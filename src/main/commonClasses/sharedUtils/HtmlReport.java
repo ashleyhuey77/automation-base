@@ -1,0 +1,147 @@
+package commonClasses.sharedUtils;
+
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
+
+import reporting.framework.reporting.ReportSettings;
+import reporting.framework.reporting.ReportTheme;
+import reporting.framework.reporting.Status;
+import reporting.framework.utilities.FrameworkException;
+
+
+public class HtmlReport extends reporting.framework.reporting.Report {
+	
+	public WebDriver driver;
+    @SuppressWarnings("unused")
+	private ReportSettings reportSettings;
+    private int failCount;
+    private int warningCount;
+
+    /// <summary>
+    /// Function to set the <seealso cref="WebDriver"/> object
+    /// </summary>
+    /// <param name="driver">
+    /// The <seealso cref="WebDriver"/> object </param>
+    public WebDriver setDriver(WebDriver value)
+    {
+          return this.driver = value;
+    }
+
+    public int getFailCount()
+    {
+       return failCount;
+    }
+
+    public int getWarningCount()
+    {
+        return warningCount;
+    }
+
+    //<summary>
+    //Constructor to initialize the Report
+    //</summary>
+    //<param name="htmlReport"></param>
+    //<param name="msTestReport"></param>
+
+    public HtmlReport(ReportSettings reportSettings, ReportTheme reportTheme)
+    { 	super(reportSettings, reportTheme);
+        
+    	this.reportSettings = reportSettings;
+        failCount = 0;
+        warningCount = 0;
+
+    }
+
+    @Override
+    protected void TakeScreenshot(String screenshotPath) throws FrameworkException
+    {
+        try
+        {
+
+            if (driver == null)
+            {
+                throw new FrameworkException("Report.driver is not initialized!");
+            }
+
+            WebDriver _driver = new Augmenter().augment(driver);
+            File source = ((TakesScreenshot)_driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(source, new File(screenshotPath));
+        }
+        catch (Exception exception)
+        {
+            reportWarning("TakeScreenshot", exception.getMessage());
+        }
+    }
+
+
+    /// <summary>
+    /// Add a done step to the test report
+    /// </summary>
+    /// <param name="stepName"></param>
+    /// <param name="description"></param>
+
+    public void reportDoneEvent(String stepName, String description) throws FrameworkException
+    {
+
+        super.UpdateTestLog(stepName, description, Status.DONE);
+
+    }
+
+    /// <summary>
+    /// Add a done step to the test report
+    /// </summary>
+    /// <param name="stepName"></param>
+    /// <param name="description"></param>
+
+    public void reportWarning(String stepName, String description) throws FrameworkException
+    {
+        warningCount += 1;
+        super.UpdateTestLog(stepName, description, Status.WARNING);
+
+    }
+
+    /// <summary>
+    /// Add a Passed step to the test report </summary>
+    /// <param name="stepName"> </param>
+    /// <param name="description"> </param>
+    public void reportPassEvent(String stepName, String description) throws FrameworkException
+    {
+        try
+        {
+
+            super.UpdateTestLog(stepName, description, Status.PASS);
+
+        }
+        catch (Exception invalidOperationException)
+        {
+            warningCount = warningCount + 1;
+            super.UpdateTestLog("reportPassEvent", invalidOperationException.getMessage(), Status.WARNING);
+        }
+    }
+
+    /// <summary>
+    /// Add a failed report to the test report </summary>
+    /// <param name="stepName"> </param>
+    /// <param name="description"> </param>
+    public void reportFailEvent(String stepName, String description) throws FrameworkException
+    {
+        try
+        {
+            failCount = failCount + 1;
+            super.UpdateTestLog(stepName, description, Status.FAIL);
+
+        }
+        catch (Exception invalidOperationException)
+        {
+            warningCount = warningCount + 1;
+            super.UpdateTestLog(stepName, description, Status.WARNING);
+            super.UpdateTestLog("reportFailEvent", invalidOperationException.getMessage(), Status.WARNING);
+        }
+    }
+
+}

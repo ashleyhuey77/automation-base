@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>automation.base</name>
+	<comment>Project AutomationBase created by Buildship.</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>externalLibraries/chromedriver</name>
+			<type>1</type>
+			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/chromedriver</location>
+		</link>
+		<link>
+			<name>externalLibraries/geckodriver</name>
+			<type>1</type>
+			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/geckodriver</location>
+		</link>
+		<link>
+			<name>externalLibraries/phantomjs</name>
+			<type>1</type>
+			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/phantomjs</location>
+		</link>
+	</linkedResources>
+</projectDescription>
