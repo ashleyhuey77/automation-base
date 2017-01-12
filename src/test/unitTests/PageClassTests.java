@@ -42,8 +42,6 @@ public class PageClassTests {
 		driver.get("http://www.google.com");
 		sHelp.browser = driver;
 	}
-	
-	//Test
 
 	@Test
 	public void randomString_enteredLengthSameAsStringLength() throws FrameworkException {

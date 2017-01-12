@@ -414,8 +414,7 @@ public abstract class Page {
 		try
 		{
 			String value = null;
-			int size = webElements.size() - 1;
-			for (int i = 0; i < size; i++)
+			for (int i = 0; i < webElements.size(); i++)
 			{
 				WebElement element = webElements.get(i);
 				String actualOption = seleniumHelper.getTextFromWebElement(element);
