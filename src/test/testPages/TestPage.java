@@ -104,5 +104,15 @@ public class TestPage extends Page {
 	{
 		findOptionInListAndSelectIt(webElements, webelementListHtml, expectedOption, clickViaJQuery);
 	}
+	
+	public void testClickSomeElement(String html, String byValue, String elementBeingTested) throws FrameworkException
+	{
+		clickSomeElement(html, byValue, elementBeingTested);
+	}
+	
+	public int testGetTotalDaysInMonth() throws FrameworkException
+	{
+		return getTotalDaysInMonth();
+	}
 
 }

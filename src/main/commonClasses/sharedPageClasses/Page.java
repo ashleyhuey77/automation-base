@@ -594,20 +594,13 @@ public abstract class Page {
 	protected int getTotalDaysInMonth() throws FrameworkException
 	{
 		int totalDaysInMonth = 0;
-		try
-		{
-			int currentYear = Integer.parseInt(getCurrentSplitDate()[2]);
-			int currentDay = Integer.parseInt(getCurrentSplitDate()[0]);
-			int currentMonth = Integer.parseInt(getCurrentSplitDate()[1]);
+		int currentYear = Integer.parseInt(getCurrentSplitDate()[2]);
+		int currentDay = Integer.parseInt(getCurrentSplitDate()[0]);
+		int currentMonth = Integer.parseInt(getCurrentSplitDate()[1]);
 			
-			Calendar cal = new GregorianCalendar(currentYear, currentMonth - 1, currentDay);
+		Calendar cal = new GregorianCalendar(currentYear, currentMonth - 1, currentDay);
 			
-			totalDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		}
-		catch (Exception ex)
-		{
-			report.reportException("getTotalDaysInMonth", ex);
-		}
+		totalDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		return totalDaysInMonth;
 	}
 	

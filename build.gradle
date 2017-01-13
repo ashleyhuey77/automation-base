@@ -26,6 +26,21 @@ buildscript {
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+idea{
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+javadoc {
+  classpath += sourceSets.test.compileClasspath
+  source += sourceSets.test.allJava
+}
 
 sourceSets {
     main {
@@ -62,4 +77,33 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.+'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
+}
+
+task createJavadoc(type: Javadoc) {
+  source = sourceSets.main.allJava
+  classpath = sourceSets.main.compileClasspath
+  // if not changed the destinationDir, the javadoc for production code is overridden.
+  destinationDir = file("${buildDir}/docs/javadoc")
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+  artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+ uploadArchives {
+  repositories {
+    flatDir {
+     dirs 'jars'
+    }
+  }
 }
