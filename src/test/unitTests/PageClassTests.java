@@ -597,9 +597,9 @@ public class PageClassTests {
 	
 	    ps.close();
 		baos.close();
-	}
+	}*/
 	
-	@Test
+/*	@Test
 	public void verifyNavigateViaNewsAppsToggle_cantFindElement() throws FrameworkException, IOException
 	{
 		try
@@ -616,7 +616,7 @@ public class PageClassTests {
 			String m = ex.toString();
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("junit.framework.AssertionFailedError: StepName: navigateViaTheNewsAppsToggle"));
 		}
-	}
+	}*/
 	
 	@Test
 	public void verifyEnterAValueIntoATextField() throws FrameworkException, IOException, InterruptedException
@@ -625,14 +625,14 @@ public class PageClassTests {
 		Thread.sleep(800);
 		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		Generic.newsAppsToggle = "input[id='Test']";
+		String test = "input[id='Test']";
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
 	    PrintStream old = System.out;
 	    System.setOut(ps);
 	    
-		page.testEnterAValueIntoATextField("Test123", Generic.newsAppsToggle, "cssSelector", "Test Element");;
+		page.testEnterAValueIntoATextField("Test123", test, "cssSelector", "Test Element");;
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
@@ -648,14 +648,14 @@ public class PageClassTests {
 		Thread.sleep(800);
 		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		Generic.newsAppsToggle = "input[id='Test']";
+		String test = "input[id='Test']";
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testEnterAValueIntoATextField(null, Generic.newsAppsToggle, "cssSelector", "Test Element");;
+		page.testEnterAValueIntoATextField(null, test, "cssSelector", "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -671,7 +671,7 @@ public class PageClassTests {
 		{
 			TestPage page = new TestPage(driver, report, validations);
 			
-			page.testEnterAValueIntoATextField(null, Generic.newsAppsToggle, "cssSelector", "Test Element");
+			page.testEnterAValueIntoATextField(null, "input[id='Test']", "cssSelector", "Test Element");
 			fail("Error expected to be thrown");
 		}
 		catch (FrameworkException ex)
@@ -689,13 +689,13 @@ public class PageClassTests {
 		Thread.sleep(800);
 		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		Generic.newsAppsToggle = "Test";
+		String test = "Test";
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
 	    PrintStream old = System.out;
 	    System.setOut(ps);
-	    WebElement el = sHelp.getElement(Generic.newsAppsToggle, "id");
+	    WebElement el = sHelp.getElement(test, "id");
 	    
 		page.testEnterAValueIntoATextField("Test123", el, "Test Element");;
 		
@@ -713,14 +713,14 @@ public class PageClassTests {
 		Thread.sleep(800);
 		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		Generic.newsAppsToggle = "input[id='Test']";
+		String test = "input[id='Test']";
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testEnterAValueIntoATextField(null, sHelp.getElement(Generic.newsAppsToggle, "cssSelector"), "Test Element");;
+		page.testEnterAValueIntoATextField(null, sHelp.getElement(test, "cssSelector"), "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -736,7 +736,7 @@ public class PageClassTests {
 		{
 			TestPage page = new TestPage(driver, report, validations);
 			
-			page.testEnterAValueIntoATextField(null, sHelp.getElement(Generic.newsAppsToggle, "cssSelector"), "Test Element");
+			page.testEnterAValueIntoATextField(null, sHelp.getElement("input[id='Test']", "cssSelector"), "Test Element");
 			fail("Error expected to be thrown");
 		}
 		catch (NoSuchElementException ex)
@@ -751,13 +751,13 @@ public class PageClassTests {
 	{
 		TestPage page = new TestPage(driver, report, validations);
 		createListOfLinks(7, "a", "testLink", "Link");
-		Generic.newsAppsToggle = "testLink";
+		String test = "testLink";
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
-		List<WebElement> list = sHelp.getElements(Generic.newsAppsToggle, "id");
+		List<WebElement> list = sHelp.getElements(test, "id");
     
 		page.testFindOptionInListAndSelectIt(list, null, "Link3", false);
 	
@@ -775,9 +775,9 @@ public class PageClassTests {
 		{
 			TestPage page = new TestPage(driver, report, validations);
 			createListOfLinks(7, "a", "testLink", "Link");
-			Generic.newsAppsToggle = "testLink";
+			String test = "testLink";
 	
-			List<WebElement> list = sHelp.getElements(Generic.newsAppsToggle, "id");
+			List<WebElement> list = sHelp.getElements(test, "id");
     
 			page.testFindOptionInListAndSelectIt(list, null, "Link10", false);
 			fail("Exception was expected to have been thrown");
@@ -796,22 +796,76 @@ public class PageClassTests {
 		TestPage page = new TestPage(driver, report, validations);
 		createListOfLinks(7, "a", "testLink", "Link");
 		makeJQueryActive();
-		Generic.newsAppsToggle = "a[id='testLink']";
+		String test = "a[id='testLink']";
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
-		List<WebElement> list = sHelp.getElements(Generic.newsAppsToggle, "cssSelector");
+		List<WebElement> list = sHelp.getElements(test, "cssSelector");
     
-		page.testFindOptionInListAndSelectIt(list, Generic.newsAppsToggle, "Link3", true);
+		page.testFindOptionInListAndSelectIt(list, test, "Link3", true);
 	
 		String inputString = getByteStreamMessage(baos, old);
     
 		assertTrue("Console messages do not match", inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
 		closeByteStream(ps, baos);
-	}*/
+	}
+	
+	@Test
+	public void verifyClickSomeElement_ElementFound() throws InterruptedException, FrameworkException, IOException
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		Thread.sleep(500);
+		String test = "input[id='Test']";
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testClickSomeElement(test, "cssSelector", "Test Element");;
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: clickSomeElement has passed. Test Element clicked successfully."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifyClickSomeElement_ElementNotFound() throws InterruptedException, FrameworkException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
+			String test = "input[id='NotHere']";
+	    
+			page.testClickSomeElement(test, "cssSelector", "Test Element");
+			fail("Exception was expected to be thrown for a failed test case");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("junit.framework.AssertionFailedError: StepName: clickSomeElement"));
+		}
+	}
+	
+	@Test
+	public void getTotalDaysInMonth() throws FrameworkException
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		
+		int totalDays = page.testGetTotalDaysInMonth();
+		String month = TestUtils.GetCurrentDateTime("MMM");
+		int expectedTotal = getTotalExpectedMonths(month);
+		
+		assertEquals("The total days in month do not match", expectedTotal, totalDays);
+	}
 	
 	private void createListOfLinks(int i, String tagName, String id, String linkText)
 	{
@@ -854,6 +908,39 @@ public class PageClassTests {
 		{
 			throw ex;
 		}
+	}
+	
+	private int getTotalExpectedMonths(String month)
+	{
+		int totalDays = 0;
+		switch(month.toUpperCase())
+		{
+			case "JAN":
+				totalDays = 31;
+			case "FEB":
+				totalDays = 28;
+			case "MAR":
+				totalDays = 31;
+			case "APR":
+				totalDays = 30;
+			case "MAY":
+				totalDays = 31;
+			case "JUN":
+				totalDays = 30;
+			case "JUL":
+				totalDays = 31;
+			case "AUG":
+				totalDays = 31;
+			case "SEP":
+				totalDays = 30;
+			case "OCT":
+				totalDays = 31;
+			case "NOV":
+				totalDays = 30;
+			case "DEC":
+				totalDays = 31;
+		}
+		return totalDays;
 	}
 	
 	
