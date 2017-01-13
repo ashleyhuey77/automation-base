@@ -19,6 +19,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import reporting.framework.utilities.FrameworkException;
+
 public class SeleniumHelper {
 
 	public WebDriver browser;
@@ -2013,6 +2015,33 @@ public class SeleniumHelper {
     		throw ex;
     	}
     }
+  public void dragAndDropViaSelenium(String dragable , String dragableby,  String dropable, String dropableby) throws FrameworkException, InterruptedException {
+    	
+    	//.sleep(3000);
+      	WebElement dragElement = null;
+      	WebElement dropElement = null;
+     
+      	
+      	waitForElementToBeClickable(dragable, dragableby, 20);
+      	List<WebElement> locate = getElements(dragable, dragableby);
+      	dragElement = locate.get(1);
+      	waitForElementToBeClickable(dropable,dropableby,20);
+      	List<WebElement> locateDroppable = getElements(dropable,dropableby);
+	try {
+	        Actions act = new Actions(browser);
+	        dropElement = locateDroppable.get(0);
+	       	act.clickAndHold(dragElement).build().perform();
+	       	Thread.sleep(1000);
+	       	act.moveToElement(dropElement ).build().perform();
+	        Thread.sleep(1000);
+	       	act.release();
+	       	act.release(dragElement).build().perform();
+	        Thread.sleep(5000);
+	       	System.out.print(dropElement.getText() + "and dropped was: "+ dropElement.getText());
+	} catch (WebDriverException ex) {
+	        throw ex;
+	}
     
+} 
     
 }
