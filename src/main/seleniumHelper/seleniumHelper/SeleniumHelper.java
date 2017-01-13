@@ -2015,19 +2015,25 @@ public class SeleniumHelper {
     		throw ex;
     	}
     }
-  public void dragAndDropViaSelenium(String dragable , String dragableby,  String dropable, String dropableby) throws FrameworkException, InterruptedException {
+    
+    /**
+     * <summary>
+     * Method to drag and drop using the selenium actions commands
+     * </summary>
+     */
+    public void dragAndDropViaSelenium(String dragable , String dragableby,  String dropable, String dropableby) throws FrameworkException, InterruptedException {
     	
-    	//.sleep(3000);
-      	WebElement dragElement = null;
-      	WebElement dropElement = null;
+    	try 
+    	{
+    		WebElement dragElement = null;
+    		WebElement dropElement = null;
      
       	
-      	waitForElementToBeClickable(dragable, dragableby, 20);
-      	List<WebElement> locate = getElements(dragable, dragableby);
-      	dragElement = locate.get(1);
-      	waitForElementToBeClickable(dropable,dropableby,20);
-      	List<WebElement> locateDroppable = getElements(dropable,dropableby);
-	try {
+    		waitForElementToBeClickable(dragable, dragableby, 20);
+    		List<WebElement> locate = getElements(dragable, dragableby);
+    		dragElement = locate.get(1);
+    		waitForElementToBeClickable(dropable,dropableby,20);
+    		List<WebElement> locateDroppable = getElements(dropable,dropableby);
 	        Actions act = new Actions(browser);
 	        dropElement = locateDroppable.get(0);
 	       	act.clickAndHold(dragElement).build().perform();
@@ -2038,10 +2044,11 @@ public class SeleniumHelper {
 	       	act.release(dragElement).build().perform();
 	        Thread.sleep(5000);
 	       	System.out.print(dropElement.getText() + "and dropped was: "+ dropElement.getText());
-	} catch (WebDriverException ex) {
+    	} 
+    	catch (WebDriverException ex) 
+    	{
 	        throw ex;
-	}
-    
-} 
+    	}
+    } 
     
 }
