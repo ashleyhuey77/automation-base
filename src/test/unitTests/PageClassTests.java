@@ -32,7 +32,7 @@ public class PageClassTests {
 	private commonClasses.sharedUtils.Report report = new commonClasses.sharedUtils.Report(htmlReport, msTestReport);
 	public static String value;
 	SeleniumHelper sHelp;
-	
+	//test
 	@Before
 	public void before()
 	{
