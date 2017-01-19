@@ -15,14 +15,16 @@ public class Report {
         this.msTestReport = msTestReport;
 	}
 	
-	public void reportDoneEvent(String stepName, String description) throws FrameworkException
+	public void reportDoneEvent(String description) throws FrameworkException
     {
+		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         htmlReport.reportDoneEvent(stepName, description);
         System.out.println("Step: " + stepName + " has passed. " + description);
     }
 	
-	public FrameworkException reportException(String stepName, Exception webDriverException) throws FrameworkException
+	public FrameworkException reportException(Exception webDriverException) throws FrameworkException
 	{
+		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		htmlReport.reportFailEvent(stepName, webDriverException.getMessage());
 		String message = "StepName: " + stepName + "\n ErrorMessage : " + webDriverException.getMessage();
         String innerEx = webDriverException.getCause() != null ? webDriverException.getCause().getMessage() : "";

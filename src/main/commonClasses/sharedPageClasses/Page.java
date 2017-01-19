@@ -75,16 +75,16 @@ public abstract class Page {
                 	seleniumHelper.clear(webElement, byValue);
                     seleniumHelper.sendKeys(webElement, byValue, value);
                 }
-                report.reportDoneEvent("enterAValueInATextField", elementBeingTested + " has been entered successfully");
+                report.reportDoneEvent(elementBeingTested + " has been entered successfully");
             }
             else
             {
-                throw validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+                throw validations.assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
             }
         }
         catch (WebDriverException ex)
         {
-            throw report.reportException("enterAValueInATextField", ex);
+            throw report.reportException(ex);
         }
 	}
 	
@@ -116,16 +116,16 @@ public abstract class Page {
                	seleniumHelper.clear(webElement);
                    seleniumHelper.sendKeys(webElement, value);
                }
-               report.reportDoneEvent("enterAValueInATextField", elementBeingTested + " has been entered successfully");
+               report.reportDoneEvent(elementBeingTested + " has been entered successfully");
            }
            else
            {
-               throw validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+               throw validations.assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
            }
        }
        catch (WebDriverException ex)
        {
-           throw report.reportException("enterAValueInATextField", ex);
+           throw report.reportException(ex);
        }
 	}
 	
@@ -149,16 +149,16 @@ public abstract class Page {
 			if (seleniumHelper.isElementDisplayedInThePage(html, byValue, 5))
 			{
 				seleniumHelper.click(html, byValue);
-				report.reportDoneEvent("clickSomeElement", elementBeingTested + " clicked successfully." );
+				report.reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
 			else
 			{
-				throw validations.assertionFailed("clickSomeElement", "Element is not on the page. Unable to click the " + elementBeingTested);
+				throw validations.assertionFailed("Element is not on the page. Unable to click the " + elementBeingTested);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("clickSomeElement", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -195,12 +195,12 @@ public abstract class Page {
 			}
 			else
 			{
-				throw validations.assertionFailed("selectSomeOptionFromNonDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw validations.assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
 		catch (WebDriverException | InterruptedException ex)
 		{
-			throw report.reportException("selectSomeOptionFromNonDropdown", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -235,12 +235,12 @@ public abstract class Page {
 			}
 			else
 			{
-				throw validations.assertionFailed("selectSomeOptionFromNonDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw validations.assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("selectSomeOptionFromNonDropdown", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -264,16 +264,16 @@ public abstract class Page {
 		{
 			if (seleniumHelper.isElementDisplayedInThePage(elementHtml, byValue, 10))
 			{
-				validations.assertionPass("verifySomeElementIsPresent", elementBeingTested + " displays in the page as expected.");
+				validations.assertionPass(elementBeingTested + " displays in the page as expected.");
 			}
 			else
 			{
-				throw validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should display in the page. It does not display as expected.");
+				throw validations.assertionFailed(elementBeingTested + " should display in the page. It does not display as expected.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("verifySomeElementIsPresent", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -298,16 +298,16 @@ public abstract class Page {
 		{
 			if (!seleniumHelper.isElementDisplayedInThePage(elementHtml, byValue, 5))
 			{
-				validations.assertionPass("verifySomeElementIsPresent", elementBeingTested + " does not display in the page.");
+				validations.assertionPass(elementBeingTested + " does not display in the page.");
 			}
 			else
 			{
-				throw validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should not display in the page. It does display. This is not expected.");
+				throw validations.assertionFailed(elementBeingTested + " should not display in the page. It does display. This is not expected.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("verifySomeElementIsPresent", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -343,16 +343,16 @@ public abstract class Page {
 			
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				validations.assertionPass("verifySomeElementContainsTheExpectedText",  elementBeingTested + " contains the correct text: " + actualText);
+				validations.assertionPass(elementBeingTested + " contains the correct text: " + actualText);
 			}
 			else
 			{
-				throw validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw validations.assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("verifySomeElementContainsTheExpectedText", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -387,16 +387,16 @@ public abstract class Page {
 		
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				validations.assertionPass("verifySomeElementContainsTheExpectedText",  elementBeingTested + " contains the correct text: " + actualText);
+				validations.assertionPass(elementBeingTested + " contains the correct text: " + actualText);
 			}
 			else
 			{
-				throw validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw validations.assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("verifySomeElementContainsTheExpectedText", ex);
+			throw report.reportException(ex);
 		}
 	}
 
@@ -441,19 +441,19 @@ public abstract class Page {
 					}
 					
 					value = actualOption;
-					report.reportDoneEvent("findOptionInListAndSelectIt", expectedOption + " has been selected successfully.");
+					report.reportDoneEvent(expectedOption + " has been selected successfully.");
 					break;
 				}
 			}
 			
 			if (value == null)
 			{
-				throw validations.assertionFailed("findOptionInListAndSelectIt", expectedOption + " is not found in the list of available options. Unable to select the expected option.");
+				throw validations.assertionFailed(expectedOption + " is not found in the list of available options. Unable to select the expected option.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("findOptionAndSelectIt", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -482,16 +482,16 @@ public abstract class Page {
 			String actualValueInTextBox = seleniumHelper.getTextInTextBoxViaJavascript(html, byValue, requiresIndex, webElementIndex);
 			if (actualValueInTextBox.equals("") || actualValueInTextBox == null)
 			{
-				validations.assertionPass("verifyTextFieldIsBlank", elementBeingTested + " is blank as expected.");
+				validations.assertionPass(elementBeingTested + " is blank as expected.");
 			}
 			else
 			{
-				throw validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
+				throw validations.assertionFailed(elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("verifyTextFieldIsBlank", ex);
+			throw report.reportException(ex);
 		}		
 	}
 	
@@ -532,16 +532,16 @@ public abstract class Page {
 			
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				validations.assertionPass("verifyTextFieldIsBlank", elementBeingTested + " contains " + actualValueInTextBox + " as expected.");
+				validations.assertionPass(elementBeingTested + " contains " + actualValueInTextBox + " as expected.");
 			}
 			else
 			{
-				throw validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should contain" + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
+				throw validations.assertionFailed(elementBeingTested + " should contain" + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			throw report.reportException("verifyTextFieldIsBlank", ex);
+			throw report.reportException(ex);
 		}
 	}
 	
@@ -682,11 +682,11 @@ public abstract class Page {
 	{
 			if (variable != null)
 			{
-				validations.assertionPass("failTestIfVariableIsNull", passMessage);
+				validations.assertionPass(passMessage);
 			}
 			else
 			{
-				throw validations.assertionFailed("failTestIfVariableIsNull", failMessage);
+				throw validations.assertionFailed(failMessage);
 			}
 	}
 	
@@ -720,7 +720,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("removeUnwantedCharacter", ex);
+			throw report.reportException(ex);
 		}
 		return result;
 	}
@@ -744,28 +744,28 @@ public abstract class Page {
 			{
 				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim()))
 				{
-					validations.assertionPass("verifyTheActualValueMatchesTheExpectedValue", actualValue + " is set correctly in " + variableBeingTested);
+					validations.assertionPass(actualValue + " is set correctly in " + variableBeingTested);
 				}
 				else
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw validations.assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
 				if (ExtensionMethods.isNullOrBlank(expectedValue))
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
+					throw validations.assertionFailed(variableBeingTested + " returned null. Variable was not expected to return null.");
 				}
 				else if (ExtensionMethods.isNullOrBlank(actualValue))
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
+					throw validations.assertionFailed(variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
 				}
 			}
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
+			throw report.reportException(ex);
 		}
 	}
 	/**	
@@ -796,7 +796,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("addDays", ex);
+			throw report.reportException(ex);
 		}
 		return addedDay;
 	}
@@ -819,28 +819,28 @@ public abstract class Page {
 			{
 				if (actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
 				{
-					validations.assertionPass("verifyTheActualValueMatchesTheExpectedValue", actualValue + " is set correctly in " + variableBeingTested);
+					validations.assertionPass(actualValue + " is set correctly in " + variableBeingTested);
 				}
 				else
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw validations.assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
 				if (ExtensionMethods.isNullOrBlank(expectedValue))
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
+					throw validations.assertionFailed(variableBeingTested + " returned null. Variable was not expected to return null.");
 				}
 				else if (ExtensionMethods.isNullOrBlank(actualValue))
 				{
-					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
+					throw validations.assertionFailed(variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
 				}
 			}
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
+			throw report.reportException(ex);
 		}
 	}
 
@@ -867,7 +867,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw report.reportException("randomString", ex);
+			throw report.reportException(ex);
 		}
 		return sb.toString();
 	}
