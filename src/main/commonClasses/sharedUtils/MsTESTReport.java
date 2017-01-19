@@ -14,7 +14,8 @@ public class MsTESTReport {
     public FrameworkException reportAssertionFailed(AssertionFailedError assertionFailedError) throws FrameworkException
     {
     	FrameworkException exception = new FrameworkException(assertionFailedError.toString());
-    	throw(exception);
+    	System.out.println(exception);
+    	return exception;
     }
 
 }

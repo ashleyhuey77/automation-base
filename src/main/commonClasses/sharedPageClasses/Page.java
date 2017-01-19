@@ -59,6 +59,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
    	*/
 	protected void enterAvalueIntoATextField(String value, String webElement, String byValue, String elementBeingTested) throws FrameworkException
 	{
@@ -78,12 +79,12 @@ public abstract class Page {
             }
             else
             {
-                validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+                throw validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
             }
         }
         catch (WebDriverException ex)
         {
-            report.reportException("enterAValueInATextField", ex);
+            throw report.reportException("enterAValueInATextField", ex);
         }
 	}
 	
@@ -99,6 +100,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
   	*/
 	protected void enterAvalueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws FrameworkException
 	{
@@ -118,12 +120,12 @@ public abstract class Page {
            }
            else
            {
-               validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+               throw validations.assertionFailed("enterAValueInATextField", elementBeingTested + " does not display as expected. Unable to enter text in this field.");
            }
        }
        catch (WebDriverException ex)
        {
-           report.reportException("enterAValueInATextField", ex);
+           throw report.reportException("enterAValueInATextField", ex);
        }
 	}
 	
@@ -138,6 +140,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method 
+	 * @throws Exception 
 	*/
 	protected void clickSomeElement(String html, String byValue, String elementBeingTested) throws FrameworkException
 	{
@@ -150,12 +153,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("clickSomeElement", "Element is not on the page. Unable to click the " + elementBeingTested);
+				throw validations.assertionFailed("clickSomeElement", "Element is not on the page. Unable to click the " + elementBeingTested);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("clickSomeElement", ex);
+			throw report.reportException("clickSomeElement", ex);
 		}
 	}
 	
@@ -174,12 +177,13 @@ public abstract class Page {
 		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method 
+	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException, InterruptedException
+	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
 	{
 		try
 		{
-			if (seleniumHelper.isElementDisplayedInThePage(clickElement, clickByValue, 15)){
+			if (seleniumHelper.isElementDisplayedInThePage(clickElement, clickByValue, 10)){
 				
 				clickSomeElement(clickElement, clickByValue, elementBeingTested);
 				Thread.sleep(600);
@@ -191,12 +195,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("selectSomeOptionFromDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw validations.assertionFailed("selectSomeOptionFromNonDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
-		catch (WebDriverException ex)
+		catch (WebDriverException | InterruptedException ex)
 		{
-			report.reportException("selectSomeOptionFromDropdown", ex);
+			throw report.reportException("selectSomeOptionFromNonDropdown", ex);
 		}
 	}
 	
@@ -215,8 +219,9 @@ public abstract class Page {
 		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException, InterruptedException
+	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
 	{
 		try
 		{
@@ -230,12 +235,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("selectSomeOptionFromDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw validations.assertionFailed("selectSomeOptionFromNonDropdown", "Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("selectSomeOptionFromDropdown", ex);
+			throw report.reportException("selectSomeOptionFromNonDropdown", ex);
 		}
 	}
 	
@@ -251,6 +256,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
 	*/
 	protected void verifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
 	{
@@ -262,12 +268,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should display in the page. It does not display as expected.");
+				throw validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should display in the page. It does not display as expected.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("verifySomeElementIsPresent", ex);
+			throw report.reportException("verifySomeElementIsPresent", ex);
 		}
 	}
 	
@@ -283,6 +289,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
 	*/
 	protected void verifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
 	{
@@ -295,12 +302,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should not display in the page. It does display. This is not expected.");
+				throw validations.assertionFailed("verifySomeElementIsPresent", elementBeingTested + " should not display in the page. It does display. This is not expected.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("verifySomeElementIsPresent", ex);
+			throw report.reportException("verifySomeElementIsPresent", ex);
 		}
 	}
 	
@@ -320,6 +327,7 @@ public abstract class Page {
    		@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
    						       removed to producce a more accurate comparison. Not neccesary 
    						       for all consumers of this method, however has been necessary for some instances.
+	 * @throws Exception 
 	*/
 	protected void verifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
 	{
@@ -339,12 +347,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("verifySomeElementContainsTheExpectedText", ex);
+			throw report.reportException("verifySomeElementContainsTheExpectedText", ex);
 		}
 	}
 	
@@ -363,6 +371,7 @@ public abstract class Page {
 		@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
 						       removed to producce a more accurate comparison. Not neccesary 
 						       for all consumers of this method, however has been necessary for some instances.
+	 * @throws Exception 
 */
 	protected void verifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
 	{
@@ -382,12 +391,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw validations.assertionFailed("verifySomeElementContainsTheExpectedText", elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
-			report.reportException("verifySomeElementContainsTheExpectedText", ex);
+			throw report.reportException("verifySomeElementContainsTheExpectedText", ex);
 		}
 	}
 
@@ -407,6 +416,7 @@ public abstract class Page {
    		@param clickViaJQuery boolean value to execute a jquery click command instead of a 
    					          click via selenium. Is not necessary for all methods, but has been 
    					          necessary in some instances.
+	 * @throws Exception 
 	*/
 	
 	protected void findOptionInListAndSelectIt(List<WebElement> webElements, String webelementListHtml, String expectedOption, Boolean clickViaJQuery) throws FrameworkException
@@ -438,12 +448,12 @@ public abstract class Page {
 			
 			if (value == null)
 			{
-				validations.assertionFailed("findOptionInListAndSelectIt", expectedOption + " is not found in the list of available options. Unable to select the expected option.");
+				throw validations.assertionFailed("findOptionInListAndSelectIt", expectedOption + " is not found in the list of available options. Unable to select the expected option.");
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("findOptionAndSelectIt", ex);
+			throw report.reportException("findOptionAndSelectIt", ex);
 		}
 	}
 	
@@ -463,8 +473,9 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
 	*/
-	protected void verifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws FrameworkException
+	protected void verifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
 	{
 		try
 		{
@@ -475,12 +486,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
+				throw validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("verifyTextFieldIsBlank", ex);
+			throw report.reportException("verifyTextFieldIsBlank", ex);
 		}		
 	}
 	
@@ -501,6 +512,7 @@ public abstract class Page {
    		@param elementBeingTested the name of the element being tested. This is used for 
    								  reporting so that when it is called the report will reflect an
    								  element that is unique to the method
+	 * @throws Exception 
 	*/
 	protected void verifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
 	{
@@ -524,12 +536,12 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should contain" + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
+				throw validations.assertionFailed("verifyTextFieldIsBlank", elementBeingTested + " should contain" + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (WebDriverException ex)
 		{
-			report.reportException("verifyTextFieldIsBlank", ex);
+			throw report.reportException("verifyTextFieldIsBlank", ex);
 		}
 	}
 	
@@ -674,7 +686,7 @@ public abstract class Page {
 			}
 			else
 			{
-				validations.assertionFailed("failTestIfVariableIsNull", failMessage);
+				throw validations.assertionFailed("failTestIfVariableIsNull", failMessage);
 			}
 	}
 	
@@ -690,7 +702,7 @@ public abstract class Page {
 	 * @param replaceValue the value to replace the character. Leave as empty string
 	 * 						to remove character completely.
 	 * @return String
-	 * @throws FrameworkException
+	 * @throws Exception 
 	 */
 	protected String removeOrChangeUnwantedCharacter(String variable, String character, String replaceValue) throws FrameworkException
 	{
@@ -708,7 +720,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			report.reportException("removeUnwantedCharacter", ex);
+			throw report.reportException("removeUnwantedCharacter", ex);
 		}
 		return result;
 	}
@@ -721,6 +733,7 @@ public abstract class Page {
 		@return void
 		@param expectedValue the value that is expected to have returned in the api response
 		@param actualValue the actual value that returned in the api response
+	 * @throws Exception 
 	*/
 	protected void verifyTheActualValueMatchesTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
 	{
@@ -735,24 +748,24 @@ public abstract class Page {
 				}
 				else
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
 				if (ExtensionMethods.isNullOrBlank(expectedValue))
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
 				}
 				else if (ExtensionMethods.isNullOrBlank(actualValue))
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
 				}
 			}
 		}
 		catch (Exception ex)
 		{
-			report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
+			throw report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
 		}
 	}
 	/**	
@@ -764,6 +777,7 @@ public abstract class Page {
 	@param date the date that needs to be subtracted from
 	@param totalDays the total number of days in the month
 	@param daysToSubtract the number of days to subtract from the date
+	 * @throws Exception 
  */
 	protected String subtractDays(String date, int totalDays, int daysToAdd) throws FrameworkException
 	{
@@ -782,7 +796,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			report.reportException("addDays", ex);
+			throw report.reportException("addDays", ex);
 		}
 		return addedDay;
 	}
@@ -794,6 +808,7 @@ public abstract class Page {
 		@return void
 		@param expectedValue the value that is expected to have returned in the api response
 		@param actualValue the actual value that returned in the api response
+	 * @throws Exception 
 	 */
 	protected void verifyTheActualValueContainsTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
 	{
@@ -808,24 +823,24 @@ public abstract class Page {
 				}
 				else
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
 				if (ExtensionMethods.isNullOrBlank(expectedValue))
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null. Variable was not expected to return null.");
 				}
 				else if (ExtensionMethods.isNullOrBlank(actualValue))
 				{
-					validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
+					throw validations.assertionFailed("verifyTheActualValueMatchesTheExpectedValue", variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
 				}
 			}
 		}
 		catch (Exception ex)
 		{
-			report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
+			throw report.reportException("verifyTheActualApiValueMatchesTheExpectedApiValue", ex);
 		}
 	}
 
@@ -852,7 +867,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			report.reportException("randomString", ex);
+			throw report.reportException("randomString", ex);
 		}
 		return sb.toString();
 	}

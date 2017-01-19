@@ -1356,8 +1356,9 @@ public class SeleniumHelper {
      * @param y2Height the second element's height
      * @param difference
      * @return ArrayList<\String>
+     * @throws Exception 
      */
-    private ArrayList<String> dXAnddYValues(int x1, int y1, int x2, int y2, int y1Height, int y2Height, int[] difference)
+    private ArrayList<String> dXAnddYValues(int x1, int y1, int x2, int y2, int y1Height, int y2Height, int[] difference) throws Exception
     {
     	ArrayList<String> values = new ArrayList<String>();
     	try
@@ -1430,8 +1431,9 @@ public class SeleniumHelper {
      * @param dy
      * @param stepWidth
      * @param stepDelay
+     * @throws Exception 
      */
-    private void executeDragNDrop(String from, String dx, String dy, String stepWidth, String stepDelay)
+    private void executeDragNDrop(String from, String dx, String dy, String stepWidth, String stepDelay) throws Exception
     {
     	try
     	{
@@ -1454,8 +1456,9 @@ public class SeleniumHelper {
      * @param stepWidth
      * @param stepDelay
      * @param index the index of the element to be selected from a list of similar elements
+     * @throws Exception 
      */
-    private void executeDragNDrop(String from, String dx, String dy, String stepWidth, String stepDelay, String index)
+    private void executeDragNDrop(String from, String dx, String dy, String stepWidth, String stepDelay, String index) throws Exception
     {
     	try
     	{
@@ -1497,8 +1500,9 @@ public class SeleniumHelper {
      * </summary>
      * @param script the script that needs to be injected
      * @return void
+     * @throws Exception 
      */
-    private void addScriptToPage(String script)
+    private void addScriptToPage(String script) throws Exception
     {
     	try
     	{
@@ -1522,7 +1526,7 @@ public class SeleniumHelper {
      * @param i the total amount of time alotted to wait for the condition to return true
      * @return void
      */
-    public void waitForAttributeToDisappear(String selectorString, String by, String attribute, int i)
+    public void waitForAttributeToDisappear(final String selectorString, final String by, final String attribute, int i)
     {
     	try
     	{
@@ -1558,7 +1562,7 @@ public class SeleniumHelper {
      * @param i the total amount of time alotted to wait for the condition to return true
      * @return void
      */
-    public void waitForAttributeToDisappear(WebElement element, String attribute, int i)
+    public void waitForAttributeToDisappear(final WebElement element, final String attribute, int i)
     {
     	try
     	{
@@ -1593,7 +1597,7 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue, int i)
+    public void waitForAttributeToEqualACertainValue(final WebElement element, final String attribute, final String expectedValue, int i)
     {
     	try
     	{
@@ -1633,7 +1637,7 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToEqualACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
+    public void waitForAttributeToEqualACertainValue(final String selectorString, final String by, final String attribute, final String expectedValue, int i)
     {
     	try
     	{
@@ -1673,7 +1677,7 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
+    public void waitForAttributeToContainACertainValue(final String selectorString, final String by, final String attribute, final String expectedValue, int i)
     {
     	try
     	{
@@ -1732,7 +1736,7 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForTextToExistInElement(String selectorString, String by, String expectedText, int i)
+    public void waitForTextToExistInElement(final String selectorString, final String by, final String expectedText, int i)
     {
     	try
     	{
@@ -1770,7 +1774,7 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForPresenceOfElementLocated(String selectorString, String by, int i)
+    public void waitForPresenceOfElementLocated(final String selectorString, final String by, int i)
     {
     	try
     	{
@@ -1809,7 +1813,7 @@ public class SeleniumHelper {
     	}
     }
     
-    public void waitForWindowCount(int i, int expectedNumberOfWindows)
+    public void waitForWindowCount(int i, final int expectedNumberOfWindows)
     {
     	try
     	{
@@ -1865,7 +1869,7 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForPresenceOfElementLocated(WebElement element, int i)
+    public void waitForPresenceOfElementLocated(final WebElement element, int i)
     {
     	try
     	{
@@ -1913,7 +1917,7 @@ public class SeleniumHelper {
     		
     		Thread.sleep(600);
     	}
-    	catch (WebDriverException | InterruptedException ex)
+    	catch (Exception ex)
     	{
     		throw ex;
     	}

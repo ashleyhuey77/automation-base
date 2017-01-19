@@ -1,7 +1,7 @@
 package reporting.framework.utilities;
 
 
-public class FrameworkException extends Exception {
+public class FrameworkException extends RuntimeException {
 	
 	/**
 	 * 

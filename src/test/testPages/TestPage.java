@@ -23,14 +23,14 @@ public class TestPage extends Page {
 		
 	}
 	
-	public String someRandomString(int length, String value) throws FrameworkException
+	public String someRandomString(int length, String value) throws Exception
 	{
 		String someValue = null;
 		someValue = randomString(length, value);
 		return someValue;
 	}
 	
-	public void testActualVersusExpected(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
+	public void testActualVersusExpected(String expectedValue, String actualValue, String variableBeingTested) throws Exception
 	{
 		verifyTheActualValueContainsTheExpectedValue(expectedValue, actualValue, variableBeingTested);
 	}
@@ -113,6 +113,26 @@ public class TestPage extends Page {
 	public int testGetTotalDaysInMonth() throws FrameworkException
 	{
 		return getTotalDaysInMonth();
+	}
+	
+	public void testSelectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException, InterruptedException
+	{
+		selectSomeOptionFromNonDropdown(option, clickElement, clickByValue, searchElement, searchByValue, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
+	}
+	
+	public void testSelectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException, InterruptedException
+	{
+		selectSomeOptionFromNonDropdown(option, clickElement, searchElement, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
+	}
+	
+	public void testVerifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
+	{
+		verifySomeElementContainsTheExpectedText(elementHtml, byValue, expectedText, elementBeingTested, removeAllSpaces);
+	}
+	
+	public void testVerifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
+	{
+		verifySomeElementContainsTheExpectedText(element, expectedText, elementBeingTested, removeAllSpaces);
 	}
 
 }

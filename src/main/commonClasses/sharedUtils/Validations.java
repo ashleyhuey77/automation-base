@@ -21,12 +21,15 @@ public class Validations {
 		System.out.println("Step: " + stepName + " has passed. " + message);
 	}
 	
-	public void assertionFailed(String stepName, String message) throws FrameworkException
+	public FrameworkException assertionFailed(String stepName, String message) throws FrameworkException
     {
+		//instead of throwing error directly in this method, we should set some int or something equal to something that then throws the error
+		//it should be maintained in some other code. Maybe in reporting or some such
 		AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
 			htmlReport.reportFailEvent(stepName, message);
 			System.out.println(assertionFailedError.toString());
-			msTestReport.reportAssertionFailed(assertionFailedError);
+			FrameworkException ex = msTestReport.reportAssertionFailed(assertionFailedError);
+			return ex;
     }
 	
 	private AssertionFailedError getAssertionFailedErrorObject(String stepName, String errorMessage)
