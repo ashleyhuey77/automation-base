@@ -6,6 +6,7 @@ import java.io.IOException;
 public class ReportPath {
 
     private static String reportPath;
+    private static ReportPath instance = null;
 
     protected ReportPath() throws IOException
     {
@@ -21,5 +22,19 @@ public class ReportPath {
             //return TestUtils.RelativePath + File.separator + FrameworkConstants.RESULT_FOLDER + File.separator + "Result_" + TestUtils.TimeStamp;
     	String reportPath = TestUtils.getRelativePath() /*"/Users/ashleyhuey/Documents/workspace/Automation.Tests"*/+ "/" + FrameworkConstants.RESULT_FOLDER + "/" + "Result_" + TestUtils.getTimeStamp();
             return reportPath;
+    }
+    
+    public String getReportPath()
+    {
+        return reportPath;
+    }
+    
+    public static ReportPath getInstance() throws IOException
+    {
+    	if (instance == null)
+        {
+    		instance = new ReportPath();
+        }
+        return instance;
     }
 }
