@@ -9,12 +9,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import commonClasses.sharedUtils.*;
-import reporting.framework.utilities.FrameworkException;
+import reporting.framework.utilities.*;
 import seleniumHelper.seleniumHelper.*;
 
 
@@ -82,7 +81,7 @@ public abstract class Page {
                 throw validations.assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
             }
         }
-        catch (WebDriverException ex)
+        catch (Exception ex)
         {
             throw report.reportException(ex);
         }
@@ -123,7 +122,7 @@ public abstract class Page {
                throw validations.assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
            }
        }
-       catch (WebDriverException ex)
+       catch (Exception ex)
        {
            throw report.reportException(ex);
        }
@@ -156,7 +155,7 @@ public abstract class Page {
 				throw validations.assertionFailed("Element is not on the page. Unable to click the " + elementBeingTested);
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -198,7 +197,7 @@ public abstract class Page {
 				throw validations.assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
-		catch (WebDriverException | InterruptedException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -238,7 +237,7 @@ public abstract class Page {
 				throw validations.assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -271,7 +270,7 @@ public abstract class Page {
 				throw validations.assertionFailed(elementBeingTested + " should display in the page. It does not display as expected.");
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -305,7 +304,7 @@ public abstract class Page {
 				throw validations.assertionFailed(elementBeingTested + " should not display in the page. It does display. This is not expected.");
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -350,7 +349,7 @@ public abstract class Page {
 				throw validations.assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -451,7 +450,7 @@ public abstract class Page {
 				throw validations.assertionFailed(expectedOption + " is not found in the list of available options. Unable to select the expected option.");
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -480,7 +479,7 @@ public abstract class Page {
 		try
 		{
 			String actualValueInTextBox = seleniumHelper.getTextInTextBoxViaJavascript(html, byValue, requiresIndex, webElementIndex);
-			if (actualValueInTextBox.equals("") || actualValueInTextBox == null)
+			if (ExtensionMethods.isNullOrBlank(actualValueInTextBox))
 			{
 				validations.assertionPass(elementBeingTested + " is blank as expected.");
 			}
@@ -489,7 +488,7 @@ public abstract class Page {
 				throw validations.assertionFailed(elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}		
@@ -536,10 +535,10 @@ public abstract class Page {
 			}
 			else
 			{
-				throw validations.assertionFailed(elementBeingTested + " should contain" + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
+				throw validations.assertionFailed(elementBeingTested + " should contain " + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
-		catch (WebDriverException ex)
+		catch (Exception ex)
 		{
 			throw report.reportException(ex);
 		}
@@ -753,14 +752,7 @@ public abstract class Page {
 			}
 			else
 			{
-				if (ExtensionMethods.isNullOrBlank(expectedValue))
-				{
-					throw validations.assertionFailed(variableBeingTested + " returned null. Variable was not expected to return null.");
-				}
-				else if (ExtensionMethods.isNullOrBlank(actualValue))
-				{
-					throw validations.assertionFailed(variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
-				}
+				throw validations.assertionFailed(variableBeingTested + " returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: " + actualValue + ". Expected: " + expectedValue);
 			}
 		}
 		catch (Exception ex)

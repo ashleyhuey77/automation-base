@@ -20,27 +20,6 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     @SuppressWarnings("unused")
 	private ReportSettings reportSettings;
     private int failCount;
-    private int warningCount;
-
-    /// <summary>
-    /// Function to set the <seealso cref="WebDriver"/> object
-    /// </summary>
-    /// <param name="driver">
-    /// The <seealso cref="WebDriver"/> object </param>
-    public WebDriver setDriver(WebDriver value)
-    {
-          return this.driver = value;
-    }
-
-    public int getFailCount()
-    {
-       return failCount;
-    }
-
-    public int getWarningCount()
-    {
-        return warningCount;
-    }
 
     //<summary>
     //Constructor to initialize the Report
@@ -53,7 +32,6 @@ public class HtmlReport extends reporting.framework.reporting.Report {
         
     	this.reportSettings = reportSettings;
         failCount = 0;
-        warningCount = 0;
 
     }
 
@@ -100,7 +78,6 @@ public class HtmlReport extends reporting.framework.reporting.Report {
 
     public void reportWarning(String stepName, String description) throws FrameworkException
     {
-        warningCount += 1;
         super.UpdateTestLog(stepName, description, Status.WARNING);
 
     }
@@ -119,7 +96,6 @@ public class HtmlReport extends reporting.framework.reporting.Report {
         }
         catch (Exception invalidOperationException)
         {
-            warningCount = warningCount + 1;
             super.UpdateTestLog("reportPassEvent", invalidOperationException.getMessage(), Status.WARNING);
         }
     }
@@ -138,7 +114,6 @@ public class HtmlReport extends reporting.framework.reporting.Report {
         }
         catch (Exception invalidOperationException)
         {
-            warningCount = warningCount + 1;
             super.UpdateTestLog(stepName, description, Status.WARNING);
             super.UpdateTestLog("reportFailEvent", invalidOperationException.getMessage(), Status.WARNING);
         }

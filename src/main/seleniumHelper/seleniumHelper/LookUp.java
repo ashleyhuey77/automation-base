@@ -13,20 +13,4 @@ public class LookUp {
         LinkText,
         PartialLinkText
     }
-
-    public static enum Attributes
-    {
-        Class,
-        Id,
-        Name,
-        Title,
-        Href,
-        Alt,
-        Src,
-        Style,
-        For,
-        Label,
-        Target,
-        Value,
-    }
 }

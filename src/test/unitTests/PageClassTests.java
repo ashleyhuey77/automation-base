@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -154,7 +153,7 @@ public class PageClassTests {
 	    System.setOut(old);
 	    String inputString = baos.toString();
 			
-		assertEquals("Step: verifyTheActualValueMatchesTheExpectedValue has passed. Test is set correctly in Test", inputString.trim());
+		assertEquals("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test", inputString.trim());
 		ps.close();
 		baos.close();
 	}
@@ -182,13 +181,13 @@ public class PageClassTests {
 			 System.setOut(old);
 			 String inputString = baos.toString();
 			 
-			assertTrue("Console Message does not contain the correct value.", inputString.trim().contains("junit.framework.AssertionFailedError: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			assertTrue("Console Message does not contain the correct value.", inputString.trim().contains("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test"));
 			assertTrue("Console Message does not contain the correct value.", inputString.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
 			ps.close();
 			baos.close();
 			    
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
 		}
 	}
@@ -206,7 +205,7 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
 		}
 	}
@@ -224,7 +223,7 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
@@ -263,7 +262,7 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("The expected message was not available in the exception thrown", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: addDays"));
+			assertTrue("The expected message was not available in the exception thrown", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: subtractDays"));
 			assertTrue("The expected message was not available in the exception thrown", m.trim().contains("ErrorMessage : Unparseable date:"));
 		}
 	}
@@ -308,34 +307,18 @@ public class PageClassTests {
 	@Test
 	public void verifyTheExpectedValueNull_exactMatch() throws Exception
 	{
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	    PrintStream ps = new PrintStream(baos);
-	    PrintStream old = System.out;
 		try
 		{
 			TestPage page = new TestPage(driver, report, validations);
-	
-		    System.setOut(ps);
 			
-			page.testActualVersusExpectedExact("Test", "Test", "Test");
-		
-			page.testActualVersusExpected(null, "Test", "Test");
+			page.testActualVersusExpectedExact(null, "Test", "Test");
 			fail("Expected an AssertionFailedError to be thrown");
 		}
 		catch (FrameworkException ex)
-		{
-			 System.out.flush();
-			 System.setOut(old);
-			 String inputString = baos.toString();
-			 
-			assertTrue("Console Message does not contain the correct value.", inputString.trim().contains("junit.framework.AssertionFailedError: StepName: verifyTheActualValueMatchesTheExpectedValue"));
-			assertTrue("Console Message does not contain the correct value.", inputString.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
-			ps.close();
-			baos.close();
-			    
+		{			    
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: Test. Expected: null"));
 		}
 	}
 	
@@ -352,8 +335,8 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: null. Expected: Test"));
 		}
 	}
 	
@@ -370,7 +353,7 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualApiValueMatchesTheExpectedApiValue"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
@@ -408,7 +391,7 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: removeUnwantedCharacter"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: removeOrChangeUnwantedCharacter"));
 		}
 	}
 	
@@ -639,7 +622,7 @@ public class PageClassTests {
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
-	    assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAValueInATextField has passed. Test Element has been entered successfully"));
+	    assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
 	
 	    closeByteStream(ps, baos);
 	}
@@ -662,7 +645,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAValueInATextField has passed. Test Element has been entered successfully"));
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
 
 		closeByteStream(ps, baos);
 	}
@@ -680,7 +663,28 @@ public class PageClassTests {
 		catch (FrameworkException ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("junit.framework.AssertionFailedError: StepName: enterAValueInATextField"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
+		}
+	}
+	
+	@Test
+	public void verifyEnterAValueIntoATextField_ByValueUndefined()
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			Thread.sleep(800);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
+			String test = "input[id='Test']";
+			
+			page.testEnterAValueIntoATextField("Test", test, null, "Test Element");
+			fail("Error expected to be thrown");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -704,7 +708,7 @@ public class PageClassTests {
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
-	    assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAValueInATextField has passed. Test Element has been entered successfully"));
+	    assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
 	
 	    closeByteStream(ps, baos);
 	}
@@ -727,7 +731,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAValueInATextField has passed. Test Element has been entered successfully"));
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
 
 		closeByteStream(ps, baos);
 	}
@@ -738,14 +742,19 @@ public class PageClassTests {
 	    try
 		{
 			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
+			WebElement test = sHelp.getElement("input[id='Test']", "cssSelector");
+			driver.navigate().refresh();
+			Thread.sleep(500);
 			
-			page.testEnterAValueIntoATextField(null, sHelp.getElement("input[id='Test']", "cssSelector"), "Test Element");
+			page.testEnterAValueIntoATextField("Test", test, "Test Element");
 			fail("Error expected to be thrown");
 		}
-		catch (NoSuchElementException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element:"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -772,7 +781,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyFindOptionInLitAndSelectIt_NoOptionsAvailable_NoJquery() throws Exception
+	public void verifyFindOptionInListAndSelectIt_NoOptionsAvailable_NoJquery() throws Exception
 	{
 		try
 		{
@@ -794,7 +803,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyFindOptionInLitAndSelectIt_OptionAvailable_Jquery() throws Exception
+	public void verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery() throws Exception
 	{
 		TestPage page = new TestPage(driver, report, validations);
 		createListOfLinks(7, "a", "testLink", "Link");
@@ -814,6 +823,27 @@ public class PageClassTests {
 		assertTrue("Console messages do not match", inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
 		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifyFindOptionInListAndSelectIt_ExceptionThrown() throws Exception
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			createListOfLinks(7, "a", "testLink", "Link");
+			String test = "testLink";
+	
+			List<WebElement> list = sHelp.getElements(test, "id");
+    
+			page.testFindOptionInListAndSelectIt(list, test, "Link10", true);
+			fail("Exception was expected to have been thrown");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("junit.framework.AssertionFailedError: StepName: findOptionInListAndSelectIt"));
+		}
 	}
 	
 	@Test
@@ -855,6 +885,26 @@ public class PageClassTests {
 		{
 			String m = ex.toString();
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("junit.framework.AssertionFailedError: StepName: clickSomeElement"));
+		}
+	}
+	
+	@Test
+	public void verifyClickSomeElement_ThrowsException() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
+			String test = "input[id='NotHere']";
+	    
+			page.testClickSomeElement(test, null, "Test Element");
+			fail("Exception was expected to be thrown for a failed test case");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: clickSomeElement"));
 		}
 	}
 	
@@ -915,6 +965,28 @@ public class PageClassTests {
 	}
 	
 	@Test
+	public void verifySelectSomeOptionFromNonDropDown_ThrowsException() throws Exception
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
+			createListOfLinks(7, "a", "testLink", "Link");
+			String testLink = "testLink";
+			String test = "input[id='Test']";
+    
+			page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, null, "Test Element", false);
+			fail("Test was supposed to throw an error for element not being found");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: selectSomeOptionFromNonDropdown"));
+		}
+	}
+	
+	@Test
 	public void verifySelectSomeOptionFromNonDropDown_WebElementPredefined_ElementFound() throws Exception
 	{
 		TestPage page = new TestPage(driver, report, validations);
@@ -944,16 +1016,22 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage(driver, report, validations);
-			createListOfLinks(7, "a", "testLink", "Link");
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			Thread.sleep(500);
 			String testLink = "testLink";
+			WebElement test = sHelp.getElement("Test", "id");
+			WebElement test2 = sHelp.getElement("input[id='Test']", "cssSelector");
+			driver.navigate().refresh();
+			Thread.sleep(500);
     
-			page.testSelectSomeOptionFromNonDropdown("Link2", sHelp.getElement("input[id='Test']", "cssSelector"), sHelp.getElement("input[id='Test']", "cssSelector"), testLink, "id", "Test Element", false);
+			page.testSelectSomeOptionFromNonDropdown("Link2", test, test2, testLink, "id", "Test Element", false);
 			fail("Test was supposed to throw an error for element not being found");
 		}
-		catch (NoSuchElementException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element:"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: selectSomeOptionFromNonDropdown"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Element is not availale. Can not select the Test Element from the drop down list."));
 		}
 	}
 	
@@ -1035,10 +1113,10 @@ public class PageClassTests {
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "id", null, "Test Element", false);
 			fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (NullPointerException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			assertTrue("Error Message does not contain the correct value.", m.trim().contains("java.lang.NullPointerException"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementContainsTheExpectedText"));
 		}
 	}
 	
@@ -1124,6 +1202,289 @@ public class PageClassTests {
 		{
 			String m = ex.toString();
 			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementContainsTheExpectedText"));
+		}
+	}
+	
+	@Test
+	public void verifySomeElementIsNotPresent_ElementNotPresent() throws InterruptedException, IOException
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		Thread.sleep(500);
+		String test = "NotHere";
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: verifySomeElementIsNotPresent has passed. Test Element does not display in the page."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifySomeElementIsNotPresent_ElementPresent() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			String test = "Test";
+    
+			page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsNotPresent"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test Element should not display in the page. It does display. This is not expected."));
+			
+		}
+	}
+	
+	@Test
+	public void verifySomeElementIsNotPresent_ExceptionThrown() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			String test = "Test";
+    
+			page.testverifySomeElementIsNotPresent(test, null, "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsNotPresent"));
+		}
+	}
+	
+	@Test
+	public void verifySomeElementIsPresent_ElementPresent() throws InterruptedException, IOException
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		Thread.sleep(500);
+		String test = "Test";
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testVerifySomeElementIsPresent(test, "id", "Test Element");
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: verifySomeElementIsPresent has passed. Test Element displays in the page as expected."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifySomeElementIsPresent_ElementNotPresent() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			String test = "NotHere";
+    
+			page.testVerifySomeElementIsPresent(test, "id", "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsPresent"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test Element should display in the page. It does not display as expected."));
+			
+		}
+	}
+	
+	@Test
+	public void verifySomeElementIsPresent_ExceptionThrown() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			String test = "Test";
+    
+			page.testVerifySomeElementIsPresent(test, null, "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsPresent"));
+		}
+	}
+	
+	@Test
+	public void verifyTextFieldIsBlank_TextFieldIsBlank() throws Exception
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value= ></input>');");
+		Thread.sleep(500);
+		String test = "#Test";
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: verifyTextFieldIsBlank has passed. Test Element is blank as expected."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifyTextFieldIsBlank_TextFieldIsNotBlank() throws Exception
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			Thread.sleep(500);
+			String test = "#Test";
+			
+			page.testEnterAValueIntoATextField("Test123", test, "cssSelector", "Test Element");
+			Thread.sleep(500);
+    
+			page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextFieldIsBlank"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
+			
+		}
+	}
+	
+	@Test
+	public void verifyTextFieldIsBlank_ThrowsException() throws Exception
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=></input>');");
+			Thread.sleep(500);
+			String test = "#Test";
+    
+			page.testVerifyTextFieldIsBlank(test, "cssSelector", true, "1", "Test Element");
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextFieldIsBlank"));
+		}
+	}
+	
+	@Test
+	public void verifyTextInTextField_ContainsInvalidChar_RemoveAllSpacesFalse_TextIsPresent() throws Exception
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<textarea id=Test value=></textarea>');");
+		Thread.sleep(500);
+		String test = "#Test";
+		
+		page.testEnterAValueIntoATextField("Test\n123", test, "cssSelector", "Test Element");
+		Thread.sleep(500);
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", false);
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: verifyTextInTextField has passed. Test Element contains Test 123 as expected."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws InterruptedException, IOException
+	{
+		TestPage page = new TestPage(driver, report, validations);
+		((JavascriptExecutor)driver).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
+		Thread.sleep(500);
+		String test = "#Test";
+	
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+    
+		page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", true);
+	
+		String inputString = getByteStreamMessage(baos, old);
+    
+		assertTrue("Console messages do not match", inputString.trim().contains("Step: verifyTextInTextField has passed. Test Element contains Test123 as expected."));
+
+		closeByteStream(ps, baos);
+	}
+	
+	@Test
+	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesFalse_TextIsNotPresent() throws Exception
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			Thread.sleep(500);
+			String test = "#Test";
+    
+			page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", false);
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (FrameworkException ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextInTextField"));
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("ErrorMessage : Test Element should contain Test 123 but is retaining an incorrect value instead. The value being retained is Testing123"));		
+		}
+	}
+	
+	@Test
+	public void verifyTextInTextField_ExceptionThrown() throws InterruptedException
+	{
+		try
+		{
+			TestPage page = new TestPage(driver, report, validations);
+			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
+			Thread.sleep(500);
+			String test = "#Test";
+    
+			page.testVerifyTextInTextField(test, "cssSelector", true, "1", "Test 123", "Test Element", false);
+			fail("Assertion failed error was supposed to have been thrown.");
+		}
+		catch (Exception ex)
+		{
+			String m = ex.toString();
+			assertTrue("Error Message does not contain the correct value.", m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextInTextField"));
 		}
 	}
 	

@@ -18,16 +18,6 @@ public class Util {
         return formatDate.format(now).toString();
     }
 
-    public static String GetCurrentTime()
-    {
-    	/*DateFormat date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Calendar now = Calendar.getInstance();
-        return String.format("{0:t}", date.format(now.getTime().toString()));*/
-        DateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date now = new Date();
-        return formatDate.format(now).toString();
-    }
-
     public static String GetFileSeparator()
     {
         return File.separator;

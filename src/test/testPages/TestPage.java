@@ -63,21 +63,33 @@ public class TestPage extends Page {
 	public void enums()
 	{
 		System.out.println(Entity.CrashRecords);
+		System.out.println(Entity.valueOf(Entity.CrashRecords.toString()));
 		System.out.println(Entity.MS2);
+		System.out.println(Entity.valueOf(Entity.MS2.toString()));
 		System.out.println(Entity.Requests);
+		System.out.println(Entity.valueOf(Entity.Requests.toString()));
 		System.out.println(Entity.Scheduler);
+		System.out.println(Entity.valueOf(Entity.Scheduler.toString()));
 		
 		System.out.println(Timezones.Central);
+		System.out.println(Timezones.valueOf(Timezones.Central.toString()));
 		System.out.println(Timezones.Dubai);
+		System.out.println(Timezones.valueOf(Timezones.Dubai.toString()));
 		System.out.println(Timezones.Eastern);
+		System.out.println(Timezones.valueOf(Timezones.Eastern.toString()));
 		System.out.println(Timezones.GMT);
+		System.out.println(Timezones.valueOf(Timezones.GMT.toString()));
 		System.out.println(Timezones.HK);
+		System.out.println(Timezones.valueOf(Timezones.HK.toString()));
 		System.out.println(Timezones.Pacific);
+		System.out.println(Timezones.valueOf(Timezones.Pacific.toString()));
 		
 		System.out.println(DaysOfTheWeek.ALL);
+		System.out.println(DaysOfTheWeek.valueOf(DaysOfTheWeek.ALL.toString()));
 		System.out.println(DaysOfTheWeek.WEEKDAYS);
+		System.out.println(DaysOfTheWeek.valueOf(DaysOfTheWeek.WEEKDAYS.toString()));
 		System.out.println(DaysOfTheWeek.WEEKENDS);
-		
+		System.out.println(DaysOfTheWeek.valueOf(DaysOfTheWeek.WEEKENDS.toString()));
 	}
 	
 	public String[] testGetCurrentSplitDate() throws FrameworkException
@@ -134,5 +146,36 @@ public class TestPage extends Page {
 	{
 		verifySomeElementContainsTheExpectedText(element, expectedText, elementBeingTested, removeAllSpaces);
 	}
+	
+	public void testverifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested)
+	{
+		verifySomeElementIsNotPresent(elementHtml, byValue, elementBeingTested);
+	}
+	
+	public void testVerifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested)
+	{
+		verifySomeElementIsPresent(elementHtml, byValue, elementBeingTested);
+	}
+	
+	public void testVerifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
+	{
+		verifyTextFieldIsBlank(html, byValue, requiresIndex, webElementIndex, elementBeingTested);
+	}
+	
+	public void testVerifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces)
+	{
+		verifyTextInTextField(html, byValue, requiresIndex, webElementIndex, expectedText, elementBeingTested, removeAllSpaces);
+	}
+	
+	 public static void superficialEnumCodeCoverage(Class<? extends Enum<?>> enumClass) {
+		    try {
+		      for (Object o : (Object[])enumClass.getMethod("values").invoke(null)) {
+		        enumClass.getMethod("valueOf", String.class).invoke(null, o.toString());
+		      }
+		    }
+		    catch (Throwable e) {
+		      throw new RuntimeException(e);
+		    }
+		  }
 
 }

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -89,7 +87,7 @@ public class SeleniumHelper {
 	    			
 	    	}
     	}
-    	catch (WebDriverException ex)
+    	catch (Exception ex)
     	{
     		throw ex;
     	}
@@ -113,15 +111,36 @@ public class SeleniumHelper {
     				(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
     				(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
     				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
-    				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME : 
-    				(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT : 
-    				(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT : 
+    				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :
+    				(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT :
+    				(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT :
     				(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
     	}
-    	catch (WebDriverException ex)
+    	catch (Exception ex)
     	{
     		throw ex;
     	}
+    }
+    
+    private String getValueViaJavascriptIndexNoIndex(String javascriptStartTxt, String selectorString, String index, Boolean requiresIndex)
+    {
+    	String textBoxText = null;
+    	try
+    	{
+			if (requiresIndex)
+			{
+        		textBoxText = (String)((JavascriptExecutor)browser).executeScript(javascriptStartTxt + selectorString + "')[" + index + "].value"); 
+        	}
+        	else
+        	{
+        		textBoxText = (String)((JavascriptExecutor)browser).executeScript(javascriptStartTxt + selectorString + "').value");
+        	}
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
+    	return textBoxText;
     }
 
     /** <summary>
@@ -139,62 +158,35 @@ public class SeleniumHelper {
      */
     private String getTxtBoxValueViaJavascriptScript(String selectorString, String index, Boolean requiresIndex, LocatorTypes webElements)
     {
-        String textBoxText = null;
-        switch (webElements)
-        {
-            case ID:
-            	if (requiresIndex)
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementById('" + selectorString + "')[" + index + "].value"); 
-            	}
-            	else
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementById('" + selectorString + "').value");
-            	}
-                return textBoxText;
-            case CLASSNAME:
-            	if (requiresIndex)
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByClassName('" + selectorString + "')[" + index + "].value");
-            	}
-            	else
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByClassName('" + selectorString + "').value");
-            	}
-                return textBoxText;
-            case NAME:
-            	if (requiresIndex)
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByName('" + selectorString + "')[" + index + "].value");
-            	}
-            	else
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByName('" + selectorString + "').value");
-            	}
-                return textBoxText;
-            case TAGNAME:
-            	if (requiresIndex)
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByTagName('" + selectorString + "')[" + index + "].value");
-            	}
-            	else
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.getElementsByTagName('" + selectorString + "').value");
-            	}
-            	return textBoxText;
-            case CSSSELECTOR:
-            	if (requiresIndex)
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.querySelector('" + selectorString + "')[" + index + "].value");
-            	}
-            	else
-            	{
-            		textBoxText = (String)((JavascriptExecutor)browser).executeScript("return document.querySelector('" + selectorString + "').value");
-            	}
-                return textBoxText;
-            default:
-                return null;
-        }
+    	String textBoxText = null;
+    	try
+    	{
+    		switch (webElements)
+    		{
+    			case ID:
+    				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementById('", selectorString, index, requiresIndex);
+    				break;
+	            case CLASSNAME:
+	            	textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByClassName('", selectorString, index, requiresIndex);
+	            	break;
+	            case NAME:
+	            	textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByName('", selectorString, index, requiresIndex);
+	            	break;
+	            case TAGNAME:
+	            	textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByTagName('", selectorString, index, requiresIndex);
+	            	break;
+	            case CSSSELECTOR:
+	            	textBoxText = getValueViaJavascriptIndexNoIndex("return document.querySelector('", selectorString, index, requiresIndex);
+	            	break;
+			default:
+				break;
+	        }
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
+    	return textBoxText;
     }
 
     /** 
@@ -211,26 +203,33 @@ public class SeleniumHelper {
      */
     private void clickViaJavascriptElementType(String selectorString, String index, LocatorTypes webelements)
     {
-        switch (webelements)
-        {
-            case ID:
-                ((JavascriptExecutor)browser).executeScript("document.getElementById('" + selectorString + "').click();");
-                break;
-            case CLASSNAME:
-                ((JavascriptExecutor)browser).executeScript("document.getElementsByClassName('" + selectorString + "')[" + index + "].click();");
-                break;
-            case NAME:
-                ((JavascriptExecutor)browser).executeScript("document.getElementsByName('" + selectorString + "')[" + index + "].click();");
-                break;
-            case TAGNAME:
-                ((JavascriptExecutor)browser).executeScript("document.getElementsByTagName('" + selectorString + "')[" + index + "].click();");
-                break;
-            case CSSSELECTOR:
-                ((JavascriptExecutor)browser).executeScript("document.querySelector('" + selectorString + "')[" + index + "].click();");
-                break;
-            default:
-                break;
-        }
+    	try
+    	{
+    		switch (webelements)
+    		{
+            	case ID:
+            		((JavascriptExecutor)browser).executeScript("document.getElementById('" + selectorString + "').click();");
+            		break;
+            	case CLASSNAME:
+            		((JavascriptExecutor)browser).executeScript("document.getElementsByClassName('" + selectorString + "')[" + index + "].click();");
+            		break;
+	            case NAME:
+	                ((JavascriptExecutor)browser).executeScript("document.getElementsByName('" + selectorString + "')[" + index + "].click();");
+	                break;
+	            case TAGNAME:
+	                ((JavascriptExecutor)browser).executeScript("document.getElementsByTagName('" + selectorString + "')[" + index + "].click();");
+	                break;
+	            case CSSSELECTOR:
+	                ((JavascriptExecutor)browser).executeScript("document.querySelector('" + selectorString + "').click();");
+	                break;
+	            default:
+	                break;
+	        }
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
     }
 
     /** 
@@ -299,7 +298,7 @@ public class SeleniumHelper {
         }
         catch (Exception ex)
         {
-            return false;
+            throw ex;
         }
     }
     
@@ -365,17 +364,13 @@ public class SeleniumHelper {
         {
             getElement(selectorString, by).click();
         }
-        catch (ElementNotVisibleException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
-        }
         catch (WebDriverException ex)
         {
             throw ex;
+        }
+        catch (Exception ex)
+        {
+        	throw ex;
         }
     }
 
@@ -392,14 +387,6 @@ public class SeleniumHelper {
         try
         {
             element.click();
-        }
-        catch (ElementNotVisibleException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
         }
         catch (WebDriverException ex)
         {
@@ -463,14 +450,6 @@ public class SeleniumHelper {
         {
             getElement(selectorString, by).sendKeys(text);
         }
-        catch (InvalidElementStateException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
-        }
         catch (WebDriverException ex)
         {
             throw ex;
@@ -489,14 +468,6 @@ public class SeleniumHelper {
         try
         {
             element.sendKeys(text);
-        }
-        catch (InvalidElementStateException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
         }
         catch (WebDriverException ex)
         {
@@ -519,14 +490,6 @@ public class SeleniumHelper {
         {
             getElement(selectorString, by).clear();
         }
-        catch (ElementNotVisibleException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
-        }
         catch (WebDriverException ex)
         {
             throw ex;
@@ -545,14 +508,6 @@ public class SeleniumHelper {
         try
         {
             element.clear();
-        }
-        catch (ElementNotVisibleException ex)
-        {
-            throw ex;
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
         }
         catch (WebDriverException ex)
         {
@@ -611,16 +566,23 @@ public class SeleniumHelper {
      */
     public Boolean isTextDisplayedInSpecifiedElement(String selectorString, String by, String expectedText)
     {
-        String actualText = getElement(selectorString, by).getText();
-        String modifiedActualText = actualText.replace("\r\n", " ");
-        if (modifiedActualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    	try
+    	{
+	        String actualText = getElement(selectorString, by).getText();
+	        String modifiedActualText = actualText.replace("\r\n", " ");
+	        if (modifiedActualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
+	        {
+	            return true;
+	        }
+	        else
+	        {
+	            return false;
+	        }
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
     }
 
     /** 
@@ -633,14 +595,21 @@ public class SeleniumHelper {
      */
     public Boolean isTextDisplayedInSpecifiedElement(WebElement element, String expectedText)
     {
-        if (element.getText().trim().contains(expectedText))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    	try
+    	{
+	        if (element.getText().trim().contains(expectedText))
+	        {
+	            return true;
+	        }
+	        else
+	        {
+	            return false;
+	        }
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
     }
 
     /**
@@ -683,35 +652,6 @@ public class SeleniumHelper {
             return null;
         }
     }
-
-    /**
-     * <summary> 
-     * 	method to jquery click
-     * </summary>
-     * @param selectorString the webelement selector string necessary for the webelement to be found
-     * @return void
-     */
-    public void clickViaJQuery(String selectorString)
-    {
-        try
-        {
-        	String webElement = null;
-        	if (selectorString.contains("'"))
-        	{
-        		webElement = selectorString.replace("'", "");
-        	}
-        	else
-        	{
-        		webElement = selectorString;
-        	}
-        	
-            ((JavascriptExecutor)browser).executeScript("$('" + webElement + "').click();");
-        }
-        catch (WebDriverException ex)
-        {
-            throw ex;
-        }
-    }
     
 
     /**
@@ -738,7 +678,7 @@ public class SeleniumHelper {
         	}
         	
         	if (index == null ||
-        		index == "")
+        		index.equals(""))
         	{
         		((JavascriptExecutor)browser).executeScript("$('" + webElement + "').click();");
         	}
@@ -747,7 +687,7 @@ public class SeleniumHelper {
         		((JavascriptExecutor)browser).executeScript("$('" + webElement + "')["+index+"].click();");
         	}
         }
-        catch (WebDriverException ex)
+        catch (Exception ex)
         {
             throw ex;
         }
@@ -768,15 +708,13 @@ public class SeleniumHelper {
         try
         {
             clickViaJavascriptElementType(selectorString, index, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
-            	(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
-            		(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
-            			(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
-            				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME : 
-            					(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT : 
-            						(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT : 
-            							(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
+            	(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
+            		(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
+            			(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :
+            				(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : 
+            					LocatorTypes.ID));
         }
-        catch (WebDriverException ex)
+        catch (Exception ex)
         {
             throw ex;
         }
@@ -795,21 +733,14 @@ public class SeleniumHelper {
     public Boolean isAnyTextDisplayedInElement(String selectorString, String by)
     {
         String actualValue = getElement(selectorString, by).getText();
-        if (!(actualValue == null))
+        if (actualValue.equals(""))
         {
-        	if (!(actualValue == ""))
-        	{
-        		return true;
-        	}
-        	else
-        	{
-        		return false;
-        	}    	
+        	return false;
         }
         else
         {
-            return false;
-        }
+        	return true;
+        }    	
     }
 
     /**
@@ -827,7 +758,7 @@ public class SeleniumHelper {
     	{
     		return browser.findElements(getByValueBasedOnUserInput(selectorString, by));
     	}
-    	catch (WebDriverException ex)
+    	catch (Exception ex)
     	{
     		throw ex;
     	}
@@ -886,7 +817,7 @@ public class SeleniumHelper {
         {
         	new WebDriverWait(browser, i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
         }
-        catch (StaleElementReferenceException ex)
+        catch (WebDriverException ex)
         {
             throw ex;
         }
@@ -926,24 +857,29 @@ public class SeleniumHelper {
      */
     public String getTextInTextBoxViaJavascript(String selectorString, String by, Boolean requiresIndex, String index)
     {
-    	String webElement = null;
-    	if (selectorString.contains("'"))
+    	try
     	{
-    		webElement = selectorString.replace("'", "");
-    	}
-    	else
-    	{
-    		webElement = selectorString;
-    	}
+    		String webElement = null;
+    		if (selectorString.contains("'"))
+    		{
+    			webElement = selectorString.replace("'", "");
+    		}
+    		else
+    		{
+    			webElement = selectorString;
+    		}
     	
-        return getTxtBoxValueViaJavascriptScript(webElement, index, requiresIndex, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
-        	(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
-        		(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
-        			(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
-        				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME : 
-        					(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT : 
-        						(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT : 
-        							(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
+    		return getTxtBoxValueViaJavascriptScript(webElement, index, requiresIndex, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
+    			(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
+    				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
+    					(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :
+    						(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : 
+    							LocatorTypes.ID));
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
     }
 
     /**
@@ -958,7 +894,7 @@ public class SeleniumHelper {
      */
     public String getWebElementAttribute(String selectorString, String by, String attribute)
     {
-        return getElement(selectorString, by).getAttribute(attribute);
+    	return getElement(selectorString, by).getAttribute(attribute);
     }
 
 
@@ -972,7 +908,7 @@ public class SeleniumHelper {
      */
     public String getWebElementAttribute(WebElement element, String attribute)
     {
-        return element.getAttribute(attribute).toString();
+    	return element.getAttribute(attribute);
     }
 
     /**
@@ -1073,100 +1009,6 @@ public class SeleniumHelper {
     		throw ex;
     	}
     }
-    
-    /**
-     * <summary>
-     * Method to get the text from an element 
-     * </summary>
-     * @param element a webelement that is defined and found in the calling method
-     * @return String
-     */
-    public String getText(WebElement element)
-    {
-        try
-        {
-            if (!(element == null))
-            {
-                return element.getText().trim();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
-        }
-        catch (WebDriverException ex)
-        {
-            throw ex;
-        }
-    }
-
-    /**
-     * <summary>
-     * Method to get the text from an element 
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  				  WebElement to be found
-     * @return String
-     */
-    public String getText(String selectorString, String by)
-    {
-        try
-        {
-            if (!(getElement(selectorString, by) == null))
-            {
-                return getElement(selectorString, by).getText().trim();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        catch (StaleElementReferenceException ex)
-        {
-            throw ex;
-        }
-        catch (WebDriverException ex)
-        {
-            throw ex;
-        }
-    }
-    
-    /**
-     * <summary>
-     * Method to drag and drop an element via actions 
-     * </summary>
-     * @param element a webelement that is defined and found in the calling method
-     * @param xPixels the number of pixels on the x axis
-     * @param yPixels the number of pixels on the y axis
-     * @return void
-     */
-    public void DragAndDropByElement(WebElement element, int xPixels, int yPixels)
-    {
-        Actions dragger = new Actions(browser);
-        dragger.moveToElement(element).clickAndHold().moveByOffset(xPixels, yPixels).release().perform();
-    }
-
-    /**
-     * <summary>
-     * Method to drag and drop an element via actions 
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  			      WebElement to be found
-     * @param x the number of pixels on the x axis
-     * @param y the number of pixels on the y axis
-     * @return void
-     */
-    public void DragAndDropByElement(String selectorString, String by, int x, int y)
-    {
-        Actions dragger = new Actions(browser);
-        dragger.moveToElement(getElement(selectorString, by)).clickAndHold().moveByOffset(x, y).release().perform();
-    }
 
     /**<summary>Method to wait for the element to be invisible in the page
      * </summary>
@@ -1181,26 +1023,6 @@ public class SeleniumHelper {
         try
         {
         	new WebDriverWait(browser, i).until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
-        }
-        catch (WebDriverException ex)
-        {
-            throw ex;
-        }
-    }
-
-    /** 
-     * <summary>
-     * Method to scroll on the page
-     * </summary>
-     * @param x the number of pixels on the x axis
-     * @param y the number of pixels on the y axis
-     * @return void
-     */
-    public void scroll(String x, String y)
-    {
-        try
-        {
-            ((JavascriptExecutor)browser).executeScript("scroll(" + x + "," + y + ")");
         }
         catch (WebDriverException ex)
         {
@@ -1361,8 +1183,6 @@ public class SeleniumHelper {
     private ArrayList<String> dXAnddYValues(int x1, int y1, int x2, int y2, int y1Height, int y2Height, int[] difference) throws Exception
     {
     	ArrayList<String> values = new ArrayList<String>();
-    	try
-    	{
               y1 = y1 + (y1Height / 2);
               x2 = x2 - difference[0];
               y2 = y2 - difference[1];
@@ -1372,11 +1192,6 @@ public class SeleniumHelper {
               
               values.add(Integer.toString(dx));
               values.add(Integer.toString(dy));
-    	}
-    	catch (Exception ex)
-    	{
-    		throw ex;
-    	}
     	return values;
     }
     
@@ -1479,19 +1294,12 @@ public class SeleniumHelper {
      */
     private void addDragNDropScriptsToPage() throws Exception
     {
-    	try
-    	{
-        	addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.js");
-        	Thread.sleep(500);
-        	addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.ext.js");
-        	Thread.sleep(500);
-        	addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.drag-n-drop.js");
-        	Thread.sleep(500);
-    	}
-    	catch (Exception ex)
-    	{
-    		throw ex;
-    	}
+        addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.js");
+        Thread.sleep(500);
+        addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.ext.js");
+        Thread.sleep(500);
+        addScriptToPage("http://j-ulrich.github.io/jquery-simulate-ext/jquery.simulate.drag-n-drop.js");
+        Thread.sleep(500);
     }
     
     /**
@@ -1535,7 +1343,7 @@ public class SeleniumHelper {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = getElement(selectorString, by);
     		                         String value = elementToBeTested.getAttribute(attribute);
-    		                         if(value == null || value == "")
+    		                         if(value == null || value.equals(""))
     		                         {
     		                        	 return true;
     		                         }
@@ -1572,7 +1380,7 @@ public class SeleniumHelper {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = element;
     		                         String value = elementToBeTested.getAttribute(attribute);
-    		                         if(value == null || value == "")
+    		                         if(value == null || value.equals(""))
     		                         {
     		                        	 return true;
     		                         }
@@ -2004,28 +1812,10 @@ public class SeleniumHelper {
     
     /**
      * <summary>
-     * Method to switch back to the main window after having switched to 
-     * an iFrame.
-     * </summary>
-     */
-    public void switchBackToDefaultContent()
-    {
-    	try
-    	{
-    		browser.switchTo().defaultContent();
-    	}
-    	catch (WebDriverException ex)
-    	{
-    		throw ex;
-    	}
-    }
-    
-    /**
-     * <summary>
      * Method to drag and drop using the selenium actions commands
      * </summary>
      */
-    public void dragAndDropViaSelenium(String dragable , String dragableby,  String dropable, String dropableby) throws FrameworkException, InterruptedException {
+    public void dragAndDropViaSelenium(String dragable , String dragableby,  String dropable, String dropableby, int timeTowait) throws FrameworkException, InterruptedException {
     	
     	try 
     	{
@@ -2033,10 +1823,10 @@ public class SeleniumHelper {
     		WebElement dropElement = null;
      
       	
-    		waitForElementToBeClickable(dragable, dragableby, 20);
+    		waitForElementToBeClickable(dragable, dragableby, timeTowait);
     		List<WebElement> locate = getElements(dragable, dragableby);
     		dragElement = locate.get(1);
-    		waitForElementToBeClickable(dropable,dropableby,20);
+    		waitForElementToBeClickable(dropable,dropableby,timeTowait);
     		List<WebElement> locateDroppable = getElements(dropable,dropableby);
 	        Actions act = new Actions(browser);
 	        dropElement = locateDroppable.get(0);
