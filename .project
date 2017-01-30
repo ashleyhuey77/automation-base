@@ -19,17 +19,17 @@
 		<link>
 			<name>externalLibraries/chromedriver</name>
 			<type>1</type>
-			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/chromedriver</location>
+			<location>/Users/ashleyhuey/Documents/workspace/automation.base/externalLibraries/chromedriver</location>
 		</link>
 		<link>
 			<name>externalLibraries/geckodriver</name>
 			<type>1</type>
-			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/geckodriver</location>
+			<location>/Users/ashleyhuey/Documents/workspace/automation.base/externalLibraries/geckodriver</location>
 		</link>
 		<link>
 			<name>externalLibraries/phantomjs</name>
 			<type>1</type>
-			<location>/Users/ashleyhuey/Documents/workspace/AutomationBase/externalLibraries/phantomjs</location>
+			<location>/Users/ashleyhuey/Documents/workspace/automation.base/externalLibraries/phantomjs</location>
 		</link>
 	</linkedResources>
 </projectDescription>
