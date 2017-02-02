@@ -19,8 +19,8 @@ public class TestUtils {
     /// </summary>
     public static String getTimeStamp()
     {
-        String getCurrentTimeStamp = GetCurrentDateTime("dd-MM-yy HH:mm:ss");
-        return String.format(getCurrentTimeStamp, "yyyy_MMM_dd_HH_mm_ss");
+        String getCurrentTimeStamp = GetCurrentDateTime("dd_MM_yy_HHmmss");
+        return getCurrentTimeStamp;
     }
 
     /// <summary>
