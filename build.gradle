@@ -21,6 +21,10 @@ buildscript {
   
  }
  
+  configurations {
+   jaxDoclet
+ }
+ 
  apply plugin: "com.github.johnrengelman.shadow"
  
 
@@ -62,4 +66,32 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.+'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
+}
+
+task generateDocs(type: Javadoc) {
+   source = sourceSets.main.allJava
+   destinationDir = reporting.file("rest-api-docs")
+   options.docletpath = configurations.jaxDoclet.files.asType(List)
+   options.doclet = "com.lunatech.doclets.jax.jaxrs.JAXRSDoclet"
+   options.addStringOption("jaxrscontext", "http://localhost:8080/myapp")
+   setFailOnError(false)
+ }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: generateDocs) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+subprojects {
+    tasks.withType(Javadoc).all { enabled = false }
 }

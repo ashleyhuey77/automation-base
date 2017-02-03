@@ -35,9 +35,9 @@ public class SeleniumHelper {
 
 	
 	/**	
-  		<summary>
-		defining the different webelement strings to use when defining switch statements
-		</summary>
+  	 *	<summary>
+	 *	defining the different webelement strings to use when defining switch statements
+	 *	</summary>
 	*/
     private enum LocatorTypes
     {
@@ -52,13 +52,13 @@ public class SeleniumHelper {
     }
 
 	/**	
-  		<summary>
-		method to get the by value based on user input
-		</summary>
-		@return By
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-				  WebElement to be found
+  	 *	<summary>
+	 *	method to get the by value based on user input
+	 *	</summary>
+	 *	@return By
+	 *	@param selectorString the webelement selector string necessary for the webelement to be found
+	 *	@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+	 *			  WebElement to be found
 	*/
     private By getByValue(String selectorString, LocatorTypes by)
     {
@@ -94,14 +94,14 @@ public class SeleniumHelper {
     }
     
 	/**	
-  		<summary>
-		Method to call the by switch statement and return the correct by value
-		based on user input
-		</summary>
-		@return By
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-				  WebElement to be found
+  	 *	<summary>
+	 *	Method to call the by switch statement and return the correct by value
+	 *	based on user input
+	 *	</summary>
+	 *	@return By
+	 *	@param selectorString the webelement selector string necessary for the webelement to be found
+	 *	@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+	 *			  WebElement to be found
 	*/
     private By getByValueBasedOnUserInput(String selectorString, String by)
     {

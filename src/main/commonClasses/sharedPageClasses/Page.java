@@ -47,17 +47,16 @@ public abstract class Page {
 	protected abstract void WaitForPageLoad() throws FrameworkException;
 	
 	 /**	
-	  	<summary>
-			Method to enter a value into a text field
-    	</summary>
-   		@return void
-   		@param value the text that will be entered into the text field
-   		@param webElement the webelement selector string for the field that
-   						  the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+	  	*<summary>
+		*	Method to enter a value into a text field
+    	*</summary>
+   		*@param value the text that will be entered into the text field
+   		*@param webElement the webelement selector string for the field that
+   		*				  the text will be entered into
+   		*@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   		*@param elementBeingTested the name of the element being tested. This is used for 
+   		*						  reporting so that when it is called the report will reflect an
+   		*						  element that is unique to the method
 	 * @throws Exception 
    	*/
 	protected void enterAvalueIntoATextField(String value, String webElement, String byValue, String elementBeingTested) throws FrameworkException
@@ -89,16 +88,16 @@ public abstract class Page {
 	
 	
 	 /**
-	  	<summary>
-			Method to enter a value into a text field
-   		</summary>
-  		@return void
-  		@param value the text that will be entered into the text field
-   		@param webElement the webelement for the field that
-   						  the text will be entered into
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+	  	*<summary>
+		*	Method to enter a value into a text field
+   		*</summary>
+  		*@return void
+  		*@param value the text that will be entered into the text field
+   		*@param webElement the webelement for the field that
+   		*				  the text will be entered into
+   		*@param elementBeingTested the name of the element being tested. This is used for 
+   		*						  reporting so that when it is called the report will reflect an
+   		*						  element that is unique to the method
 	 * @throws Exception 
   	*/
 	protected void enterAvalueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws FrameworkException
@@ -129,16 +128,16 @@ public abstract class Page {
 	}
 	
 	/**	
-  		<summary>
-		Method to wait for and then click some element
-		</summary>
-		@return void
-		@param webElement the webelement selector string for the field that
-   						  the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method 
+  	 *	<summary>
+	 *	Method to wait for and then click some element
+	 *	</summary>
+	 *	@return void
+	 *	@param webElement the webelement selector string for the field that
+   	 *					  the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
 	protected void clickSomeElement(String html, String byValue, String elementBeingTested) throws FrameworkException
@@ -162,20 +161,20 @@ public abstract class Page {
 	}
 	
 	/**	
-  		<summary>
-		Method to select some text from a drop down
-		</summary>
-		@return void
-		@param option the text value of the option that needs to be selected from the dropdown
-		@param clickElement the element selector string of the element that will be clicked
-		@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
-		@param searchElement the element selector string of the search box element
-		@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
-		@param optionsElement the element selector string of the options element in the drop down
-		@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
-		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method 
+  	 *	<summary>
+	 *	Method to select some text from a drop down
+	 *	</summary>
+	 *	@return void
+	 *	@param option the text value of the option that needs to be selected from the dropdown
+	 *	@param clickElement the element selector string of the element that will be clicked
+	 *	@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
+	 *	@param searchElement the element selector string of the search box element
+	 *	@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
+	 *	@param optionsElement the element selector string of the options element in the drop down
+	 *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
+	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
 	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
@@ -205,19 +204,18 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to select some text from a drop down
-		</summary>
-		
-		@return void
-		@param option the text value of the option that needs to be selected from the dropdown
-		@param clickElement the element that will be clicked
-		@param searchElement the search box element
-		@param optionsElement the element selector string of the options element in the drop down
-		@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
-		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+  	 *	<summary>
+	 *	Method to select some text from a drop down
+	 *	</summary>	
+	 *	@return void
+	 *	@param option the text value of the option that needs to be selected from the dropdown
+	 *	@param clickElement the element that will be clicked
+	 *	@param searchElement the search box element
+	 *	@param optionsElement the element selector string of the options element in the drop down
+	 *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
+	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
 	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
@@ -245,16 +243,16 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to verify some element is present
-		</summary>
-		@return void
-		@param elementHtml the webelement selector string for the field that
-   						   the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+  	 *	<summary>
+	 *	Method to verify some element is present
+	 *	</summary>
+	 *	@return void
+	 *	@param elementHtml the webelement selector string for the field that
+   	 *					   the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
 	protected void verifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
@@ -278,16 +276,16 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to verify some element is not present
-		</summary>
-		@return void
-		@param elementHtml the webelement selector string for the field that
-   						   the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+  	 *	<summary>
+	 *	Method to verify some element is not present
+	 *	</summary>
+	 *	@return void
+	 *	@param elementHtml the webelement selector string for the field that
+   	 *					   the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
 	protected void verifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
@@ -312,20 +310,20 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to verify some element contains the expected text
-		</summary>
-		@return void
-		@param elementHtml the webelement selector string for the field that
-   						   the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param expectedText the text that is expected to be in the element
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
-   		@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
-   						       removed to producce a more accurate comparison. Not neccesary 
-   						       for all consumers of this method, however has been necessary for some instances.
+  	 *	<summary>
+	 *	Method to verify some element contains the expected text
+	 *	</summary>
+	 *	@return void
+	 *	@param elementHtml the webelement selector string for the field that
+   	 *					   the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param expectedText the text that is expected to be in the element
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
+   	 *	@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
+   	 *					       removed to producce a more accurate comparison. Not neccesary 
+   	 *					       for all consumers of this method, however has been necessary for some instances.
 	 * @throws Exception 
 	*/
 	protected void verifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
@@ -356,20 +354,20 @@ public abstract class Page {
 	}
 	
 	/**	
-		<summary>
-	Method to verify some element contains the expected text
-	</summary>
-	@return void
-	@param elementHtml the webelement selector string for the field that
-						   the text will be entered into
-		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-		@param expectedText the text that is expected to be in the element
-		@param elementBeingTested the name of the element being tested. This is used for 
-								  reporting so that when it is called the report will reflect an
-								  element that is unique to the method
-		@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
-						       removed to producce a more accurate comparison. Not neccesary 
-						       for all consumers of this method, however has been necessary for some instances.
+	 *	<summary>
+	 *	Method to verify some element contains the expected text
+	 *	</summary>
+	 *	@return void
+	 *	@param elementHtml the webelement selector string for the field that
+	 *					   the text will be entered into
+	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+	 *	@param expectedText the text that is expected to be in the element
+	 *	@param elementBeingTested the name of the element being tested. This is used for 
+	 *							  reporting so that when it is called the report will reflect an
+	 *							  element that is unique to the method
+	 *	@param removeAllSpaces boolean to determine whether validation needs to occur with all spaces 
+	 *					       removed to producce a more accurate comparison. Not neccesary 
+	 *					       for all consumers of this method, however has been necessary for some instances.
 	 * @throws Exception 
 */
 	protected void verifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
@@ -402,19 +400,19 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to find some option in a list of options 
-		and select it based on text
-		</summary>
-		@return void
-		@param webElements a list of webelements that share a similar selector in order
-						   to loop through and execute an action based on some parameter
-		@param webelementListHtml the webelement selector string for the field that
-   						   		  the text will be entered into
-   		@param expectedOption the option that is expected to be found
-   		@param clickViaJQuery boolean value to execute a jquery click command instead of a 
-   					          click via selenium. Is not necessary for all methods, but has been 
-   					          necessary in some instances.
+  	 *	<summary>
+	 *	Method to find some option in a list of options 
+	 *	and select it based on text
+	 *	</summary>
+	 *	@return void
+	 *	@param webElements a list of webelements that share a similar selector in order
+	 *					   to loop through and execute an action based on some parameter
+	 *	@param webelementListHtml the webelement selector string for the field that
+   	 *					   		  the text will be entered into
+   	 *	@param expectedOption the option that is expected to be found
+   	 *	@param clickViaJQuery boolean value to execute a jquery click command instead of a 
+   	 *				          click via selenium. Is not necessary for all methods, but has been 
+   	 *				          necessary in some instances.
 	 * @throws Exception 
 	*/
 	
@@ -458,20 +456,20 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to verify a field is blank
-		</summary>
-		@return void
-		@param html the webelement selector string for the field that
-   					the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param requiresIndex boolean value that determines whether the index is used or not in the
-   						     javascript script. Not necessary for all methods, but has been necessary for 
-   						     some.
-   		@param webElementIndex the index of the element if there are more than one elements with the same selector
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+  	 *	<summary>
+	 *	Method to verify a field is blank
+	 *	</summary>
+	 *	@return void
+	 *	@param html the webelement selector string for the field that
+   	 *				the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param requiresIndex boolean value that determines whether the index is used or not in the
+   	 *					     javascript script. Not necessary for all methods, but has been necessary for 
+   	 *					     some.
+   	 *	@param webElementIndex the index of the element if there are more than one elements with the same selector
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
 	protected void verifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
@@ -496,21 +494,21 @@ public abstract class Page {
 	
 	
 	/**	
-  		<summary>
-		Method to verify the text in a text field contains the correct text
-		</summary>
-		@return void
-		@param html the webelement selector string for the field that
-   					the text will be entered into
-   		@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-   		@param requiresIndex boolean value that determines whether the index is used or not in the
-   						     javascript script. Not necessary for all methods, but has been necessary for 
-   						     some.
-   		@param webElementIndex the index of the element if there are more than one elements with the same selector
-   		@param expectedText the text that is expected to be in the element
-   		@param elementBeingTested the name of the element being tested. This is used for 
-   								  reporting so that when it is called the report will reflect an
-   								  element that is unique to the method
+  	 *	<summary>
+	 *	Method to verify the text in a text field contains the correct text
+	 *	</summary>
+	 *	@return void
+	 *	@param html the webelement selector string for the field that
+   	 *				the text will be entered into
+   	 *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+   	 *	@param requiresIndex boolean value that determines whether the index is used or not in the
+   	 *					     javascript script. Not necessary for all methods, but has been necessary for 
+   	 *					     some.
+   	 *	@param webElementIndex the index of the element if there are more than one elements with the same selector
+   	 *	@param expectedText the text that is expected to be in the element
+   	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
 	protected void verifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
@@ -547,10 +545,10 @@ public abstract class Page {
 	
 	
 	/**	
-		<summary>
-		enum of accepted timezones 
-		within the newstron app
-		</summary>
+	 *	<summary>
+	 *	enum of accepted timezones 
+	 *	within the newstron app
+	 *	</summary>
 	 */
 	public enum Timezones
 	{
@@ -563,10 +561,10 @@ public abstract class Page {
 	}
 	
 	/**	
-		<summary>
-		Entity enum that holds all of the 
-		api models object categories
-		</summary>
+	 *	<summary>
+	 *	Entity enum that holds all of the 
+	 *	api models object categories
+	 *	</summary>
 	 */
 	
 	public enum Entity
@@ -579,10 +577,10 @@ public abstract class Page {
 	
 	
 	/**	
-		<summary>
-		Method to get the current date and split it into a string array
-		</summary>
-		@return String[]
+	 *	<summary>
+	 *	Method to get the current date and split it into a string array
+	 *	</summary>
+	 *	@return String[]
 	 */
 	protected String[] getCurrentSplitDate() throws FrameworkException
 	{
@@ -595,11 +593,11 @@ public abstract class Page {
 	
 	
 	/**	
-		<summary>
-		Method to get the total days in the current month
-		of the current year - taking into account leap year
-		</summary>
-		@return void
+	 *	<summary>
+	 *	Method to get the total days in the current month
+	 *	of the current year - taking into account leap year
+	 *	</summary>
+	 *	@return void
 	 */
 	
 	protected int getTotalDaysInMonth() throws FrameworkException
@@ -617,13 +615,13 @@ public abstract class Page {
 	
 	
 	/**	
-		<summary>
-		Method to get the future date based on 
-		user input of how many days they wish to select 
-		from today's date
-		</summary>
-		@return int
-		@param daysOutFromCurrentDay the number of days out from today to select 
+	 *	<summary>
+	 *	Method to get the future date based on 
+	 *	user input of how many days they wish to select 
+	 *	from today's date
+	 *	</summary>
+	 *	@return int
+	 *	@param daysOutFromCurrentDay the number of days out from today to select 
 	 */
 	
 	protected int getFutureDate(int daysOutFromCurrentDay) throws FrameworkException
@@ -635,12 +633,12 @@ public abstract class Page {
 	}
 	
 	/**
-		<summary>
-		days of the week combinations enum.
-		This enum holds all the different combinations of 
-		days of the week that may need to be selected in order to
-		properly test
-		</summary>
+	 *	<summary>
+	 *	days of the week combinations enum.
+	 *	This enum holds all the different combinations of 
+	 *	days of the week that may need to be selected in order to
+	 *	properly test
+	 *	</summary>
 	 */
 	public enum DaysOfTheWeek
 	{
@@ -650,12 +648,12 @@ public abstract class Page {
 	}
 
 	/**	
-		<summary>
-		Method to clean up static global variables
-		</summary>
-		@return void
-		@param value the static global value that needs to be cleaned up.
-					 Is set to null if it is not already null or empty
+	 *	<summary>
+	 *	Method to clean up static global variables
+	 *	</summary>
+	 *	@return void
+	 *	@param value the static global value that needs to be cleaned up.
+	 *				 Is set to null if it is not already null or empty
 	 */	
     protected void cleanUp(String value)
     {
@@ -726,12 +724,12 @@ public abstract class Page {
 	
 
 	/**	
-  		<summary>
-			Method to verify an expected value matches an actual value
-		</summary>
-		@return void
-		@param expectedValue the value that is expected to have returned in the api response
-		@param actualValue the actual value that returned in the api response
+  	 *	<summary>
+	 *		Method to verify an expected value matches an actual value
+	 *	</summary>
+	 *	@return void
+	 *	@param expectedValue the value that is expected to have returned in the api response
+	 *	@param actualValue the actual value that returned in the api response
 	 * @throws Exception 
 	*/
 	protected void verifyTheActualValueMatchesTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
@@ -761,14 +759,14 @@ public abstract class Page {
 		}
 	}
 	/**	
-	<summary>
-	Method to add i number of days to
-	a date
-	</summary>
-	@return String
-	@param date the date that needs to be subtracted from
-	@param totalDays the total number of days in the month
-	@param daysToSubtract the number of days to subtract from the date
+	 *	<summary>
+	 *	Method to add i number of days to
+	 *	a date
+	 *	</summary>
+	 *	@return String
+	 *	@param date the date that needs to be subtracted from
+	 *	@param totalDays the total number of days in the month
+	 *	@param daysToSubtract the number of days to subtract from the date
 	 * @throws Exception 
  */
 	protected String subtractDays(String date, int totalDays, int daysToAdd) throws FrameworkException
@@ -794,12 +792,12 @@ public abstract class Page {
 	}
 	
 	/**	
-		<summary>
-		Method to verify an expected value matches an actual value
-		</summary>
-		@return void
-		@param expectedValue the value that is expected to have returned in the api response
-		@param actualValue the actual value that returned in the api response
+	 *	<summary>
+	 *	Method to verify an expected value matches an actual value
+	 *	</summary>
+	 *	@return void
+	 *	@param expectedValue the value that is expected to have returned in the api response
+	 *	@param actualValue the actual value that returned in the api response
 	 * @throws Exception 
 	 */
 	protected void verifyTheActualValueContainsTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
