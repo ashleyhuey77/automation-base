@@ -107,15 +107,12 @@ public class UtilsTests {
 			String newstronPWD = props.getProperty("NewstronEncryptedPassword", "pass");
 			String env = props.getProperty("Environment", "ref");
 			String browser = props.getProperty("Browser", "Chrome");
-			String requiresTestCleanUp = props.getProperty("RequiresTestCleanUp", "false");
-			Boolean realRequiresTestCleanUp = Boolean.valueOf(requiresTestCleanUp);
 
 			TestSettings.setApplicationUrl(appUrl);
 			TestSettings.setNewstronEncryptedUserName(newstronUN);
 			TestSettings.setNewstronEncryptedPassword(newstronPWD);
 			TestSettings.setEnvironment(env);
 			TestSettings.setBrowser(browser);
-			TestSettings.setRequiresTestCleanUp(realRequiresTestCleanUp);
     	
 			String browserName = TestSettings.getBrowser();
 			String environment = TestSettings.getEnvironment();
@@ -124,14 +121,12 @@ public class UtilsTests {
 			String newstronpwd = TestSettings.getNewstronEncryptedPassword();
 			String envn = TestSettings.getEnvironment();
 			String brows = TestSettings.getBrowser();
-			Boolean requiresTest = TestSettings.getRequiresTestCleanUp();
 			
 			assertEquals("app url values do not match", url, "url");
 			assertEquals("newstronUN values do not match", newstronun, "user");
 			assertEquals("newstronPWD values do not match", newstronpwd, "pass");
 			assertEquals("env values do not match", envn, "ref");
 			assertEquals("browser values do not match", brows, "Chrome");
-			assertEquals("requiresTestCleanUp values do not match", requiresTest, false);
 			assertEquals("browserName values do not match", browserName, "Chrome");
 			assertEquals("environment values do not match", environment, "ref");
 		}

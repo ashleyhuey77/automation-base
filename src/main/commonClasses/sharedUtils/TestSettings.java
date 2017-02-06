@@ -7,7 +7,6 @@ public class TestSettings {
 	private static String newstronEncryptedPassword;
 	private static String environment;
 	private static String browser;
-	private static boolean requiresTestCleanUp;
 	
 	public static String getApplicationUrl()
 	{
@@ -58,14 +57,5 @@ public class TestSettings {
 	{
 		browser = value;
 	}
-	
-	public static boolean getRequiresTestCleanUp()
-	{
-		return requiresTestCleanUp;
-	}
-	
-	public static void setRequiresTestCleanUp(Boolean value)
-	{
-		requiresTestCleanUp = value;
-	}
+
 }
