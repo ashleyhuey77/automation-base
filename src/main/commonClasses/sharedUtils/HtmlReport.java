@@ -49,6 +49,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
             WebDriver _driver = new Augmenter().augment(driver);
             File source = ((TakesScreenshot)_driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(source, new File(screenshotPath));
+            //FileUtils.copyFile(source, new File(screenshotPath));
         }
         catch (Exception exception)
         {
