@@ -10,6 +10,11 @@ public class ReportPath {
 
     protected ReportPath() throws IOException
     {
+    	File directory = new File(String.valueOf(FrameworkConstants.RESULT_FOLDER));
+    	if (!directory.exists())
+    	{
+    		directory.mkdir();
+    	}
         reportPath = getLocalReportPath();
         File _file = new File(reportPath);
         _file.mkdir();
