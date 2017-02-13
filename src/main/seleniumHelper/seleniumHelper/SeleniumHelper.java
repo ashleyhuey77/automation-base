@@ -1097,7 +1097,7 @@ public class SeleniumHelper {
     		String value = getElement(selectorString, by).getAttribute(attribute);
     		if (value != null)
     		{
-    			if (value.toLowerCase().trim().equals(expectedValue.toLowerCase().trim()))
+    			if (value.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
     			{
     				result = true;
     			}
