@@ -1816,11 +1816,12 @@ public class SeleniumHelper {
     		WebElement dragElement = null;
     		WebElement dropElement = null;
      
-      	
     		waitForElementToBeClickable(dragable, dragableby, timeTowait);
     		List<WebElement> locate = getElements(dragable, dragableby);
     		dragElement = locate.get(1);
     		waitForElementToBeClickable(dropable,dropableby,timeTowait);
+    		dragElement = locate.get(0);
+    		waitForElementToBeClickable(dropable,dropableby,20);
     		List<WebElement> locateDroppable = getElements(dropable,dropableby);
 	        Actions act = new Actions(browser);
 	        dropElement = locateDroppable.get(0);
@@ -1831,7 +1832,7 @@ public class SeleniumHelper {
 	       	act.release();
 	       	act.release(dragElement).build().perform();
 	        Thread.sleep(5000);
-	       	System.out.print(dropElement.getText() + "and dropped was: "+ dropElement.getText());
+	       	System.out.print(dragElement.getText() + "and dropped was: "+ dropElement.getText());
     	} 
     	catch (WebDriverException ex) 
     	{
