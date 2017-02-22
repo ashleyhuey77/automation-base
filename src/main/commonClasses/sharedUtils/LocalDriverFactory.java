@@ -3,40 +3,27 @@ package commonClasses.sharedUtils;
 import java.util.logging.Level;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.safari.SafariOptions;
-
-//import com.gargoylesoftware.htmlunit.BrowserVersion;
-
-import commonClasses.sharedUtils.TestUtils;
  
 public class LocalDriverFactory {
+	
     public static WebDriver createInstance(String browserName) {
     	
-        WebDriver driver = null;
+    	WebDriver driver = null;
         if (browserName.toLowerCase().contains("firefox")) {
-        	System.setProperty("webdriver.gecko.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/geckodriver");
-            driver = new FirefoxDriver();
-            return driver;
+
         }
         if (browserName.toLowerCase().contains("internet")) {
-            driver = new InternetExplorerDriver();
-            return driver;
+            /*driver = new InternetExplorerDriver();
+            return driver;*/
         }
         if (browserName.toLowerCase().contains("chrome")) {
-        	System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
-        	System.setProperty("java.awt.headless", "false");
-            driver = new ChromeDriver();
-            return driver;
+        	ChromeDriverFactory cFac = new ChromeDriverFactory();
+        	driver = cFac.driver.get();
         }
         if (browserName.toLowerCase().trim().equals("safari"))
         {
-            SafariOptions safariOptions = new SafariOptions();
-            driver = new SafariDriver(safariOptions);
+           /* driver = SafariDriverFactory.driver.get();
+            LocalDriverManager.setFFWebDriver(driver);*/
         }
         if (browserName.toLowerCase().trim().contains("phantom"))
         {
