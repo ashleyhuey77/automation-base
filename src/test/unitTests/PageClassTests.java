@@ -25,7 +25,7 @@ public class PageClassTests {
 	
 	private static MsTESTReport msTestReport = new MsTESTReport();
 	protected static commonClasses.sharedUtils.HtmlReport htmlReport = new commonClasses.sharedUtils.HtmlReport(new ReportSettings("NA", "NOPE"), new ReportTheme());
-	private WebDriver driver;
+	private WebDriver browser;
 	private Validations validations = new Validations(htmlReport, msTestReport);
 	private commonClasses.sharedUtils.Report report = new commonClasses.sharedUtils.Report(htmlReport, msTestReport);
 	public static String value;
@@ -34,17 +34,17 @@ public class PageClassTests {
 	@Before
 	public void before()
 	{
+		browser = LocalDriverManager.getDriver();
 		sHelp = new SeleniumHelper();
         System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/ExternalLibraries/chromedriver");
-        driver = new ChromeDriver();
-		driver.get("http://www.google.com");
-		sHelp.browser = driver;
+        browser = new ChromeDriver();
+        browser.get("http://www.google.com");;
 	}
 
 	@Test
 	public void randomString_enteredLengthSameAsStringLength() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String test = page.someRandomString(5, "Hello");
 		page.enums();
@@ -56,7 +56,7 @@ public class PageClassTests {
 	@Test
 	public void randomString_enteredLengthLongerThanStringLength() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String value = "Test";
 		String test = page.someRandomString(50, value);
@@ -68,7 +68,7 @@ public class PageClassTests {
 	@Test
 	public void randomString_enteredLengthShorterThanStringLength() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String value = "ReallyLongTestStringForAGoodReason";
 		String test = page.someRandomString(2, value);
@@ -80,7 +80,7 @@ public class PageClassTests {
 	@Test
 	public void randomString_CorrectLetters() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String test = page.someRandomString(7, "Testing");
 		
@@ -94,7 +94,7 @@ public class PageClassTests {
 	@Test
 	public void randomString_Integers() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String test = page.someRandomString(9, "123456789");
 		
@@ -109,7 +109,7 @@ public class PageClassTests {
 	@Test
 	public void randomString_SpecialCharacters() throws Exception {
 		
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String test = page.someRandomString(9, "!@#$%^&*()_+-=~`{[}]|/:;'<,>.?");
 		
@@ -125,7 +125,7 @@ public class PageClassTests {
 
 		try
 		{	
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			String value = null;
 			page.someRandomString(9, value);
 			fail("Expected a NumberFormatException to be thrown");
@@ -140,7 +140,7 @@ public class PageClassTests {
 	@Test
 	public void verifyTheExpectedValueContainsTheActualValue() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
@@ -166,7 +166,7 @@ public class PageClassTests {
 	    PrintStream old = System.out;
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 	
 		    System.setOut(ps);
 			
@@ -197,7 +197,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			page.testActualVersusExpected("Test", null, "Test");
 			fail("Expected an AssertionFailedError to be thrown");
@@ -215,7 +215,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			page.testActualVersusExpected("Test", "Nothing", "Test");
 			fail("Expected an AssertionFailedError to be thrown");
@@ -231,7 +231,7 @@ public class PageClassTests {
 	@Test
 	public void verifySubtractDays_DayStartsWith0() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String actualDate = page.testSubtractDays("05-JAN-2017", 1, 1);
 		
@@ -241,7 +241,7 @@ public class PageClassTests {
 	@Test
 	public void verifySubtractDays_DayStartsWith1() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String actualDate = page.testSubtractDays("15-JAN-2017", 1, 1);
 		
@@ -253,7 +253,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			String actualDate = page.testSubtractDays("123456789", 1, 1);
 		
@@ -270,7 +270,7 @@ public class PageClassTests {
 	@Test
 	public void verifyCleanUp() throws FrameworkException
 	{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			value = "SomeTestValue";
 		
 			page.testCleanUp(value);
@@ -286,7 +286,7 @@ public class PageClassTests {
 	@Test
 	public void verifyTheExpectedValueMatchesTheActualValue() throws FrameworkException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
@@ -309,7 +309,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			
 			page.testActualVersusExpectedExact(null, "Test", "Test");
 			fail("Expected an AssertionFailedError to be thrown");
@@ -327,7 +327,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			page.testActualVersusExpectedExact("Test", null, "Test");
 			fail("Expected an AssertionFailedError to be thrown");
@@ -345,7 +345,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			page.testActualVersusExpectedExact("Test", "Nothing", "Test");
 			fail("Expected an AssertionFailedError to be thrown");
@@ -361,7 +361,7 @@ public class PageClassTests {
 	@Test
 	public void verifyRemovingCharacters_containsCharacter() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String actualValue = page.testRemoveOrChangeUnwantedCharacter("Test!", "!", ".");
 		
@@ -371,7 +371,7 @@ public class PageClassTests {
 	@Test
 	public void verifyRemovingCharacters_doesntContainCharacter() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String actualValue = page.testRemoveOrChangeUnwantedCharacter("Test", "!", ".");
 		
@@ -383,7 +383,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 		
 			String actualValue = page.testRemoveOrChangeUnwantedCharacter(null, "!", ".");
 			fail("Test expected to throw exception" + actualValue);
@@ -400,7 +400,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			
 			page.testFailIfNull(null, "Passed", "Failed");;
 			fail("Test expected to throw exception");
@@ -415,7 +415,7 @@ public class PageClassTests {
 	@Test
 	public void failTestIfVariableIsNull_notNullVariable() throws FrameworkException, IOException
 	{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		    PrintStream ps = new PrintStream(baos);
@@ -437,7 +437,7 @@ public class PageClassTests {
 	@Test
 	public void verifySetActualStartTime() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		page.testSetActualStartTime(true);
 		
@@ -463,7 +463,7 @@ public class PageClassTests {
 /*	@Test
 	public void verifyGetActualStartTime() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String value = page.testGetActualStartTime("Test", true);
 		
@@ -477,7 +477,7 @@ public class PageClassTests {
 	@Test
 	public void verifyGetCurrentSplitDate() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String[] value = page.testGetCurrentSplitDate();
 		
@@ -489,7 +489,7 @@ public class PageClassTests {
 /*	@Test
 	public void verifyActualSlug_ContainsValue() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String value = page.testActualSlug("Test");
 		
@@ -503,7 +503,7 @@ public class PageClassTests {
 	@Test
 	public void verifySetScheduledRecordingDate_IsStartDateRegularFormat() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String time = TestUtils.getTimeStamp();
 		
@@ -515,7 +515,7 @@ public class PageClassTests {
 	@Test
 	public void verifySetScheduledRecordingDate_IsStartDateAltFormat() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String time = TestUtils.getTimeStamp();
 		
@@ -527,7 +527,7 @@ public class PageClassTests {
 	@Test
 	public void verifySetScheduledRecordingDate_IsNotStartDateAltFormat() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String time = TestUtils.getTimeStamp();
 		
@@ -539,7 +539,7 @@ public class PageClassTests {
 	@Test
 	public void verifySetScheduledRecordingDate_IsNotStartDateRegularFormat() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String time = TestUtils.getTimeStamp();
 		
@@ -551,7 +551,7 @@ public class PageClassTests {
 	@Test
 	public void verifyGetFutureDate() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		String day = TestUtils.GetCurrentDateTime("dd");
 		
@@ -563,8 +563,8 @@ public class PageClassTests {
 /*	@Test
 	public void verifyNavigateViaNewsAppsToggle() throws FrameworkException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Generic.newsAppsToggle = "input[id='Test']";
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -590,8 +590,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Generic.newsAppsToggle = "input[id='Test']";
 		
 			page.testNavigateViaNewsappsToggle("OneTwoThree", "id", "TestElement");
@@ -607,9 +607,9 @@ public class PageClassTests {
 	@Test
 	public void verifyEnterAValueIntoATextField() throws FrameworkException, IOException, InterruptedException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		Thread.sleep(800);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 		
@@ -630,9 +630,9 @@ public class PageClassTests {
 	@Test
 	public void verifyEnterAValueIntoATextField_NullValue() throws FrameworkException, IOException, InterruptedException
 	{	
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		Thread.sleep(800);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -655,7 +655,7 @@ public class PageClassTests {
 	{
 	    try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			
 			page.testEnterAValueIntoATextField(null, "input[id='Test']", "cssSelector", "Test Element");
 			fail("Error expected to be thrown");
@@ -672,9 +672,9 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			Thread.sleep(800);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='Test']";
 			
@@ -692,9 +692,9 @@ public class PageClassTests {
 	@Test
 	public void verifyEnterAValueIntoATextField_ElementDefined() throws FrameworkException, IOException, InterruptedException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		Thread.sleep(800);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "Test";
 		
@@ -716,9 +716,9 @@ public class PageClassTests {
 	@Test
 	public void verifyEnterAValueIntoATextField_NullValue_ElementDefined() throws FrameworkException, IOException, InterruptedException
 	{	
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		Thread.sleep(800);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -741,11 +741,11 @@ public class PageClassTests {
 	{
 	    try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			WebElement test = sHelp.getElement("input[id='Test']", "cssSelector");
-			driver.navigate().refresh();
+			browser.navigate().refresh();
 			Thread.sleep(500);
 			
 			page.testEnterAValueIntoATextField("Test", test, "Test Element");
@@ -761,7 +761,7 @@ public class PageClassTests {
 	@Test
 	public void verifyFindOptionInLitAndSelectIt_OptionAvailable_NoJquery() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		createListOfLinks(7, "a", "testLink", "Link");
 		String test = "testLink";
 	
@@ -785,7 +785,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			createListOfLinks(7, "a", "testLink", "Link");
 			String test = "testLink";
 	
@@ -805,7 +805,7 @@ public class PageClassTests {
 	@Test
 	public void verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		createListOfLinks(7, "a", "testLink", "Link");
 		makeJQueryActive();
 		String test = "a[id='testLink']";
@@ -830,7 +830,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			createListOfLinks(7, "a", "testLink", "Link");
 			String test = "testLink";
 	
@@ -849,8 +849,8 @@ public class PageClassTests {
 	@Test
 	public void verifyClickSomeElement_ElementFound() throws InterruptedException, FrameworkException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -873,8 +873,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='NotHere']";
 	    
@@ -893,8 +893,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='NotHere']";
 	    
@@ -911,7 +911,7 @@ public class PageClassTests {
 	@Test
 	public void getTotalDaysInMonth() throws FrameworkException
 	{
-		TestPage page = new TestPage(driver, report, validations);
+		TestPage page = new TestPage(report, validations);
 		
 		int totalDays = page.testGetTotalDaysInMonth();
 		String month = TestUtils.GetCurrentDateTime("MMM");
@@ -923,8 +923,8 @@ public class PageClassTests {
 	@Test
 	public void verifySelectSomeOptionFromNonDropDown_ElementFound() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		createListOfLinks(7, "a", "testLink", "Link");
 		String testLink = "testLink";
@@ -949,7 +949,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
+			TestPage page = new TestPage(report, validations);
 			createListOfLinks(7, "a", "testLink", "Link");
 			String testLink = "testLink";
 			String test = "input[id='Test']";
@@ -969,8 +969,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			createListOfLinks(7, "a", "testLink", "Link");
 			String testLink = "testLink";
@@ -989,8 +989,8 @@ public class PageClassTests {
 	@Test
 	public void verifySelectSomeOptionFromNonDropDown_WebElementPredefined_ElementFound() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		createListOfLinks(7, "a", "testLink", "Link");
 		String testLink = "testLink";
@@ -1015,13 +1015,13 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test > </input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String testLink = "testLink";
 			WebElement test = sHelp.getElement("Test", "id");
 			WebElement test2 = sHelp.getElement("input[id='Test']", "cssSelector");
-			driver.navigate().refresh();
+			browser.navigate().refresh();
 			Thread.sleep(500);
     
 			page.testSelectSomeOptionFromNonDropdown("Link2", test, test2, testLink, "id", "Test Element", false);
@@ -1038,8 +1038,8 @@ public class PageClassTests {
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesFalse() throws FrameworkException, InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String textEl = "Test";
 	
@@ -1060,8 +1060,8 @@ public class PageClassTests {
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesTrue() throws FrameworkException, InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String textEl = "Test";
 	
@@ -1084,8 +1084,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String textEl = "Test";
     
@@ -1105,8 +1105,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String textEl = "Test";
     
@@ -1123,8 +1123,8 @@ public class PageClassTests {
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws FrameworkException, InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		WebElement textEl = sHelp.getElement("Test", "id");
 	
@@ -1145,8 +1145,8 @@ public class PageClassTests {
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesTrue() throws FrameworkException, InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		WebElement textEl = sHelp.getElement("Test", "id");
 	
@@ -1169,8 +1169,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			WebElement textEl = sHelp.getElement("Test", "id");
     
@@ -1190,8 +1190,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			WebElement textEl = sHelp.getElement("Test", "id");
     
@@ -1208,8 +1208,8 @@ public class PageClassTests {
 	@Test
 	public void verifySomeElementIsNotPresent_ElementNotPresent() throws InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String test = "NotHere";
 	
@@ -1232,8 +1232,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1254,8 +1254,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1272,8 +1272,8 @@ public class PageClassTests {
 	@Test
 	public void verifySomeElementIsPresent_ElementPresent() throws InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String test = "Test";
 	
@@ -1296,8 +1296,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "NotHere";
     
@@ -1318,8 +1318,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1336,8 +1336,8 @@ public class PageClassTests {
 	@Test
 	public void verifyTextFieldIsBlank_TextFieldIsBlank() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value= ></input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test value= ></input>');");
 		Thread.sleep(500);
 		String test = "#Test";
 	
@@ -1360,8 +1360,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
 			
@@ -1385,8 +1385,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=></input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test value=></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1403,8 +1403,8 @@ public class PageClassTests {
 	@Test
 	public void verifyTextInTextField_ContainsInvalidChar_RemoveAllSpacesFalse_TextIsPresent() throws Exception
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<textarea id=Test value=></textarea>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<textarea id=Test value=></textarea>');");
 		Thread.sleep(500);
 		String test = "#Test";
 		
@@ -1428,8 +1428,8 @@ public class PageClassTests {
 	@Test
 	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws InterruptedException, IOException
 	{
-		TestPage page = new TestPage(driver, report, validations);
-		((JavascriptExecutor)driver).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
+		TestPage page = new TestPage(report, validations);
+		((JavascriptExecutor)browser).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
 		Thread.sleep(500);
 		String test = "#Test";
 	
@@ -1452,8 +1452,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1473,8 +1473,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			TestPage page = new TestPage(driver, report, validations);
-			((JavascriptExecutor)driver).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
+			TestPage page = new TestPage(report, validations);
+			((JavascriptExecutor)browser).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1495,7 +1495,7 @@ public class PageClassTests {
 			for (int j = 0; j < i; j++)
 			{
 				String html = "<a href=\"http://www.google.com\" id=\"" +id +"\" > " + linkText + j + "</a>";
-				((JavascriptExecutor)driver).executeScript("document.write('" + html + "');");
+				((JavascriptExecutor)browser).executeScript("document.write('" + html + "');");
 			}
 		}
 		catch (Exception ex)
@@ -1508,7 +1508,7 @@ public class PageClassTests {
 	{
 		try
 		{
-			((JavascriptExecutor)driver).executeScript("var jq = document.createElement('script'); jq.src = \"https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js\"; document.getElementsByTagName('head')[0].appendChild(jq);");
+			((JavascriptExecutor)browser).executeScript("var jq = document.createElement('script'); jq.src = \"https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js\"; document.getElementsByTagName('head')[0].appendChild(jq);");
 		}
 		catch (Exception ex)
 		{
@@ -1584,16 +1584,16 @@ public class PageClassTests {
 	{
 		try
 		{
-			driver.quit();
+			browser.quit();
 		}
 		catch (Exception ex)
 		{
-			driver.quit();
+			browser.quit();
 			throw ex;
 		}
 		finally
 		{
-			driver.quit();
+			browser.quit();
 		}
 	}
 

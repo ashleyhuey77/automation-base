@@ -11,11 +11,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import commonClasses.sharedUtils.LocalDriverManager;
 import reporting.framework.utilities.FrameworkException;
 
 public class SeleniumHelper {
-
-	public WebDriver browser;
+	
 
     //defining the different webelement strings to use when calling switch statements
     private String cssSelector = "cssselector";
@@ -133,11 +133,11 @@ public class SeleniumHelper {
     	{
 			if (requiresIndex)
 			{
-        		textBoxText = (String)((JavascriptExecutor)browser).executeScript(javascriptStartTxt + selectorString + "')[" + index + "].value"); 
+        		textBoxText = (String)((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript(javascriptStartTxt + selectorString + "')[" + index + "].value"); 
         	}
         	else
         	{
-        		textBoxText = (String)((JavascriptExecutor)browser).executeScript(javascriptStartTxt + selectorString + "').value");
+        		textBoxText = (String)((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript(javascriptStartTxt + selectorString + "').value");
         	}
     	}
     	catch (Exception ex)
@@ -212,19 +212,19 @@ public class SeleniumHelper {
     		switch (webelements)
     		{
             	case ID:
-            		((JavascriptExecutor)browser).executeScript("document.getElementById('" + selectorString + "').click();");
+            		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.getElementById('" + selectorString + "').click();");
             		break;
             	case CLASSNAME:
-            		((JavascriptExecutor)browser).executeScript("document.getElementsByClassName('" + selectorString + "')[" + index + "].click();");
+            		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.getElementsByClassName('" + selectorString + "')[" + index + "].click();");
             		break;
 	            case NAME:
-	                ((JavascriptExecutor)browser).executeScript("document.getElementsByName('" + selectorString + "')[" + index + "].click();");
+	                ((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.getElementsByName('" + selectorString + "')[" + index + "].click();");
 	                break;
 	            case TAGNAME:
-	                ((JavascriptExecutor)browser).executeScript("document.getElementsByTagName('" + selectorString + "')[" + index + "].click();");
+	                ((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.getElementsByTagName('" + selectorString + "')[" + index + "].click();");
 	                break;
 	            case CSSSELECTOR:
-	                ((JavascriptExecutor)browser).executeScript("document.querySelector('" + selectorString + "').click();");
+	                ((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.querySelector('" + selectorString + "').click();");
 	                break;
 	            default:
 	                break;
@@ -250,7 +250,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		return browser.findElement(getByValueBasedOnUserInput(selectorString, by));
+    		return LocalDriverManager.getDriver().findElement(getByValueBasedOnUserInput(selectorString, by));
     	}
     	catch (WebDriverException ex)
     	{
@@ -293,7 +293,7 @@ public class SeleniumHelper {
     {
         try
         {
-        	new WebDriverWait(browser, i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+        	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
         	return true;
         }
         catch (WebDriverException ex)
@@ -410,7 +410,7 @@ public class SeleniumHelper {
     {
         try
         {
-            Actions actions = new Actions(browser);
+            Actions actions = new Actions(LocalDriverManager.getDriver());
             actions.moveToElement(getElement(selectorString, by)).click().perform();
         }
         catch (WebDriverException ex)
@@ -430,7 +430,7 @@ public class SeleniumHelper {
     {
         try
         {
-            Actions actions = new Actions(browser);
+            Actions actions = new Actions(LocalDriverManager.getDriver());
             actions.clickAndHold(element).perform();
         }
         catch (WebDriverException ex)
@@ -533,7 +533,7 @@ public class SeleniumHelper {
     {
         try
         {
-        	new WebDriverWait(browser, i).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+        	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
         }
         catch (WebDriverException ex)
         {
@@ -550,7 +550,7 @@ public class SeleniumHelper {
         try
         {
             Object d;
-			new WebDriverWait(browser, waitTime).until((com.google.common.base.Predicate<WebDriver>) ((d) = webElement.isDisplayed()));
+			new WebDriverWait(LocalDriverManager.getDriver(), waitTime).until((com.google.common.base.Predicate<WebDriver>) ((d) = webElement.isDisplayed()));
         }
         catch (WebDriverException ex)
         {
@@ -684,11 +684,11 @@ public class SeleniumHelper {
         	if (index == null ||
         		index.equals(""))
         	{
-        		((JavascriptExecutor)browser).executeScript("$('" + webElement + "').click();");
+        		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("$('" + webElement + "').click();");
         	}
         	else
         	{
-        		((JavascriptExecutor)browser).executeScript("$('" + webElement + "')["+index+"].click();");
+        		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("$('" + webElement + "')["+index+"].click();");
         	}
         }
         catch (Exception ex)
@@ -760,7 +760,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		return browser.findElements(getByValueBasedOnUserInput(selectorString, by));
+    		return LocalDriverManager.getDriver().findElements(getByValueBasedOnUserInput(selectorString, by));
     	}
     	catch (Exception ex)
     	{
@@ -780,7 +780,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    	new WebDriverWait(browser, i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+    	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
     	}
     	catch (WebDriverException ex)
     	{
@@ -797,7 +797,7 @@ public class SeleniumHelper {
     {
         try
         {
-            browser.navigate().to(url);
+            LocalDriverManager.getDriver().navigate().to(url);
         }
         catch (WebDriverException ex)
         {
@@ -819,7 +819,7 @@ public class SeleniumHelper {
     {
         try
         {
-        	new WebDriverWait(browser, i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
+        	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
         }
         catch (WebDriverException ex)
         {
@@ -839,7 +839,7 @@ public class SeleniumHelper {
     {
         try
         {
-        	Select select = new Select(browser.findElement(getByValueBasedOnUserInput(selectorString, by)));
+        	Select select = new Select(LocalDriverManager.getDriver().findElement(getByValueBasedOnUserInput(selectorString, by)));
             select.selectByVisibleText(optionToSelect);
         }
         catch (WebDriverException ex)
@@ -1026,7 +1026,7 @@ public class SeleniumHelper {
     {
         try
         {
-        	new WebDriverWait(browser, i).until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+        	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
         }
         catch (WebDriverException ex)
         {
@@ -1044,7 +1044,7 @@ public class SeleniumHelper {
     {
         try
         {
-            browser.switchTo().defaultContent();
+            LocalDriverManager.getDriver().switchTo().defaultContent();
         }
         catch (WebDriverException ex)
         {
@@ -1062,7 +1062,7 @@ public class SeleniumHelper {
     {
         try
         {
-            browser.navigate().refresh();
+            LocalDriverManager.getDriver().navigate().refresh();
         }
         catch (WebDriverException ex)
         {
@@ -1080,7 +1080,7 @@ public class SeleniumHelper {
     {
         try
         {
-            ((JavascriptExecutor)browser).executeScript("window.open();");
+            ((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("window.open();");
         }
         catch (WebDriverException ex)
         {
@@ -1256,7 +1256,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		((JavascriptExecutor)browser).executeScript("$('"+ from + "').simulate('drag-n-drop', {dx: "+ dx +", dy: "+ dy +", interpolation: {stepWidth: "+ stepWidth +", stepDelay: "+ stepDelay +"}})");
+    		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("$('"+ from + "').simulate('drag-n-drop', {dx: "+ dx +", dy: "+ dy +", interpolation: {stepWidth: "+ stepWidth +", stepDelay: "+ stepDelay +"}})");
     	}
     	catch (Exception ex)
     	{
@@ -1281,7 +1281,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		((JavascriptExecutor)browser).executeScript("$('"+ from + "')["+ index + "].simulate('drag-n-drop', {dx: "+ dx +", dy: "+ dy +", interpolation: {stepWidth: "+ stepWidth +", stepDelay: "+ stepDelay +"}})");
+    		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("$('"+ from + "')["+ index + "].simulate('drag-n-drop', {dx: "+ dx +", dy: "+ dy +", interpolation: {stepWidth: "+ stepWidth +", stepDelay: "+ stepDelay +"}})");
     	}
     	catch (Exception ex)
     	{
@@ -1318,7 +1318,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		((JavascriptExecutor)browser).executeScript("$.getScript('" + script + "')");
+    		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("$.getScript('" + script + "')");
     	}
     	catch (Exception ex)
     	{
@@ -1338,11 +1338,11 @@ public class SeleniumHelper {
      * @param i the total amount of time alotted to wait for the condition to return true
      * @return void
      */
-    public void waitForAttributeToDisappear(final String selectorString, final String by, final String attribute, int i)
+    public void waitForAttributeToDisappear(String selectorString, String by, String attribute, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = getElement(selectorString, by);
@@ -1374,11 +1374,11 @@ public class SeleniumHelper {
      * @param i the total amount of time alotted to wait for the condition to return true
      * @return void
      */
-    public void waitForAttributeToDisappear(final WebElement element, final String attribute, int i)
+    public void waitForAttributeToDisappear(WebElement element, String attribute, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
@@ -1409,11 +1409,11 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToEqualACertainValue(final WebElement element, final String attribute, final String expectedValue, int i)
+    public void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
@@ -1449,11 +1449,11 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToEqualACertainValue(final String selectorString, final String by, final String attribute, final String expectedValue, int i)
+    public void waitForAttributeToEqualACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
@@ -1489,11 +1489,11 @@ public class SeleniumHelper {
    * @param i the total amount of time allotted to wait for the condition to return true
    * @return void
    */
-    public void waitForAttributeToContainACertainValue(final String selectorString, final String by, final String attribute, final String expectedValue, int i)
+    public void waitForAttributeToContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
@@ -1549,11 +1549,11 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForTextToExistInElement(final String selectorString, final String by, final String expectedText, int i)
+    public void waitForTextToExistInElement(String selectorString, String by, String expectedText, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
@@ -1587,11 +1587,11 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForPresenceOfElementLocated(final String selectorString, final String by, int i)
+    public void waitForPresenceOfElementLocated(String selectorString, String by, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
 	            	public Boolean apply(WebDriver driver) {
@@ -1606,7 +1606,7 @@ public class SeleniumHelper {
 	                         								(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
 	                         	try
 	                         	{
-	                         		if(browser.findElement(byValue).isDisplayed())
+	                         		if(LocalDriverManager.getDriver().findElement(byValue).isDisplayed())
 	                         		{
 	                         			result = true;
 	                         			return result;
@@ -1626,16 +1626,16 @@ public class SeleniumHelper {
     	}
     }
     
-    public void waitForWindowCount(int i, final int expectedNumberOfWindows)
+    public void waitForWindowCount(int i, int expectedNumberOfWindows)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
 	            	public Boolean apply(WebDriver driver) {
 	            				Boolean result = false;
-	                         	int actualNumberofWindows = browser.getWindowHandles().size();
+	                         	int actualNumberofWindows = LocalDriverManager.getDriver().getWindowHandles().size();
 	                         	try
 	                         	{
 	                         		if (actualNumberofWindows == expectedNumberOfWindows)
@@ -1662,9 +1662,9 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		for (String window : browser.getWindowHandles())
+    		for (String window : LocalDriverManager.getDriver().getWindowHandles())
     		{
-    			browser.switchTo().window(window);
+    			LocalDriverManager.getDriver().switchTo().window(window);
     		}
     	}
     	catch (WebDriverException ex)
@@ -1682,11 +1682,11 @@ public class SeleniumHelper {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    public void waitForPresenceOfElementLocated(final WebElement element, int i)
+    public void waitForPresenceOfElementLocated(WebElement element, int i)
     {
     	try
     	{
-    		WebDriverWait wait = new WebDriverWait(browser,i);
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
 
     		wait.until(new ExpectedCondition<Boolean>() {
 	            	public Boolean apply(WebDriver driver) {
@@ -1724,7 +1724,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		JavascriptExecutor js = ((JavascriptExecutor) browser);
+    		JavascriptExecutor js = ((JavascriptExecutor) LocalDriverManager.getDriver());
 
     		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     		
@@ -1749,7 +1749,7 @@ public class SeleniumHelper {
     	try
     	{
     		WebElement element = getElement(selectorString, by);
-    		((JavascriptExecutor) browser).executeScript(
+    		((JavascriptExecutor) LocalDriverManager.getDriver()).executeScript(
               "arguments[0].scrollIntoView();", element);
     	}
     	catch (WebDriverException ex)
@@ -1768,7 +1768,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		((JavascriptExecutor) browser).executeScript(
+    		((JavascriptExecutor) LocalDriverManager.getDriver()).executeScript(
               "arguments[0].scrollIntoView();", element);
     	}
     	catch (WebDriverException ex)
@@ -1789,7 +1789,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		browser.switchTo().frame(getElement(selectorString, by));
+    		LocalDriverManager.getDriver().switchTo().frame(getElement(selectorString, by));
     	}
     	catch (WebDriverException ex)
     	{
@@ -1807,7 +1807,7 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		browser.switchTo().frame(element);
+    		LocalDriverManager.getDriver().switchTo().frame(element);
     	}
     	catch (WebDriverException ex)
     	{
@@ -1834,7 +1834,7 @@ public class SeleniumHelper {
     		dragElement = locate.get(0);
     		waitForElementToBeClickable(dropable,dropableby,20);
     		List<WebElement> locateDroppable = getElements(dropable,dropableby);
-	        Actions act = new Actions(browser);
+	        Actions act = new Actions(LocalDriverManager.getDriver());
 	        dropElement = locateDroppable.get(0);
 	       	act.clickAndHold(dragElement).build().perform();
 	       	Thread.sleep(1000);

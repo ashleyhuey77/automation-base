@@ -21,7 +21,7 @@ public abstract class Page {
 	
 	protected Validations validations;
 	protected Report report;
-	public WebDriver browser;
+	//public static ThreadLocal<WebDriver> browser;
 	protected static SeleniumHelper seleniumHelper;
 	
 	protected static java.lang.String cssSelector = LookUp.IdentifyBy.CssSelector.toString();
@@ -33,13 +33,12 @@ public abstract class Page {
     protected static java.lang.String linkText = LookUp.IdentifyBy.LinkText.toString();
     protected static java.lang.String partialLinkText = LookUp.IdentifyBy.PartialLinkText.toString();
 	
-	public Page (WebDriver browser, Report report, Validations validations) throws FrameworkException
+	public Page (Report report, Validations validations) throws FrameworkException
 	{
-		this.browser = browser;
+		WebDriver browser = LocalDriverManager.getDriver();
 		this.report = report;
 		this.validations = validations;
 		seleniumHelper = new SeleniumHelper();
-		seleniumHelper.browser = this.browser;
 		PageFactory.initElements(browser, this);
         WaitForPageLoad();
 	}

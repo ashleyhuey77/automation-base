@@ -2,7 +2,6 @@ package testPages;
 
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import commonClasses.sharedPageClasses.Page;
@@ -12,8 +11,8 @@ import reporting.framework.utilities.FrameworkException;
 
 public class TestPage extends Page {
 
-	public TestPage(WebDriver browser, Report report, Validations validations) throws FrameworkException {
-		super(browser, report, validations);
+	public TestPage(Report report, Validations validations) throws FrameworkException {
+		super(report, validations);
 		// TODO Auto-generated constructor stub
 	}
 
