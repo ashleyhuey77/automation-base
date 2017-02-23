@@ -807,7 +807,9 @@ public abstract class Page {
 			if (!ExtensionMethods.isNullOrBlank(expectedValue) &&
 				!ExtensionMethods.isNullOrBlank(actualValue))
 			{
-				if (actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
+				//if (actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
+				if(actualValue.equalsIgnoreCase(expectedValue))
+					
 				{
 					validations.assertionPass(actualValue + " is set correctly in " + variableBeingTested);
 				}

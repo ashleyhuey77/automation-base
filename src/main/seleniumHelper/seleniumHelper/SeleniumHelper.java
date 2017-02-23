@@ -101,14 +101,24 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		return getByValue(selectorString, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
+    		/*return getByValue(selectorString, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
     				(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
     				(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
     				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
     				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :
     				(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT :
     				(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT :
-    				(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
+    				(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));*/
+    		
+    		
+    		        return getByValue(selectorString,by.equalsIgnoreCase(id) ? LocatorTypes.ID:
+    		        	   (by.equalsIgnoreCase(cssSelector) ? LocatorTypes.CSSSELECTOR : 
+    	    			   (by.equalsIgnoreCase(xPath)) ? LocatorTypes.XPATH : 
+    	    			   (by.equalsIgnoreCase(className)) ? LocatorTypes.CLASSNAME : 
+    	    			   (by.equalsIgnoreCase(tagName)) ? LocatorTypes.TAGNAME :
+    	    			   (by.equalsIgnoreCase(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT :
+    	    			   (by.equalsIgnoreCase(linkText)) ? LocatorTypes.LINKTEXT :
+    	    			   (by.equalsIgnoreCase(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
     	}
     	catch (Exception ex)
     	{
@@ -1489,7 +1499,8 @@ public class SeleniumHelper {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = getElement(selectorString, by);
     		                         String actualValue = elementToBeTested.getAttribute(attribute);
-    		                         if(actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
+    		                         //if(actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
+    		                         if(actualValue.trim().equalsIgnoreCase(expectedValue.trim())) 
     		                         {
     		                        	 return true;
     		                         }
