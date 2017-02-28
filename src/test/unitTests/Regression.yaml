@@ -1,0 +1,11 @@
+name: Suite
+threadCount: 8
+parallel: methods
+tests:
+  - name: Regression
+    parallel: methods
+    classes:
+      - unitTests.PageClassTests
+      - unitTests.SeleniumHelperTests
+      - unitTests.UtilsTests
+
