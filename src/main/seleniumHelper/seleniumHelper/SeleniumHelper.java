@@ -1829,7 +1829,7 @@ public class SeleniumHelper {
      
     		waitForElementToBeClickable(dragable, dragableby, timeTowait);
     		List<WebElement> locate = getElements(dragable, dragableby);
-    		dragElement = locate.get(1);
+    		dragElement = locate.get(0);
     		waitForElementToBeClickable(dropable,dropableby,timeTowait);
     		dragElement = locate.get(0);
     		waitForElementToBeClickable(dropable,dropableby,20);
