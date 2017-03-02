@@ -1,21 +1,23 @@
 package unitTests;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 import commonClasses.sharedUtils.ExtensionMethods;
 import commonClasses.sharedUtils.FrameworkConstants;
 import commonClasses.sharedUtils.Security;
 import commonClasses.sharedUtils.TestSettings;
 import commonClasses.sharedUtils.TestUtils;
+import commonClasses.sharedUtils.WebDriverListener;
 
+@Listeners(WebDriverListener.class)
 public class UtilsTests {
 
 	@Test
@@ -25,7 +27,7 @@ public class UtilsTests {
 		
 		String timeStamp = TestUtils.getTimeStamp();
 		
-		assertTrue(!ExtensionMethods.isNullOrBlank(timeStamp));
+		Assert.assertTrue(!ExtensionMethods.isNullOrBlank(timeStamp));
 	}
 	
 	@Test
@@ -36,7 +38,7 @@ public class UtilsTests {
 		
 		float value = ExtensionMethods.getTotalPassNumber(0, 20);
 		
-		assertEquals("These numbers don't equal each other", 20, value, 0);
+		Assert.assertEquals(20, value, 0);
 	}
 	
 	@Test
@@ -47,7 +49,7 @@ public class UtilsTests {
 		
 		float value = ExtensionMethods.getTotalPassNumber(5, 20);
 		
-		assertEquals("These numbers don't equal each other", 15, value, 0);
+		Assert.assertEquals(15, value, 0);
 	}
 	
 	@Test
@@ -58,7 +60,7 @@ public class UtilsTests {
 		
 		float value = ExtensionMethods.getThePassPercentage(20, 20);
 		
-		assertEquals("These numbers don't equal each other", 100, value, 0);
+		Assert.assertEquals(100, value, 0);
 	}
 	
 	@Test
@@ -69,7 +71,7 @@ public class UtilsTests {
 		
 		float value = ExtensionMethods.getThePassPercentage(15, 20);
 		
-		assertEquals("These numbers don't equal each other", 75, value, 0);
+		Assert.assertEquals(75, value, 0);
 	}
 	
 	@Test
@@ -80,13 +82,13 @@ public class UtilsTests {
 		
 		String result = Security.encrypt("Testing123456");
 		
-		assertTrue("The encrypt result is null", !ExtensionMethods.isNullOrBlank(result));
-		assertTrue("The result matches the original value. String is not being encrypted.", result != "Testing123456");
+		Assert.assertTrue(!ExtensionMethods.isNullOrBlank(result));
+		Assert.assertTrue(result != "Testing123456");
 		
 		String result2 = Security.decrypt(result);
 		
-		assertTrue("The decrypt result is null", !ExtensionMethods.isNullOrBlank(result2));
-		assertEquals("The result does not match the original value. String is not being decrypted.", result2, "Testing123456");
+		Assert.assertTrue(!ExtensionMethods.isNullOrBlank(result2));
+		Assert.assertEquals(result2, "Testing123456");
 	}
 	
 	@Test
@@ -122,13 +124,13 @@ public class UtilsTests {
 			String envn = TestSettings.getEnvironment();
 			String brows = TestSettings.getBrowser();
 			
-			assertEquals("app url values do not match", url, "url");
-			assertEquals("newstronUN values do not match", newstronun, "user");
-			assertEquals("newstronPWD values do not match", newstronpwd, "pass");
-			assertEquals("env values do not match", envn, "ref");
-			assertEquals("browser values do not match", brows, "Chrome");
-			assertEquals("browserName values do not match", browserName, "Chrome");
-			assertEquals("environment values do not match", environment, "ref");
+			Assert.assertEquals(url, "url");
+			Assert.assertEquals(newstronun, "user");
+			Assert.assertEquals(newstronpwd, "pass");
+			Assert.assertEquals(envn, "ref");
+			Assert.assertEquals(brows, "Chrome");
+			Assert.assertEquals(browserName, "Chrome");
+			Assert.assertEquals(environment, "ref");
 		}
 		catch (Exception ex)
 		{
@@ -144,7 +146,7 @@ public class UtilsTests {
 		
 		String result = FrameworkConstants.RESULT_FOLDER;
 		
-		assertEquals("result folder values do not match", result, "Results");
+		Assert.assertEquals(result, "Results");
 	}
 	
 	

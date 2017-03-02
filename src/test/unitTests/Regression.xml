@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite"  thread-count="8" parallel="methods">
+  <test name="Regression">
+  	<classes>
+  		<class name="unitTests.PageClassTests"/>
+  		<class name ="unitTests.SeleniumHelperTests"/>
+  		<class name ="unitTests.UtilsTests"/>
+  	</classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
