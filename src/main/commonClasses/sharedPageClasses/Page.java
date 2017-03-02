@@ -64,6 +64,7 @@ public abstract class Page {
         {
             if (seleniumHelper.isElementDisplayedInThePage(webElement, byValue, 5))
             {
+            	seleniumHelper.waitForElementToBeClickable(webElement, byValue, 40);
                 seleniumHelper.click(webElement, byValue);
                 seleniumHelper.clearAllTextByBackspacing(webElement, byValue);
 
@@ -105,12 +106,13 @@ public abstract class Page {
        {
            if (seleniumHelper.isElementDisplayedInThePage(webElement, 5))
            {
+        	   seleniumHelper.waitForElementToBeClickable(webElement, 40);
                seleniumHelper.click(webElement);
                seleniumHelper.clearAllTextByBackspacing(webElement);
 
                if (!ExtensionMethods.isNullOrBlank(value))
                {
-               	seleniumHelper.clear(webElement);
+               		seleniumHelper.clear(webElement);
                    seleniumHelper.sendKeys(webElement, value);
                }
                report.reportDoneEvent(elementBeingTested + " has been entered successfully");
@@ -145,6 +147,7 @@ public abstract class Page {
 		{
 			if (seleniumHelper.isElementDisplayedInThePage(html, byValue, 5))
 			{
+				seleniumHelper.waitForElementToBeClickable(html, byValue, 40);
 				seleniumHelper.click(html, byValue);
 				report.reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
@@ -223,6 +226,7 @@ public abstract class Page {
 		{
 			if (seleniumHelper.isElementDisplayedInThePage(clickElement, 5)){
 				
+				seleniumHelper.waitForElementToBeClickable(clickElement, 40);
 				seleniumHelper.click(clickElement);
 				enterAvalueIntoATextField(option, searchElement, elementBeingTested);
 				seleniumHelper.waitForElementToLoad(optionsElement, optionsByValue, 10);
@@ -428,11 +432,13 @@ public abstract class Page {
 				{
 					if (clickViaJQuery)
 					{
+						seleniumHelper.waitForElementToBeClickable(element, 40);
 							String iString = Integer.toString(i);
 							seleniumHelper.clickViaJQuery(webelementListHtml, iString);
 					}
 					else
 					{
+						seleniumHelper.waitForElementToBeClickable(element, 40);
 						seleniumHelper.click(element);
 					}
 					
@@ -806,8 +812,7 @@ public abstract class Page {
 			if (!ExtensionMethods.isNullOrBlank(expectedValue) &&
 				!ExtensionMethods.isNullOrBlank(actualValue))
 			{
-				//if (actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
-				if(actualValue.equalsIgnoreCase(expectedValue))
+				if(actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
 					
 				{
 					validations.assertionPass(actualValue + " is set correctly in " + variableBeingTested);

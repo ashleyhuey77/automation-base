@@ -366,6 +366,7 @@ public class SeleniumHelper {
     {
         try
         {
+        	waitForElementToBeClickable(getElement(selectorString, by), 40);
             getElement(selectorString, by).click();
         }
         catch (WebDriverException ex)
@@ -390,6 +391,7 @@ public class SeleniumHelper {
     {
         try
         {
+        	waitForElementToBeClickable(element, 40);
             element.click();
         }
         catch (WebDriverException ex)
@@ -820,6 +822,28 @@ public class SeleniumHelper {
         try
         {
         	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
+        }
+        catch (WebDriverException ex)
+        {
+            throw ex;
+        }
+    }
+    
+    /**
+     * <summary> 
+     * method to wait for element to be clickable
+     * </summary>
+		@param selectorString the webelement selector string necessary for the webelement to be found
+		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+  				  WebElement to be found
+     * @param i the total amount of time alotted to wait for the condition to return true
+     * @return void
+     */
+    public void waitForElementToBeClickable(WebElement element, int i)
+    {
+        try
+        {
+        	new WebDriverWait(LocalDriverManager.getDriver(), i).until(ExpectedConditions.elementToBeClickable(element));
         }
         catch (WebDriverException ex)
         {
