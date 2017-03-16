@@ -1901,4 +1901,30 @@ public class SeleniumHelper {
     	}
     } 
     
+    /**
+     * <summary>
+     * Method to determine whether an element is enabled or not
+     * </summary>
+     * @param selectorString
+     * @param by
+     * @return Boolean
+     */
+    public Boolean isElementEnabled(String selectorString, String by)
+    {
+    	try 
+    	{
+			Boolean result = false;
+			WebElement element = getElement(selectorString, by);
+			if (element.isEnabled())
+			{
+				result = true;
+			}
+			return result;
+		} 
+    	catch (Exception ex) 
+    	{
+			throw ex;
+		}
+    }
+    
 }
