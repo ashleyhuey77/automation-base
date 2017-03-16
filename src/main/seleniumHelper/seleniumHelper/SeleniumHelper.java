@@ -3,6 +3,7 @@ package seleniumHelper.seleniumHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -376,6 +377,7 @@ public class SeleniumHelper {
         catch (Exception ex)
         {
         	throw ex;
+        	
         }
     }
 
@@ -1874,5 +1876,22 @@ public class SeleniumHelper {
 	        throw ex;
     	}
     } 
+    public void safeJavaScriptClick(WebElement element) throws Exception {
+    	try {
+    		if (element.isEnabled() && element.isDisplayed()) {
+    			System.out.println("Clicking on element with using java script click");
+
+    			((JavascriptExecutor) LocalDriverManager.getDriver()).executeScript("arguments[0].click();", element);
+    		} else {
+    			System.out.println("Unable to click on element");
+    		}
+    	} catch (StaleElementReferenceException e) {
+    		System.out.println("Element is not attached to the page document "+ e.getStackTrace());
+    	} catch (NoSuchElementException e) {
+    		System.out.println("Element was not found in DOM "+ e.getStackTrace());
+    	} catch (Exception e) {
+    		System.out.println("Unable to click on element "+ e.getStackTrace());
+    	}
+    }
     
 }
