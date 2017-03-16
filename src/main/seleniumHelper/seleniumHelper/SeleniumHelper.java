@@ -727,6 +727,31 @@ public class SeleniumHelper {
             throw ex;
         }
     }
+    
+    /**<summary> 
+     * method to javascript click
+     * </summary>
+		@param element the predefined webelement to be clicked
+     * @return void
+     */
+    public void clickViaJavaScript(WebElement element) throws Exception 
+    {
+    	try 
+    	{
+    		if (isElementDisplayedInThePage(element, 5)) 
+    		{
+    			((JavascriptExecutor) LocalDriverManager.getDriver()).executeScript("arguments[0].click();", element);
+    		} 
+    		else 
+    		{
+    			System.out.println("Unable to click on element");
+    		}
+    	}
+    	catch (Exception ex) 
+    	{
+    		throw ex;
+    	}
+    }
 
     /**
      * <summary>
