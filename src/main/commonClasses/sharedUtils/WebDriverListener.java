@@ -11,7 +11,7 @@ public class WebDriverListener implements IInvokedMethodListener {
 	 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        if (method.toString().toLowerCase().contains("beforescenario")) {
+        if (method.toString().equalsIgnoreCase("beforescenario")) {
             WebDriver driver = LocalDriverFactory.createInstance("chrome");
             LocalDriverManager.setDriver(driver);
             testNumber ++;
@@ -22,7 +22,7 @@ public class WebDriverListener implements IInvokedMethodListener {
  
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        if (method.toString().toLowerCase().contains("afterscenario")) {
+    	if(method.toString().equalsIgnoreCase("afterscenario")){
             WebDriver driver = LocalDriverManager.getDriver();
             if (driver != null) {
                 driver.quit();
