@@ -71,6 +71,7 @@ public abstract class Page {
                 if (!ExtensionMethods.isNullOrBlank(value))
                 {
                 	seleniumHelper.clear(webElement, byValue);
+                	seleniumHelper.click(webElement, byValue);
                     seleniumHelper.sendKeys(webElement, byValue, value);
                 }
                 report.reportDoneEvent(elementBeingTested + " has been entered successfully");
@@ -113,6 +114,7 @@ public abstract class Page {
                if (!ExtensionMethods.isNullOrBlank(value))
                {
                		seleniumHelper.clear(webElement);
+               		seleniumHelper.click(webElement);
                    seleniumHelper.sendKeys(webElement, value);
                }
                report.reportDoneEvent(elementBeingTested + " has been entered successfully");
