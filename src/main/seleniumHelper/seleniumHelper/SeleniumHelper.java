@@ -1550,8 +1550,7 @@ public class SeleniumHelper {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = getElement(selectorString, by);
     		                         String actualValue = elementToBeTested.getAttribute(attribute);
-    		                         //if(actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
-    		                         if(actualValue.trim().equalsIgnoreCase(expectedValue.trim())) 
+    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
     		                         {
     		                        	 return true;
     		                         }
