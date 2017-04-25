@@ -13,7 +13,6 @@ public class ChromeDriverFactory {
 	private Set<WebDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	
 	 {
-		
 		System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
     	System.setProperty("java.awt.headless", "false");
 		
