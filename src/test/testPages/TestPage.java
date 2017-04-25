@@ -11,8 +11,8 @@ import reporting.framework.utilities.FrameworkException;
 
 public class TestPage extends Page {
 
-	public TestPage(Report report, Validations validations) throws FrameworkException {
-		super(report, validations);
+	public TestPage() throws FrameworkException {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

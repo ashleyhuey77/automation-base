@@ -467,6 +467,27 @@ public class SeleniumHelper {
     /** <summary>
  		Method to type inside a particular element
       * </summary>
+		@param selectorString the webelement selector string necessary for the webelement to be found
+		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+				  WebElement to be found
+		@param text the text value to type into the element
+     * @return void
+     */
+    public void sendKeys(String selectorString, String by, Keys key)
+    {
+        try
+        {
+            getElement(selectorString, by).sendKeys(key);
+        }
+        catch (WebDriverException ex)
+        {
+            throw ex;
+        }
+    }
+    
+    /** <summary>
+ 		Method to type inside a particular element
+      * </summary>
 		@param element a webelement that is defined and found in the calling method
 		@param text the text value to type into the element
      * @return void
@@ -1942,6 +1963,40 @@ public class SeleniumHelper {
     	{
 			throw ex;
 		}
+    }
+    
+    public void refreshPageAndWaitForElementToDisplay(String selectorString, String by, int i)
+    {
+    	WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
+
+		wait.until(new ExpectedCondition<Boolean>() {
+            	public Boolean apply(WebDriver driver) {
+            				Boolean result = false;
+            				refreshThePage();
+            				try {
+								Thread.sleep(900);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                         	try
+                         	{
+                         		if(isElementDisplayedInThePage(getElement(selectorString, by), 10))
+                         		{
+                         			result = true;
+                         			return result;
+                         		}
+                         		else 
+                         		{
+                         			return result;
+								}
+                         	}
+                         	catch (StaleElementReferenceException ex)
+                         	{
+                         		return result;
+                         	}
+		   		};
+		});
     }
     
 }
