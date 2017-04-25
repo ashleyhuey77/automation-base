@@ -102,16 +102,6 @@ public class SeleniumHelper {
     {
     	try
     	{
-    		/*return getByValue(selectorString, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
-    				(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
-    				(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
-    				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
-    				(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :
-    				(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT :
-    				(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT :
-    				(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));*/
-    		
-    		
     		        return getByValue(selectorString,by.equalsIgnoreCase(id) ? LocatorTypes.ID:
     		        	   (by.equalsIgnoreCase(cssSelector) ? LocatorTypes.CSSSELECTOR : 
     	    			   (by.equalsIgnoreCase(xPath)) ? LocatorTypes.XPATH : 
