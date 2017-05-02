@@ -578,6 +578,7 @@ public abstract class Page {
 		MS2,
 		CrashRecords,
 		Requests
+		
 	}
 	
 	
