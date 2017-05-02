@@ -1588,6 +1588,45 @@ public class SeleniumHelper {
     	}
     }
     
+    
+  /**
+   * <summary> 
+   * method to wait for an attribute to equal a certain value
+   * </summary>
+		@param selectorString the webelement selector string necessary for the webelement to be found
+		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+  				  WebElement to be found
+   * @param attribute the html attribute whose value is to be evaluated and obtained
+   * @param expectedValue the expected value of the html attribute
+   * @param i the total amount of time allotted to wait for the condition to return true
+   * @return void
+   */
+    public void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue, int i)
+    {
+    	try
+    	{
+    		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
+
+    		wait.until(new ExpectedCondition<Boolean>() {
+    		            public Boolean apply(WebDriver driver) {
+    		                         String actualValue = element.getAttribute(attribute);
+    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+    		                         {
+    		                        	 return true;
+    		                         }
+    		                         else
+    		                         {
+    		                            return false;
+    		                         }
+    		                    }
+    		   });
+    	}
+    	catch (WebDriverException ex)
+    	{
+    		throw ex; 
+    	}
+    }
+    
   /**
    * <summary> 
    * method to return if an attribute is present in an element or not
@@ -1798,6 +1837,29 @@ public class SeleniumHelper {
     		JavascriptExecutor js = ((JavascriptExecutor) LocalDriverManager.getDriver());
 
     		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    		
+    		Thread.sleep(600);
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
+    }
+    
+    /**
+     * <summary> 
+     * method to scroll to the bottom of a page
+     * </summary>
+     * @throws Exception
+     * @return void
+     */
+    public void scrollToTopOfPage() throws Exception
+    {
+    	try
+    	{
+    		JavascriptExecutor js = ((JavascriptExecutor) LocalDriverManager.getDriver());
+
+    		js.executeScript("window.scrollTo(0, -document.body.scrollHeight)");
     		
     		Thread.sleep(600);
     	}
