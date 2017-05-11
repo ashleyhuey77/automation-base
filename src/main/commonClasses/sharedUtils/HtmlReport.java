@@ -1,6 +1,7 @@
 package commonClasses.sharedUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -36,7 +37,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     }
 
     @Override
-    protected void TakeScreenshot(String screenshotPath) throws FrameworkException
+    protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException
     {
         try
         {
@@ -48,7 +49,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
 
             WebDriver _driver = new Augmenter().augment(driver);
             File source = ((TakesScreenshot)_driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(source, new File(screenshotPath));
+            FileUtils.copyFile(source, new File(screenshotPath), true);
             //FileUtils.copyFile(source, new File(screenshotPath));
         }
         catch (Exception exception)
@@ -64,7 +65,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// <param name="stepName"></param>
     /// <param name="description"></param>
 
-    public void reportDoneEvent(String stepName, String description) throws FrameworkException
+    public void reportDoneEvent(String stepName, String description) throws FrameworkException, IOException
     {
 
         super.UpdateTestLog(stepName, description, Status.DONE);
@@ -77,7 +78,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// <param name="stepName"></param>
     /// <param name="description"></param>
 
-    public void reportWarning(String stepName, String description) throws FrameworkException
+    public void reportWarning(String stepName, String description) throws FrameworkException, IOException
     {
         super.UpdateTestLog(stepName, description, Status.WARNING);
 
@@ -87,7 +88,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// Add a Passed step to the test report </summary>
     /// <param name="stepName"> </param>
     /// <param name="description"> </param>
-    public void reportPassEvent(String stepName, String description) throws FrameworkException
+    public void reportPassEvent(String stepName, String description) throws FrameworkException, IOException
     {
         try
         {
@@ -105,7 +106,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// Add a failed report to the test report </summary>
     /// <param name="stepName"> </param>
     /// <param name="description"> </param>
-    public void reportFailEvent(String stepName, String description) throws FrameworkException
+    public void reportFailEvent(String stepName, String description) throws FrameworkException, IOException
     {
         try
         {

@@ -1,12 +1,13 @@
 package commonClasses.sharedUtils;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 import org.openqa.selenium.WebDriver;
  
 public class LocalDriverFactory {
 	
-    public static WebDriver createInstance(String browserName) {
+    public static WebDriver createInstance(String browserName, Boolean isHeadless) throws IOException {
     	
     	WebDriver driver = null;
         if (browserName.toLowerCase().contains("firefox")) {
@@ -17,7 +18,7 @@ public class LocalDriverFactory {
             return driver;*/
         }
         if (browserName.toLowerCase().contains("chrome")) {
-        	ChromeDriverFactory cFac = new ChromeDriverFactory();
+        	ChromeDriverFactory cFac = new ChromeDriverFactory(isHeadless);
         	driver = cFac.driver.get();
         }
         if (browserName.toLowerCase().trim().equals("safari"))

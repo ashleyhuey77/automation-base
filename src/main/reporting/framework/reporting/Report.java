@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import commonClasses.sharedUtils.LocalDriverManager;
 import reporting.framework.utilities.FrameworkException;
 import reporting.framework.utilities.Util;
 
@@ -163,9 +168,9 @@ public class Report {
         }
     }
 
-    protected void TakeScreenshot(String screenshotPath) throws FrameworkException
+    protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException
     {
-            try
+/*            try
             {               
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();  
                 GraphicsDevice[] screens = ge.getScreenDevices();       
@@ -189,7 +194,10 @@ public class Report {
             {
             	System.out.println(exception.getStackTrace());
                 throw new FrameworkException("Error while writing screenshot to .png file");
-            }
+            }*/
+    	
+    	File srcFile = ((TakesScreenshot)LocalDriverManager.getDriver()).getScreenshotAs(OutputType.FILE);
+    	FileUtils.copyFile(srcFile, new File(screenshotPath), true);
     }
 
     public void UpdateResultSummary(String currentScenario, String currentTestcase, String currentTestDescription, String executionTime, String testStatus) throws FrameworkException
@@ -210,7 +218,7 @@ public class Report {
         }
     }
 
-    public void UpdateTestLog(String stepName, String stepDescription, Status stepStatus) throws FrameworkException
+    public void UpdateTestLog(String stepName, String stepDescription, Status stepStatus) throws FrameworkException, IOException
     {
         String reportPath;
         //String _stepStatus = stepStatus.toString();

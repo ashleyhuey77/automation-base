@@ -33,7 +33,7 @@ public abstract class Page {
     protected static java.lang.String linkText = LookUp.IdentifyBy.LinkText.toString();
     protected static java.lang.String partialLinkText = LookUp.IdentifyBy.PartialLinkText.toString();
 	
-	public Page () throws FrameworkException
+	public Page () throws Exception
 	{
 		WebDriver browser = LocalDriverManager.getDriver();
 		seleniumHelper = new SeleniumHelper();
@@ -41,7 +41,7 @@ public abstract class Page {
         WaitForPageLoad();
 	}
 	
-	protected abstract void WaitForPageLoad() throws FrameworkException;
+	protected abstract void WaitForPageLoad() throws Exception;
 	
 	 /**	
 	  	*<summary>
@@ -56,7 +56,7 @@ public abstract class Page {
    		*						  element that is unique to the method
 	 * @throws Exception 
    	*/
-	protected void enterAvalueIntoATextField(String value, String webElement, String byValue, String elementBeingTested) throws FrameworkException
+	protected void enterAvalueIntoATextField(String value, String webElement, String byValue, String elementBeingTested) throws Exception
 	{
 		try
         {
@@ -99,7 +99,7 @@ public abstract class Page {
    		*						  element that is unique to the method
 	 * @throws Exception 
   	*/
-	protected void enterAvalueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws FrameworkException
+	protected void enterAvalueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws Exception
 	{
 		try
        {
@@ -141,7 +141,7 @@ public abstract class Page {
    	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
-	protected void clickSomeElement(String html, String byValue, String elementBeingTested) throws FrameworkException
+	protected void clickSomeElement(String html, String byValue, String elementBeingTested) throws Exception
 	{
 		try
 		{
@@ -179,7 +179,7 @@ public abstract class Page {
    	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
+	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception
 	{
 		try
 		{
@@ -220,7 +220,7 @@ public abstract class Page {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws FrameworkException
+	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception
 	{
 		try
 		{
@@ -258,7 +258,7 @@ public abstract class Page {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void verifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
+	protected void verifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested) throws Exception
 	{
 		try
 		{
@@ -291,7 +291,7 @@ public abstract class Page {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void verifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested) throws FrameworkException
+	protected void verifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested) throws Exception
 	{
 
 		try
@@ -329,7 +329,7 @@ public abstract class Page {
    	 *					       for all consumers of this method, however has been necessary for some instances.
 	 * @throws Exception 
 	*/
-	protected void verifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
+	protected void verifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
 		try
 		{
@@ -373,7 +373,7 @@ public abstract class Page {
 	 *					       for all consumers of this method, however has been necessary for some instances.
 	 * @throws Exception 
 */
-	protected void verifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
+	protected void verifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
 		try
 		{
@@ -419,7 +419,7 @@ public abstract class Page {
 	 * @throws Exception 
 	*/
 	
-	protected void findOptionInListAndSelectIt(List<WebElement> webElements, String webelementListHtml, String expectedOption, Boolean clickViaJQuery) throws FrameworkException
+	protected void findOptionInListAndSelectIt(List<WebElement> webElements, String webelementListHtml, String expectedOption, Boolean clickViaJQuery) throws Exception
 	{
 		try
 		{
@@ -516,7 +516,7 @@ public abstract class Page {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void verifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws FrameworkException
+	protected void verifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
 		try
 		{
@@ -588,7 +588,7 @@ public abstract class Page {
 	 *	</summary>
 	 *	@return String[]
 	 */
-	protected String[] getCurrentSplitDate() throws FrameworkException
+	protected String[] getCurrentSplitDate() throws Exception
 	{
 		String[] currentDate = null;
 		String date = TestUtils.GetCurrentDateTime("dd-MM-yyyy");
@@ -606,7 +606,7 @@ public abstract class Page {
 	 *	@return void
 	 */
 	
-	protected int getTotalDaysInMonth() throws FrameworkException
+	protected int getTotalDaysInMonth() throws Exception
 	{
 		int totalDaysInMonth = 0;
 		int currentYear = Integer.parseInt(getCurrentSplitDate()[2]);
@@ -630,7 +630,7 @@ public abstract class Page {
 	 *	@param daysOutFromCurrentDay the number of days out from today to select 
 	 */
 	
-	protected int getFutureDate(int daysOutFromCurrentDay) throws FrameworkException
+	protected int getFutureDate(int daysOutFromCurrentDay) throws Exception
 	{
 		int futureDate = 0;
 		int currentDay = Integer.parseInt(getCurrentSplitDate()[0]);
@@ -678,10 +678,10 @@ public abstract class Page {
 	 * @param variable the string variable being evaluated
 	 * @param passMessage the message for reporting if the test passes
 	 * @param failMessage the message for reporting if the test fails
-	 * @throws FrameworkException
+	 * @throws Exception
 	 * @return void
 	 */
-	protected void failTestIfVariableIsNull(String variable, String passMessage, String failMessage) throws FrameworkException
+	protected void failTestIfVariableIsNull(String variable, String passMessage, String failMessage) throws Exception
 	{
 			if (variable != null)
 			{
@@ -707,7 +707,7 @@ public abstract class Page {
 	 * @return String
 	 * @throws Exception 
 	 */
-	protected String removeOrChangeUnwantedCharacter(String variable, String character, String replaceValue) throws FrameworkException
+	protected String removeOrChangeUnwantedCharacter(String variable, String character, String replaceValue) throws Exception
 	{
 		String result = null;
 		try
@@ -738,7 +738,7 @@ public abstract class Page {
 	 *	@param actualValue the actual value that returned in the api response
 	 * @throws Exception 
 	*/
-	protected void verifyTheActualValueMatchesTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
+	protected void verifyTheActualValueMatchesTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws Exception
 	{
 		try
 		{
@@ -775,7 +775,7 @@ public abstract class Page {
 	 *	@param daysToSubtract the number of days to subtract from the date
 	 * @throws Exception 
  */
-	protected String subtractDays(String date, int totalDays, int daysToAdd) throws FrameworkException
+	protected String subtractDays(String date, int totalDays, int daysToAdd) throws Exception
 	{
 		String addedDay = null;
 		try
@@ -806,7 +806,7 @@ public abstract class Page {
 	 *	@param actualValue the actual value that returned in the api response
 	 * @throws Exception 
 	 */
-	protected void verifyTheActualValueContainsTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws FrameworkException
+	protected void verifyTheActualValueContainsTheExpectedValue(String expectedValue, String actualValue, String variableBeingTested) throws Exception
 	{
 		try
 		{
@@ -849,9 +849,9 @@ public abstract class Page {
 	 * @param value the String of characters that will be used to create the random string of text. Method takes the
 	 * 			    the characters in this string and scrambles them to generte thte random string.
 	 * @return String
-	 * @throws FrameworkException
+	 * @throws Exception
 	 */
-	protected String randomString(int length, String value) throws FrameworkException
+	protected String randomString(int length, String value) throws Exception
 	{
 		StringBuilder sb = new StringBuilder( length );
 		try

@@ -1,6 +1,8 @@
 package commonClasses.sharedUtils;
 
 
+import java.io.IOException;
+
 import junit.framework.AssertionFailedError;
 import reporting.framework.utilities.FrameworkException;
 
@@ -15,14 +17,14 @@ public class Validations {
         this.msTestReport = msTestReport;
 	}
 	
-	public void assertionPass(String message) throws FrameworkException
+	public void assertionPass(String message) throws FrameworkException, IOException
 	{
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		htmlReport.reportPassEvent(stepName, message);
 		System.out.println("Step: " + stepName + " has passed. " + message);
 	}
 	
-	public FrameworkException assertionFailed(String message) throws FrameworkException
+	public FrameworkException assertionFailed(String message) throws FrameworkException, IOException
     {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);

@@ -1,6 +1,8 @@
 package commonClasses.sharedUtils;
 
 
+import java.io.IOException;
+
 import reporting.framework.utilities.FrameworkException;
 
 public class Report {
@@ -15,14 +17,14 @@ public class Report {
         this.msTestReport = msTestReport;
 	}
 	
-	public void reportDoneEvent(String description) throws FrameworkException
+	public void reportDoneEvent(String description) throws FrameworkException, IOException
     {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         htmlReport.reportDoneEvent(stepName, description);
         System.out.println("Step: " + stepName + " has passed. " + description);
     }
 	
-	public FrameworkException reportException(Exception webDriverException) throws FrameworkException
+	public FrameworkException reportException(Exception webDriverException) throws FrameworkException, IOException
 	{
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		htmlReport.reportFailEvent(stepName, webDriverException.getMessage());

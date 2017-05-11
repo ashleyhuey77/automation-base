@@ -7,6 +7,7 @@ public class TestSettings {
 	private static String newstronEncryptedPassword;
 	private static String environment;
 	private static String browser;
+	private static Boolean isHeadless;
 	
 	public static String getApplicationUrl()
 	{
@@ -56,6 +57,16 @@ public class TestSettings {
 	public static void setBrowser(String value)
 	{
 		browser = value;
+	}
+	
+	public static Boolean getIsHeadless()
+	{
+		return isHeadless;
+	}
+	
+	public static void setIsHeadless(Boolean value)
+	{
+		isHeadless = value;
 	}
 
 }

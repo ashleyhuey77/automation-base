@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 
 import commonClasses.sharedUtils.*;
 import reporting.framework.reporting.*;
-import reporting.framework.utilities.FrameworkException;
 import seleniumHelper.seleniumHelper.SeleniumHelper;
 import testPages.TestPage;
 
@@ -130,7 +129,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.contains("reporting.framework.utilities.FrameworkException: StepName: randomString"));
+			Assert.assertTrue(m.contains("reporting.framework.utilities.Exception: StepName: randomString"));
 		}
 	}
 	
@@ -172,7 +171,7 @@ public class PageClassTests {
 			page.testActualVersusExpected(null, "Test", "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			 System.out.flush();
 			 System.setOut(old);
@@ -184,7 +183,7 @@ public class PageClassTests {
 			baos.close();
 			    
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
 		}
 	}
@@ -199,10 +198,10 @@ public class PageClassTests {
 			page.testActualVersusExpected("Test", null, "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
 		}
 	}
@@ -217,16 +216,16 @@ public class PageClassTests {
 			page.testActualVersusExpected("Test", "Nothing", "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueContainsTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
 	
 	@Test
-	public void verifySubtractDays_DayStartsWith0() throws FrameworkException
+	public void verifySubtractDays_DayStartsWith0() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -236,7 +235,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySubtractDays_DayStartsWith1() throws FrameworkException
+	public void verifySubtractDays_DayStartsWith1() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -246,7 +245,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySubtractDays_IncorrectDateFormat() throws FrameworkException
+	public void verifySubtractDays_IncorrectDateFormat() throws Exception
 	{
 		try
 		{
@@ -256,16 +255,16 @@ public class PageClassTests {
 		
 			Assert.fail("Expected AssertionError exception to be thrown." + actualDate);
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: subtractDays"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: subtractDays"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Unparseable date:"));
 		}
 	}
 	
 	@Test
-	public void verifyCleanUp() throws FrameworkException
+	public void verifyCleanUp() throws Exception
 	{
 			TestPage page = new TestPage();
 			value = "SomeTestValue";
@@ -281,7 +280,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyTheExpectedValueMatchesTheActualValue() throws FrameworkException, IOException
+	public void verifyTheExpectedValueMatchesTheActualValue() throws Exception, IOException
 	{
 		TestPage page = new TestPage();
 		
@@ -311,16 +310,16 @@ public class PageClassTests {
 			page.testActualVersusExpectedExact(null, "Test", "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{			    
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: Test. Expected: null"));
 		}
 	}
 	
 	@Test
-	public void verifyTheActualValueNull_exactMatch() throws FrameworkException, IOException
+	public void verifyTheActualValueNull_exactMatch() throws Exception, IOException
 	{
 		try
 		{
@@ -329,16 +328,16 @@ public class PageClassTests {
 			page.testActualVersusExpectedExact("Test", null, "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: null. Expected: Test"));
 		}
 	}
 	
 	@Test
-	public void verifyTheActualValueDoesntMatchExpectedValue() throws FrameworkException, IOException
+	public void verifyTheActualValueDoesntMatchExpectedValue() throws Exception, IOException
 	{
 		try
 		{
@@ -347,16 +346,16 @@ public class PageClassTests {
 			page.testActualVersusExpectedExact("Test", "Nothing", "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
 	
 	@Test
-	public void verifyRemovingCharacters_containsCharacter() throws FrameworkException
+	public void verifyRemovingCharacters_containsCharacter() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -366,7 +365,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyRemovingCharacters_doesntContainCharacter() throws FrameworkException
+	public void verifyRemovingCharacters_doesntContainCharacter() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -376,7 +375,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyRemovingCharacters_nullException() throws FrameworkException
+	public void verifyRemovingCharacters_nullException() throws Exception
 	{
 		try
 		{
@@ -385,15 +384,15 @@ public class PageClassTests {
 			String actualValue = page.testRemoveOrChangeUnwantedCharacter(null, "!", ".");
 			Assert.fail("Test expected to throw exception" + actualValue);
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: removeOrChangeUnwantedCharacter"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: removeOrChangeUnwantedCharacter"));
 		}
 	}
 	
 	@Test
-	public void failTestIfVariableIsNull_nullVariable() throws FrameworkException
+	public void failTestIfVariableIsNull_nullVariable() throws Exception
 	{
 		try
 		{
@@ -402,7 +401,7 @@ public class PageClassTests {
 			page.testFailIfNull(null, "Passed", "Failed");;
 			Assert.fail("Test expected to throw exception");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: failTestIfVariableIsNull"));
@@ -410,7 +409,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void failTestIfVariableIsNull_notNullVariable() throws FrameworkException, IOException
+	public void failTestIfVariableIsNull_notNullVariable() throws Exception, IOException
 	{
 			TestPage page = new TestPage();
 			
@@ -432,7 +431,7 @@ public class PageClassTests {
 	}
 /*	
 	@Test
-	public void verifySetActualStartTime() throws FrameworkException
+	public void verifySetActualStartTime() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -458,7 +457,7 @@ public class PageClassTests {
 	}*/
 	
 /*	@Test
-	public void verifyGetActualStartTime() throws FrameworkException
+	public void verifyGetActualStartTime() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -472,7 +471,7 @@ public class PageClassTests {
 	}*/
 	
 	@Test
-	public void verifyGetCurrentSplitDate() throws FrameworkException
+	public void verifyGetCurrentSplitDate() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -484,7 +483,7 @@ public class PageClassTests {
 	}
 	
 /*	@Test
-	public void verifyActualSlug_ContainsValue() throws FrameworkException
+	public void verifyActualSlug_ContainsValue() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -498,7 +497,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySetScheduledRecordingDate_IsStartDateRegularFormat() throws FrameworkException
+	public void verifySetScheduledRecordingDate_IsStartDateRegularFormat() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -510,7 +509,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySetScheduledRecordingDate_IsStartDateAltFormat() throws FrameworkException
+	public void verifySetScheduledRecordingDate_IsStartDateAltFormat() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -522,7 +521,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySetScheduledRecordingDate_IsNotStartDateAltFormat() throws FrameworkException
+	public void verifySetScheduledRecordingDate_IsNotStartDateAltFormat() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -534,7 +533,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifySetScheduledRecordingDate_IsNotStartDateRegularFormat() throws FrameworkException
+	public void verifySetScheduledRecordingDate_IsNotStartDateRegularFormat() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -546,7 +545,7 @@ public class PageClassTests {
 	}
 	*/
 	@Test
-	public void verifyGetFutureDate() throws FrameworkException
+	public void verifyGetFutureDate() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -558,7 +557,7 @@ public class PageClassTests {
 	}
 	
 /*	@Test
-	public void verifyNavigateViaNewsAppsToggle() throws FrameworkException, IOException
+	public void verifyNavigateViaNewsAppsToggle() throws Exception, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)browser).executeScript("document.write('<input id=Test > </input>');");
@@ -583,7 +582,7 @@ public class PageClassTests {
 	}*/
 	
 /*	@Test
-	public void verifyNavigateViaNewsAppsToggle_cantFindElement() throws FrameworkException, IOException
+	public void verifyNavigateViaNewsAppsToggle_cantFindElement() throws Exception, IOException
 	{
 		try
 		{
@@ -602,7 +601,7 @@ public class PageClassTests {
 	}*/
 	
 	@Test
-	public void verifyEnterAValueIntoATextField() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField() throws Exception, IOException, InterruptedException
 	{
 		TestPage page = new TestPage();
 		Thread.sleep(800);
@@ -625,7 +624,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyEnterAValueIntoATextField_NullValue() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField_NullValue() throws Exception, IOException, InterruptedException
 	{	
 		TestPage page = new TestPage();
 		Thread.sleep(800);
@@ -648,7 +647,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyEnterAValueIntoATextField_ElementNotFound() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField_ElementNotFound() throws Exception, IOException, InterruptedException
 	{
 	    try
 		{
@@ -657,10 +656,10 @@ public class PageClassTests {
 			page.testEnterAValueIntoATextField(null, "input[id='Test']", "cssSelector", "Test Element");
 			Assert.fail("Error expected to be thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -681,13 +680,13 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
 	
 	@Test
-	public void verifyEnterAValueIntoATextField_ElementDefined() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField_ElementDefined() throws Exception, IOException, InterruptedException
 	{
 		TestPage page = new TestPage();
 		Thread.sleep(800);
@@ -711,7 +710,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyEnterAValueIntoATextField_NullValue_ElementDefined() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField_NullValue_ElementDefined() throws Exception, IOException, InterruptedException
 	{	
 		TestPage page = new TestPage();
 		Thread.sleep(800);
@@ -734,7 +733,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyEnterAValueIntoATextField_ElementNotFound_ElementDefined() throws FrameworkException, IOException, InterruptedException
+	public void verifyEnterAValueIntoATextField_ElementNotFound_ElementDefined() throws Exception, IOException, InterruptedException
 	{
 	    try
 		{
@@ -751,7 +750,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -791,7 +790,7 @@ public class PageClassTests {
 			page.testFindOptionInListAndSelectIt(list, null, "Link10", false);
 			Assert.fail("Exception was expected to have been thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: findOptionInListAndSelectIt"));
@@ -836,7 +835,7 @@ public class PageClassTests {
 			page.testFindOptionInListAndSelectIt(list, test, "Link10", true);
 			Assert.fail("Exception was expected to have been thrown");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: findOptionInListAndSelectIt"));
@@ -844,7 +843,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyClickSomeElement_ElementFound() throws InterruptedException, FrameworkException, IOException
+	public void verifyClickSomeElement_ElementFound() throws InterruptedException, Exception, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
@@ -866,7 +865,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyClickSomeElement_ElementNotFound() throws InterruptedException, FrameworkException
+	public void verifyClickSomeElement_ElementNotFound() throws InterruptedException, Exception
 	{
 		try
 		{
@@ -878,7 +877,7 @@ public class PageClassTests {
 			page.testClickSomeElement(test, "cssSelector", "Test Element");
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: clickSomeElement"));
@@ -898,15 +897,15 @@ public class PageClassTests {
 			page.testClickSomeElement(test, null, "Test Element");
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: clickSomeElement"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: clickSomeElement"));
 		}
 	}
 	
 	@Test
-	public void getTotalDaysInMonth() throws FrameworkException
+	public void getTotalDaysInMonth() throws Exception
 	{
 		TestPage page = new TestPage();
 		
@@ -954,7 +953,7 @@ public class PageClassTests {
 			page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, "id", "Test Element", false);
 			Assert.fail("Test was supposed to throw an error for element not being found");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: selectSomeOptionFromNonDropdown"));
@@ -979,7 +978,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: selectSomeOptionFromNonDropdown"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: selectSomeOptionFromNonDropdown"));
 		}
 	}
 	
@@ -1027,13 +1026,13 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: selectSomeOptionFromNonDropdown"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: selectSomeOptionFromNonDropdown"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Element is not availale. Can not select the Test Element from the drop down list."));
 		}
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesFalse() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1055,7 +1054,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesTrue() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesTrue() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1077,7 +1076,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_ElementDoesNotContainCorrectText() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_ElementDoesNotContainCorrectText() throws Exception, InterruptedException, IOException
 	{
 		try
 		{
@@ -1089,7 +1088,7 @@ public class PageClassTests {
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Not correct", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: verifySomeElementContainsTheExpectedText"));
@@ -1098,7 +1097,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_NullExpectedValue() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_NullExpectedValue() throws Exception, InterruptedException, IOException
 	{
 		try
 		{
@@ -1113,12 +1112,12 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementContainsTheExpectedText"));
 		}
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1140,7 +1139,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesTrue() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesTrue() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1162,7 +1161,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_ElementDoesNotContainCorrectText() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_ElementDoesNotContainCorrectText() throws Exception, InterruptedException, IOException
 	{
 		try
 		{
@@ -1174,7 +1173,7 @@ public class PageClassTests {
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "Not correct", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: verifySomeElementContainsTheExpectedText"));
@@ -1183,7 +1182,7 @@ public class PageClassTests {
 	}
 	
 	@Test 
-	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_NullExpectedValue() throws FrameworkException, InterruptedException, IOException
+	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_NullExpectedValue() throws Exception, InterruptedException, IOException
 	{
 		try
 		{
@@ -1195,15 +1194,15 @@ public class PageClassTests {
 			page.testVerifySomeElementContainsTheExpectedText(textEl, null, "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementContainsTheExpectedText"));
 		}
 	}
 	
 	@Test
-	public void verifySomeElementIsNotPresent_ElementNotPresent() throws InterruptedException, IOException
+	public void verifySomeElementIsNotPresent_ElementNotPresent() throws Exception
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1237,10 +1236,10 @@ public class PageClassTests {
 			page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsNotPresent"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsNotPresent"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should not display in the page. It does display. This is not expected."));
 			
 		}
@@ -1262,12 +1261,12 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsNotPresent"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsNotPresent"));
 		}
 	}
 	
 	@Test
-	public void verifySomeElementIsPresent_ElementPresent() throws InterruptedException, IOException
+	public void verifySomeElementIsPresent_ElementPresent() throws Exception
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -1301,10 +1300,10 @@ public class PageClassTests {
 			page.testVerifySomeElementIsPresent(test, "id", "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsPresent"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsPresent"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should display in the page. It does not display as expected."));
 			
 		}
@@ -1326,7 +1325,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifySomeElementIsPresent"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsPresent"));
 		}
 	}
 	
@@ -1368,10 +1367,10 @@ public class PageClassTests {
 			page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextFieldIsBlank"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextFieldIsBlank"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
 			
 		}
@@ -1393,7 +1392,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextFieldIsBlank"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextFieldIsBlank"));
 		}
 	}
 	
@@ -1423,7 +1422,7 @@ public class PageClassTests {
 	}
 	
 	@Test
-	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws InterruptedException, IOException
+	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws Exception
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
@@ -1457,10 +1456,10 @@ public class PageClassTests {
 			page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
-		catch (FrameworkException ex)
+		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextInTextField"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextInTextField"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should contain Test 123 but is retaining an incorrect value instead. The value being retained is Testing123"));		
 		}
 	}
@@ -1481,7 +1480,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.FrameworkException: StepName: verifyTextInTextField"));
+			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextInTextField"));
 		}
 	}
 	
