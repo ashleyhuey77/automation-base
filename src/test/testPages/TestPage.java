@@ -5,7 +5,6 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 
 import commonClasses.sharedPageClasses.Page;
-import commonClasses.sharedUtils.*;
 
 
 public class TestPage extends Page {

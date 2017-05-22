@@ -24,7 +24,9 @@ public class PageClassTests {
 	private static MsTESTReport msTestReport = new MsTESTReport();
 	protected static commonClasses.sharedUtils.HtmlReport htmlReport = new commonClasses.sharedUtils.HtmlReport(new ReportSettings("NA", "NOPE"), new ReportTheme());
 	//private WebDriver browser;
+	@SuppressWarnings("unused")
 	private Validations validations = new Validations(htmlReport, msTestReport);
+	@SuppressWarnings("unused")
 	private commonClasses.sharedUtils.Report report = new commonClasses.sharedUtils.Report(htmlReport, msTestReport);
 	public static String value;
 	SeleniumHelper sHelp;

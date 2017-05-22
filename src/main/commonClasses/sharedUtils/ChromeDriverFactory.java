@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -27,9 +26,9 @@ public class ChromeDriverFactory {
     	if (isHeadless)
     	{
     		options.addArguments("headless");
+    		options.addArguments("start-fullscreen");
     	}
     	options.addArguments("disable-extensions");
-    	options.addArguments("window-size=1200x600");
     	caps.setCapability(ChromeOptions.CAPABILITY, options);
 		
 		driver = new InheritableThreadLocal<WebDriver>(){
