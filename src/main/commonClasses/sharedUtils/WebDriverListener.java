@@ -39,19 +39,19 @@ public class WebDriverListener implements IInvokedMethodListener {
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
     	WebDriver driver = LocalDriverManager.getDriver();
-    	try {
-    	if(method.toString().toLowerCase().contains("afterscenario")){
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-		} catch (Exception e) {
-			driver.quit();
-			throw e;
-		}
-    	finally {
-    		driver.quit();
-		}
+	    	if(method.toString().toLowerCase().contains("afterscenario")){
+	    		try {
+		            if (driver != null) {
+		                driver.quit();
+		            }
+				} catch (Exception e) {
+					driver.quit();
+					throw e;
+				}
+	    		finally {
+	    			driver.quit();
+				}
+	        }
     }
 }
  
