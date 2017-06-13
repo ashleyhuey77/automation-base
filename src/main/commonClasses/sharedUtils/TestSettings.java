@@ -1,5 +1,7 @@
 package commonClasses.sharedUtils;
 
+
+
 public class TestSettings {
 	
 	private static String applicationUrl;
@@ -8,6 +10,8 @@ public class TestSettings {
 	private static String environment;
 	private static String browser;
 	private static Boolean isHeadless;
+	private static String miraEncryptedUserName;
+	private static String miraEncryptedPassword;
 	
 	public static String getApplicationUrl()
 	{
@@ -67,6 +71,18 @@ public class TestSettings {
 	public static void setIsHeadless(Boolean value)
 	{
 		isHeadless = value;
+	}
+	public static String getMiraEncryptedUserName() {
+		return miraEncryptedUserName;
+	}
+	public static void setMiraEncryptedUserName(String value) {
+		miraEncryptedUserName = value;
+	}
+	public static String getMiraEncryptedPassword() {
+		return miraEncryptedPassword;
+	}
+	public static void setMiraEncryptedPassword(String value) {
+		miraEncryptedPassword = value;
 	}
 
 }

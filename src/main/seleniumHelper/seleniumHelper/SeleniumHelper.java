@@ -2051,4 +2051,17 @@ public class SeleniumHelper {
 		});
     }
     
+    public void switchToFrame(String frameName)
+    {
+    	try
+    	{
+    		LocalDriverManager.getDriver().switchTo().frame(frameName);
+    	}
+    	catch (Exception ex)
+    	{
+    		throw ex;
+    	}
+    }
+   
+    
 }
