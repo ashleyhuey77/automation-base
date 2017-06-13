@@ -26,7 +26,8 @@ public class ChromeDriverFactory {
     	if (isHeadless)
     	{
     		options.addArguments("headless");
-    		options.addArguments("start-fullscreen");
+    		options.addArguments("disable-gpu");
+    		//options.addArguments("screenshot");
     	}
     	options.addArguments("disable-extensions");
     	caps.setCapability(ChromeOptions.CAPABILITY, options);

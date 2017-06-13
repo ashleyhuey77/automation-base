@@ -80,6 +80,7 @@ public class UtilsTests {
 		Security s = new Security();
 		System.out.println(s);
 		
+		String p = "Testing123456";
 		String result = Security.encrypt("Testing123456");
 		
 		Assert.assertTrue(!ExtensionMethods.isNullOrBlank(result));
