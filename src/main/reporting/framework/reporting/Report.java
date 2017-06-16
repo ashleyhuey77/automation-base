@@ -1,10 +1,17 @@
 package reporting.framework.reporting;
 
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -164,7 +171,7 @@ public class Report {
 
     protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException
     {
-/*            try
+           try
             {               
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();  
                 GraphicsDevice[] screens = ge.getScreenDevices();       
@@ -188,10 +195,7 @@ public class Report {
             {
             	System.out.println(exception.getStackTrace());
                 throw new FrameworkException("Error while writing screenshot to .png file");
-            }*/
-    	
-    	File srcFile = ((TakesScreenshot)LocalDriverManager.getDriver()).getScreenshotAs(OutputType.FILE);
-    	FileUtils.copyFile(srcFile, new File(screenshotPath), true);
+            }
     }
 
     public void UpdateResultSummary(String currentScenario, String currentTestcase, String currentTestDescription, String executionTime, String testStatus) throws FrameworkException
