@@ -2016,7 +2016,12 @@ public class SeleniumHelper {
 			throw ex;
 		}
     }
-    
+    /**
+     * <summary>Refresh a page and wial for element to display</summary>
+     * @param selectorString
+     * @param by
+     * @param i
+     */
     public void refreshPageAndWaitForElementToDisplay(String selectorString, String by, int i)
     {
     	WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
@@ -2050,7 +2055,10 @@ public class SeleniumHelper {
 		   		};
 		});
     }
-    
+    /**
+     * <summary>This methon will go to a selected frame</summary>
+     * @param frameName
+     */
     public void switchToFrame(String frameName)
     {
     	try
@@ -2061,6 +2069,17 @@ public class SeleniumHelper {
     	{
     		throw ex;
     	}
+    }
+    /**
+     * <summary>select from dropdown</summary>
+     * @param element
+     * @param value
+     */
+    public void selectFromDropdown(WebElement element,String value)
+    {
+    	  Select sel =new Select(element);
+          sel.deselectAll();
+          sel.selectByValue(value);
     }
    
     
