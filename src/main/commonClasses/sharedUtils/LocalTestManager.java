@@ -35,13 +35,17 @@ public class LocalTestManager {
 	    	String env = props.getProperty("Environment", "ref");
 	    	String browser = props.getProperty("Browser", "Chrome");
 	    	Boolean isHeadless = Boolean.parseBoolean(props.getProperty("IsHeadless", "false"));
-	
+	        String miraUserName = props.getProperty("miraEncryptedUserName", "n/a");
+	        String miraPassword= props.getProperty("miraEncryptedPassword", "n/a");
+	        
 	    	TestSettings.setApplicationUrl(appUrl);
 	    	TestSettings.setNewstronEncryptedUserName(newstronUN);
 	    	TestSettings.setNewstronEncryptedPassword(newstronPWD);
 	    	TestSettings.setEnvironment(env);
 	    	TestSettings.setBrowser(browser);
 	    	TestSettings.setIsHeadless(isHeadless);
+	    	TestSettings.setMiraEncryptedUserName(miraUserName);
+	    	TestSettings.setMiraEncryptedPassword(miraPassword);
     	}
     	catch (Exception ex)
     	{
