@@ -1561,14 +1561,21 @@ public class SeleniumHelper {
     		            public Boolean apply(WebDriver driver) {
     		                         WebElement elementToBeTested = getElement(selectorString, by);
     		                         String actualValue = elementToBeTested.getAttribute(attribute);
-    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+    		                         //returning false if attribute is null.
+    		                         if (actualValue != null)
     		                         {
-    		                        	 return true;
+	    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+	    		                         {
+	    		                        	 return true;
+	    		                         }
+	    		                         else
+	    		                         {
+	    		                            return false;
+	    		                         }
     		                         }
-    		                         else
-    		                         {
-    		                            return false;
-    		                         }
+    		                         else {
+										return false;
+									}
     		                    }
     		   });
     	}
@@ -1578,6 +1585,51 @@ public class SeleniumHelper {
     	}
     }
     
+    /**
+     * <summary> 
+     * method to wait for an attribute to equal a certain value
+     * </summary>
+  		@param selectorString the webelement selector string necessary for the webelement to be found
+  		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+    				  WebElement to be found
+     * @param attribute the html attribute whose value is to be evaluated and obtained
+     * @param expectedValue the expected value of the html attribute
+     * @param i the total amount of time allotted to wait for the condition to return true
+     * @return void
+     */
+      public void waitForAttributeToNoLongerContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
+      {
+      	try
+      	{
+      		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
+
+      		wait.until(new ExpectedCondition<Boolean>() {
+      		            public Boolean apply(WebDriver driver) {
+      		                         WebElement elementToBeTested = getElement(selectorString, by);
+      		                         String actualValue = elementToBeTested.getAttribute(attribute);
+      		                         //returning true if attribute is null because it still means the attribute does not contain the desired value.
+      		                         if (actualValue != null)
+      		                         {
+  	    		                         if(!actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+  	    		                         {
+  	    		                        	 return true;
+  	    		                         }
+  	    		                         else
+  	    		                         {
+  	    		                            return false;
+  	    		                         }
+      		                         }
+      		                         else {
+  										return true;
+  									}
+      		                    }
+      		   });
+      	}
+      	catch (WebDriverException ex)
+      	{
+      		throw ex; 
+      	}
+      }
     
   /**
    * <summary> 
@@ -1600,14 +1652,20 @@ public class SeleniumHelper {
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
     		                         String actualValue = element.getAttribute(attribute);
-    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+    		                         if (actualValue != null)
     		                         {
-    		                        	 return true;
+	    		                         if(actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+	    		                         {
+	    		                        	 return true;
+	    		                         }
+	    		                         else
+	    		                         {
+	    		                            return false;
+	    		                         }
     		                         }
-    		                         else
-    		                         {
-    		                            return false;
-    		                         }
+    		                         else {
+										return false;
+									}
     		                    }
     		   });
     	}
@@ -1616,6 +1674,52 @@ public class SeleniumHelper {
     		throw ex; 
     	}
     }
+    
+    /**
+     * <summary> 
+     * method to wait for an attribute to equal a certain value
+     * </summary>
+  		@param selectorString the webelement selector string necessary for the webelement to be found
+  		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+    				  WebElement to be found
+     * @param attribute the html attribute whose value is to be evaluated and obtained
+     * @param expectedValue the expected value of the html attribute
+     * @param i the total amount of time allotted to wait for the condition to return true
+     * @return void
+     */
+      public void waitForAttributeToNoLongerContainACertainValue(WebElement element, String attribute, String expectedValue, int i)
+      {
+      	try
+      	{
+      		WebDriverWait wait = new WebDriverWait(LocalDriverManager.getDriver(),i);
+
+      		wait.until(new ExpectedCondition<Boolean>() {
+      		            public Boolean apply(WebDriver driver) {
+      		                         WebElement elementToBeTested = element;
+      		                         String actualValue = elementToBeTested.getAttribute(attribute);
+      		                         //returning true if attribute is null because it still means the attribute does not contain the desired value.
+      		                         if (actualValue != null)
+      		                         {
+  	    		                         if(!actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) 
+  	    		                         {
+  	    		                        	 return true;
+  	    		                         }
+  	    		                         else
+  	    		                         {
+  	    		                            return false;
+  	    		                         }
+      		                         }
+      		                         else {
+  										return true;
+  									}
+      		                    }
+      		   });
+      	}
+      	catch (WebDriverException ex)
+      	{
+      		throw ex; 
+      	}
+      }
     
   /**
    * <summary> 
@@ -1771,6 +1875,26 @@ public class SeleniumHelper {
     	{
     		throw ex;
     	}
+    }
+    
+    public void closeAllOpenTabsExceptTheNewlyOpenedWindow()
+    {
+    	try 
+    	{
+		    String originalHandle = LocalDriverManager.getDriver().getWindowHandle();
+
+		    for(String handle : LocalDriverManager.getDriver().getWindowHandles()) {
+		        if (!handle.equals(originalHandle)) {
+		        	LocalDriverManager.getDriver().switchTo().window(handle);
+		        	LocalDriverManager.getDriver().close();
+		        }
+		    }
+
+		    LocalDriverManager.getDriver().switchTo().window(originalHandle);
+		} 
+    	catch (Exception ex) {
+			throw ex;
+		}
     }
     
     
