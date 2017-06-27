@@ -17,7 +17,6 @@ import reporting.framework.utilities.FrameworkException;
 
 public class SeleniumHelper {
 	
-
     //defining the different webelement strings to use when calling switch statements
     private String cssSelector = "cssselector";
     private String id = "id";
@@ -45,7 +44,12 @@ public class SeleniumHelper {
         PARTIALLINKTEXT,
         NAME
     }
-
+/**
+ * <summary>dropdown selector</summary>
+ * @author kalikojo
+ *
+ */
+    public  enum selectType {byValue, byVisibleText};
 	/**	
   	 *	<summary>
 	 *	method to get the by value based on user input
@@ -2070,17 +2074,64 @@ public class SeleniumHelper {
     		throw ex;
     	}
     }
-    /**
-     * <summary>select from dropdown</summary>
-     * @param element
-     * @param value
-     */
-    public void selectFromDropdown(WebElement element,String value)
+  
+
+public void selectFromDropdown(WebElement element,String value,selectType select)
+{
+	 
+	 try {
+		Select sel =new Select(element);
+		 switch(select){
+		 
+		 case byValue:
+		       sel.selectByValue(value);
+		 break;
+		 case byVisibleText:
+			 sel.selectByVisibleText(value);
+		  break;
+		 
+		  default:
+			  System.out.println("A selection must be made");
+			  break;
+		 
+		  }
+	} catch (Exception e) {
+		throw e;
+	}
+}
+
+public void selectFromDropdown(String element, String value, selectType select)
+{
+	
+	  try {
+		Select sel = new Select(getElement( element, value));
+		
+			 switch(select) {
+			 
+			 case byValue:
+			       sel.selectByValue(value);
+			 break;
+			 
+			 case byVisibleText:
+				 sel.selectByVisibleText(value);
+			 break;
+			 
+			 default:
+				  System.out.println("A selection must be made");
+				  break;
+		     
+		      }
+	} catch (Exception e) {
+		throw e;
+	}
+}
+
+   /* public void selectFromDropdown(WebElement element,String value)
     {
     	  Select sel =new Select(element);
           sel.deselectAll();
           sel.selectByValue(value);
-    }
+    }*/
    
     
 }
