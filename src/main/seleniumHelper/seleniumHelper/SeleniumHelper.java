@@ -13,7 +13,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import commonClasses.sharedUtils.LocalDriverManager;
+import commonClasses.sharedUtils.LocalReportManager;
 import reporting.framework.utilities.FrameworkException;
+
 
 public class SeleniumHelper {
 	
@@ -40,7 +42,7 @@ public class SeleniumHelper {
         XPATH,
         CLASSNAME,
         TAGNAME,
-        LINKTEXT,
+        LINKTEXT, 
         PARTIALLINKTEXT,
         NAME
     }
@@ -49,7 +51,7 @@ public class SeleniumHelper {
  * @author kalikojo
  *
  */
-    public  enum selectType {byValue, byVisibleText};
+    public  enum selectType {byValue, byVisibleText, byIndex};
 	/**	
   	 *	<summary>
 	 *	method to get the by value based on user input
@@ -2200,55 +2202,69 @@ public class SeleniumHelper {
     }
   
 
-public void selectFromDropdown(WebElement element,String value,selectType select)
-{
-	 
-	 try {
-		Select sel =new Select(element);
-		 switch(select){
-		 
-		 case byValue:
-		       sel.selectByValue(value);
-		 break;
-		 case byVisibleText:
-			 sel.selectByVisibleText(value);
-		  break;
-		 
-		  default:
-			  System.out.println("A selection must be made");
-			  break;
-		 
-		  }
-	} catch (Exception e) {
-		throw e;
-	}
-}
 
-public void selectFromDropdown(String element, String value, selectType select)
-{
-	
-	  try {
-		Select sel = new Select(getElement( element, value));
-		
-			 switch(select) {
-			 
-			 case byValue:
-			       sel.selectByValue(value);
-			 break;
-			 
-			 case byVisibleText:
-				 sel.selectByVisibleText(value);
-			 break;
-			 
-			 default:
-				  System.out.println("A selection must be made");
-				  break;
-		     
-		      }
-	} catch (Exception e) {
-		throw e;
+	/**
+	 * <summary>Select from dropdown using selenium</summary>
+	 * @param element
+	 * @param value
+	 * @param select
+	 */
+	public void selectFromDropdown(WebElement element, String value, selectType select) throws Exception {
+		Select sel = new Select(element);
+		try {
+			switch (select) {
+
+			case byValue:
+				sel.selectByValue(value);
+
+				break;
+			case byVisibleText:
+				sel.selectByVisibleText(value);
+				break;
+			case byIndex:
+				sel.selectByIndex(1);
+			default:
+				System.out.println("A selection must be made");
+				break;
+
+			}
+		} catch (Exception e) {
+			throw LocalReportManager.getReport().reportException(e);
+		}
 	}
-}
+
+	/**
+	 *<summary>Select from dropdown using selenium</summary>
+	 * @param element
+	 * @param value
+	 * @param select
+	 */
+	public void selectFromDropdown(String element, String selector, String value, selectType select) throws Exception {
+		Select sel = new Select(getElement(element, selector));
+
+		try {
+
+			switch (select) {
+
+			case byValue:
+				sel.selectByValue(value);
+				break;
+
+			case byVisibleText:
+				sel.selectByVisibleText(value);
+				break;
+			case byIndex:
+				sel.selectByIndex(1);
+			default:
+				System.out.println("A selection must be made");
+				break;
+
+			}
+		} catch (Exception e) {
+			throw LocalReportManager.getReport().reportException(e);
+		}
+	}
+
 
    /* public void selectFromDropdown(WebElement element,String value)
     {
