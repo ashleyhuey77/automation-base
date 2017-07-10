@@ -13,6 +13,7 @@ import commonClasses.sharedUtils.WebDriverListener;
 import commonClasses.sharedUtils.managers.LocalDriver;
 import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.SeleniumHelper;
+import seleniumHelper.enums.SelectType;
 
 @Listeners(WebDriverListener.class)
 public class ActionsTests {
@@ -106,7 +107,7 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown("Test", "id", "Test2");
+		SHelper.get().actions().selectFromDropDown("Test", "id", "Test2", SelectType.byIndex);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -115,7 +116,7 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown("notHere", "name", "Test2");
+		SHelper.get().actions().selectFromDropDown("notHere", "name", "Test2", SelectType.byIndex);
 	}
 	
 	@Test
