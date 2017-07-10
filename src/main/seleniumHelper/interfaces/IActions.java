@@ -1,6 +1,7 @@
 package seleniumHelper.interfaces;
 
 import org.openqa.selenium.WebElement;
+import seleniumHelper.enums.SelectType;
 
 public interface IActions {
 	
@@ -22,8 +23,8 @@ public void moveTo(String selectorString, String by);
 	
 	public void scrollTo(WebElement element);
 	
-	public void selectFromDropDown(WebElement element, String value);
+	public void selectFromDropDown(WebElement element, String value, SelectType selectType);
 	
-	public void selectFromDropDown(String selectorString, String by, String value);
+	public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType);
 
 }

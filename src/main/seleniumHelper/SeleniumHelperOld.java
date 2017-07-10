@@ -11,12 +11,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import commonClasses.sharedUtils.managers.LocalDriver;
 import reporting.framework.utilities.FrameworkException;
 
-public class SeleniumHelperOld {
 
+public class SeleniumHelperOld {
+	
     //defining the different webelement strings to use when calling switch statements
     private String cssSelector = "cssselector";
     private String id = "id";
@@ -40,11 +40,16 @@ public class SeleniumHelperOld {
         XPATH,
         CLASSNAME,
         TAGNAME,
-        LINKTEXT,
+        LINKTEXT, 
         PARTIALLINKTEXT,
         NAME
     }
-
+/**
+ * <summary>dropdown selector</summary>
+ * @author kalikojo
+ *
+ */
+    public  enum selectType {byValue, byVisibleText, byIndex};
 	/**	
   	 *	<summary>
 	 *	method to get the by value based on user input
@@ -2193,17 +2198,68 @@ public class SeleniumHelperOld {
     		throw ex;
     	}
     }
-    /**
-     * <summary>select from dropdown</summary>
-     * @param element
-     * @param value
-     */
-    public void selectFromDropdown(WebElement element,String value)
-    {
-    	  Select sel =new Select(element);
-          sel.deselectAll();
-          sel.selectByValue(value);
-    }
-   
-    
+  
+
+
+	/**
+	 * <summary>Select from dropdown using selenium</summary>
+	 * @param element
+	 * @param value
+	 * @param select
+	 */
+	public void selectFromDropdown(WebElement element, String value, selectType select) throws Exception {
+		Select sel = new Select(element);
+		try {
+			switch (select) {
+
+			case byValue:
+				sel.selectByValue(value);
+
+				break;
+			case byVisibleText:
+				sel.selectByVisibleText(value);
+				break;
+			case byIndex:
+				sel.selectByIndex(1);
+			default:
+				System.out.println("A selection must be made");
+				break;
+
+			}
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	/**
+	 *<summary>Select from dropdown using selenium</summary>
+	 * @param element
+	 * @param value
+	 * @param select
+	 */
+	public void selectFromDropdown(String element, String selector, String value, selectType select) throws Exception {
+		Select sel = new Select(getElement(element, selector));
+
+		try {
+
+			switch (select) {
+
+			case byValue:
+				sel.selectByValue(value);
+				break;
+
+			case byVisibleText:
+				sel.selectByVisibleText(value);
+				break;
+			case byIndex:
+				sel.selectByIndex(1);
+			default:
+				System.out.println("A selection must be made");
+				break;
+
+			}
+		} catch (Exception ex) {
+			throw ex;
+		}
+	} 
 }

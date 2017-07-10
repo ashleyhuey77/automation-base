@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import commonClasses.sharedUtils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
+import seleniumHelper.enums.SelectType;
 import seleniumHelper.interfaces.IActions;
 import seleniumHelper.interfaces.IWait;
 
@@ -309,30 +310,39 @@ public class ElementActions extends Commands implements IActions {
     }
 
 	@Override
-	public void selectFromDropDown(WebElement element, String value) {
-		try 
-		{
-	    	  Select sel =new Select(element);
-	          sel.deselectAll();
-	          sel.selectByValue(value);
-		} 
-		catch (Exception ex) {
-			throw ex;
-		}
-		
-	}
+	public void selectFromDropDown(WebElement element, String value, SelectType selectType) {
+	    	Select sel =new Select(element);
+	    	selectOption(sel, value, selectType);
+	} 	
 
 	@Override
-	public void selectFromDropDown(String selectorString, String by, String value) {
-        try
-        {
-        	Select select = new Select(LocalDriver.getDriver().findElement(getByValueBasedOnUserInput(selectorString, by)));
-            select.selectByVisibleText(value);
-        }
-        catch (WebDriverException ex)
-        {
-            throw ex;
-        }
+	public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType) {
+    	Select sel =new Select(getElement(selectorString, by));
+  		selectOption(sel, value, selectType);
+	}
+	
+	private void selectOption(Select select, String value, SelectType selectType) {
+		try 
+  		{
+  			switch (selectType) 
+  			{
+	  			case byValue:
+	  				select.selectByValue(value);
+	  				break;
+	  			case byVisibleText:
+	  				select.selectByVisibleText(value);
+	  				break;
+	  			case byIndex:
+	  				select.selectByIndex(1);
+	  			default:
+	  				System.out.println("A selection must be made");
+	  				break;
+  			}
+  		} 
+  		catch (Exception ex) 
+  		{
+  			throw ex;
+  		}
 	}
 
 }
