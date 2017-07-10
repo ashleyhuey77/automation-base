@@ -1,8 +1,8 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.managers;
 
 import org.openqa.selenium.WebDriver;
 
-public class LocalDriverManager {
+public class LocalDriver {
 	
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
  

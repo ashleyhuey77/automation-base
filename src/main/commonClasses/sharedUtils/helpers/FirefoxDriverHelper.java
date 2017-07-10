@@ -1,4 +1,4 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 import java.util.Collections;
 import java.util.Set;
@@ -6,7 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class FirefoxDriverFactory {
+import commonClasses.sharedUtils.TestUtils;
+
+public class FirefoxDriverHelper {
 	
 	public static final InheritableThreadLocal<FirefoxDriver> driver;
 	private static final Set<FirefoxDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());

@@ -1,88 +1,21 @@
-package commonClasses.sharedUtils;
-
-
+package commonClasses.sharedUtils.builders;
 
 public class TestSettings {
 	
-	private static String applicationUrl;
-	private static String newstronEncryptedUserName;
-	private static String newstronEncryptedPassword;
-	private static String environment;
-	private static String browser;
-	private static Boolean isHeadless;
-	private static String miraEncryptedUserName;
-	private static String miraEncryptedPassword;
+	private Environment environment;
+	private Credentials credentials;
 	
-	public static String getApplicationUrl()
-	{
-		return applicationUrl;
+	public TestSettings(Environment environment, Credentials credentials) {
+		this.environment = environment;
+		this.credentials = credentials;
 	}
 	
-	public static void setApplicationUrl(String value)
-	{
-		applicationUrl = value;
-	}
-	
-	public static String getNewstronEncryptedUserName()
-	{
-		return newstronEncryptedUserName;
-	}
-	
-	public static void setNewstronEncryptedUserName(String value)
-	{
-		newstronEncryptedUserName = value;
-	}
-	
-	public static String getNewstronEncryptedPassword()
-	{
-		return newstronEncryptedPassword;
-	}
-	
-	public static void setNewstronEncryptedPassword(String value)
-	{
-		newstronEncryptedPassword = value;
-	}
-	
-	public static String getEnvironment()
-	{
+	public Environment getEnvironment() {
 		return environment;
 	}
 	
-	public static void setEnvironment(String value)
-	{
-		environment = value;
-	}
-	
-	public static String getBrowser()
-	{
-		return browser;
-	}
-	
-	public static void setBrowser(String value)
-	{
-		browser = value;
-	}
-	
-	public static Boolean getIsHeadless()
-	{
-		return isHeadless;
-	}
-	
-	public static void setIsHeadless(Boolean value)
-	{
-		isHeadless = value;
-	}
-	public static String getMiraEncryptedUserName() {
-		return miraEncryptedUserName;
-	}
-	public static void setMiraEncryptedUserName(String value) {
-		miraEncryptedUserName = value;
-	}
-	public static String getMiraEncryptedPassword() {
-		return miraEncryptedPassword;
-	}
-	public static void setMiraEncryptedPassword(String value) {
-		miraEncryptedPassword = value;
+	public Credentials getCredentials() {
+		return credentials;
 	}
 
 }

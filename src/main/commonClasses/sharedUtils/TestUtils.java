@@ -40,5 +40,9 @@ public class TestUtils {
             //Trace.WriteLine("Trace: " + frameWorkRelativePath);
             return getFrameWorkRelativePath;
     }
+    
+	public static boolean isNullOrBlank(String param) { 
+	    return param == null || param.trim().length() == 0;
+	}
 
 }

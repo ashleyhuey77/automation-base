@@ -1,44 +1,47 @@
 package commonClasses.sharedUtils;
 
-import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
+import commonClasses.sharedUtils.enums.Drivers;
+import commonClasses.sharedUtils.facades.HelperFacade;
+import commonClasses.sharedUtils.managers.LocalDriver;
+import commonClasses.sharedUtils.managers.LocalTest;
 
 public class WebDriverListener implements IInvokedMethodListener {
 	
 	public static int testNumber = 0;
 	 
-    @Override
+	@Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult){
     	try 
     	{
-			LocalTestManager.initializeSettings();
+			LocalTest.initializeSettings();
 		} 
-    	catch (IOException e) 
+    	catch (Exception e) 
     	{
 			e.printStackTrace();
 		}
         if (method.toString().toLowerCase().contains("beforescenario")) {
         	WebDriver driver = null;
 			try {
-				driver = LocalDriverFactory.createInstance(TestSettings.getBrowser(), TestSettings.getIsHeadless());
-			} catch (IOException e) {
+				driver = HelperFacade.getDriver(
+						Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()), 
+						LocalTest.getEnvironment().isHeadlessEnabled());
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            LocalDriverManager.setDriver(driver);
+            LocalDriver.setDriver(driver);
             testNumber ++;
             System.out.println("Now executing test number: " + testNumber);
-            LocalTestManager.setTestName(method.getTestMethod().getMethodName());
         }
     }
  
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-    	WebDriver driver = LocalDriverManager.getDriver();
+    	WebDriver driver = LocalDriver.getDriver();
 	    	if(method.toString().toLowerCase().contains("afterscenario")){
 	    		try {
 		            if (driver != null) {

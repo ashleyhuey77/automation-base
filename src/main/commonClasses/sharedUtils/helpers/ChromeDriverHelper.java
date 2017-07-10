@@ -1,4 +1,4 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -10,12 +10,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class ChromeDriverFactory {
+import commonClasses.sharedUtils.TestUtils;
+import commonClasses.sharedUtils.contexts.HeadlessContext;
+import commonClasses.sharedUtils.interfaces.State;
+import commonClasses.sharedUtils.states.HeadlessStartState;
+import commonClasses.sharedUtils.states.HeadlessStopState;
+
+public class ChromeDriverHelper {
 	
 	public ThreadLocal<WebDriver> driver;
 	private Set<WebDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	
-	public ChromeDriverFactory(Boolean isHeadless) throws IOException
+	public ChromeDriverHelper(Boolean isHeadless) throws IOException
 	 {
 		System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
     	System.setProperty("java.awt.headless", Boolean.toString(isHeadless));
@@ -23,12 +29,19 @@ public class ChromeDriverFactory {
     	caps.setJavascriptEnabled(true);
     	caps.setCapability("takesScreenshot", true);
     	ChromeOptions options = new ChromeOptions();
+    	HeadlessContext context = new HeadlessContext();
     	if (isHeadless)
     	{
-    		options.addArguments("headless");
-    		options.addArguments("disable-gpu");
-    		//options.addArguments("screenshot");
+    		State headlessStartState = new HeadlessStartState();
+    		context.setState(headlessStartState);
+    		context.doAction(options);
     	}
+    	else 
+    	{
+			State headlessStopState = new HeadlessStopState();
+			context.setState(headlessStopState);
+			context.doAction(options);
+		}
     	options.addArguments("disable-extensions");
     	caps.setCapability(ChromeOptions.CAPABILITY, options);
 		

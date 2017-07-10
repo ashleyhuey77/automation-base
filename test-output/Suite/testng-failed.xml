@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="6" name="Failed suite [Suite]" parallel="methods">
+  <test name="Regression(failed)" parallel="methods" preserve-order="true">
+    <classes>
+      <class name="unitTests.seleniumHelperTests.EnterTests">
+        <methods>
+          <include name="afterScenario"/>
+          <include name="beforeScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.ClickTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.PageClassTests">
+        <methods>
+          <include name="verifyTheExpectedValueNull_contains"/>
+          <include name="verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery"/>
+          <include name="AfterScenario"/>
+          <include name="BeforeScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.BrowserTests">
+        <methods>
+          <include name="afterScenario"/>
+          <include name="beforeScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.TextTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.ActionsTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.WaitTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.ElementTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+      <class name="unitTests.seleniumHelperTests.PageTests">
+        <methods>
+          <include name="beforeScenario"/>
+          <include name="afterScenario"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

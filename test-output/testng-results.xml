@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="3578" started-at="2017-07-07T12:57:50Z" finished-at="2017-07-07T12:57:54Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="3578" started-at="2017-07-07T12:57:50Z" finished-at="2017-07-07T12:57:54Z">
+      <class name="unitTests.PageClassTests">
+        <test-method status="PASS" signature="BeforeScenario(java.lang.reflect.Method)[pri:0, instance:unitTests.PageClassTests@7225790e]" name="BeforeScenario" is-config="true" duration-ms="2890" started-at="2017-07-07T12:57:50Z" finished-at="2017-07-07T12:57:53Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void unitTests.PageClassTests.verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery() throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery()[pri:0, instance:unitTests.PageClassTests@7225790e]" name="verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery" duration-ms="402" started-at="2017-07-07T12:57:53Z" finished-at="2017-07-07T12:57:54Z">
+        </test-method>
+        <test-method status="PASS" signature="AfterScenario()[pri:0, instance:unitTests.PageClassTests@7225790e]" name="AfterScenario" is-config="true" duration-ms="280" started-at="2017-07-07T12:57:54Z" finished-at="2017-07-07T12:57:54Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>

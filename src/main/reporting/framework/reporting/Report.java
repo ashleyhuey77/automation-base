@@ -13,11 +13,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-
-import commonClasses.sharedUtils.LocalDriverManager;
 import reporting.framework.utilities.FrameworkException;
 import reporting.framework.utilities.Util;
 

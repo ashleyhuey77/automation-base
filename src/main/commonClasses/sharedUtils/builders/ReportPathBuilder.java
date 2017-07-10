@@ -1,16 +1,19 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.builders;
 
 import java.io.File;
 import java.io.IOException;
 
-public class ReportPath {
+import commonClasses.sharedUtils.TestUtils;
+
+public class ReportPathBuilder {
 
     private static String reportPath;
-    private static ReportPath instance = null;
+    private static ReportPathBuilder instance = null;
+    public final static String RESULT_FOLDER = "Results";
 
-    protected ReportPath() throws IOException
+    protected ReportPathBuilder() throws IOException
     {
-    	File directory = new File(String.valueOf(FrameworkConstants.RESULT_FOLDER));
+    	File directory = new File(String.valueOf(RESULT_FOLDER));
     	if (!directory.exists())
     	{
     		directory.mkdir();
@@ -25,7 +28,7 @@ public class ReportPath {
     private String getLocalReportPath()
     {
             //return TestUtils.RelativePath + File.separator + FrameworkConstants.RESULT_FOLDER + File.separator + "Result_" + TestUtils.TimeStamp;
-    	String reportPath = TestUtils.getRelativePath() /*"/Users/ashleyhuey/Documents/workspace/Automation.Tests"*/+ "/" + FrameworkConstants.RESULT_FOLDER + "/" + "Result_" + TestUtils.getTimeStamp();
+    	String reportPath = TestUtils.getRelativePath() /*"/Users/ashleyhuey/Documents/workspace/Automation.Tests"*/+ "/" + RESULT_FOLDER + "/" + "Result_" + TestUtils.getTimeStamp();
             return reportPath;
     }
     
@@ -34,11 +37,11 @@ public class ReportPath {
         return reportPath;
     }
     
-    public static ReportPath getInstance() throws IOException
+    public static ReportPathBuilder getInstance() throws IOException
     {
     	if (instance == null)
         {
-    		instance = new ReportPath();
+    		instance = new ReportPathBuilder();
         }
         return instance;
     }

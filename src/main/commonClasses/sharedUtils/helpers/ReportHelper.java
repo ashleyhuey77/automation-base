@@ -1,20 +1,18 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 
 import java.io.IOException;
 
+import commonClasses.sharedUtils.HtmlReport;
 import reporting.framework.utilities.FrameworkException;
 
-public class Report {
+public class ReportHelper {
 	
 	private HtmlReport htmlReport;
-    @SuppressWarnings("unused")
-	private MsTESTReport msTestReport;
 	
-	public Report(HtmlReport htmlReport, MsTESTReport msTestReport)
+	public ReportHelper(HtmlReport htmlReport)
 	{
 		this.htmlReport = htmlReport;
-        this.msTestReport = msTestReport;
 	}
 	
 	public void reportDoneEvent(String description) throws FrameworkException, IOException
@@ -31,7 +29,6 @@ public class Report {
 		String message = "StepName: " + stepName + "\n ErrorMessage : " + webDriverException.getMessage();
         FrameworkException assertionFailedException = new FrameworkException(message);
         return assertionFailedException;
-        //throw assertionFailedException;
 	}
 
 }

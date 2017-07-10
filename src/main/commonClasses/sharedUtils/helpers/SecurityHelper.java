@@ -1,4 +1,4 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Security {
+public class SecurityHelper {
 
 	    private static SecretKeySpec createSecretKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
 	    	byte[] salt = new String("12345678").getBytes();

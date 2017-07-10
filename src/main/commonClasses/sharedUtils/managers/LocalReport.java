@@ -1,28 +1,22 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.managers;
 
-public class LocalReportManager {
+import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.helpers.ReportHelper;
+
+public class LocalReport {
 	
-	private static ThreadLocal<Report> report = new ThreadLocal<Report>();
-	private static ThreadLocal<MsTESTReport> msTestReport = new ThreadLocal<MsTESTReport>();
+	private static ThreadLocal<ReportHelper> report = new ThreadLocal<ReportHelper>();
 	private static ThreadLocal<HtmlReport> HtmlReport = new ThreadLocal<HtmlReport>();
 	 
-    public static Report getReport() {
+    public static ReportHelper getReport() {
     	return report.get();
     }
     
-    public static void setReport(Report inreport)
+    public static void setReport(ReportHelper inreport)
     {
     	report.set(inreport);
     }
-    
-    public static MsTESTReport getMsTestReport() {
-    	return msTestReport.get();
-    }
-    
-    public static void setMsTestReport(MsTESTReport inMsReport) {
-    	msTestReport.set(inMsReport);
-    }
-    
+   
     public static HtmlReport getHtmlReport() {
     	return HtmlReport.get();
     }

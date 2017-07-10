@@ -1,20 +1,19 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 
 import java.io.IOException;
 
+import commonClasses.sharedUtils.HtmlReport;
 import junit.framework.AssertionFailedError;
 import reporting.framework.utilities.FrameworkException;
 
-public class Validations {
+public class ValidationsHelper {
 	
 	private HtmlReport htmlReport;
-    private MsTESTReport msTestReport;
 	
-	public Validations(HtmlReport htmlReport, MsTESTReport msTestReport)
+	public ValidationsHelper(HtmlReport htmlReport)
 	{
 		this.htmlReport = htmlReport;
-        this.msTestReport = msTestReport;
 	}
 	
 	public void assertionPass(String message) throws FrameworkException, IOException
@@ -30,7 +29,7 @@ public class Validations {
 		AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
 			htmlReport.reportFailEvent(stepName, message);
 			System.out.println(assertionFailedError.toString());
-			FrameworkException ex = msTestReport.reportAssertionFailed(assertionFailedError);
+			FrameworkException ex = reportAssertionFailed(assertionFailedError);
 			return ex;
     }
 	
@@ -39,6 +38,13 @@ public class Validations {
         String message = "StepName: " + stepName + "\n ErrorMessage : " + errorMessage;
         AssertionFailedError assertionFailedError = new AssertionFailedError(message);
         return assertionFailedError;
+    }
+	
+    private FrameworkException reportAssertionFailed(AssertionFailedError assertionFailedError) throws FrameworkException
+    {
+    	FrameworkException exception = new FrameworkException(assertionFailedError.toString());
+    	System.out.println(exception);
+    	return exception;
     }
 
 }

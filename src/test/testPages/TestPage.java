@@ -3,19 +3,18 @@ package testPages;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import commonClasses.sharedPageClasses.PageTemplate;
 
-import commonClasses.sharedPageClasses.Page;
 
-
-public class TestPage extends Page {
+public class TestPage extends PageTemplate {
 
 	public TestPage() throws Exception {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
-	protected void WaitForPageLoad() throws Exception {
+	public void WaitForPageLoad() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -23,7 +22,7 @@ public class TestPage extends Page {
 	public String someRandomString(int length, String value) throws Exception
 	{
 		String someValue = null;
-		someValue = randomString(length, value);
+		someValue = randomStringAtSetLength(length, value);
 		return someValue;
 	}
 	

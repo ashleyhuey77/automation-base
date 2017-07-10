@@ -1,14 +1,16 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.managers;
 
-public class LocalValidationManager {
+import commonClasses.sharedUtils.helpers.ValidationsHelper;
+
+public class LocalValidation {
 	
-	private static ThreadLocal<Validations> validations = new ThreadLocal<Validations>();
+	private static ThreadLocal<ValidationsHelper> validations = new ThreadLocal<ValidationsHelper>();
 	 
-    public static Validations getValidations() {
+    public static ValidationsHelper getValidations() {
     	return validations.get();
     }
     
-    public static void setValidations(Validations invalidations)
+    public static void setValidations(ValidationsHelper invalidations)
     {
     	validations.set(invalidations);
     }

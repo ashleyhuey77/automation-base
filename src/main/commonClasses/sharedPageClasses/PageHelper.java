@@ -9,39 +9,36 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import commonClasses.sharedUtils.*;
-import seleniumHelper.seleniumHelper.*;
+import commonClasses.sharedUtils.managers.LocalDriver;
+import commonClasses.sharedUtils.managers.LocalReport;
+import commonClasses.sharedUtils.managers.LocalValidation;
+import commonClasses.sharedUtils.managers.SHelper;
+import seleniumHelper.enums.*;
 
 
-public abstract class Page {
+public abstract class PageHelper {
 	
-/*	protected Validations validations;
-	protected Report report;*/
-	//public static ThreadLocal<WebDriver> browser;
-	protected static SeleniumHelper seleniumHelper;
+	protected static String cssSelector = IdentifyBy.CssSelector.toString();
+    protected static String id = IdentifyBy.Id.toString();
+    protected static String name = IdentifyBy.Name.toString();
+    protected static String xpath = IdentifyBy.Xpath.toString();
+    protected static String className = IdentifyBy.ClassName.toString();
+    protected static String tagName = IdentifyBy.TagName.toString();
+    protected static String linkText = IdentifyBy.LinkText.toString();
+    protected static String partialLinkText = IdentifyBy.PartialLinkText.toString();
 	
-	protected static java.lang.String cssSelector = LookUp.IdentifyBy.CssSelector.toString();
-    protected static java.lang.String id = LookUp.IdentifyBy.Id.toString();
-    protected static java.lang.String name = LookUp.IdentifyBy.Name.toString();
-    protected static java.lang.String xpath = LookUp.IdentifyBy.Xpath.toString();
-    protected static java.lang.String className = LookUp.IdentifyBy.ClassName.toString();
-    protected static java.lang.String tagName = LookUp.IdentifyBy.TagName.toString();
-    protected static java.lang.String linkText = LookUp.IdentifyBy.LinkText.toString();
-    protected static java.lang.String partialLinkText = LookUp.IdentifyBy.PartialLinkText.toString();
-	
-	public Page () throws Exception
-	{
-		WebDriver browser = LocalDriverManager.getDriver();
-		seleniumHelper = new SeleniumHelper();
-		PageFactory.initElements(browser, this);
-        WaitForPageLoad();
+	public PageHelper () throws Exception {
+		
 	}
-	
-	protected abstract void WaitForPageLoad() throws Exception;
 	
 	 /**	
 	  	*<summary>
@@ -60,28 +57,28 @@ public abstract class Page {
 	{
 		try
         {
-            if (seleniumHelper.isElementDisplayedInThePage(webElement, byValue, 5))
+            if (SHelper.get().element().isDisplayed(webElement, byValue, 5))
             {
-            	seleniumHelper.waitForElementToBeClickable(webElement, byValue, 40);
-                seleniumHelper.click(webElement, byValue);
-                seleniumHelper.clearAllTextByBackspacing(webElement, byValue);
+            	SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(webElement, byValue, 40);
+                SHelper.get().click(Via.SELENIUM).on(webElement, byValue);
+                clearAllTextByBackspacing(webElement, byValue);
 
-                if (!ExtensionMethods.isNullOrBlank(value))
+                if (!TestUtils.isNullOrBlank(value))
                 {
-                	seleniumHelper.clear(webElement, byValue);
-                	seleniumHelper.click(webElement, byValue);
-                    seleniumHelper.sendKeys(webElement, byValue, value);
+                	SHelper.get().enter().clear(webElement, byValue);
+                	SHelper.get().click(Via.SELENIUM).on(webElement, byValue);
+                    SHelper.get().enter().textInto(webElement, byValue, value);
                 }
-                LocalReportManager.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
+                LocalReport.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
             }
             else
             {
-                throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+                throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
             }
         }
         catch (Exception ex)
         {
-            throw LocalReportManager.getReport().reportException(ex);
+            throw LocalReport.getReport().reportException(ex);
         }
 	}
 	
@@ -103,28 +100,28 @@ public abstract class Page {
 	{
 		try
        {
-           if (seleniumHelper.isElementDisplayedInThePage(webElement, 5))
+           if (SHelper.get().element().isDisplayed(webElement, 5))
            {
-        	   seleniumHelper.waitForElementToBeClickable(webElement, 40);
-               seleniumHelper.click(webElement);
-               seleniumHelper.clearAllTextByBackspacing(webElement);
+        	   SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(webElement, 40);
+               SHelper.get().click(Via.SELENIUM).on(webElement);
+               clearAllTextByBackspacing(webElement);
 
-               if (!ExtensionMethods.isNullOrBlank(value))
+               if (!TestUtils.isNullOrBlank(value))
                {
-               		seleniumHelper.clear(webElement);
-               		seleniumHelper.click(webElement);
-                   seleniumHelper.sendKeys(webElement, value);
+               		SHelper.get().enter().clear(webElement);
+               		SHelper.get().click(Via.SELENIUM).on(webElement);
+                   SHelper.get().enter().textInto(webElement, value);
                }
-               LocalReportManager.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
+               LocalReport.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
            }
            else
            {
-               throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
+               throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " does not display as expected. Unable to enter text in this field.");
            }
        }
        catch (Exception ex)
        {
-           throw LocalReportManager.getReport().reportException(ex);
+           throw LocalReport.getReport().reportException(ex);
        }
 	}
 	
@@ -145,20 +142,20 @@ public abstract class Page {
 	{
 		try
 		{
-			if (seleniumHelper.isElementDisplayedInThePage(html, byValue, 5))
+			if (SHelper.get().element().isDisplayed(html, byValue, 5))
 			{
-				seleniumHelper.waitForElementToBeClickable(html, byValue, 40);
-				seleniumHelper.click(html, byValue);
-				LocalReportManager.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
+				SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(html, byValue, 40);
+				SHelper.get().click(Via.SELENIUM).on(html, byValue);
+				LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed("Element is not on the page. Unable to click the " + elementBeingTested);
+				throw LocalValidation.getValidations().assertionFailed("Element is not on the page. Unable to click the " + elementBeingTested);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -183,24 +180,24 @@ public abstract class Page {
 	{
 		try
 		{
-			if (seleniumHelper.isElementDisplayedInThePage(clickElement, clickByValue, 10)){
+			if (SHelper.get().element().isDisplayed(clickElement, clickByValue, 10)){
 				
 				clickSomeElement(clickElement, clickByValue, elementBeingTested);
 				Thread.sleep(600);
 				enterAvalueIntoATextField(option, searchElement, searchByValue, elementBeingTested);
-				seleniumHelper.waitForElementToLoad(optionsElement, optionsByValue, 10);
+				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
 				Thread.sleep(900);
-				List<WebElement> listOfOptions = seleniumHelper.getElements(optionsElement, optionsByValue);
+				List<WebElement> listOfOptions = SHelper.get().element().getListOf(optionsElement, optionsByValue);
 				findOptionInListAndSelectIt(listOfOptions, optionsElement, option, clickViaJQuery);
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw LocalValidation.getValidations().assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -224,23 +221,23 @@ public abstract class Page {
 	{
 		try
 		{
-			if (seleniumHelper.isElementDisplayedInThePage(clickElement, 5)){
+			if (SHelper.get().element().isDisplayed(clickElement, 5)){
 				
-				seleniumHelper.waitForElementToBeClickable(clickElement, 40);
-				seleniumHelper.click(clickElement);
+				SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(clickElement, 40);
+				SHelper.get().click(Via.SELENIUM).on(clickElement);
 				enterAvalueIntoATextField(option, searchElement, elementBeingTested);
-				seleniumHelper.waitForElementToLoad(optionsElement, optionsByValue, 10);
-				List<WebElement> listOfOptions = seleniumHelper.getElements(optionsElement, optionsByValue);
+				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
+				List<WebElement> listOfOptions = SHelper.get().element().getListOf(optionsElement, optionsByValue);
 				findOptionInListAndSelectIt(listOfOptions, optionsElement, option, clickViaJQuery);
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				throw LocalValidation.getValidations().assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -262,18 +259,18 @@ public abstract class Page {
 	{
 		try
 		{
-			if (seleniumHelper.isElementDisplayedInThePage(elementHtml, byValue, 10))
+			if (SHelper.get().element().isDisplayed(elementHtml, byValue, 10))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " displays in the page as expected.");
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " displays in the page as expected.");
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " should display in the page. It does not display as expected.");
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " should display in the page. It does not display as expected.");
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -296,18 +293,18 @@ public abstract class Page {
 
 		try
 		{
-			if (!seleniumHelper.isElementDisplayedInThePage(elementHtml, byValue, 5))
+			if (!SHelper.get().element().isDisplayed(elementHtml, byValue, 5))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " should not display in the page. It does display. This is not expected.");
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " should not display in the page. It does display. This is not expected.");
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -333,7 +330,7 @@ public abstract class Page {
 	{
 		try
 		{
-			String actualText = seleniumHelper.getTextFromWebElement(elementHtml, byValue);
+			String actualText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(elementHtml, byValue);
 			
 			if (removeAllSpaces)
 			{
@@ -343,16 +340,16 @@ public abstract class Page {
 			
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " contains the correct text: " + actualText);
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " contains the correct text: " + actualText);
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -377,7 +374,7 @@ public abstract class Page {
 	{
 		try
 		{
-			String actualText = seleniumHelper.getTextFromWebElement(element);
+			String actualText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 		
 			if (removeAllSpaces)
 			{
@@ -387,16 +384,16 @@ public abstract class Page {
 		
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " contains the correct text: " + actualText);
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " contains the correct text: " + actualText);
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: " + expectedText + ". Actual text: " + actualText);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 
@@ -427,35 +424,35 @@ public abstract class Page {
 			for (int i = 0; i < webElements.size(); i++)
 			{
 				WebElement element = webElements.get(i);
-				String actualOption = seleniumHelper.getTextFromWebElement(element);
+				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 				if (actualOption.toLowerCase().trim().equals(expectedOption.toLowerCase().trim()))
 				{
 					if (clickViaJQuery)
 					{
-						seleniumHelper.waitForElementToBeClickable(element, 40);
+						SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(element, 40);
 							String iString = Integer.toString(i);
-							seleniumHelper.clickViaJQuery(webelementListHtml, iString);
+							SHelper.get().click(Via.JQUERY).on(webelementListHtml, iString);
 					}
 					else
 					{
-						seleniumHelper.waitForElementToBeClickable(element, 40);
-						seleniumHelper.click(element);
+						SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(element, 40);
+						SHelper.get().click(Via.SELENIUM).on(element);
 					}
 					
 					value = actualOption;
-					LocalReportManager.getReport().reportDoneEvent(expectedOption + " has been selected successfully.");
+					LocalReport.getReport().reportDoneEvent(expectedOption + " has been selected successfully.");
 					break;
 				}
 			}
 			
 			if (value == null)
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(expectedOption + " is not found in the list of available options. Unable to select the expected option.");
+				throw LocalValidation.getValidations().assertionFailed(expectedOption + " is not found in the list of available options. Unable to select the expected option.");
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -481,19 +478,19 @@ public abstract class Page {
 	{
 		try
 		{
-			String actualValueInTextBox = seleniumHelper.getTextInTextBoxViaJavascript(html, byValue, requiresIndex, webElementIndex);
-			if (ExtensionMethods.isNullOrBlank(actualValueInTextBox))
+			String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue, webElementIndex);
+			if (TestUtils.isNullOrBlank(actualValueInTextBox))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " is blank as expected.");
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " is blank as expected.");
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " should be blank but is retaining a value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}		
 	}
 	
@@ -520,7 +517,7 @@ public abstract class Page {
 	{
 		try
 		{
-			String actualValueInTextBox = seleniumHelper.getTextInTextBoxViaJavascript(html, byValue, requiresIndex, webElementIndex);
+			String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue, webElementIndex);
 			if (actualValueInTextBox.contains("\n"))
 			{
 				actualValueInTextBox = actualValueInTextBox.replace("\n", " ");
@@ -534,16 +531,16 @@ public abstract class Page {
 			
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim()))
 			{
-				LocalValidationManager.getValidations().assertionPass(elementBeingTested + " contains " + actualValueInTextBox + " as expected.");
+				LocalValidation.getValidations().assertionPass(elementBeingTested + " contains " + actualValueInTextBox + " as expected.");
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(elementBeingTested + " should contain " + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
+				throw LocalValidation.getValidations().assertionFailed(elementBeingTested + " should contain " + expectedText + " but is retaining an incorrect value instead. The value being retained is " + actualValueInTextBox);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	
@@ -663,7 +660,7 @@ public abstract class Page {
 	 */	
     protected void cleanUp(String value)
     {
-    	if (!ExtensionMethods.isNullOrBlank(value))
+    	if (!TestUtils.isNullOrBlank(value))
 		{
 			value = null;
 		}
@@ -685,11 +682,11 @@ public abstract class Page {
 	{
 			if (variable != null)
 			{
-				LocalValidationManager.getValidations().assertionPass(passMessage);
+				LocalValidation.getValidations().assertionPass(passMessage);
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(failMessage);
+				throw LocalValidation.getValidations().assertionFailed(failMessage);
 			}
 	}
 	
@@ -723,7 +720,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 		return result;
 	}
@@ -742,26 +739,26 @@ public abstract class Page {
 	{
 		try
 		{
-			if (!ExtensionMethods.isNullOrBlank(expectedValue) &&
-				!ExtensionMethods.isNullOrBlank(actualValue))
+			if (!TestUtils.isNullOrBlank(expectedValue) &&
+				!TestUtils.isNullOrBlank(actualValue))
 			{
 				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim()))
 				{
-					LocalValidationManager.getValidations().assertionPass(actualValue + " is set correctly in " + variableBeingTested);
+					LocalValidation.getValidations().assertionPass(actualValue + " is set correctly in " + variableBeingTested);
 				}
 				else
 				{
-					throw LocalValidationManager.getValidations().assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw LocalValidation.getValidations().assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
-				throw LocalValidationManager.getValidations().assertionFailed(variableBeingTested + " returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: " + actualValue + ". Expected: " + expectedValue);
+				throw LocalValidation.getValidations().assertionFailed(variableBeingTested + " returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: " + actualValue + ". Expected: " + expectedValue);
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 	/**	
@@ -792,7 +789,7 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 		return addedDay;
 	}
@@ -810,34 +807,34 @@ public abstract class Page {
 	{
 		try
 		{
-			if (!ExtensionMethods.isNullOrBlank(expectedValue) &&
-				!ExtensionMethods.isNullOrBlank(actualValue))
+			if (!TestUtils.isNullOrBlank(expectedValue) &&
+				!TestUtils.isNullOrBlank(actualValue))
 			{
 				if(actualValue.toLowerCase().trim().contains(expectedValue.toLowerCase().trim()))
 					
 				{
-					LocalValidationManager.getValidations().assertionPass(actualValue + " is set correctly in " + variableBeingTested);
+					LocalValidation.getValidations().assertionPass(actualValue + " is set correctly in " + variableBeingTested);
 				}
 				else
 				{
-					throw LocalValidationManager.getValidations().assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+					throw LocalValidation.getValidations().assertionFailed(expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			}
 			else
 			{
-				if (ExtensionMethods.isNullOrBlank(expectedValue))
+				if (TestUtils.isNullOrBlank(expectedValue))
 				{
-					throw LocalValidationManager.getValidations().assertionFailed(variableBeingTested + " returned null. Variable was not expected to return null.");
+					throw LocalValidation.getValidations().assertionFailed(variableBeingTested + " returned null. Variable was not expected to return null.");
 				}
-				else if (ExtensionMethods.isNullOrBlank(actualValue))
+				else if (TestUtils.isNullOrBlank(actualValue))
 				{
-					throw LocalValidationManager.getValidations().assertionFailed(variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
+					throw LocalValidation.getValidations().assertionFailed(variableBeingTested + " returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately.");
 				}
 			}
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 	}
 
@@ -851,7 +848,7 @@ public abstract class Page {
 	 * @return String
 	 * @throws Exception
 	 */
-	protected String randomString(int length, String value) throws Exception
+	protected String randomStringAtRandomLength(int length, String value) throws Exception
 	{
 		StringBuilder sb = new StringBuilder( length );
 		try
@@ -870,9 +867,157 @@ public abstract class Page {
 		}
 		catch (Exception ex)
 		{
-			throw LocalReportManager.getReport().reportException(ex);
+			throw LocalReport.getReport().reportException(ex);
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * <summary>
+	 * Method to generate a random string of text
+	 * </summary>
+	 * @param length the total length that the random string of text should be when completed
+	 * @param value the String of characters that will be used to create the random string of text. Method takes the
+	 * 			    the characters in this string and scrambles them to generte thte random string.
+	 * @return String
+	 * @throws Exception
+	 */
+	protected String randomStringAtSetLength(int length, String value) throws Exception
+	{
+		StringBuilder sb = new StringBuilder( length );
+		try
+		{
+				SecureRandom rnd = new SecureRandom();
+				for( int i = 0; i < length; i++ )
+				{
+					sb.append( value.charAt( rnd.nextInt(value.length()) ) );
+				}
+		}
+		catch (Exception ex)
+		{
+			throw LocalReport.getReport().reportException(ex);
+		}
+		return sb.toString();
+	}
+	
+    /**
+     * <summary> 
+     * method to clear a field by selecting all text and backspacing
+     * </summary>
+		@param selectorString the webelement selector string necessary for the webelement to be found
+		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
+  			      WebElement to be found
+     * @return void
+     */
+    protected void clearAllTextByBackspacing(String selectorString, String by)
+    {
+        try
+        {
+            SHelper.get().enter().textInto(selectorString, by, Keys.CONTROL + "a");
+            SHelper.get().enter().textInto(selectorString, by, Keys.BACK_SPACE);
+        }
+        catch (WebDriverException ex)
+        {
+            throw ex;
+        }
+    }
+    
+
+    /**
+     * <summary> 
+     * method to clear a field by selecting all text and backspacing
+     * </summary>
+		@param element a webelement that is defined and found in the calling method
+     * @return void
+     */
+    protected void clearAllTextByBackspacing(WebElement element)
+    {
+        try
+        {
+        	SHelper.get().enter().textInto(element, Keys.CONTROL + "a");
+        	SHelper.get().enter().textInto(element, Keys.BACK_SPACE);
+        }
+        catch (WebDriverException ex)
+        {
+            throw ex;
+        }
+    }
+    
+    /**
+     * <summary>Refresh a page and wial for element to display</summary>
+     * @param selectorString
+     * @param by
+     * @param i
+     */
+    public void refreshPageAndWaitForElementToDisplay(String selectorString, String by, int i)
+    {
+    	WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
+
+		wait.until(new ExpectedCondition<Boolean>() {
+            	public Boolean apply(WebDriver driver) {
+            				Boolean result = false;
+            				SHelper.get().page().refresh();
+            				try {
+								Thread.sleep(900);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                         	try
+                         	{
+                         		if(SHelper.get().element().isDisplayed(SHelper.get().element().get(selectorString, by), 10))
+                         		{
+                         			result = true;
+                         			return result;
+                         		}
+                         		else 
+                         		{
+                         			return result;
+								}
+                         	}
+                         	catch (StaleElementReferenceException ex)
+                         	{
+                         		return result;
+                         	}
+		   		};
+		});
+    }
+    
+	/**
+	 * <summary>Method to extract digits from strings</summary>
+	 * 
+	 * @param locator
+	 * @param type
+	 * @return String
+	 */
+	protected String getNumbersFromString(String locator, String type) throws Exception {
+		String z = null;
+		try 
+		{
+			z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator, type);
+			return z.replaceAll("[^0-9]", "");
+		} 
+		catch (Exception ex) 
+		{
+			throw LocalReport.getReport().reportException(ex);
+		}
+	}
+	
+	/**
+	 * <summary>retrieve number form field</summary>
+	 * @param elemnt
+	 * @return
+	 */
+	protected String getNumbersFromString(WebElement elemnt) throws Exception{
+		try 
+		{
+			String z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(elemnt);
+			return z.replaceAll("[^0-9]", "");
+		} 
+		catch (Exception ex) 
+		{
+			throw LocalReport.getReport().reportException(ex);
+		}
 	}
 	
 }

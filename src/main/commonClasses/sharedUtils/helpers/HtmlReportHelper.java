@@ -1,17 +1,19 @@
-package commonClasses.sharedUtils;
+package commonClasses.sharedUtils.helpers;
 
 import org.openqa.selenium.WebDriver;
 
+import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.builders.ReportPathBuilder;
 import reporting.framework.reporting.ReportSettings;
 import reporting.framework.reporting.ReportThemeFactory;
 
-public class HtmlReportFactory {
+public class HtmlReportHelper {
 	
 	public static HtmlReport initialize(HtmlReport htmlReport, WebDriver browser, String testScenarioName, String browserName) throws Exception
 	{
 		try
     	{
-	        String reportFilePath = ReportPath.getInstance().getReportPath();
+	        String reportFilePath = ReportPathBuilder.getInstance().getReportPath();
 	        String reportFileName = testScenarioName + "_" + browserName;
 	        ReportSettings reportSettings = new ReportSettings(reportFilePath, reportFileName);
 	
