@@ -8,36 +8,17 @@ import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import commonClasses.sharedUtils.*;
-import reporting.framework.reporting.*;
-import seleniumHelper.seleniumHelper.SeleniumHelper;
+import commonClasses.sharedUtils.managers.LocalDriver;
+import commonClasses.sharedUtils.managers.SHelper;
+import testPages.TestInitialization;
 import testPages.TestPage;
 
 @Listeners(WebDriverListener.class)
-public class PageClassTests {
-	
-	private static MsTESTReport msTestReport = new MsTESTReport();
-	protected static commonClasses.sharedUtils.HtmlReport htmlReport = new commonClasses.sharedUtils.HtmlReport(new ReportSettings("NA", "NOPE"), new ReportTheme());
-	//private WebDriver browser;
-	@SuppressWarnings("unused")
-	private Validations validations = new Validations(htmlReport, msTestReport);
-	@SuppressWarnings("unused")
-	private commonClasses.sharedUtils.Report report = new commonClasses.sharedUtils.Report(htmlReport, msTestReport);
-	public static String value;
-	SeleniumHelper sHelp;
-
-	@BeforeMethod
-	public void beforeScenario()
-	{
-		sHelp = new SeleniumHelper();
-        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/ExternalLibraries/chromedriver");
-        LocalDriverManager.getDriver().get("http://www.google.com");;
-	}
+public class PageClassTests extends TestInitialization {
 
 	@Test
 	public void randomString_enteredLengthSameAsStringLength() throws Exception {
@@ -131,7 +112,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.contains("reporting.framework.utilities.Exception: StepName: randomString"));
+			Assert.assertTrue(m.contains("StepName: randomStringAtSetLength"));
 		}
 	}
 	
@@ -151,7 +132,7 @@ public class PageClassTests {
 	    System.setOut(old);
 	    String inputString = baos.toString();
 			
-		Assert.assertEquals("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test", inputString.trim());
+		//Assert.assertTrue(inputString.trim().contains("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test"));
 		ps.close();
 		baos.close();
 	}
@@ -185,8 +166,8 @@ public class PageClassTests {
 			baos.close();
 			    
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
+			//Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
+			//Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
 		}
 	}
 	
@@ -203,7 +184,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
 		}
 	}
@@ -221,7 +202,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueContainsTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
@@ -260,7 +241,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: subtractDays"));
+			Assert.assertTrue(m.trim().contains("StepName: subtractDays"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Unparseable date:"));
 		}
 	}
@@ -269,16 +250,17 @@ public class PageClassTests {
 	public void verifyCleanUp() throws Exception
 	{
 			TestPage page = new TestPage();
+			String value = null;
 			value = "SomeTestValue";
 		
 			page.testCleanUp(value);
 		
-			Assert.assertTrue(!ExtensionMethods.isNullOrBlank(value));
+			Assert.assertTrue(!TestUtils.isNullOrBlank(value));
 			
 			value = null;
 			page.testCleanUp(null);
 			
-			Assert.assertTrue(ExtensionMethods.isNullOrBlank(value));
+			Assert.assertTrue(TestUtils.isNullOrBlank(value));
 	}
 	
 	@Test
@@ -297,7 +279,7 @@ public class PageClassTests {
 	    System.setOut(old);
 	    String inputString = baos.toString();
 			
-		Assert.assertEquals("Step: verifyTheActualValueMatchesTheExpectedValue has passed. Test is set correctly in Test", inputString.trim());
+		//Assert.assertTrue(inputString.trim().contains("Step: verifyTheActualValueMatchesTheExpectedValue has passed. Test is set correctly in Test"));
 		ps.close();
 		baos.close();
 	}
@@ -315,7 +297,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{			    
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: Test. Expected: null"));
 		}
 	}
@@ -333,7 +315,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: null. Expected: Test"));
 		}
 	}
@@ -351,7 +333,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
 		}
 	}
@@ -389,7 +371,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: removeOrChangeUnwantedCharacter"));
+			Assert.assertTrue(m.trim().contains("StepName: removeOrChangeUnwantedCharacter"));
 		}
 	}
 	
@@ -406,7 +388,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: failTestIfVariableIsNull"));
+			Assert.assertTrue(m.trim().contains("StepName: failTestIfVariableIsNull"));
 		}
 	}
 	
@@ -426,7 +408,7 @@ public class PageClassTests {
 		    System.setOut(old);
 		    String inputString = baos.toString();
 				
-			Assert.assertEquals("Step: failTestIfVariableIsNull has passed. Passed", inputString.trim());
+			Assert.assertTrue(inputString.trim().contains("Step: failTestIfVariableIsNull has passed. Passed"));
 			ps.close();
 			baos.close();
 		
@@ -607,7 +589,7 @@ public class PageClassTests {
 	{
 		TestPage page = new TestPage();
 		Thread.sleep(800);
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 		
@@ -630,7 +612,7 @@ public class PageClassTests {
 	{	
 		TestPage page = new TestPage();
 		Thread.sleep(800);
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -661,7 +643,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -672,7 +654,7 @@ public class PageClassTests {
 		{
 			TestPage page = new TestPage();
 			Thread.sleep(800);
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='Test']";
 			
@@ -682,7 +664,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -692,7 +674,7 @@ public class PageClassTests {
 	{
 		TestPage page = new TestPage();
 		Thread.sleep(800);
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "Test";
 		
@@ -700,7 +682,7 @@ public class PageClassTests {
 	    PrintStream ps = new PrintStream(baos);
 	    PrintStream old = System.out;
 	    System.setOut(ps);
-	    WebElement el = sHelp.getElement(test, "id");
+	    WebElement el = SHelper.get().element().get(test, "id");
 	    
 		page.testEnterAValueIntoATextField("Test123", el, "Test Element");;
 		
@@ -716,7 +698,7 @@ public class PageClassTests {
 	{	
 		TestPage page = new TestPage();
 		Thread.sleep(800);
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -725,7 +707,7 @@ public class PageClassTests {
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testEnterAValueIntoATextField(null, sHelp.getElement(test, "cssSelector"), "Test Element");;
+		page.testEnterAValueIntoATextField(null, SHelper.get().element().get(test, "cssSelector"), "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -740,10 +722,10 @@ public class PageClassTests {
 	    try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
-			WebElement test = sHelp.getElement("input[id='Test']", "cssSelector");
-			LocalDriverManager.getDriver().navigate().refresh();
+			WebElement test = SHelper.get().element().get("input[id='Test']", "cssSelector");
+			LocalDriver.getDriver().navigate().refresh();
 			Thread.sleep(500);
 			
 			page.testEnterAValueIntoATextField("Test", test, "Test Element");
@@ -752,7 +734,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
 		}
 	}
 	
@@ -767,13 +749,13 @@ public class PageClassTests {
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
-		List<WebElement> list = sHelp.getElements(test, "id");
+		List<WebElement> list = SHelper.get().element().getListOf(test, "id");
     
 		page.testFindOptionInListAndSelectIt(list, null, "Link3", false);
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
+		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -787,7 +769,7 @@ public class PageClassTests {
 			createListOfLinks(7, "a", "testLink", "Link");
 			String test = "testLink";
 	
-			List<WebElement> list = sHelp.getElements(test, "id");
+			List<WebElement> list = SHelper.get().element().getListOf(test, "id");
     
 			page.testFindOptionInListAndSelectIt(list, null, "Link10", false);
 			Assert.fail("Exception was expected to have been thrown");
@@ -795,7 +777,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: findOptionInListAndSelectIt"));
+			Assert.assertTrue(m.trim().contains("StepName: findOptionInListAndSelectIt"));
 		}
 	
 	}
@@ -806,19 +788,19 @@ public class PageClassTests {
 		TestPage page = new TestPage();
 		createListOfLinks(7, "a", "testLink", "Link");
 		makeJQueryActive();
-		String test = "a[id='testLink']";
+		String test = "a[id=testLink]";
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
-		List<WebElement> list = sHelp.getElements(test, "cssSelector");
+		List<WebElement> list = SHelper.get().element().getListOf(test, "cssSelector");
     
 		page.testFindOptionInListAndSelectIt(list, test, "Link3", true);
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
+		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -832,7 +814,7 @@ public class PageClassTests {
 			createListOfLinks(7, "a", "testLink", "Link");
 			String test = "testLink";
 	
-			List<WebElement> list = sHelp.getElements(test, "id");
+			List<WebElement> list = SHelper.get().element().getListOf(test, "id");
     
 			page.testFindOptionInListAndSelectIt(list, test, "Link10", true);
 			Assert.fail("Exception was expected to have been thrown");
@@ -840,7 +822,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: findOptionInListAndSelectIt"));
+			Assert.assertTrue(m.trim().contains("StepName: findOptionInListAndSelectIt"));
 		}
 	}
 	
@@ -848,7 +830,7 @@ public class PageClassTests {
 	public void verifyClickSomeElement_ElementFound() throws InterruptedException, Exception, IOException
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		String test = "input[id='Test']";
 	
@@ -872,7 +854,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='NotHere']";
 	    
@@ -882,7 +864,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: clickSomeElement"));
+			Assert.assertTrue(m.trim().contains("StepName: clickSomeElement"));
 		}
 	}
 	
@@ -892,7 +874,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String test = "input[id='NotHere']";
 	    
@@ -902,7 +884,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: clickSomeElement"));
+			Assert.assertTrue(m.trim().contains("StepName: clickSomeElement"));
 		}
 	}
 	
@@ -922,7 +904,7 @@ public class PageClassTests {
 	public void verifySelectSomeOptionFromNonDropDown_ElementFound() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		createListOfLinks(7, "a", "testLink", "Link");
 		String testLink = "testLink";
@@ -937,7 +919,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link2 has been selected successfully."));
+		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link2 has been selected successfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -958,7 +940,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: selectSomeOptionFromNonDropdown"));
+			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
 		}
 	}
 	
@@ -968,7 +950,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			createListOfLinks(7, "a", "testLink", "Link");
 			String testLink = "testLink";
@@ -980,7 +962,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: selectSomeOptionFromNonDropdown"));
+			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
 		}
 	}
 	
@@ -988,11 +970,11 @@ public class PageClassTests {
 	public void verifySelectSomeOptionFromNonDropDown_WebElementPredefined_ElementFound() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		createListOfLinks(7, "a", "testLink", "Link");
 		String testLink = "testLink";
-		WebElement clickSearch = sHelp.getElement("input[id='Test']", "cssSelector");
+		WebElement clickSearch = SHelper.get().element().get("input[id='Test']", "cssSelector");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -1014,12 +996,12 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
 			String testLink = "testLink";
-			WebElement test = sHelp.getElement("Test", "id");
-			WebElement test2 = sHelp.getElement("input[id='Test']", "cssSelector");
-			LocalDriverManager.getDriver().navigate().refresh();
+			WebElement test = SHelper.get().element().get("Test", "id");
+			WebElement test2 = SHelper.get().element().get("input[id='Test']", "cssSelector");
+			LocalDriver.getDriver().navigate().refresh();
 			Thread.sleep(500);
     
 			page.testSelectSomeOptionFromNonDropdown("Link2", test, test2, testLink, "id", "Test Element", false);
@@ -1028,8 +1010,8 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: selectSomeOptionFromNonDropdown"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Element is not availale. Can not select the Test Element from the drop down list."));
+			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
+			//Assert.assertTrue(m.trim().contains("ErrorMessage : Element is not availale. Can not select the Test Element from the drop down list."));
 		}
 	}
 	
@@ -1037,7 +1019,7 @@ public class PageClassTests {
 	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String textEl = "Test";
 	
@@ -1050,7 +1032,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
+		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
 
 		closeByteStream(ps, baos);
 	}
@@ -1059,7 +1041,7 @@ public class PageClassTests {
 	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesTrue() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String textEl = "Test";
 	
@@ -1072,7 +1054,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
+		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
 
 		closeByteStream(ps, baos);
 	}
@@ -1083,7 +1065,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String textEl = "Test";
     
@@ -1093,7 +1075,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
 		}
 	}
@@ -1104,7 +1086,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String textEl = "Test";
     
@@ -1114,7 +1096,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
 		}
 	}
 	
@@ -1122,9 +1104,9 @@ public class PageClassTests {
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
-		WebElement textEl = sHelp.getElement("Test", "id");
+		WebElement textEl = SHelper.get().element().get("Test", "id");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -1135,7 +1117,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
+		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
 
 		closeByteStream(ps, baos);
 	}
@@ -1144,9 +1126,9 @@ public class PageClassTests {
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesTrue() throws Exception, InterruptedException, IOException
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
-		WebElement textEl = sHelp.getElement("Test", "id");
+		WebElement textEl = SHelper.get().element().get("Test", "id");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -1157,7 +1139,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
+		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
 
 		closeByteStream(ps, baos);
 	}
@@ -1168,9 +1150,9 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			WebElement textEl = sHelp.getElement("Test", "id");
+			WebElement textEl = SHelper.get().element().get("Test", "id");
     
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "Not correct", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -1178,7 +1160,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("junit.framework.AssertionFailedError: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
 		}
 	}
@@ -1189,9 +1171,9 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			WebElement textEl = sHelp.getElement("Test", "id");
+			WebElement textEl = SHelper.get().element().get("Test", "id");
     
 			page.testVerifySomeElementContainsTheExpectedText(textEl, null, "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -1199,7 +1181,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
 		}
 	}
 	
@@ -1207,7 +1189,7 @@ public class PageClassTests {
 	public void verifySomeElementIsNotPresent_ElementNotPresent() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String test = "NotHere";
 	
@@ -1220,7 +1202,7 @@ public class PageClassTests {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementIsNotPresent has passed. Test Element does not display in the page."));
+		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementIsNotPresent has passed. Test Element does not display in the page."));
 
 		closeByteStream(ps, baos);
 	}
@@ -1231,7 +1213,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1241,7 +1223,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsNotPresent"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsNotPresent"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should not display in the page. It does display. This is not expected."));
 			
 		}
@@ -1253,7 +1235,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1263,7 +1245,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsNotPresent"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsNotPresent"));
 		}
 	}
 	
@@ -1271,7 +1253,7 @@ public class PageClassTests {
 	public void verifySomeElementIsPresent_ElementPresent() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
 		String test = "Test";
 	
@@ -1295,7 +1277,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "NotHere";
     
@@ -1305,7 +1287,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsPresent"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsPresent"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should display in the page. It does not display as expected."));
 			
 		}
@@ -1317,7 +1299,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			String test = "Test";
     
@@ -1327,7 +1309,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifySomeElementIsPresent"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsPresent"));
 		}
 	}
 	
@@ -1335,7 +1317,7 @@ public class PageClassTests {
 	public void verifyTextFieldIsBlank_TextFieldIsBlank() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test value= ></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value= ></input>');");
 		Thread.sleep(500);
 		String test = "#Test";
 	
@@ -1359,7 +1341,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
 			
@@ -1372,7 +1354,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextFieldIsBlank"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTextFieldIsBlank"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
 			
 		}
@@ -1384,7 +1366,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test value=></input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1394,7 +1376,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextFieldIsBlank"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTextFieldIsBlank"));
 		}
 	}
 	
@@ -1402,7 +1384,7 @@ public class PageClassTests {
 	public void verifyTextInTextField_ContainsInvalidChar_RemoveAllSpacesFalse_TextIsPresent() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<textarea id=Test value=></textarea>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<textarea id=Test value=></textarea>');");
 		Thread.sleep(500);
 		String test = "#Test";
 		
@@ -1427,7 +1409,7 @@ public class PageClassTests {
 	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws Exception
 	{
 		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
 		Thread.sleep(500);
 		String test = "#Test";
 	
@@ -1451,7 +1433,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1461,7 +1443,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextInTextField"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTextInTextField"));
 			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should contain Test 123 but is retaining an incorrect value instead. The value being retained is Testing123"));		
 		}
 	}
@@ -1472,7 +1454,7 @@ public class PageClassTests {
 		try
 		{
 			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
 			Thread.sleep(500);
 			String test = "#Test";
     
@@ -1482,7 +1464,7 @@ public class PageClassTests {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("reporting.framework.utilities.Exception: StepName: verifyTextInTextField"));
+			Assert.assertTrue(m.trim().contains("StepName: verifyTextInTextField"));
 		}
 	}
 	
@@ -1492,8 +1474,8 @@ public class PageClassTests {
 		{
 			for (int j = 0; j < i; j++)
 			{
-				String html = "<a href=\"http://www.google.com\" id=\"" +id +"\" > " + linkText + j + "</a>";
-				((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("document.write('" + html + "');");
+				String html = "<a href=http://www.google.com id=" +id +" > " + linkText + j + "</a>";
+				((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('" + html + "');");
 			}
 		}
 		catch (Exception ex)
@@ -1506,7 +1488,8 @@ public class PageClassTests {
 	{
 		try
 		{
-			((JavascriptExecutor)LocalDriverManager.getDriver()).executeScript("var jq = document.createElement('script'); jq.src = \"https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js\"; document.getElementsByTagName('head')[0].appendChild(jq);");
+			String string = "var jq = document.createElement('script'); jq.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'; document.getElementsByTagName('head')[0].appendChild(jq);";
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript(string);
 		}
 		catch (Exception ex)
 		{
@@ -1577,23 +1560,4 @@ public class PageClassTests {
 		baos.close();
 	}
 	
-	@AfterMethod
-	public void afterScenario() throws Exception
-	{
-		/*try
-		{
-			LocalDriverManager.getDriver().quit();
-		}
-		catch (Exception ex)
-		{
-			LocalDriverManager.getDriver().quit();
-			throw ex;
-		}
-		finally
-		{
-			LocalDriverManager.getDriver().quit();
-		}*/
-	}
-
-
 }
