@@ -1396,7 +1396,7 @@ public class PageClassTests extends TestInitialization {
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", false);
+		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", false);
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -1418,7 +1418,7 @@ public class PageClassTests extends TestInitialization {
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", true);
+		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", true);
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -1437,7 +1437,7 @@ public class PageClassTests extends TestInitialization {
 			Thread.sleep(500);
 			String test = "#Test";
     
-			page.testVerifyTextInTextField(test, "cssSelector", false, null, "Test 123", "Test Element", false);
+			page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1458,7 +1458,7 @@ public class PageClassTests extends TestInitialization {
 			Thread.sleep(500);
 			String test = "#Test";
     
-			page.testVerifyTextInTextField(test, "cssSelector", true, "1", "Test 123", "Test Element", false);
+			page.testVerifyTextInTextField(test, "cssSelector", "1", "Test 123", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)

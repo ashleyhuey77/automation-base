@@ -1,13 +1,12 @@
 package seleniumHelper.methods;
 
 import java.util.List;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.errorprone.annotations.DoNotCall;
@@ -23,34 +22,7 @@ public class PresentElement extends Commands implements IWait {
 	public void waitOn(String selectorString, String by, int i, String... attribute) {
 		try
     	{
-    		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
-
-    		wait.until(new ExpectedCondition<Boolean>() {
-	            	public Boolean apply(WebDriver driver) {
-	            				Boolean result = false;
-	                         	By byValue = getByValue(selectorString, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
-	                         		(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR : 
-	                         			(by.toLowerCase().contains(xPath)) ? LocatorTypes.XPATH : 
-	                         				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
-	                         					(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME : 
-	                         						(by.toLowerCase().contains(linkText)) ? LocatorTypes.LINKTEXT : 
-	                         							(by.toLowerCase().contains(partialLinkText)) ? LocatorTypes.PARTIALLINKTEXT : 
-	                         								(by.toLowerCase().contains(name)) ? LocatorTypes.NAME : LocatorTypes.ID));
-	                         	try
-	                         	{
-	                         		if(LocalDriver.getDriver().findElement(byValue).isDisplayed())
-	                         		{
-	                         			result = true;
-	                         			return result;
-	                         		}
-	                         	}
-	                         	catch (StaleElementReferenceException ex)
-	                         	{
-	                         		return result;
-	                         	}
-								return result;
-    		   		};
-    		});
+			new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
     	}
     	catch (WebDriverException ex)
     	{

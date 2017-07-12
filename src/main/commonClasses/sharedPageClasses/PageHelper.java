@@ -513,11 +513,16 @@ public abstract class PageHelper {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void verifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
+	protected void verifyTextInTextField(String html, String byValue, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
 		try
 		{
-			String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue, webElementIndex);
+			String index = null;
+			if (!TestUtils.isNullOrBlank(webElementIndex))
+			{
+				index = webElementIndex;
+			}
+			String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue, index);
 			if (actualValueInTextBox.contains("\n"))
 			{
 				actualValueInTextBox = actualValueInTextBox.replace("\n", " ");
