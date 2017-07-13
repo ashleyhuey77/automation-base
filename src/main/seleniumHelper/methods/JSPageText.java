@@ -94,12 +94,24 @@ public class JSPageText extends Commands implements IText {
     			webElement = selectorString;
     		}
     		Boolean requiresIndex = false;
-    		if (!TestUtils.isNullOrBlank(attribute[0]))
+    		int count = attribute.length;
+    		String attr = null;
+    		if (count > 0)
     		{
-    			requiresIndex = true;
+    			if (!TestUtils.isNullOrBlank(attribute[0]))
+    			{
+    				requiresIndex = true;
+    				attr = attribute[0];
+    			}
+    			else {
+    				attr = "";
+				}
     		}
+    		else {
+    			attr = "";
+			}
     	
-    		return getTxtBoxValueViaJavascriptScript(webElement, attribute[0], requiresIndex, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
+    		return getTxtBoxValueViaJavascriptScript(webElement, attr, requiresIndex, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
     			(by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
     				(by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME : 
     					(by.toLowerCase().contains(tagName)) ? LocatorTypes.TAGNAME :

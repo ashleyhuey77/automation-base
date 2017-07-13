@@ -158,9 +158,9 @@ public class TestPage extends PageTemplate {
 		verifyTextFieldIsBlank(html, byValue, requiresIndex, webElementIndex, elementBeingTested);
 	}
 	
-	public void testVerifyTextInTextField(String html, String byValue, Boolean requiresIndex, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
+	public void testVerifyTextInTextField(String html, String byValue, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
-		verifyTextInTextField(html, byValue, requiresIndex, webElementIndex, expectedText, elementBeingTested, removeAllSpaces);
+		verifyTextInTextField(html, byValue, webElementIndex, expectedText, elementBeingTested, removeAllSpaces);
 	}
 	
 	 public static void superficialEnumCodeCoverage(Class<? extends Enum<?>> enumClass) {

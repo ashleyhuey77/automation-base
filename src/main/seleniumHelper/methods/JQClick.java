@@ -46,7 +46,16 @@ public class JQClick extends Commands implements IClick {
 	public void on(String selectorString, String by, String index) {
 		try 
 		{
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("$('" + selectorString + "')["+index+"].click();");
+    		String webElement = null;
+    		if (selectorString.contains("'"))
+    		{
+    			webElement = selectorString.replace("'", "");
+    		}
+    		else
+    		{
+    			webElement = selectorString;
+    		}
+			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("$('" + webElement + "')["+index+"].click();");
 		} 
 		catch (Exception ex) 
 		{
