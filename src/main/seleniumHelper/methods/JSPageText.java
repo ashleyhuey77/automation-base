@@ -98,8 +98,14 @@ public class JSPageText extends Commands implements IText {
     		String attr = null;
     		if (count > 0)
     		{
-    			requiresIndex = true;
-    			attr = attribute[0];
+    			if (!TestUtils.isNullOrBlank(attribute[0]))
+    			{
+    				requiresIndex = true;
+    				attr = attribute[0];
+    			}
+    			else {
+    				attr = "";
+				}
     		}
     		else {
     			attr = "";
