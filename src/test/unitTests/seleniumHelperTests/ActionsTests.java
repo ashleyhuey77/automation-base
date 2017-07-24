@@ -27,7 +27,7 @@ public class ActionsTests {
 	}
 	
 	@Test
-	public void verifyMouseOver() throws InterruptedException
+	public void verifyMouseOver() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Thread.sleep(500);
@@ -37,7 +37,7 @@ public class ActionsTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyMouseOver_ExceptionThrown() throws InterruptedException
+	public void verifyMouseOver_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Thread.sleep(500);
@@ -49,7 +49,7 @@ public class ActionsTests {
 	}
 	
 	@Test
-	public void verifyMoveToElement() throws InterruptedException
+	public void verifyMoveToElement() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Thread.sleep(500);
@@ -58,7 +58,7 @@ public class ActionsTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyMoveToElement_ThrowsException() throws InterruptedException
+	public void verifyMoveToElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		
@@ -102,7 +102,7 @@ public class ActionsTests {
 	}
 	
 	@Test
-	public void verifySelectOptionFromDropDownMenu() throws InterruptedException
+	public void verifySelectOptionFromDropDownMenu() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Thread.sleep(300);
@@ -111,7 +111,7 @@ public class ActionsTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifySelectOptionFromDropDownMenu_ExceptionThrown() throws InterruptedException
+	public void verifySelectOptionFromDropDownMenu_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Thread.sleep(300);

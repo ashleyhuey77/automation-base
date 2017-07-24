@@ -27,7 +27,7 @@ public class EnterTests {
 	
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifySendKeys_ExceptionThrown()
+	public void verifySendKeys_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		String test = "#Ha";
@@ -36,7 +36,7 @@ public class EnterTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifySendKeys_ElementPreDefined_ExceptionThrown() throws InterruptedException
+	public void verifySendKeys_ElementPreDefined_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Thread.sleep(500);
@@ -49,7 +49,7 @@ public class EnterTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyClear_ExceptionThrown()
+	public void verifyClear_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		String test = "#Ha";
@@ -58,7 +58,7 @@ public class EnterTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyClear_ElementPreDefined_ExceptionThrown() throws InterruptedException
+	public void verifyClear_ElementPreDefined_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Thread.sleep(500);

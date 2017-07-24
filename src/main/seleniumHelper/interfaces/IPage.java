@@ -6,6 +6,6 @@ public interface IPage {
 	
 	public void scrollTo(Location location) throws Exception;
 	
-	public void refresh();
+	public void refresh() throws Exception;
 
 }

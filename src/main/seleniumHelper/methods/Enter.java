@@ -10,7 +10,7 @@ import seleniumHelper.interfaces.IEnter;
 public class Enter extends Commands implements IEnter {
 
 	@Override
-	public void textInto(String selectorString, String by, String text) {
+	public void textInto(String selectorString, String by, String text) throws Exception {
         try
         {
             getElement(selectorString, by).sendKeys(text);
@@ -22,7 +22,7 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void textInto(WebElement element, String text) {
+	public void textInto(WebElement element, String text) throws Exception {
         try
         {
             element.sendKeys(text);
@@ -34,7 +34,7 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void textInto(String selectorString, String by, Keys key) {
+	public void textInto(String selectorString, String by, Keys key) throws Exception {
         try
         {
             getElement(selectorString, by).sendKeys(key);
@@ -58,7 +58,7 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void clear(String selectorString, String by) {
+	public void clear(String selectorString, String by) throws Exception {
         try
         {
             getElement(selectorString, by).clear();
@@ -70,7 +70,7 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void clear(WebElement element) {
+	public void clear(WebElement element) throws Exception {
         try
         {
             element.clear();

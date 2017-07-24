@@ -20,7 +20,7 @@ import seleniumHelper.interfaces.IWait;
 public class NonPresentElement extends Commands implements IWait {
 
 	@Override
-	public void waitOn(String selectorString, String by, int i, String... attribute) {
+	public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
 		try 
 		{
 			new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
@@ -62,7 +62,7 @@ public class NonPresentElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(WebElement element, int i, String... attribute) {
+	public void waitOn(WebElement element, int i, String... attribute) throws Exception {
     	try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
@@ -95,7 +95,8 @@ public class NonPresentElement extends Commands implements IWait {
 	@Override
 	public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
 			String... attribute) throws Exception {
-		switch(condition) {
+		try {
+			switch(condition) {
 			case EQUALS:
 				waitForElementToNoLongerEqualText(selectorString, by, expectedValue, i);
 				break;
@@ -104,13 +105,17 @@ public class NonPresentElement extends Commands implements IWait {
 				break;
 			default:
 				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
+		}
+		} catch (Exception e) {
+			throw e;
 		}	
 	}
 
 	@Override
 	public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String... attribute)
 			throws Exception {
-		switch(condition) {
+		try {
+			switch(condition) {
 			case EQUALS:
 				waitForElementToNoLongerEqualText(element, expectedValue, i);
 				break;
@@ -119,6 +124,9 @@ public class NonPresentElement extends Commands implements IWait {
 				break;
 			default:
 				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
+		}
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 	
@@ -131,7 +139,7 @@ public class NonPresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToNoLongerContainText(String selectorString, String by, String expectedText, int i)
+    private void waitForElementToNoLongerContainText(String selectorString, String by, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -167,7 +175,7 @@ public class NonPresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToNoLongerEqualText(String selectorString, String by, String expectedText, int i)
+    private void waitForElementToNoLongerEqualText(String selectorString, String by, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -203,7 +211,7 @@ public class NonPresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToNoLongerContainText(WebElement element, String expectedText, int i)
+    private void waitForElementToNoLongerContainText(WebElement element, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -239,7 +247,7 @@ public class NonPresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToNoLongerEqualText(WebElement element, String expectedText, int i)
+    private void waitForElementToNoLongerEqualText(WebElement element, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -268,14 +276,14 @@ public class NonPresentElement extends Commands implements IWait {
 
 	@Override
 	@DoNotCall
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) {
+	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	@DoNotCall
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) {
+	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

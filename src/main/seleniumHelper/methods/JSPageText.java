@@ -81,7 +81,7 @@ public class JSPageText extends Commands implements IText {
 
 
 	@Override
-	public String getFrom(String selectorString, String by, String... attribute) {
+	public String getFrom(String selectorString, String by, String... attribute) throws Exception {
     	try
     	{
     		String webElement = null;
@@ -125,7 +125,7 @@ public class JSPageText extends Commands implements IText {
 	}
 
 	@Override
-	public String getFrom(WebElement element, String... attribute) {
+	public String getFrom(WebElement element, String... attribute) throws Exception {
     	try
     	{
     		return (String)((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return argument[0].value", element);
@@ -138,14 +138,14 @@ public class JSPageText extends Commands implements IText {
 
 	@Override
 	@DoNotCall
-	public Boolean isDisplayed(String selectorString, String by, String expectedText, String... attribute) {
+	public Boolean isDisplayed(String selectorString, String by, String expectedText, String... attribute) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@DoNotCall
-	public Boolean isDisplayed(WebElement element, String expectedText, String... attribute) {
+	public Boolean isDisplayed(WebElement element, String expectedText, String... attribute) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

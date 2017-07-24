@@ -53,7 +53,7 @@ public class JSClick extends Commands implements IClick {
     }
 
 	@Override
-	public void on(String selectorString, String by) {
+	public void on(String selectorString, String by) throws Exception {
         try
         {
             clickViaJavascriptElementType(selectorString, "0", (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
@@ -89,7 +89,7 @@ public class JSClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(String selectorString, String by, String index) {
+	public void on(String selectorString, String by, String index) throws Exception {
         try
         {
             clickViaJavascriptElementType(selectorString, index, (by.toLowerCase().contains(id) ? LocatorTypes.ID : 
@@ -106,7 +106,7 @@ public class JSClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(String selectorString, String by, int index) {
+	public void on(String selectorString, String by, int index) throws Exception {
         try
         {
             clickViaJavascriptElementType(selectorString, Integer.toString(index), (by.toLowerCase().contains(id) ? LocatorTypes.ID : 

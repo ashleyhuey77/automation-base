@@ -39,7 +39,7 @@ public class Page extends Commands implements IPage {
 	}
 
 	@Override
-	public void refresh() {
+	public void refresh() throws Exception {
         try
         {
             LocalDriver.getDriver().navigate().refresh();

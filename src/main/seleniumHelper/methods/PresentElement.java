@@ -19,7 +19,7 @@ import seleniumHelper.interfaces.IWait;
 public class PresentElement extends Commands implements IWait {
 
 	@Override
-	public void waitOn(String selectorString, String by, int i, String... attribute) {
+	public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
 		try
     	{
 			new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
@@ -31,7 +31,7 @@ public class PresentElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(WebElement element, int i, String... attribute) {
+	public void waitOn(WebElement element, int i, String... attribute) throws Exception {
     	try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
@@ -64,7 +64,8 @@ public class PresentElement extends Commands implements IWait {
 	@Override
 	public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
 			String... attribute) throws Exception {
-		switch(condition) {
+		try {
+			switch(condition) {
 			case EQUALS:
 				waitForElementToEqualText(selectorString, by, expectedValue, i);
 				break;
@@ -74,21 +75,28 @@ public class PresentElement extends Commands implements IWait {
 			default:
 				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
 		}
+		} catch (Exception e) {
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String... attribute) throws Exception {
-		switch(condition) {
-		case EQUALS:
-			waitForElementToEqualText(element, expectedValue, i);
-			break;
-		case CONTAINS:
-			waitForElementToContainText(element, expectedValue, i);
-			break;
-		default:
-			throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
-	}
+		try {
+			switch(condition) {
+			case EQUALS:
+				waitForElementToEqualText(element, expectedValue, i);
+				break;
+			case CONTAINS:
+				waitForElementToContainText(element, expectedValue, i);
+				break;
+			default:
+				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
+			}
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
     /**<summary> method to wait for a particular text to be present in a web element
@@ -100,7 +108,7 @@ public class PresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToContainText(String selectorString, String by, String expectedText, int i)
+    private void waitForElementToContainText(String selectorString, String by, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -136,7 +144,7 @@ public class PresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToEqualText(String selectorString, String by, String expectedText, int i)
+    private void waitForElementToEqualText(String selectorString, String by, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -172,7 +180,7 @@ public class PresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToContainText(WebElement element, String expectedText, int i)
+    private void waitForElementToContainText(WebElement element, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -208,7 +216,7 @@ public class PresentElement extends Commands implements IWait {
      * @param i the total amount of time allotted to wait for the condition to return true
      * @return void
      */
-    private void waitForElementToEqualText(WebElement element, String expectedText, int i)
+    private void waitForElementToEqualText(WebElement element, String expectedText, int i) throws Exception
     {
     	try
     	{
@@ -237,14 +245,14 @@ public class PresentElement extends Commands implements IWait {
 
 	@Override
 	@DoNotCall
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) {
+	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	@DoNotCall
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) {
+	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

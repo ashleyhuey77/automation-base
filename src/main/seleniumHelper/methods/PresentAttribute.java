@@ -18,7 +18,7 @@ import seleniumHelper.interfaces.IWait;
 public class PresentAttribute extends Commands implements IWait {
 
 	@Override
-	public void waitOn(String selectorString, String by, int i, String... attribute) {
+	public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
     	try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
@@ -44,7 +44,7 @@ public class PresentAttribute extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(WebElement element, int i, String... attribute) {
+	public void waitOn(WebElement element, int i, String... attribute) throws Exception {
     	try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
@@ -72,7 +72,8 @@ public class PresentAttribute extends Commands implements IWait {
 	@Override
 	public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
 			String... attribute) throws Exception {
-		switch(condition) {
+		try {
+			switch(condition) {
 			case EQUALS:
 				waitForAttributeToEqualACertainValue(selectorString, by, attribute[0], expectedValue, i);
 				break;
@@ -82,12 +83,16 @@ public class PresentAttribute extends Commands implements IWait {
 			default:
 				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
 		}
+		} catch (Exception e) {
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String... attribute)
 			throws Exception {
+		try {
 			switch(condition) {
 			case EQUALS:
 				waitForAttributeToEqualACertainValue(element, attribute[0], expectedValue, i);
@@ -97,6 +102,9 @@ public class PresentAttribute extends Commands implements IWait {
 				break;
 			default:
 				throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
+		}
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 	
@@ -108,7 +116,7 @@ public class PresentAttribute extends Commands implements IWait {
 	   * @param i the total amount of time allotted to wait for the condition to return true
 	   * @return void
 	   */
-	    private void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue, int i)
+	    private void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue, int i) throws Exception
 	    {
 	    	try
 	    	{
@@ -148,7 +156,7 @@ public class PresentAttribute extends Commands implements IWait {
 	   * @param i the total amount of time allotted to wait for the condition to return true
 	   * @return void
 	   */
-	    private void waitForAttributeToEqualACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
+	    private void waitForAttributeToEqualACertainValue(String selectorString, String by, String attribute, String expectedValue, int i) throws Exception
 	    {
 	    	try
 	    	{
@@ -187,7 +195,7 @@ public class PresentAttribute extends Commands implements IWait {
 	   * @param i the total amount of time allotted to wait for the condition to return true
 	   * @return void
 	   */
-	    private void waitForAttributeToContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i)
+	    private void waitForAttributeToContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i) throws Exception
 	    {
 	    	try
 	    	{
@@ -234,7 +242,7 @@ public class PresentAttribute extends Commands implements IWait {
 	   * @param i the total amount of time allotted to wait for the condition to return true
 	   * @return void
 	   */
-	    private void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue, int i)
+	    private void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue, int i) throws Exception
 	    {
 	    	try
 	    	{
@@ -270,14 +278,14 @@ public class PresentAttribute extends Commands implements IWait {
 
 	@Override
 	@DoNotCall
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) {
+	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	@DoNotCall
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) {
+	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

@@ -8,17 +8,17 @@ import seleniumHelper.interfaces.IText;
 public class PageText extends Commands implements IText {
 
 	@Override
-	public String getFrom(String selectorString, String by, String... attribute) {
+	public String getFrom(String selectorString, String by, String... attribute) throws Exception {
 		return getElement(selectorString, by).getText().trim();
 	}
 
 	@Override
-	public String getFrom(WebElement element, String... attribute) {
+	public String getFrom(WebElement element, String... attribute) throws Exception {
 		return element.getText().trim();
 	}
 
 	@Override
-	public Boolean isDisplayed(String selectorString, String by, String expectedText, String... attribute) {
+	public Boolean isDisplayed(String selectorString, String by, String expectedText, String... attribute) throws Exception {
     	try
     	{
 	        String actualText = getElement(selectorString, by).getText();
@@ -39,7 +39,7 @@ public class PageText extends Commands implements IText {
 	}
 
 	@Override
-	public Boolean isDisplayed(WebElement element, String expectedText, String... attribute) {
+	public Boolean isDisplayed(WebElement element, String expectedText, String... attribute) throws Exception {
 		try
     	{
 	        String actualText = element.getText();

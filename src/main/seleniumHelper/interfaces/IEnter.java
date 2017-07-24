@@ -5,16 +5,16 @@ import org.openqa.selenium.WebElement;
 
 public interface IEnter {
 	
-	public void textInto(String selectorString, String by, String text);
+	public void textInto(String selectorString, String by, String text) throws Exception;
 	
-	public void textInto(WebElement element, String text);
+	public void textInto(WebElement element, String text) throws Exception;
 	
-	public void textInto(String selectorString, String by, Keys key);
+	public void textInto(String selectorString, String by, Keys key) throws Exception;
 	
-	public void textInto(WebElement element, Keys key);
+	public void textInto(WebElement element, Keys key) throws Exception;
 	
-	public void clear(String selectorString, String by);
+	public void clear(String selectorString, String by) throws Exception;
 	
-	public void clear(WebElement element);
+	public void clear(WebElement element) throws Exception;
 
 }

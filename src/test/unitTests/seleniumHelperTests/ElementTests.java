@@ -29,7 +29,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyFindWebElement() throws InterruptedException
+	public void verifyFindWebElement() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button></div>');");
 		Thread.sleep(500);
@@ -39,7 +39,7 @@ public class ElementTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyFindWebElement_ThrowsException() throws InterruptedException
+	public void verifyFindWebElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button></div>');");
 		Thread.sleep(500);
@@ -48,7 +48,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyFindWebElements() throws InterruptedException
+	public void verifyFindWebElements() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Thread.sleep(500);
@@ -58,7 +58,7 @@ public class ElementTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyFindWebElements_ThrowsException() throws InterruptedException
+	public void verifyFindWebElements_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Thread.sleep(500);
@@ -79,7 +79,7 @@ public class ElementTests {
 	}*/
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifyGetElements_ExceptionThrown() throws InterruptedException
+	public void verifyGetElements_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		String test = "#Test";
@@ -88,7 +88,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_ID() throws InterruptedException
+	public void getWebElement_ID() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Thread.sleep(500);
@@ -98,7 +98,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_CssSelector() throws InterruptedException
+	public void getWebElement_CssSelector() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Thread.sleep(500);
@@ -108,7 +108,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_Xpath() throws InterruptedException
+	public void getWebElement_Xpath() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Thread.sleep(500);
@@ -118,7 +118,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_ClassName() throws InterruptedException
+	public void getWebElement_ClassName() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=className >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -128,7 +128,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_TagName() throws InterruptedException
+	public void getWebElement_TagName() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Thread.sleep(500);
@@ -138,7 +138,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_LinkText() throws InterruptedException
+	public void getWebElement_LinkText() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<a>Dont click this button</a>');");
 		Thread.sleep(500);
@@ -148,7 +148,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_PartialLinkText() throws InterruptedException
+	public void getWebElement_PartialLinkText() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<a>Dont click this button</a>');");
 		Thread.sleep(500);
@@ -158,7 +158,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_Name() throws InterruptedException
+	public void getWebElement_Name() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -168,7 +168,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void getWebElement_Default() throws InterruptedException
+	public void getWebElement_Default() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -178,7 +178,7 @@ public class ElementTests {
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void getWebElement_SelectorStringIsNull() throws InterruptedException
+	public void getWebElement_SelectorStringIsNull() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -186,7 +186,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyIsAttributePresentInElement_AttributeIsPresent() throws InterruptedException
+	public void verifyIsAttributePresentInElement_AttributeIsPresent() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -198,7 +198,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyIsAttributePresentInElement_AttributeIsNotPresent() throws InterruptedException
+	public void verifyIsAttributePresentInElement_AttributeIsNotPresent() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -210,7 +210,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyIsAttributePresentInElement_ExcpetionThrown() throws InterruptedException
+	public void verifyIsAttributePresentInElement_ExcpetionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -224,7 +224,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyIsElementPresent_ElementIsPresent() throws InterruptedException
+	public void verifyIsElementPresent_ElementIsPresent() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
@@ -235,7 +235,7 @@ public class ElementTests {
 	}
 	
 	@Test
-	public void verifyIsElementPresent_ElementIsNotPresent() throws InterruptedException
+	public void verifyIsElementPresent_ElementIsNotPresent() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);

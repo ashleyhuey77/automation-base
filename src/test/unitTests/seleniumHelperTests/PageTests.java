@@ -55,14 +55,14 @@ public class PageTests {
 	}
 	
 	@Test
-	public void verifyRefreshThePage()
+	public void verifyRefreshThePage() throws Exception
 	{
 		SHelper.get().page().refresh();
 		Assert.assertTrue(LocalDriver.getDriver().getWindowHandles().size() == 1, "Total tabs open is not correct");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyRefreshThePage_ThrowsException()
+	public void verifyRefreshThePage_ThrowsException() throws Exception
 	{
 		LocalDriver.getDriver().close();
 		SHelper.get().page().refresh();

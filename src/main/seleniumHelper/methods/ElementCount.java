@@ -22,14 +22,14 @@ public class ElementCount extends Commands implements IWait {
 
 	@Override
 	@DoNotCall
-	public void waitOn(String selectorString, String by, int i, String... attribute) {
+	public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	@DoNotCall
-	public void waitOn(WebElement element, int i, String... attribute) {
+	public void waitOn(WebElement element, int i, String... attribute) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -51,13 +51,17 @@ public class ElementCount extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) {
+	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
 		try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
-    		            	SHelper.get().page().refresh();
+    		            	try {
+								SHelper.get().page().refresh();
+							} catch (Exception e1) {
+
+							}
     		            	try {
 								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selectorString, by, 30);
 							} catch (Exception e) {
@@ -83,13 +87,17 @@ public class ElementCount extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) {
+	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
 		try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
     		wait.until(new ExpectedCondition<Boolean>() {
     		            public Boolean apply(WebDriver driver) {
-    		            	SHelper.get().page().refresh();
+    		            	try {
+								SHelper.get().page().refresh();
+							} catch (Exception e1) {
+								
+							}
     		            	try {
 								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(element.get(0), 30);
 							} catch (Exception e) {

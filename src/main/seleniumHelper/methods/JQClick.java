@@ -10,7 +10,7 @@ import seleniumHelper.interfaces.IClick;
 public class JQClick extends Commands implements IClick {
 
 	@Override
-	public void on(String selectorString, String by) {
+	public void on(String selectorString, String by) throws Exception {
         try
         {
     		String webElement = null;
@@ -31,7 +31,7 @@ public class JQClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(WebElement element) {
+	public void on(WebElement element) throws Exception {
         try
         {
         	((JavascriptExecutor)LocalDriver.getDriver()).executeScript("$arguments[0].click();", element);
@@ -43,7 +43,7 @@ public class JQClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(String selectorString, String by, String index) {
+	public void on(String selectorString, String by, String index) throws Exception {
 		try 
 		{
     		String webElement = null;
@@ -64,7 +64,7 @@ public class JQClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(String selectorString, String by, int index) {
+	public void on(String selectorString, String by, int index) throws Exception {
 		try 
 		{
     		String webElement = null;

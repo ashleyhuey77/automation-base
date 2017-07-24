@@ -15,7 +15,7 @@ import seleniumHelper.interfaces.IBrowser;
 
 public class Browser extends Commands implements IBrowser {
 	
-	private void switchToDefaultContent() {
+	private void switchToDefaultContent() throws Exception {
         try
         {
             LocalDriver.getDriver().switchTo().defaultContent();
@@ -26,7 +26,7 @@ public class Browser extends Commands implements IBrowser {
         }
 	}
 	
-	private void switchToNewWindow() {
+	private void switchToNewWindow() throws Exception {
     	try
     	{
     		for (String window : LocalDriver.getDriver().getWindowHandles())
@@ -41,7 +41,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void switchTo(BrowserObject object, WebElement element) {
+	public void switchTo(BrowserObject object, WebElement element) throws Exception {
     	try
     	{
     		LocalDriver.getDriver().switchTo().frame(element);
@@ -53,7 +53,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void switchTo(BrowserObject object, String selectorString, String by) {
+	public void switchTo(BrowserObject object, String selectorString, String by) throws Exception {
     	try
     	{
     		LocalDriver.getDriver().switchTo().frame(getElement(selectorString, by));
@@ -65,7 +65,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void switchTo(BrowserObject object, String name) {
+	public void switchTo(BrowserObject object, String name) throws Exception {
     	try
     	{
     		LocalDriver.getDriver().switchTo().frame(name);
@@ -77,7 +77,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void close(BrowserObject object) {
+	public void close(BrowserObject object) throws Exception {
     	try 
     	{
 		    String originalHandle = LocalDriver.getDriver().getWindowHandle();
@@ -97,7 +97,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void open(BrowserObject object) {
+	public void open(BrowserObject object) throws Exception {
         try
         {
             ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("window.open();");
@@ -109,7 +109,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void navigateTo(String url) {
+	public void navigateTo(String url) throws Exception {
         try
         {
             LocalDriver.getDriver().navigate().to(url);
@@ -122,7 +122,8 @@ public class Browser extends Commands implements IBrowser {
 
 	@Override
 	public void switchTo(BrowserObject object) throws Exception {
-		switch(object) {
+		try {
+			switch(object) {
 			case WINDOW:
 				switchToNewWindow();
 				break;
@@ -131,11 +132,14 @@ public class Browser extends Commands implements IBrowser {
 				break;
 			default:
 				throw new Exception("Please select an available browser object to switch to.");
+			}
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 
 	@Override
-	public void waitForWindowCount(int i, int expectedCount) {
+	public void waitForWindowCount(int i, int expectedCount) throws Exception {
     	try
     	{
     		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);

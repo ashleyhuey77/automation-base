@@ -18,7 +18,7 @@ import seleniumHelper.interfaces.IWait;
 public class ElementActions extends Commands implements IActions {
 	
 	@Override
-	public void moveTo(String selectorString, String by) {
+	public void moveTo(String selectorString, String by) throws Exception {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
@@ -31,7 +31,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void moveTo(WebElement element) {
+	public void moveTo(WebElement element) throws Exception {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
@@ -44,7 +44,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void mouseOver(String selectorString, String by) {
+	public void mouseOver(String selectorString, String by) throws Exception {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
@@ -57,7 +57,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void mouseOver(WebElement element) {
+	public void mouseOver(WebElement element) throws Exception {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
@@ -169,7 +169,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void scrollTo(String selectorString, String by) {
+	public void scrollTo(String selectorString, String by) throws Exception {
     	try
     	{
     		WebElement element = getElement(selectorString, by);
@@ -183,7 +183,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void scrollTo(WebElement element) {
+	public void scrollTo(WebElement element) throws Exception {
     	try
     	{
     		((JavascriptExecutor) LocalDriver.getDriver()).executeScript(
@@ -310,18 +310,26 @@ public class ElementActions extends Commands implements IActions {
     }
 
 	@Override
-	public void selectFromDropDown(WebElement element, String value, SelectType selectType) {
-	    	Select sel =new Select(element);
+	public void selectFromDropDown(WebElement element, String value, SelectType selectType) throws Exception {
+		try {
+			Select sel =new Select(element);
 	    	selectOption(sel, value, selectType);
+		} catch (Exception ex) {
+			throw ex;
+		}
 	} 	
 
 	@Override
-	public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType) {
-    	Select sel =new Select(getElement(selectorString, by));
-  		selectOption(sel, value, selectType);
+	public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType) throws Exception {
+		try {
+	    	Select sel =new Select(getElement(selectorString, by));
+	  		selectOption(sel, value, selectType);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
-	private void selectOption(Select select, String value, SelectType selectType) {
+	private void selectOption(Select select, String value, SelectType selectType) throws Exception {
 		try 
   		{
   			switch (selectType) 

@@ -913,8 +913,9 @@ public abstract class PageHelper {
 		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
   			      WebElement to be found
      * @return void
+     * @throws Exception 
      */
-    protected void clearAllTextByBackspacing(String selectorString, String by)
+    protected void clearAllTextByBackspacing(String selectorString, String by) throws Exception
     {
         try
         {
@@ -934,8 +935,9 @@ public abstract class PageHelper {
      * </summary>
 		@param element a webelement that is defined and found in the calling method
      * @return void
+     * @throws Exception 
      */
-    protected void clearAllTextByBackspacing(WebElement element)
+    protected void clearAllTextByBackspacing(WebElement element) throws Exception
     {
         try
         {
@@ -961,7 +963,11 @@ public abstract class PageHelper {
 		wait.until(new ExpectedCondition<Boolean>() {
             	public Boolean apply(WebDriver driver) {
             				Boolean result = false;
-            				SHelper.get().page().refresh();
+            				try {
+								SHelper.get().page().refresh();
+							} catch (Exception e1) {
+
+							}
             				try {
 								Thread.sleep(900);
 							} catch (InterruptedException e) {
@@ -983,7 +989,9 @@ public abstract class PageHelper {
                          	catch (StaleElementReferenceException ex)
                          	{
                          		return result;
-                         	}
+                         	} catch (Exception e) {
+                         		return result;
+							}
 		   		};
 		});
     }

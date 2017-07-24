@@ -11,7 +11,7 @@ import seleniumHelper.interfaces.IClick;
 public class Click extends Commands implements IClick {
 
 	@Override
-	public void on(String selectorString, String by) {
+	public void on(String selectorString, String by) throws Exception {
         try
         {
         	getElement(selectorString, by);
@@ -28,7 +28,7 @@ public class Click extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(WebElement element) {
+	public void on(WebElement element) throws Exception {
         try
         {
             element.click();
@@ -40,7 +40,7 @@ public class Click extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(String selectorString, String by, String index) {
+	public void on(String selectorString, String by, String index) throws Exception {
         try
         {
         	List<WebElement> element =  getElements(selectorString, by);
@@ -57,7 +57,7 @@ public class Click extends Commands implements IClick {
 	}
 	
 	@Override
-	public void on(String selectorString, String by, int index) {
+	public void on(String selectorString, String by, int index) throws Exception {
         try
         {
         	List<WebElement> element =  getElements(selectorString, by);

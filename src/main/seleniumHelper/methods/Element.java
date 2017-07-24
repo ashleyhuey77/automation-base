@@ -15,17 +15,17 @@ import seleniumHelper.interfaces.IElement;
 public class Element extends Commands implements IElement {
 
 	@Override
-	public WebElement get(String selectorString, String by) {
+	public WebElement get(String selectorString, String by) throws Exception {
 		return getElement(selectorString, by);
 	}
 
 	@Override
-	public List<WebElement> getListOf(String selectorString, String by) {
+	public List<WebElement> getListOf(String selectorString, String by) throws Exception {
 		return getElements(selectorString, by);
 	}
 
 	@Override
-	public Boolean isDisplayed(String selectorString, String by, int i) {
+	public Boolean isDisplayed(String selectorString, String by, int i) throws Exception {
         try
         {
         	new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
@@ -43,7 +43,7 @@ public class Element extends Commands implements IElement {
 
 	@Override
 	@DoNotCall
-	public Boolean isDisplayed(WebElement element, int i) {
+	public Boolean isDisplayed(WebElement element, int i) throws Exception {
         try
         {
         	//waitForPresenceOfElementLocated(element, i);
@@ -60,7 +60,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public WebElement find(WebElement firstElement, String selectorString, String by) {
+	public WebElement find(WebElement firstElement, String selectorString, String by) throws Exception {
     	try
     	{
     		return firstElement.findElement(getByValueBasedOnUserInput(selectorString, by));
@@ -72,7 +72,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public WebElement find(String firstESelectorString, String firstEBy, String by, String selectorString) {
+	public WebElement find(String firstESelectorString, String firstEBy, String by, String selectorString) throws Exception {
     	try
     	{
     		return getElement(firstESelectorString, firstEBy).findElement(getByValueBasedOnUserInput(selectorString, by));
@@ -84,7 +84,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public List<WebElement> findListOf(WebElement firstElement, String selectorString, String by) {
+	public List<WebElement> findListOf(WebElement firstElement, String selectorString, String by) throws Exception {
     	try
     	{
     		return firstElement.findElements(getByValueBasedOnUserInput(selectorString, by));
@@ -96,7 +96,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public List<WebElement> findListOf(String firstESelectorString, String firstEBy, String by, String selectorString) {
+	public List<WebElement> findListOf(String firstESelectorString, String firstEBy, String by, String selectorString) throws Exception {
     	try
     	{
     		return getElement(firstESelectorString, firstEBy).findElements(getByValueBasedOnUserInput(selectorString, by));
@@ -108,7 +108,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isAttributePresent(WebElement element, String attribute) {
+	public Boolean isAttributePresent(WebElement element, String attribute) throws Exception {
     	Boolean result = false;
         try {
             String value = element.getAttribute(attribute);
@@ -123,7 +123,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isAttributePresent(String selectorString, String by, String attribute) {
+	public Boolean isAttributePresent(String selectorString, String by, String attribute) throws Exception {
     	Boolean result = false;
         try {
             String value = getElement(selectorString, by).getAttribute(attribute);
@@ -138,7 +138,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isEnabled(String selectorString, String by) {
+	public Boolean isEnabled(String selectorString, String by) throws Exception {
     	try 
     	{
 			Boolean result = false;
@@ -156,7 +156,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isEnabled(WebElement element) {
+	public Boolean isEnabled(WebElement element) throws Exception {
     	try 
     	{
 			Boolean result = false;

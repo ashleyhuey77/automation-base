@@ -67,7 +67,7 @@ public class BrowserTests {
 	}
 	
 	@Test
-	public void verifySwitchToIFrame() throws InterruptedException
+	public void verifySwitchToIFrame() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -76,7 +76,7 @@ public class BrowserTests {
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifySwitchToIFrame_ThrowsException() throws InterruptedException
+	public void verifySwitchToIFrame_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -85,7 +85,7 @@ public class BrowserTests {
 	}
 	
 	@Test
-	public void verifySwitchToIFrame_PredefinedElement() throws InterruptedException
+	public void verifySwitchToIFrame_PredefinedElement() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -95,7 +95,7 @@ public class BrowserTests {
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifySwitchToIFrame_PredefinedElement_ThrowsException() throws InterruptedException
+	public void verifySwitchToIFrame_PredefinedElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -107,7 +107,7 @@ public class BrowserTests {
 	}
 	
 	@Test
-	public void verifySwitchToFrameByName() throws InterruptedException
+	public void verifySwitchToFrameByName() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe name=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -116,7 +116,7 @@ public class BrowserTests {
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifySwitchToFrameByName_ThrowsException() throws InterruptedException
+	public void verifySwitchToFrameByName_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe name=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Thread.sleep(300);
@@ -125,7 +125,7 @@ public class BrowserTests {
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifyOpenNewTab_ThrowsException() {
+	public void verifyOpenNewTab_ThrowsException() throws Exception {
 		
 		LocalDriver.getDriver().close();
 		SHelper.get().browser().open(BrowserObject.TAB);
@@ -158,7 +158,7 @@ public class BrowserTests {
 	}
 	
 	@Test
-	public void verifyNavigateToUrl() throws InterruptedException
+	public void verifyNavigateToUrl() throws Exception
 	{
 		SHelper.get().browser().navigateTo("https://www.facebook.com/");
 		Thread.sleep(400);
@@ -167,20 +167,20 @@ public class BrowserTests {
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifyNavigateToUrl_ThrowsException() throws InterruptedException
+	public void verifyNavigateToUrl_ThrowsException() throws Exception
 	{
 		LocalDriver.getDriver().close();
 		SHelper.get().browser().navigateTo("Test");
 	}
 	
 	@Test
-	public void verifyWaitForWindowCount()
+	public void verifyWaitForWindowCount() throws Exception
 	{
 		SHelper.get().browser().waitForWindowCount(1, 1);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyWaitForWindowCount_ThrowsException()
+	public void verifyWaitForWindowCount_ThrowsException() throws Exception
 	{
 		SHelper.get().browser().waitForWindowCount(1, 2);
 	}

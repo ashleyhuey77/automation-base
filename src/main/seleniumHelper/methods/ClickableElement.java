@@ -17,7 +17,7 @@ import seleniumHelper.interfaces.IWait;
 public class ClickableElement extends Commands implements IWait {
 
 	@Override
-	public void waitOn(String selectorString, String by, int i, String... attribute) {
+	public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
         try
         {
         	new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
@@ -29,7 +29,7 @@ public class ClickableElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void waitOn(WebElement element, int i, String... attribute) {
+	public void waitOn(WebElement element, int i, String... attribute) throws Exception {
         try
         {
         	new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.elementToBeClickable(element));
@@ -58,14 +58,14 @@ public class ClickableElement extends Commands implements IWait {
 
 	@Override
 	@DoNotCall
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) {
+	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	@DoNotCall
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) {
+	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
