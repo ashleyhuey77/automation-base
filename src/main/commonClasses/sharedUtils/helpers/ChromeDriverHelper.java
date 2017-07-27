@@ -1,6 +1,5 @@
 package commonClasses.sharedUtils.helpers;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,41 +8,43 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import commonClasses.sharedUtils.TestUtils;
 import commonClasses.sharedUtils.contexts.HeadlessContext;
+import commonClasses.sharedUtils.enums.OS;
+import commonClasses.sharedUtils.facades.HelperFacade;
 import commonClasses.sharedUtils.interfaces.State;
-import commonClasses.sharedUtils.states.HeadlessStartState;
-import commonClasses.sharedUtils.states.HeadlessStopState;
+import commonClasses.sharedUtils.managers.LocalChromeOptions;
+import commonClasses.sharedUtils.managers.LocalTest;
+import commonClasses.sharedUtils.states.HeadlessStart;
+import commonClasses.sharedUtils.states.HeadlessStop;
 
 public class ChromeDriverHelper {
 	
 	public ThreadLocal<WebDriver> driver;
 	private Set<WebDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	
-	public ChromeDriverHelper(Boolean isHeadless) throws IOException
+	public ChromeDriverHelper() throws Exception
 	 {
-		System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
-    	System.setProperty("java.awt.headless", Boolean.toString(isHeadless));
+		HelperFacade.setDriverLocalPathBasedOnOS(OS.valueOf(LocalTest.getEnvironment().getOS().toUpperCase()));
+    	System.setProperty("java.awt.headless", Boolean.toString(LocalTest.getEnvironment().isHeadlessEnabled()));
     	DesiredCapabilities caps = DesiredCapabilities.chrome();
     	caps.setJavascriptEnabled(true);
     	caps.setCapability("takesScreenshot", true);
-    	ChromeOptions options = new ChromeOptions();
+    	LocalChromeOptions.set(new ChromeOptions());
     	HeadlessContext context = new HeadlessContext();
-    	if (isHeadless)
+    	if (LocalTest.getEnvironment().isHeadlessEnabled())
     	{
-    		State headlessStartState = new HeadlessStartState();
+    		State headlessStartState = new HeadlessStart();
     		context.setState(headlessStartState);
-    		context.doAction(options);
+    		context.doAction();
     	}
     	else 
     	{
-			State headlessStopState = new HeadlessStopState();
+			State headlessStopState = new HeadlessStop();
 			context.setState(headlessStopState);
-			context.doAction(options);
+			context.doAction();
 		}
-    	options.addArguments("disable-extensions");
-    	caps.setCapability(ChromeOptions.CAPABILITY, options);
+    	LocalChromeOptions.get().addArguments("disable-extensions");
+    	caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 		
 		driver = new InheritableThreadLocal<WebDriver>(){
 			@Override

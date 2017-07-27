@@ -49,16 +49,17 @@ public class LocalTest {
 	    	 
 	    	props.load(inputStream);
 	
-	    	String appUrl = props.getProperty("ApplicationUrl", "");
-	    	String newstronUN = props.getProperty("NewstronEncryptedUserName", "n/a");
-	    	String newstronPWD = props.getProperty("NewstronEncryptedPassword", "n/a");
-	    	String env = props.getProperty("Environment", "ref");
-	    	String browser = props.getProperty("Browser", "Chrome");
-	    	Boolean isHeadless = Boolean.parseBoolean(props.getProperty("IsHeadless", "false"));
-	        String miraUserName = props.getProperty("miraEncryptedUserName", "n/a");
-	        String miraPassword= props.getProperty("miraEncryptedPassword", "n/a");
+	    	String appUrl = setValueIfSystemPropIsNull(props, "ApplicationUrl", "AppUrl");
+	    	String newstronUN = setValueIfSystemPropIsNull(props, "NewstronEncryptedUserName", "");
+	    	String newstronPWD = setValueIfSystemPropIsNull(props, "NewstronEncryptedPassword", "");
+	    	String env = setValueIfSystemPropIsNull(props, "Environment", "Env");
+	    	String browser = setValueIfSystemPropIsNull(props, "Browser", "Browser");
+	    	Boolean isHeadless = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsHeadless", ""));
+	        String miraUserName = setValueIfSystemPropIsNull(props, "miraEncryptedUserName", "");
+	        String miraPassword= setValueIfSystemPropIsNull(props, "miraEncryptedPassword", "");
+	        String os = setValueIfSystemPropIsNull(props, "OS", "");
 	        
-	        Environment environment = new Environment(appUrl, env, browser, isHeadless);
+	        Environment environment = new Environment(appUrl, env, browser, os, isHeadless);
 	        Credentials credentials = new Credentials(miraUserName, miraPassword, newstronUN, newstronPWD);
 	        setCredentials(credentials);
 	        setEnvironment(environment);
@@ -67,6 +68,33 @@ public class LocalTest {
     	{
     		throw ex;
     	}
+    }
+    
+    private static String setValueIfSystemPropIsNull(Properties props, String prop, String systemProp)
+    {
+    	String value = null;
+    	String sysProp = null;
+    	try 
+    	{
+    		if (!TestUtils.isNullOrBlank(systemProp))
+    		{
+    			sysProp = System.getProperty(systemProp);
+			}
+    		
+			if (TestUtils.isNullOrBlank(sysProp))
+			{
+				value = props.getProperty(prop, "");
+			}
+			else 
+			{
+				value = sysProp;
+			}
+		} 
+    	catch (Exception ex) 
+    	{
+			throw ex;
+		}
+    	return value;
     }
 
 }

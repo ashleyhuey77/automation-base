@@ -4,22 +4,28 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.WebDriver;
 
 import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.contexts.OSContext;
 import commonClasses.sharedUtils.enums.Drivers;
+import commonClasses.sharedUtils.enums.OS;
 import commonClasses.sharedUtils.enums.ReportType;
 import commonClasses.sharedUtils.helpers.ChromeDriverHelper;
 import commonClasses.sharedUtils.helpers.ReportHelper;
 import commonClasses.sharedUtils.helpers.ValidationsHelper;
+import commonClasses.sharedUtils.interfaces.State;
 import commonClasses.sharedUtils.managers.LocalReport;
 import commonClasses.sharedUtils.managers.LocalValidation;
+import commonClasses.sharedUtils.states.Linux;
+import commonClasses.sharedUtils.states.Mac;
+import commonClasses.sharedUtils.states.Windows;
 
 public class HelperFacade {
 	
-	public static WebDriver getDriver(Drivers driverType, Boolean isHeadless) throws Exception {
+	public static WebDriver getDriver(Drivers driverType) throws Exception {
 		WebDriver driver = null;
 		switch(driverType)
 		{
 			case CHROME:
-				ChromeDriverHelper cFac = new ChromeDriverHelper(isHeadless);
+				ChromeDriverHelper cFac = new ChromeDriverHelper();
 		    	driver = cFac.driver.get();
 	        	break;
 			case FIREFOX:
@@ -45,6 +51,35 @@ public class HelperFacade {
 				break;
 			default:
 				throw new Exception("User did not supply the correct Report Type. Unable to determine which report to initialize for testing.");
+		}
+	}
+	
+	public static void setDriverLocalPathBasedOnOS(OS os) throws Exception
+	{
+		try 
+		{ 
+			State state = null;
+			OSContext context = new OSContext();
+			switch(os)
+			{
+				case MAC:
+					 state = new Mac();
+					 break;
+				case WINDOWS:
+					state = new Windows();
+					break;
+				case LINUX:
+					state = new Linux();
+					break;
+				default:
+					throw new Exception("User did not provide a valid operating system. Unable to open browser because the operating system is unknown.");		
+			}
+			context.setState(state);
+			context.doAction();
+		} 
+		catch (Exception ex) 
+		{
+			throw ex;
 		}
 	}
 

@@ -2,21 +2,21 @@ package commonClasses.sharedUtils.contexts;
 
 import commonClasses.sharedUtils.interfaces.State;
 
-public class HeadlessContext implements State {
+public class OSContext implements State{
 
-	private State headlessState;
+	private State osState;
 	
 	public void setState(State state) {
-		this.headlessState=state;
+		this.osState=state;
 	}
 	
 	public State getState() {
-		return this.headlessState;
+		return this.osState;
 	}
 	
 	@Override
 	public void doAction() {
-		this.headlessState.doAction();	
+		this.osState.doAction();	
 	}
 
 }

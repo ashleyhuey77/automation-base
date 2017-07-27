@@ -27,8 +27,7 @@ public class WebDriverListener implements IInvokedMethodListener {
         	WebDriver driver = null;
 			try {
 				driver = HelperFacade.getDriver(
-						Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()), 
-						LocalTest.getEnvironment().isHeadlessEnabled());
+						Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

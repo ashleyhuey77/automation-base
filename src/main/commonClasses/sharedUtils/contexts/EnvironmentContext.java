@@ -1,16 +1,16 @@
 package commonClasses.sharedUtils.contexts;
 
-import commonClasses.sharedUtils.interfaces.EnvironmentState;
+import commonClasses.sharedUtils.interfaces.State;
 
-public class EnvironmentContext implements EnvironmentState {
+public class EnvironmentContext implements State {
 
-	private EnvironmentState envState;
+	private State envState;
 	
-	public void setState(EnvironmentState state) {
+	public void setState(State state) {
 		this.envState=state;
 	}
 	
-	public EnvironmentState getState() {
+	public State getState() {
 		return this.envState;
 	}
 	

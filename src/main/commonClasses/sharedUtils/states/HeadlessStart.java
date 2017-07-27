@@ -1,15 +1,14 @@
 package commonClasses.sharedUtils.states;
 
-import org.openqa.selenium.chrome.ChromeOptions;
-
 import commonClasses.sharedUtils.interfaces.State;
+import commonClasses.sharedUtils.managers.LocalChromeOptions;
 
-public class HeadlessStartState implements State {
+public class HeadlessStart implements State {
 
 	@Override
-	public void doAction(ChromeOptions options) {
-		options.addArguments("headless");
-		options.addArguments("disable-gpu");
+	public void doAction() {
+		LocalChromeOptions.get().addArguments("headless");
+		LocalChromeOptions.get().addArguments("disable-gpu");
 		System.out.println("Headless mode has been enabled. All tests will run in headless Chrome.");
 	}
 

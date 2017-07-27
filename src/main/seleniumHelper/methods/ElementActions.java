@@ -22,7 +22,7 @@ public class ElementActions extends Commands implements IActions {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
-            actions.moveToElement(getElement(selectorString, by)).click().perform();
+            actions.moveToElement(getElement(selectorString, by)).perform();
         }
         catch (WebDriverException ex)
         {
@@ -35,7 +35,7 @@ public class ElementActions extends Commands implements IActions {
         try
         {
             Actions actions = new Actions(LocalDriver.getDriver());
-            actions.moveToElement(element).click().perform();
+            actions.moveToElement(element).perform();
         }
         catch (WebDriverException ex)
         {
