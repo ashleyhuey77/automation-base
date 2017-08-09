@@ -25,7 +25,7 @@ public class UtilsTest {
 		SecurityHelper s = new SecurityHelper();
 		System.out.println(s);
 		
-		String p = "Testing123456";
+		String p = "Sami123!";
 		//String u = "";
 		String result1 = SecurityHelper.encrypt(p);
 		//String result3 = SecurityHelper.encrypt(u);

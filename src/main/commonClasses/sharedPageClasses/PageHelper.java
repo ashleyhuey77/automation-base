@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -59,7 +60,6 @@ public abstract class PageHelper {
         {
             if (SHelper.get().element().isDisplayed(webElement, byValue, 5))
             {
-            	SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(webElement, byValue, 40);
                 SHelper.get().click(Via.SELENIUM).on(webElement, byValue);
                 clearAllTextByBackspacing(webElement, byValue);
 
@@ -102,7 +102,6 @@ public abstract class PageHelper {
        {
            if (SHelper.get().element().isDisplayed(webElement, 5))
            {
-        	   SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(webElement, 40);
                SHelper.get().click(Via.SELENIUM).on(webElement);
                clearAllTextByBackspacing(webElement);
 
@@ -144,7 +143,6 @@ public abstract class PageHelper {
 		{
 			if (SHelper.get().element().isDisplayed(html, byValue, 5))
 			{
-				SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(html, byValue, 40);
 				SHelper.get().click(Via.SELENIUM).on(html, byValue);
 				LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
@@ -221,9 +219,8 @@ public abstract class PageHelper {
 	{
 		try
 		{
-			if (SHelper.get().element().isDisplayed(clickElement, 5)){
-				
-				SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(clickElement, 40);
+			if (SHelper.get().element().isDisplayed(clickElement, 5))
+			{
 				SHelper.get().click(Via.SELENIUM).on(clickElement);
 				enterAvalueIntoATextField(option, searchElement, elementBeingTested);
 				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
@@ -429,13 +426,70 @@ public abstract class PageHelper {
 				{
 					if (clickViaJQuery)
 					{
-						SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(element, 40);
 							String iString = Integer.toString(i);
-							SHelper.get().click(Via.JQUERY).on(webelementListHtml, iString);
+							SHelper.get().click(Via.JQUERY).on(webelementListHtml, cssSelector, iString);
 					}
 					else
 					{
-						SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(element, 40);
+						SHelper.get().actions().scrollTo(element);
+						SHelper.get().click(Via.SELENIUM).on(element);
+					}
+					
+					value = actualOption;
+					LocalReport.getReport().reportDoneEvent(expectedOption + " has been selected successfully.");
+					break;
+				}
+			}
+			
+			if (value == null)
+			{
+				throw LocalValidation.getValidations().assertionFailed(expectedOption + " is not found in the list of available options. Unable to select the expected option.");
+			}
+		}
+		catch (Exception ex)
+		{
+			throw LocalReport.getReport().reportException(ex);
+		}
+	}
+	
+	/**	
+  	 *	<summary>
+	 *	Method to find some option in a list of options 
+	 *	and select it based on text
+	 *	</summary>
+	 *	@return void
+	 *	@param webElements a list of webelements that share a similar selector in order
+	 *					   to loop through and execute an action based on some parameter
+	 *	@param webelementListHtml the webelement selector string for the field that
+   	 *					   		  the text will be entered into
+   	 *	@param expectedOption the option that is expected to be found
+   	 *	@param clickViaJQuery boolean value to execute a jquery click command instead of a 
+   	 *				          click via selenium. Is not necessary for all methods, but has been 
+   	 *				          necessary in some instances.
+	 * @throws Exception 
+	*/
+	
+	protected void findOptionInListAndSelectIt(String selector, String by, String expectedOption, Boolean clickViaJQuery) throws Exception
+	{
+		try
+		{
+			String value = null;
+			SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selector, by, 40);
+			List<WebElement> webElements = SHelper.get().element().getListOf(selector, by);
+			for (int i = 0; i < webElements.size(); i++)
+			{
+				WebElement element = webElements.get(i);
+				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
+				if (actualOption.toLowerCase().trim().equals(expectedOption.toLowerCase().trim()))
+				{
+					if (clickViaJQuery)
+					{
+							String iString = Integer.toString(i);
+							SHelper.get().click(Via.JQUERY).on(selector, by, iString);
+					}
+					else
+					{
+						SHelper.get().actions().scrollTo(element);
 						SHelper.get().click(Via.SELENIUM).on(element);
 					}
 					
