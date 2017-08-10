@@ -130,7 +130,7 @@ public class PageClassTests extends TestInitialization {
 		
 	    System.out.flush();
 	    System.setOut(old);
-	    String inputString = baos.toString();
+	    baos.toString();
 			
 		//Assert.assertTrue(inputString.trim().contains("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test"));
 		ps.close();
@@ -165,9 +165,7 @@ public class PageClassTests extends TestInitialization {
 			ps.close();
 			baos.close();
 			    
-			String m = ex.toString();
-			//Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
-			//Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
+			ex.toString();
 		}
 	}
 	
@@ -277,7 +275,7 @@ public class PageClassTests extends TestInitialization {
 		
 	    System.out.flush();
 	    System.setOut(old);
-	    String inputString = baos.toString();
+	    baos.toString();
 			
 		//Assert.assertTrue(inputString.trim().contains("Step: verifyTheActualValueMatchesTheExpectedValue has passed. Test is set correctly in Test"));
 		ps.close();
@@ -753,7 +751,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testFindOptionInListAndSelectIt(list, null, "Link3", false);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
@@ -798,7 +796,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testFindOptionInListAndSelectIt(list, test, "Link3", true);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
 
@@ -917,7 +915,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, "id", "Test Element", false);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link2 has been selected successfully."));
 
@@ -1030,7 +1028,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Testing 123", "Test Element", false);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
 
@@ -1052,7 +1050,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Testing 123", "Test Element", true);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
 
@@ -1115,7 +1113,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "Testing 123", "Test Element", false);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
 
@@ -1137,7 +1135,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "Testing 123", "Test Element", true);
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
 
@@ -1200,7 +1198,7 @@ public class PageClassTests extends TestInitialization {
     
 		page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
 	
-		String inputString = getByteStreamMessage(baos, old);
+		getByteStreamMessage(baos, old);
     
 		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementIsNotPresent has passed. Test Element does not display in the page."));
 
