@@ -26,7 +26,7 @@ public class ElementActions extends Commands implements IActions {
 	} catch (WebDriverException ex) {
 	    throw ex;
 	}
-    }
+    } 
 
     @Override
     public void moveTo(WebElement element) throws Exception {

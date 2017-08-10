@@ -2,6 +2,7 @@ package commonClasses.sharedPageClasses;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -24,6 +25,13 @@ import seleniumHelper.enums.Variable;
 import seleniumHelper.enums.Via;
 import seleniumHelper.enums.WaitFor;
 
+import java.util.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
+import commonClasses.sharedUtils.*;
+import commonClasses.sharedUtils.managers.*;
+import seleniumHelper.enums.*;
+
 public abstract class PageHelper {
 
     protected static String cssSelector = IdentifyBy.CssSelector.toString();
@@ -35,10 +43,41 @@ public abstract class PageHelper {
     protected static String linkText = IdentifyBy.LinkText.toString();
     protected static String partialLinkText = IdentifyBy.PartialLinkText.toString();
 
-    public PageHelper() throws Exception {
+    /**
+     * <summary> Method to enter a value into a text field </summary>
+     * 
+     * @param value
+     *            the text that will be entered into the text field
+     * @param webElement
+     *            the webelement selector string for the field that the text
+     *            will be entered into
+     * @param byValue
+     *            the type of selector being used (i.e id, name, cssSelector,
+     *            xpath, etc.)
+     * @param elementBeingTested
+     *            the name of the element being tested. This is used for
+     *            reporting so that when it is called the report will reflect an
+     *            element that is unique to the method
+     * @throws Exception
+     */
 
-    }
 
+    /**
+     * <summary> Method to enter a value into a text field </summary>
+     * 
+     * @return void
+     * @param value
+     *            the text that will be entered into the text field
+     * @param webElement
+     *            the webelement for the field that the text will be entered
+     *            into
+     * @param elementBeingTested
+     *            the name of the element being tested. This is used for
+     *            reporting so that when it is called the report will reflect an
+     *            element that is unique to the method
+     * @throws Exception
+     */
+ 
     /**
      * <summary> Method to enter a value into a text field </summary>
      * 
@@ -114,6 +153,72 @@ public abstract class PageHelper {
 	    throw LocalReport.getReport().reportException(ex);
 	}
     }
+
+    /**
+     * <summary> Method to wait for and then click some element </summary>
+     * 
+     * @return void
+     * @param webElement
+     *            the webelement selector string for the field that the text
+     *            will be entered into
+     * @param byValue
+     *            the type of selector being used (i.e id, name, cssSelector,
+     *            xpath, etc.)
+     * @param elementBeingTested
+     *            the name of the element being tested. This is used for
+     *            reporting so that when it is called the report will reflect an
+     *            element that is unique to the method
+     * @throws Exception
+     */
+    protected void clickSomeElement(Via via, String html, String byValue, String elementBeingTested) throws Exception {
+	try {
+	    if (SHelper.get().element().isDisplayed(html, byValue, 5)) {
+		try {
+		    SHelper.get().click(via).on(html, byValue);
+		} catch (Exception e) {
+		    try {
+			SHelper.get().click(Via.SELENIUM).on(html, byValue);
+		    } catch (Exception e2) {
+			try {
+			    SHelper.get().click(Via.JAVASCRIPT).on(html, byValue);
+			} catch (Exception e3) {
+			    try {
+				SHelper.get().click(Via.JQUERY).on(html, byValue);
+			    } catch (Exception e4) {
+				LocalValidation.getValidations().assertionFailed(
+					"Test has exhausted all different click methods. Not able to click element with the specified selector.");
+				throw LocalReport.getReport().reportException(e4);
+			    }
+			}
+		    }
+		}
+		LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully.");
+	    } else {
+		throw LocalValidation.getValidations()
+			.assertionFailed("Element is not on the page. Unable to click the " + elementBeingTested);
+	    }
+	} catch (Exception ex) {
+	    throw LocalReport.getReport().reportException(ex);
+	}
+    }
+
+    /**	
+  	 *	<summary>
+	 *	Method to select some text from a drop down
+	 *	</summary>
+	 *	@return void
+	 *	@param option the text value of the option that needs to be selected from the dropdown
+	 *	@param clickElement the element selector string of the element that will be clicked
+	 *	@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
+	 *	@param searchElement the element selector string of the search box element
+	 *	@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
+	 *	@param optionsElement the element selector string of the options element in the drop down
+	 *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
+	 *	@param elementBeingTested the name of the element being tested. This is used for 
+   	 *							  reporting so that when it is called the report will reflect an
+   	 *							  element that is unique to the method 
+	 * @throws Exception 
+	*/
 
     /**
      * <summary> Method to wait for and then click some element </summary>
@@ -348,6 +453,7 @@ public abstract class PageHelper {
 	} catch (Exception ex) {
 	    throw LocalReport.getReport().reportException(ex);
 	}
+
     }
 
     /**
@@ -395,7 +501,28 @@ public abstract class PageHelper {
 	} catch (Exception ex) {
 	    throw LocalReport.getReport().reportException(ex);
 	}
-    }
+	}
+
+    /**
+     * <summary> Method to find some option in a list of options and select it
+     * based on text </summary>
+     * 
+     * @return void
+     * @param webElements
+     *            a list of webelements that share a similar selector in order
+     *            to loop through and execute an action based on some parameter
+     * @param webelementListHtml
+     *            the webelement selector string for the field that the text
+     *            will be entered into
+     * @param expectedOption
+     *            the option that is expected to be found
+     * @param clickViaJQuery
+     *            boolean value to execute a jquery click command instead of a
+     *            click via selenium. Is not necessary for all methods, but has
+     *            been necessary in some instances.
+     * @throws Exception
+     */
+
 
     /**
      * <summary> Method to find some option in a list of options and select it
@@ -977,7 +1104,7 @@ public abstract class PageHelper {
 	    }
 	});
     }
-
+ 
     /**
      * <summary>Method to extract digits from strings</summary>
      * 
