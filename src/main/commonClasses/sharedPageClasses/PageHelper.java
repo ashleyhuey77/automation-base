@@ -1,6 +1,7 @@
 package commonClasses.sharedPageClasses;
 
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -8,6 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import commonClasses.sharedUtils.*;
 import commonClasses.sharedUtils.managers.*;
+import reporting.framework.utilities.FrameworkException;
 import seleniumHelper.enums.*;
 
 
@@ -45,13 +47,13 @@ public abstract class PageHelper {
         {
             if (SHelper.get().element().isDisplayed(webElement, byValue, 5))
             {
-                SHelper.get().click(Via.SELENIUM).on(webElement, byValue);
+            	clickSomeElement(Via.SELENIUM, webElement, byValue, elementBeingTested);
                 clearAllTextByBackspacing(webElement, byValue);
 
                 if (!TestUtils.isNullOrBlank(value))
                 {
                 	SHelper.get().enter().clear(webElement, byValue);
-                	SHelper.get().click(Via.SELENIUM).on(webElement, byValue);
+                	clickSomeElement(Via.SELENIUM, webElement, byValue, elementBeingTested);
                     SHelper.get().enter().textInto(webElement, byValue, value);
                 }
                 LocalReport.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
@@ -122,42 +124,13 @@ public abstract class PageHelper {
    	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
-	protected void clickSomeElement(Via via, String html, String byValue, String elementBeingTested) throws Exception
+	protected void clickSomeElement(Via via, String html, String byValue, String elementBeingTested, int...index) throws Exception
 	{
 		try
 		{
 			if (SHelper.get().element().isDisplayed(html, byValue, 5))
 			{
-				try 
-				{
-					SHelper.get().click(via).on(html, byValue);
-				} 
-				catch (Exception e) 
-				{
-					try 
-					{
-						SHelper.get().click(Via.SELENIUM).on(html, byValue);
-					} 
-					catch (Exception e2) 
-					{
-						try 
-						{
-							SHelper.get().click(Via.JAVASCRIPT).on(html, byValue);
-						} 
-						catch (Exception e3) 
-						{
-							try 
-							{
-								SHelper.get().click(Via.JQUERY).on(html, byValue);
-							} 
-							catch (Exception e4) 
-							{
-								LocalValidation.getValidations().assertionFailed("Test has exhausted all different click methods. Not able to click element with the specified selector.");
-								throw LocalReport.getReport().reportException(e4);
-							}
-						}
-					}
-				}
+				tryAllClicks(html, byValue, via, index);
 				LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
 			else
@@ -168,6 +141,59 @@ public abstract class PageHelper {
 		catch (Exception ex)
 		{
 			throw LocalReport.getReport().reportException(ex);
+		}
+	}
+	
+	private void tryAllClicks(String html, String byValue, Via via, int... index) throws Exception
+	{
+		try
+		{
+			indexCheckClick(via, html, byValue, index);
+		}
+		catch (Exception ex)
+		{
+			try 
+			{
+				indexCheckClick(Via.SELENIUM, html, byValue, index);
+			} 
+			catch (Exception e2) 
+			{
+				try 
+				{
+					indexCheckClick(Via.JAVASCRIPT, html, byValue, index);
+				} 
+				catch (Exception e3) 
+				{
+					try 
+					{
+						indexCheckClick(Via.JQUERY, html, byValue, index);
+					} 
+					catch (Exception e4) 
+					{
+						LocalValidation.getValidations().assertionFailed("Test has exhausted all different click methods. Not able to click element with the specified selector.");
+						throw LocalReport.getReport().reportException(e4);
+					}
+				}
+			}
+		}
+	}
+	
+	private void indexCheckClick(Via via, String html, String byValue, int... index) throws Exception
+	{
+		try 
+		{
+			if (index.length > 0)
+			{
+				SHelper.get().click(via).on(html, byValue, index[0]);
+			}
+			else 
+			{
+				SHelper.get().click(via).on(html, byValue);
+			}
+		} 
+		catch (Exception e2) 
+		{
+			throw e2;
 		}
 	}
 	
@@ -188,19 +214,18 @@ public abstract class PageHelper {
    	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception
+	protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Via via) throws Exception
 	{
 		try
 		{
-			if (SHelper.get().element().isDisplayed(clickElement, clickByValue, 10)){
-				
+			if (SHelper.get().element().isDisplayed(clickElement, clickByValue, 10))
+			{
 				clickSomeElement(Via.SELENIUM, clickElement, clickByValue, elementBeingTested);
 				Thread.sleep(600);
 				enterAvalueIntoATextField(option, searchElement, searchByValue, elementBeingTested);
 				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
 				Thread.sleep(900);
-				List<WebElement> listOfOptions = SHelper.get().element().getListOf(optionsElement, optionsByValue);
-				findOptionInListAndSelectIt(listOfOptions, optionsElement, option, clickViaJQuery);
+				findEqualOptionInListAndSelectIt(via, optionsElement, optionsByValue, option);
 			}
 			else
 			{
@@ -229,7 +254,7 @@ public abstract class PageHelper {
    	 *							  element that is unique to the method
 	 * @throws Exception 
 	*/
-	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception
+	protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Via via) throws Exception
 	{
 		try
 		{
@@ -238,8 +263,7 @@ public abstract class PageHelper {
 				SHelper.get().click(Via.SELENIUM).on(clickElement);
 				enterAvalueIntoATextField(option, searchElement, elementBeingTested);
 				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
-				List<WebElement> listOfOptions = SHelper.get().element().getListOf(optionsElement, optionsByValue);
-				findOptionInListAndSelectIt(listOfOptions, optionsElement, option, clickViaJQuery);
+				findEqualOptionInListAndSelectIt(via, optionsElement, optionsByValue, option);
 			}
 			else
 			{
@@ -427,28 +451,18 @@ public abstract class PageHelper {
 	 * @throws Exception 
 	*/
 	
-	protected void findOptionInListAndSelectIt(List<WebElement> webElements, String webelementListHtml, String expectedOption, Boolean clickViaJQuery) throws Exception
+	protected void findEqualOptionInListAndSelectIt(Via via, String selector, String by, String expectedOption) throws Exception
 	{
 		try
 		{
+			List<WebElement> webElements = SHelper.get().element().getListOf(selector, by);
 			String value = null;
 			for (int i = 0; i < webElements.size(); i++)
 			{
-				WebElement element = webElements.get(i);
-				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
+				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(webElements.get(i));
 				if (actualOption.toLowerCase().trim().equals(expectedOption.toLowerCase().trim()))
 				{
-					if (clickViaJQuery)
-					{
-							String iString = Integer.toString(i);
-							SHelper.get().click(Via.JQUERY).on(webelementListHtml, cssSelector, iString);
-					}
-					else
-					{
-						SHelper.get().actions().scrollTo(element);
-						SHelper.get().click(Via.SELENIUM).on(element);
-					}
-					
+					tryAllClicks(selector, by, via, i);
 					value = actualOption;
 					LocalReport.getReport().reportDoneEvent(expectedOption + " has been selected successfully.");
 					break;
@@ -483,7 +497,7 @@ public abstract class PageHelper {
 	 * @throws Exception 
 	*/
 	
-	protected void findOptionInListAndSelectIt(String selector, String by, String expectedOption, Boolean clickViaJQuery) throws Exception
+	protected void findOptionContainedInListAndSelectIt(Via via, String selector, String by, String expectedOption) throws Exception
 	{
 		try
 		{
@@ -496,17 +510,7 @@ public abstract class PageHelper {
 				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 				if (actualOption.toLowerCase().trim().contains(expectedOption.toLowerCase().trim()))
 				{
-					if (clickViaJQuery)
-					{
-							String iString = Integer.toString(i);
-							SHelper.get().click(Via.JAVASCRIPT).on(selector, by, iString);
-					}
-					else
-					{
-						SHelper.get().actions().scrollTo(element);
-						SHelper.get().click(Via.SELENIUM).on(element);
-					}
-					
+					tryAllClicks(selector, by, via, i);
 					value = actualOption;
 					LocalReport.getReport().reportDoneEvent(expectedOption + " has been selected successfully.");
 					break;
@@ -1039,8 +1043,6 @@ public abstract class PageHelper {
             				try {
 								Thread.sleep(900);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							}
                          	try
                          	{

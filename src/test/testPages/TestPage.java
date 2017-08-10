@@ -111,7 +111,7 @@ public class TestPage extends PageTemplate {
 	
 	public void testFindOptionInListAndSelectIt(List<WebElement> webElements, String webelementListHtml, String expectedOption, Boolean clickViaJQuery) throws Exception
 	{
-		findOptionInListAndSelectIt(webElements, webelementListHtml, expectedOption, clickViaJQuery);
+		//findOptionInListAndSelectIt(webElements, webelementListHtml, expectedOption, clickViaJQuery);
 	}
 	
 	public void testClickSomeElement(String html, String byValue, String elementBeingTested) throws Exception
@@ -126,12 +126,12 @@ public class TestPage extends PageTemplate {
 	
 	public void testSelectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception, InterruptedException
 	{
-		selectSomeOptionFromNonDropdown(option, clickElement, clickByValue, searchElement, searchByValue, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
+		//selectSomeOptionFromNonDropdown(option, clickElement, clickByValue, searchElement, searchByValue, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
 	}
 	
 	public void testSelectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsElement, String optionsByValue, String elementBeingTested, Boolean clickViaJQuery) throws Exception, InterruptedException
 	{
-		selectSomeOptionFromNonDropdown(option, clickElement, searchElement, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
+		//selectSomeOptionFromNonDropdown(option, clickElement, searchElement, optionsElement, optionsByValue, elementBeingTested, clickViaJQuery);
 	}
 	
 	public void testVerifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
