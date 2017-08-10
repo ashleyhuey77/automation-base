@@ -65,8 +65,7 @@ public class ElementCount extends Commands implements IWait {
     		            	try {
 								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selectorString, by, 30);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+
 							}
     		            	int actualElementCount = getElements(selectorString, by).size();
     		                if(actualElementCount == expectedTotalCount)
@@ -101,8 +100,6 @@ public class ElementCount extends Commands implements IWait {
     		            	try {
 								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(element.get(0), 30);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							}
     		            	int actualElementCount = element.size();
     		                if(actualElementCount == expectedTotalCount)

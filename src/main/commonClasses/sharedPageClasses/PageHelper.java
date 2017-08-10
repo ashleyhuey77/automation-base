@@ -3,27 +3,11 @@ package commonClasses.sharedPageClasses;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Random;
-
-import org.apache.bcel.generic.SWITCH;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import java.util.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 import commonClasses.sharedUtils.*;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.LocalReport;
-import commonClasses.sharedUtils.managers.LocalValidation;
-import commonClasses.sharedUtils.managers.SHelper;
+import commonClasses.sharedUtils.managers.*;
 import seleniumHelper.enums.*;
 
 
@@ -144,7 +128,36 @@ public abstract class PageHelper {
 		{
 			if (SHelper.get().element().isDisplayed(html, byValue, 5))
 			{
-				SHelper.get().click(via).on(html, byValue);
+				try 
+				{
+					SHelper.get().click(via).on(html, byValue);
+				} 
+				catch (Exception e) 
+				{
+					try 
+					{
+						SHelper.get().click(Via.SELENIUM).on(html, byValue);
+					} 
+					catch (Exception e2) 
+					{
+						try 
+						{
+							SHelper.get().click(Via.JAVASCRIPT).on(html, byValue);
+						} 
+						catch (Exception e3) 
+						{
+							try 
+							{
+								SHelper.get().click(Via.JQUERY).on(html, byValue);
+							} 
+							catch (Exception e4) 
+							{
+								LocalValidation.getValidations().assertionFailed("Test has exhausted all different click methods. Not able to click element with the specified selector.");
+								throw LocalReport.getReport().reportException(e4);
+							}
+						}
+					}
+				}
 				LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
 			else
