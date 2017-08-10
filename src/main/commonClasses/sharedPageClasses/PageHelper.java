@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.bcel.generic.SWITCH;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -137,13 +138,13 @@ public abstract class PageHelper {
    	 *							  element that is unique to the method 
 	 * @throws Exception 
 	*/
-	protected void clickSomeElement(String html, String byValue, String elementBeingTested) throws Exception
+	protected void clickSomeElement(Via via, String html, String byValue, String elementBeingTested) throws Exception
 	{
 		try
 		{
 			if (SHelper.get().element().isDisplayed(html, byValue, 5))
 			{
-				SHelper.get().click(Via.SELENIUM).on(html, byValue);
+				SHelper.get().click(via).on(html, byValue);
 				LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully." );
 			}
 			else
@@ -180,7 +181,7 @@ public abstract class PageHelper {
 		{
 			if (SHelper.get().element().isDisplayed(clickElement, clickByValue, 10)){
 				
-				clickSomeElement(clickElement, clickByValue, elementBeingTested);
+				clickSomeElement(Via.SELENIUM, clickElement, clickByValue, elementBeingTested);
 				Thread.sleep(600);
 				enterAvalueIntoATextField(option, searchElement, searchByValue, elementBeingTested);
 				SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
@@ -480,12 +481,12 @@ public abstract class PageHelper {
 			{
 				WebElement element = webElements.get(i);
 				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
-				if (actualOption.toLowerCase().trim().equals(expectedOption.toLowerCase().trim()))
+				if (actualOption.toLowerCase().trim().contains(expectedOption.toLowerCase().trim()))
 				{
 					if (clickViaJQuery)
 					{
 							String iString = Integer.toString(i);
-							SHelper.get().click(Via.JQUERY).on(selector, by, iString);
+							SHelper.get().click(Via.JAVASCRIPT).on(selector, by, iString);
 					}
 					else
 					{

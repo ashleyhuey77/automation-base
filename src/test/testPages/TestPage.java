@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import commonClasses.sharedPageClasses.PageTemplate;
+import seleniumHelper.enums.Via;
 
 
 public class TestPage extends PageTemplate {
@@ -115,7 +116,7 @@ public class TestPage extends PageTemplate {
 	
 	public void testClickSomeElement(String html, String byValue, String elementBeingTested) throws Exception
 	{
-		clickSomeElement(html, byValue, elementBeingTested);
+		clickSomeElement(Via.SELENIUM, html, byValue, elementBeingTested);
 	}
 	
 	public int testGetTotalDaysInMonth() throws Exception
