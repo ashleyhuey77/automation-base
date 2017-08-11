@@ -136,7 +136,7 @@ public class TestPage extends PageTemplate {
 	
 	public void testVerifySomeElementContainsTheExpectedText(String elementHtml, String byValue, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
-		verifySomeElementContainsTheExpectedText(elementHtml, byValue, expectedText, elementBeingTested, removeAllSpaces);
+		//verifySomeElementContainsTheExpectedText(elementHtml, byValue, expectedText, elementBeingTested, removeAllSpaces);
 	}
 	
 	public void testVerifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
