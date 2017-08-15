@@ -130,6 +130,8 @@ public class Browser extends Commands implements IBrowser {
 			case DEFAULTCONTENT:
 				switchToDefaultContent();
 				break;
+			case ALERT:
+				LocalDriver.getDriver().switchTo().alert().accept();
 			default:
 				throw new Exception("Please select an available browser object to switch to.");
 			}
