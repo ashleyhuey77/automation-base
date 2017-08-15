@@ -2,36 +2,13 @@ package commonClasses.sharedPageClasses;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Random;
-
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import commonClasses.sharedUtils.TestUtils;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.LocalReport;
-import commonClasses.sharedUtils.managers.LocalValidation;
-import commonClasses.sharedUtils.managers.SHelper;
-import seleniumHelper.enums.IdentifyBy;
-import seleniumHelper.enums.Variable;
-import seleniumHelper.enums.Via;
-import seleniumHelper.enums.WaitFor;
-
 import java.util.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
-import commonClasses.sharedUtils.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import commonClasses.sharedUtils.TestUtils;
 import commonClasses.sharedUtils.managers.*;
-import reporting.framework.utilities.FrameworkException;
 import seleniumHelper.enums.*;
+import org.openqa.selenium.support.ui.*;
 
 public abstract class PageHelper {
 
@@ -268,6 +245,47 @@ public abstract class PageHelper {
 			throw LocalReport.getReport().reportException(ex);
 		}
 	}
+	
+	   /**	
+	  	 *	<summary>
+		 *	Method to select some text from a drop down
+		 *	</summary>
+		 *	@return void
+		 *	@param option the text value of the option that needs to be selected from the dropdown
+		 *	@param clickElement the element selector string of the element that will be clicked
+		 *	@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
+		 *	@param searchElement the element selector string of the search box element
+		 *	@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
+		 *	@param optionsElement the element selector string of the options element in the drop down
+		 *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
+		 *	@param elementBeingTested the name of the element being tested. This is used for 
+	   	 *							  reporting so that when it is called the report will reflect an
+	   	 *							  element that is unique to the method 
+		 * @throws Exception 
+		*/
+		protected void selectSomeOptionFromNonDropdown(String option, WebElement clickEl, WebElement searchEl, String optionsElement, String optionsByValue, String elementBeingTested, Via via) throws Exception
+		{
+			try
+			{
+				if (SHelper.get().element().isDisplayed(clickEl, 10))
+				{
+					SHelper.get().click(Via.SELENIUM).on(clickEl);
+					Thread.sleep(600);
+					enterAvalueIntoATextField(option, searchEl, elementBeingTested);
+					SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
+					Thread.sleep(900);
+					findEqualOptionInListAndSelectIt(via, optionsElement, optionsByValue, option);
+				}
+				else
+				{
+					throw LocalValidation.getValidations().assertionFailed("Element is not availale. Can not select the " + elementBeingTested + " from the drop down list.");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw LocalReport.getReport().reportException(ex);
+			}
+		}
 
     /**
      * <summary> Method to verify some element is present </summary>
@@ -468,6 +486,62 @@ public abstract class PageHelper {
     {
 		try 
 		{
+		    String actualText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
+	
+		    if (removeAllSpaces) 
+		    {
+		    	actualText = actualText.replace(" ", "");
+		    	expectedText = expectedText.replace(" ", "");
+		    }
+	
+		    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) 
+		    {
+		    	LocalValidation.getValidations()
+				.assertionPass(elementBeingTested + " contains the correct text: " + actualText);
+		    } 
+		    else 
+		    {
+		    	throw LocalValidation.getValidations()
+				.assertionFailed(elementBeingTested + " does not contain the correct text. Expected text: "
+					+ expectedText + ". Actual text: " + actualText);
+		    }
+		} 
+		catch (Exception ex) 
+		{
+		    throw LocalReport.getReport().reportException(ex);
+		}
+	}
+    
+    /**
+     * <summary> Method to verify some element contains the expected text
+     * </summary>
+     * 
+     * @return void
+     * @param elementHtml
+     *            the webelement selector string for the field that the text
+     *            will be entered into
+     * @param byValue
+     *            the type of selector being used (i.e id, name, cssSelector,
+     *            xpath, etc.)
+     * @param expectedText
+     *            the text that is expected to be in the element
+     * @param elementBeingTested
+     *            the name of the element being tested. This is used for
+     *            reporting so that when it is called the report will reflect an
+     *            element that is unique to the method
+     * @param removeAllSpaces
+     *            boolean to determine whether validation needs to occur with
+     *            all spaces removed to producce a more accurate comparison. Not
+     *            neccesary for all consumers of this method, however has been
+     *            necessary for some instances.
+     * @throws Exception
+     */
+    protected void verifySomeElementContainsTheExpectedText(String selector, String by, String expectedText,
+	    String elementBeingTested, Boolean removeAllSpaces) throws Exception 
+    {
+		try 
+		{
+			WebElement element = SHelper.get().element().get(selector, by);
 		    String actualText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 	
 		    if (removeAllSpaces) 
@@ -1075,5 +1149,25 @@ public abstract class PageHelper {
 			throw LocalReport.getReport().reportException(ex);
 		}
 	}
+	
+    /**
+     * <summary>retrieve number form field</summary>
+     * 
+     * @param elemnt
+     * @return
+     */
+    protected String getNumbersFromString(WebElement elemnt) throws Exception 
+    {
+		try 
+		{
+		    String z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(elemnt);
+		    return z.replaceAll("[^0-9]", "");
+		} 
+		catch (Exception ex) 
+		{
+		    throw LocalReport.getReport().reportException(ex);
+		}
+    }
+
 
 }
