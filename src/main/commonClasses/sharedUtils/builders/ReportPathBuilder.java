@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import commonClasses.sharedUtils.TestUtils;
+import commonClasses.sharedUtils.managers.LocalReport;
 
 public class ReportPathBuilder {
 
@@ -28,7 +29,8 @@ public class ReportPathBuilder {
     private String getLocalReportPath()
     {
             //return TestUtils.RelativePath + File.separator + FrameworkConstants.RESULT_FOLDER + File.separator + "Result_" + TestUtils.TimeStamp;
-    	String reportPath = TestUtils.getRelativePath() /*"/Users/ashleyhuey/Documents/workspace/Automation.Tests"*/+ "/" + RESULT_FOLDER + "/" + "Result_" + TestUtils.getTimeStamp();
+    	String reportPath = TestUtils.getRelativePath() + "/" + RESULT_FOLDER + "/" + "Result_" + TestUtils.getTimeStamp();
+    	LocalReport.setFilePath(reportPath);
             return reportPath;
     }
     
