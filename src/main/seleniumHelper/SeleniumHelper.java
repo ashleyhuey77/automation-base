@@ -1,5 +1,6 @@
 package seleniumHelper;
 
+import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.enums.*;
 import seleniumHelper.interfaces.*;
 import seleniumHelper.methods.*;
@@ -121,13 +122,13 @@ public class SeleniumHelper {
 	}
 	
 	protected void test() throws Exception {
-		click(Via.JAVASCRIPT).on("", "");
-		text(Variable.ELEMENT, Via.SELENIUM).getFrom("", "");
-		enter().textInto("", "", "");
-		browser().switchTo(BrowserObject.WINDOW);
-		element().isDisplayed("", "", 30);
-		page().scrollTo(Location.TOP_OF_PAGE);
-		waitMethod(WaitFor.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).waitOn("", "", Condition.CONTAINS, "", 40);
+		SHelper.get().click(Via.JAVASCRIPT).on("", "");
+		SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom("", "");
+		SHelper.get().enter().textInto("", "", "");
+		SHelper.get().browser().switchTo(BrowserObject.WINDOW);
+		SHelper.get().element().isDisplayed("", "", 30);
+		SHelper.get().page().scrollTo(Location.TOP_OF_PAGE);
+		SHelper.get().waitMethod(WaitFor.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).waitOn("", "", Condition.CONTAINS, "", 40);
 		
 	}
     

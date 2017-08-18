@@ -9,7 +9,7 @@ import reporting.framework.reporting.ReportThemeFactory;
 
 public class HtmlReportHelper {
 	
-	public static HtmlReport initialize(HtmlReport htmlReport, WebDriver browser, String testScenarioName, String browserName) throws Exception
+	public HtmlReport initialize(HtmlReport htmlReport, WebDriver browser, String testScenarioName, String browserName) throws Exception
 	{
 		try
     	{

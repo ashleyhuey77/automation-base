@@ -44,7 +44,8 @@ public abstract class ApplicationHelper {
     {
     	try
     	{
-	        return HtmlReportHelper.initialize(LocalReport.getHtmlReport(), browser, testScenarioName, browserName);
+    		HtmlReportHelper helper = new HtmlReportHelper();
+	        return helper.initialize(LocalReport.getHtmlReport(), browser, testScenarioName, browserName);
     	}
     	catch (Exception ex) 
     	{
