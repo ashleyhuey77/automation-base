@@ -16,7 +16,7 @@ public class SafariDriverHelper {
 		
 		SafariOptions safariOptions = new SafariOptions();
 		
-		driver = new ThreadLocal<SafariDriver>(){
+		driver = new ThreadLocal<SafariDriver>() {
 			@Override
 			protected SafariDriver initialValue() {
 				SafariDriver safariDriver = new SafariDriver(safariOptions);

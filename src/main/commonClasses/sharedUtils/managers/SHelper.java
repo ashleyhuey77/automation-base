@@ -10,8 +10,7 @@ public class SHelper {
     	return sHelper.get();
     }
     
-    public static void set(SeleniumHelper indriver)
-    {
+    public static void set(SeleniumHelper indriver) {
     	sHelper.set(indriver);
     }
 }

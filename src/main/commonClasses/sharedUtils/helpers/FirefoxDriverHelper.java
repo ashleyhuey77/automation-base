@@ -18,7 +18,7 @@ public class FirefoxDriverHelper {
 		System.setProperty("webdriver.gecko.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/geckodriver");
     	System.setProperty("java.awt.headless", "false");
 		
-		driver = new InheritableThreadLocal<FirefoxDriver>(){
+		driver = new InheritableThreadLocal<FirefoxDriver>() {
 			@Override
 			protected FirefoxDriver initialValue() {
 				FirefoxDriver ffDriver = new FirefoxDriver();

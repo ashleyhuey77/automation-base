@@ -16,10 +16,10 @@ import reporting.framework.utilities.FrameworkException;
 
 
 public class HtmlReport extends reporting.framework.reporting.Report {
-	
-	public WebDriver driver;
+
+    public WebDriver driver;
     @SuppressWarnings("unused")
-	private ReportSettings reportSettings;
+    private ReportSettings reportSettings;
     private int failCount;
 
     //<summary>
@@ -28,32 +28,27 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     //<param name="htmlReport"></param>
     //<param name="msTestReport"></param>
 
-    public HtmlReport(ReportSettings reportSettings, ReportTheme reportTheme)
-    { 	super(reportSettings, reportTheme);
-        
-    	this.reportSettings = reportSettings;
+    public HtmlReport(ReportSettings reportSettings, ReportTheme reportTheme) {
+        super(reportSettings, reportTheme);
+
+        this.reportSettings = reportSettings;
         failCount = 0;
 
     }
 
     @Override
-    protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException
-    {
-        try
-        {
+    protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException {
+        try {
 
-            if (driver == null)
-            {
+            if (driver == null) {
                 throw new FrameworkException("Report.driver is not initialized!");
             }
 
             WebDriver _driver = new Augmenter().augment(driver);
-            File source = ((TakesScreenshot)_driver).getScreenshotAs(OutputType.FILE);
+            File source = ((TakesScreenshot) _driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(source, new File(screenshotPath), true);
             //FileUtils.copyFile(source, new File(screenshotPath));
-        }
-        catch (Exception exception)
-        {
+        } catch (Exception exception) {
             reportWarning("TakeScreenshot", exception.getMessage());
         }
     }
@@ -65,8 +60,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// <param name="stepName"></param>
     /// <param name="description"></param>
 
-    public void reportDoneEvent(String stepName, String description) throws FrameworkException, IOException
-    {
+    public void reportDoneEvent(String stepName, String description) throws FrameworkException, IOException {
 
         super.UpdateTestLog(stepName, description, Status.DONE);
 
@@ -78,8 +72,7 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// <param name="stepName"></param>
     /// <param name="description"></param>
 
-    public void reportWarning(String stepName, String description) throws FrameworkException, IOException
-    {
+    public void reportWarning(String stepName, String description) throws FrameworkException, IOException {
         super.UpdateTestLog(stepName, description, Status.WARNING);
 
     }
@@ -88,16 +81,12 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// Add a Passed step to the test report </summary>
     /// <param name="stepName"> </param>
     /// <param name="description"> </param>
-    public void reportPassEvent(String stepName, String description) throws FrameworkException, IOException
-    {
-        try
-        {
+    public void reportPassEvent(String stepName, String description) throws FrameworkException, IOException {
+        try {
 
             super.UpdateTestLog(stepName, description, Status.PASS);
 
-        }
-        catch (Exception invalidOperationException)
-        {
+        } catch (Exception invalidOperationException) {
             super.UpdateTestLog("reportPassEvent", invalidOperationException.getMessage(), Status.WARNING);
         }
     }
@@ -106,16 +95,12 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     /// Add a failed report to the test report </summary>
     /// <param name="stepName"> </param>
     /// <param name="description"> </param>
-    public void reportFailEvent(String stepName, String description) throws FrameworkException, IOException
-    {
-        try
-        {
+    public void reportFailEvent(String stepName, String description) throws FrameworkException, IOException {
+        try {
             failCount = failCount + 1;
             super.UpdateTestLog(stepName, description, Status.FAIL);
 
-        }
-        catch (Exception invalidOperationException)
-        {
+        } catch (Exception invalidOperationException) {
             super.UpdateTestLog(stepName, description, Status.WARNING);
             super.UpdateTestLog("reportFailEvent", invalidOperationException.getMessage(), Status.WARNING);
         }

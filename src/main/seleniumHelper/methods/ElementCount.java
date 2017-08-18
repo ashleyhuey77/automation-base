@@ -21,100 +21,87 @@ public class ElementCount extends Commands implements IWait {
 
     @Override
     @DoNotCall
-    public void waitOn(String selectorString, String by, int i, String... attribute) throws Exception {
-	// TODO Auto-generated method stub
+    public void waitOn(String selectorString, String by, int i, String...attribute) throws Exception {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(WebElement element, int i, String... attribute) throws Exception {
-	// TODO Auto-generated method stub
+    public void waitOn(WebElement element, int i, String...attribute) throws Exception {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     @DoNotCall
     public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
-	    String... attribute) throws Exception {
-	// TODO Auto-generated method stub 
+        String...attribute) throws Exception {
+        // TODO Auto-generated method stub 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String... attribute)
-	    throws Exception {
-	// TODO Auto-generated method stub
+    public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
+    throws Exception {
+        // TODO Auto-generated method stub
 
     }
 
-	@Override
-	public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
-		try
-    	{
-    		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
-    		wait.until(new ExpectedCondition<Boolean>() {
-    		            public Boolean apply(WebDriver driver) {
-    		            	try {
-								SHelper.get().page().refresh();
-							} catch (Exception e1) {
+    @Override
+    public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
+        try {
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+            wait.until(new ExpectedCondition < Boolean > () {
+                public Boolean apply(WebDriver driver) {
+                    try {
+                        SHelper.get().page().refresh();
+                    } catch (Exception e1) {
 
-							}
-    		            	try {
-								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selectorString, by, 30);
-							} catch (Exception e) {
+                    }
+                    try {
+                        SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selectorString, by, 30);
+                    } catch (Exception e) {
 
-							}
-    		            	int actualElementCount = getElements(selectorString, by).size();
-    		                if(actualElementCount == expectedTotalCount)
-    		                {
-    		                	return true;
-    		                }
-    		                else
-    		                {
-    		                	return false;
-    		                }
-    		            }
-    		   });
-    	}
-    	catch (WebDriverException ex)
-    	{
-    		throw ex; 
-    	}
-	}
+                    }
+                    int actualElementCount = getElements(selectorString, by).size();
+                    if (actualElementCount == expectedTotalCount) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        } catch (WebDriverException ex) {
+            throw ex;
+        }
+    }
 
-	@Override
-	public void waitOn(List<WebElement> element, int expectedTotalCount, int i) throws Exception {
-		try
-    	{
-    		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(),i);
-    		wait.until(new ExpectedCondition<Boolean>() {
-    		            public Boolean apply(WebDriver driver) {
-    		            	try {
-								SHelper.get().page().refresh();
-							} catch (Exception e1) {
-								
-							}
-    		            	try {
-								SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(element.get(0), 30);
-							} catch (Exception e) {
-							}
-    		            	int actualElementCount = element.size();
-    		                if(actualElementCount == expectedTotalCount)
-    		                {
-    		                	return true;
-    		                }
-    		                else
-    		                {
-    		                	return false;
-    		                }
-    		            }
-    		   });
-    	}
-    	catch (WebDriverException ex)
-    	{
-    		throw ex; 
-    	}
-	}
+    @Override
+    public void waitOn(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
+        try {
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+            wait.until(new ExpectedCondition < Boolean > () {
+                public Boolean apply(WebDriver driver) {
+                    try {
+                        SHelper.get().page().refresh();
+                    } catch (Exception e1) {
+
+                    }
+                    try {
+                        SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(element.get(0), 30);
+                    } catch (Exception e) {}
+                    int actualElementCount = element.size();
+                    if (actualElementCount == expectedTotalCount) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        } catch (WebDriverException ex) {
+            throw ex;
+        }
+    }
 
 }
