@@ -1127,7 +1127,7 @@ public abstract class PageHelper {
 							}
 		   		};
 		});
-    }
+    }    
     
 	/**
 	 * <summary>Method to extract digits from strings</summary>
