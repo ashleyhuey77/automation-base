@@ -14,19 +14,26 @@ public class Page extends Commands implements IPage {
     public void scrollTo(Location location) throws Exception {
         try {
             JavascriptExecutor js = ((JavascriptExecutor) LocalDriver.getDriver());
-            String locationString = null;
+            String hLocationString = "0";
+            String wLocationString = "0";
             switch (location) {
                 case TOP_OF_PAGE:
-                    locationString = "-document.body.scrollHeight";
+                	hLocationString = "-document.body.scrollHeight";
                     break;
                 case BOTTOM_OF_PAGE:
-                    locationString = "document.body.scrollHeight";
+                	hLocationString = "document.body.scrollHeight";
                     break;
+                case RIGHT_OF_PAGE:
+                	wLocationString = "document.body.scrollWidth";
+                	break;
+                case LEFT_OF_PAGE:
+                	wLocationString = "-document.body.scrollWidth";
+                	break;
                 default:
                     throw new Exception("Did not provide an accepted location on the page.");
             }
 
-            js.executeScript("window.scrollTo(0, " + locationString + ")");
+            js.executeScript("window.scrollTo(" + wLocationString + ", " + hLocationString + ")");
 
             Thread.sleep(600);
         } catch (Exception ex) {
