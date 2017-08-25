@@ -8,6 +8,8 @@ public class Credentials {
     private static String miraEncryptedPassword;
     private static String newstronEncryptedUserName;
     private static String newstronEncryptedPassword;
+    private static String emailServerUN;
+    private static String emailServerPWD;
 
     public String getMiraUN() {
         return miraEncryptedUserName;
@@ -24,6 +26,14 @@ public class Credentials {
     public String getNewstronPWord() {
         return newstronEncryptedPassword;
     }
+    
+    public String getEmailServerUN() {
+    	return emailServerUN;
+    }
+    
+    public String getEmailServerPWD() {
+    	return emailServerPWD;
+    }
 
     public Credentials(String mUser, String mPword, String nUser, String nPword) throws Exception {
         if (mUser.length() > 3) {
@@ -38,6 +48,11 @@ public class Credentials {
             Credentials.newstronEncryptedUserName = decryptedNUN;
             Credentials.newstronEncryptedPassword = decryptedNPword;
         }
+    }
+    
+    public Credentials(String user, String pwd)throws Exception {
+    	Credentials.emailServerUN = user;
+    	Credentials.emailServerPWD = pwd;
     }
 
 }
