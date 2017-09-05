@@ -1,6 +1,5 @@
 package commonClasses.sharedUtils.templates;
 
-import org.openqa.selenium.WebDriver;
 import commonClasses.sharedUtils.enums.ReportType;
 import commonClasses.sharedUtils.facades.HelperFacade;
 import commonClasses.sharedUtils.helpers.ApplicationHelper;
@@ -13,13 +12,11 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
     public ApplicationTemplate() throws Exception {
         super();
 
-        WebDriver browser = LocalDriver.getDriver();
-
         initializeBrowserName();
         initializeEnvironment();
         initializeTestData();
         initializeBrowser();
-        initializeReporting(browser);
+        initializeReporting();
         openApplication();
     }
 
@@ -48,9 +45,9 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
         environment = LocalTest.getEnvironment().getEnvironment();
     }
 
-    public void initializeReporting(WebDriver browser) throws Exception {
-        HelperFacade.initializeReportType(ReportType.REPORT, browser, getHtmlReport(LocalTest.getTestName(), browser));
-        HelperFacade.initializeReportType(ReportType.VALIDATIONS, browser, getHtmlReport(LocalTest.getTestName(), browser));
+    public void initializeReporting() throws Exception {
+        HelperFacade.initializeReportType(ReportType.REPORT, getHtmlReport(LocalTest.getTestName()));
+        HelperFacade.initializeReportType(ReportType.VALIDATIONS, getHtmlReport(LocalTest.getTestName()));
     }
 
     @Override

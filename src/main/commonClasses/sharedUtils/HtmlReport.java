@@ -9,6 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 
+import commonClasses.sharedUtils.managers.LocalDriver;
 import reporting.framework.reporting.ReportSettings;
 import reporting.framework.reporting.ReportTheme;
 import reporting.framework.reporting.Status;
@@ -17,7 +18,7 @@ import reporting.framework.utilities.FrameworkException;
 
 public class HtmlReport extends reporting.framework.reporting.Report {
 
-    public WebDriver driver;
+    //public WebDriver driver;
     @SuppressWarnings("unused")
     private ReportSettings reportSettings;
     private int failCount;
@@ -40,12 +41,12 @@ public class HtmlReport extends reporting.framework.reporting.Report {
     protected void TakeScreenshot(String screenshotPath) throws FrameworkException, IOException {
         try {
 
-            if (driver == null) {
+            if (LocalDriver.getDriver() == null) {
                 throw new FrameworkException("Report.driver is not initialized!");
             }
 
-            WebDriver _driver = new Augmenter().augment(driver);
-            File source = ((TakesScreenshot) _driver).getScreenshotAs(OutputType.FILE);
+            //WebDriver _driver = new Augmenter().augment(driver);
+            File source = ((TakesScreenshot)LocalDriver.getDriver()).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(source, new File(screenshotPath), true);
             //FileUtils.copyFile(source, new File(screenshotPath));
         } catch (Exception exception) {

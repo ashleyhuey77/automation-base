@@ -29,7 +29,7 @@ public class HelperFacade {
         return driver;
     }
 
-    public static void initializeReportType(ReportType type, WebDriver browser, commonClasses.sharedUtils.HtmlReport getHTMLReport) throws Exception {
+    public static void initializeReportType(ReportType type, commonClasses.sharedUtils.HtmlReport getHTMLReport) throws Exception {
         switch (type) {
             case REPORT:
                 HtmlReport report = getHTMLReport;

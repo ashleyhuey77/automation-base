@@ -1,7 +1,5 @@
 package commonClasses.sharedUtils.helpers;
 
-import org.openqa.selenium.WebDriver;
-
 import commonClasses.sharedUtils.HtmlReport;
 import commonClasses.sharedUtils.builders.ReportPathBuilder;
 import reporting.framework.reporting.ReportSettings;
@@ -9,7 +7,7 @@ import reporting.framework.reporting.ReportThemeFactory;
 
 public class HtmlReportHelper {
 
-    public HtmlReport initialize(HtmlReport htmlReport, WebDriver browser, String testScenarioName, String browserName) throws Exception {
+    public HtmlReport initialize(HtmlReport htmlReport, String testScenarioName, String browserName) throws Exception {
         try {
             String reportFilePath = ReportPathBuilder.getInstance().getReportPath();
             String reportFileName = testScenarioName + "_" + browserName;
@@ -21,7 +19,7 @@ public class HtmlReportHelper {
             reportSettings.TakeScreenshotFailedStep = true;
             reportSettings.TakeScreenshotPassedStep = true;
             htmlReport = new commonClasses.sharedUtils.HtmlReport(reportSettings, ReportThemeFactory.GetReportsTheme(ReportThemeFactory.Theme.COOL));
-            htmlReport.driver = browser;
+            //htmlReport.driver = browser;
             htmlReport.InitializeReportTypes();
             htmlReport.InitializeTestLog();
             htmlReport.AddTestLogHeading(testScenarioName);

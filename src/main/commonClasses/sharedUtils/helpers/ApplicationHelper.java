@@ -31,11 +31,10 @@ public abstract class ApplicationHelper {
         }
     }
 
-    protected commonClasses.sharedUtils.HtmlReport getHtmlReport(String testScenarioName, 
-    		WebDriver browser) throws Exception {
+    protected commonClasses.sharedUtils.HtmlReport getHtmlReport(String testScenarioName) throws Exception {
         try {
             HtmlReportHelper helper = new HtmlReportHelper();
-            return helper.initialize(LocalReport.getHtmlReport(), browser, testScenarioName, browserName);
+            return helper.initialize(LocalReport.getHtmlReport(), testScenarioName, browserName);
         } catch (Exception ex) {
             throw ex;
         }

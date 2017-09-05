@@ -1,6 +1,5 @@
 package commonClasses.sharedUtils.interfaces;
 
-import org.openqa.selenium.WebDriver;
 
 public interface Application {
 	
@@ -14,6 +13,6 @@ public interface Application {
 	
 	public void initializeBrowser() throws Exception;
 	
-	public void initializeReporting(WebDriver browser) throws Exception;
+	public void initializeReporting() throws Exception;
 	
 }
