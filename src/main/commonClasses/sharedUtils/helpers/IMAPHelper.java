@@ -4,8 +4,14 @@ import java.text.*;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import commonClasses.sharedUtils.*;
 import commonClasses.sharedUtils.enums.Protocol;
+import commonClasses.sharedUtils.managers.LocalDriver;
 import commonClasses.sharedUtils.managers.LocalTest;
 
 public class IMAPHelper {
@@ -26,8 +32,8 @@ public class IMAPHelper {
 		      Session sess = Session.getInstance(properties,
 		    		  new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(LocalTest.getCredentials().getEmailServerUN(), 
-								LocalTest.getCredentials().getEmailServerUN());
+						return new PasswordAuthentication(LocalTest.getEmailCredentials().getEmailServerUN(), 
+								LocalTest.getEmailCredentials().getEmailServerPWD());
 					}
 				  });
 		      
@@ -62,41 +68,78 @@ public class IMAPHelper {
 	public static void getTheSpecifiedEmailAndRetrieveContents(String expectedDate, String expectedSubject, String expectedBody) throws Exception {
 		try {
 			Message[] messages = folder.get().getMessages();
-			String result = null;
-			for (int i=0; i < messages.length; i++) {
-				Message m = messages[i];
-				Date d = m.getSentDate();
-				DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
-				String actualDate = formatDate.format(d).toString();
-				String actualSubject = m.getSubject();
-				String actualBody = getText(m);
-				if (TestUtils.isNullOrBlank(expectedBody)) {
-					if (actualDate.equals(expectedDate)
-							&& actualSubject.toLowerCase().trim()
-								.contains(expectedSubject.toLowerCase().trim())) {
-						setRequiredValues(m, actualBody);
-						System.out.println("Existing email message found... ");
-						result = "PASS";
-					}
-				} else {
-					if (actualDate.equals(expectedDate)
-							&& actualSubject.toLowerCase().trim().contains(expectedSubject
-									.toLowerCase().trim())
-							&& actualBody.toLowerCase().trim().contains(expectedBody
-									.toLowerCase().trim())) {
-						setRequiredValues(m, actualBody);
-						System.out.println("Existing email message found... ");
-						result = "PASS";
-					}
-				}
-			}
-			
-			if (TestUtils.isNullOrBlank(result)) {
-				throw new Exception("Unable to find message in the test user's email with the specified criteria. "
-						+ "Make sure the required email is present in the specified folder.");
-			}
+			waitForMessageToBeAvailable(messages, expectedBody, expectedDate, expectedSubject);
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+	
+	private static void waitForMessageToBeAvailable(Message[] messages, String expectedBody, String expectedDate, String expectedSubject) throws Exception {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 200);
+
+            wait.until(new ExpectedCondition < Boolean > () {
+                public Boolean apply(WebDriver driver) {
+                	Boolean result = false;
+					for (int i=0; i < messages.length; i++) {
+						Message m = messages[i];
+						Date d = null;
+						try {
+							d = m.getSentDate();
+						} catch (MessagingException e2) {
+						}
+						DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
+						String actualDate = formatDate.format(d).toString();
+						String actualSubject = null;
+						try {
+							actualSubject = m.getSubject();
+						} catch (MessagingException e1) {
+						}
+						String actualBody = null;
+						try {
+							actualBody = getText(m);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if (TestUtils.isNullOrBlank(expectedBody)) {
+							if (actualDate.equals(expectedDate)
+									&& actualSubject.toLowerCase().trim()
+										.contains(expectedSubject.toLowerCase().trim())) {
+								System.out.println("Existing email message found... ");
+								try {
+									setRequiredValues(m, actualBody);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								result = true;
+								break;
+							}
+						} else {
+							if (actualDate.equals(expectedDate)
+									&& actualSubject.toLowerCase().trim().contains(expectedSubject
+											.toLowerCase().trim())
+									&& actualBody.toLowerCase().trim().contains(expectedBody
+											.toLowerCase().trim())) {
+								System.out.println("Existing email message found... ");
+								try {
+									setRequiredValues(m, actualBody);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								result = true;
+								break;
+							}
+						}
+					}
+					return result;
+                }
+           });	
+		} catch (Exception e) {
+			throw new Exception("Unable to find message in the test user's email with the specified criteria. "
+					+ "Make sure the required email is present in the specified folder.");
 		}
 	}
 	

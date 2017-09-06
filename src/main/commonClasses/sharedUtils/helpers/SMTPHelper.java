@@ -19,8 +19,8 @@ public class SMTPHelper {
 		    Properties properties2 = e2.property.get();
 		      Session sess = Session.getInstance(properties2, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(LocalTest.getCredentials().getEmailServerUN(), 
-								LocalTest.getCredentials().getEmailServerUN());
+						return new PasswordAuthentication(LocalTest.getEmailCredentials().getEmailServerUN(), 
+								LocalTest.getEmailCredentials().getEmailServerPWD());
 					}
 				  });
 
@@ -35,8 +35,8 @@ public class SMTPHelper {
 	public static void sendEmailMessage() throws Exception {
 		try {
 			Transport t = session.get().getTransport();
-            t.connect(LocalTest.getCredentials().getEmailServerUN(), 
-					LocalTest.getCredentials().getEmailServerUN());
+            t.connect(LocalTest.getEmailCredentials().getEmailServerUN(), 
+					LocalTest.getEmailCredentials().getEmailServerPWD());
             t.sendMessage(replyMessage.get(), replyMessage.get().getRecipients(RecipientType.TO));;
             t.close();
             System.out.println("Replied to message successfully ....");
@@ -45,22 +45,22 @@ public class SMTPHelper {
 		}
 	}
 	
-	public static void composeReplyEmailMessage(Message messageToReplyTo, String testMessage, String to, String from, String body) throws Exception {
+	public static void composeReplyEmailMessage(String testMessage) throws Exception {
 		try {
 			Message rMessage = new MimeMessage(session.get());
-			rMessage = (MimeMessage) messageToReplyTo.reply(false);
+			rMessage = (MimeMessage) IMAPHelper.getMessage().reply(false);
 			
 			Multipart mp = new MimeMultipart("alternative");
 			
 			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent("<h1> " + testMessage + " </h1> <br>" + body, "text/html; charset=utf-8");
+			htmlPart.setContent("<h1> " + testMessage + " </h1> <br>" + IMAPHelper.getBody(), "text/html; charset=utf-8");
 			
 			mp.addBodyPart(htmlPart);
 			
-			rMessage.setFrom(new InternetAddress(to));
-            Address[] add = { new InternetAddress(from) };
+			rMessage.setFrom(new InternetAddress(IMAPHelper.getTo()));
+            Address[] add = { new InternetAddress(IMAPHelper.getFrom()) };
             rMessage.setReplyTo(add);
-            rMessage.setRecipient(RecipientType.TO, new InternetAddress(from));
+            rMessage.setRecipient(RecipientType.TO, new InternetAddress(IMAPHelper.getFrom()));
             rMessage.saveChanges();
             rMessage.setContent(mp, "text/html");
             rMessage.saveChanges();

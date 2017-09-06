@@ -1,18 +1,10 @@
 package commonClasses.sharedUtils;
 
-import java.io.File;
-import java.io.IOException;
-
+import java.io.*;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Augmenter;
-
+import org.openqa.selenium.*;
 import commonClasses.sharedUtils.managers.LocalDriver;
-import reporting.framework.reporting.ReportSettings;
-import reporting.framework.reporting.ReportTheme;
-import reporting.framework.reporting.Status;
+import reporting.framework.reporting.*;
 import reporting.framework.utilities.FrameworkException;
 
 

@@ -18,7 +18,6 @@ public class WebDriverListener implements IInvokedMethodListener {
         try {
             LocalTest.initializeSettings();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         if (method.toString().toLowerCase().contains("beforescenario")) {
             WebDriver driver = null;

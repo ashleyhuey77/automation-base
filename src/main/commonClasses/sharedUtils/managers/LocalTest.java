@@ -13,6 +13,7 @@ public class LocalTest {
     private static ThreadLocal < String > testName = new ThreadLocal < String > ();
     private static Environment environment;
     private static ThreadLocal < Credentials > credentials = new ThreadLocal < Credentials > ();
+    private static ThreadLocal< Credentials > emailCreds = new ThreadLocal< Credentials >();
 
     public static String getTestName() {
         return testName.get();
@@ -36,6 +37,14 @@ public class LocalTest {
 
     public static void setCredentials(Credentials value) {
         credentials.set(value);
+    }
+    
+    public static void setEmailCredentials(Credentials value) {
+    	emailCreds.set(value);
+    }
+    
+    public static Credentials getEmailCredentials() {
+    	return emailCreds.get();
     }
 
     public static void initializeSettings() throws Exception {

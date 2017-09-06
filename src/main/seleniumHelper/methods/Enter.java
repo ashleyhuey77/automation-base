@@ -1,9 +1,6 @@
 package seleniumHelper.methods;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.*;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.interfaces.IEnter;
 
