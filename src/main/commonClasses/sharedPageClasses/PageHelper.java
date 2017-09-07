@@ -941,24 +941,16 @@ public abstract class PageHelper {
                 Boolean result = false;
                 try {
                     SHelper.get().page().refresh();
-                } catch (Exception e1) {
-
-                }
-                try {
                     Thread.sleep(900);
-                } catch (InterruptedException e) {}
-                try {
                     if (SHelper.get().element().isDisplayed(SHelper.get().element().get(selectorString, by), 10)) {
                         result = true;
-                        return result;
                     } else {
-                        return result;
+                        result = false;
                     }
-                } catch (StaleElementReferenceException ex) {
-                    return result;
-                } catch (Exception e) {
-                    return result;
-                }
+				} catch (Exception e) {
+					result = false;
+				}
+				return result;
             };
         });
     }

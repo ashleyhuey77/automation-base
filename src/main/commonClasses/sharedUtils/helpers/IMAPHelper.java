@@ -81,58 +81,38 @@ public class IMAPHelper {
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
                 	Boolean result = false;
-					for (int i=0; i < messages.length; i++) {
-						Message m = messages[i];
-						Date d = null;
-						try {
-							d = m.getSentDate();
-						} catch (MessagingException e2) {
-						}
-						DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
-						String actualDate = formatDate.format(d).toString();
-						String actualSubject = null;
-						try {
-							actualSubject = m.getSubject();
-						} catch (MessagingException e1) {
-						}
-						String actualBody = null;
-						try {
-							actualBody = getText(m);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (TestUtils.isNullOrBlank(expectedBody)) {
-							if (actualDate.equals(expectedDate)
-									&& actualSubject.toLowerCase().trim()
-										.contains(expectedSubject.toLowerCase().trim())) {
-								System.out.println("Existing email message found... ");
-								try {
+					try {
+						for (int i=0; i < messages.length; i++) {
+							Message m = messages[i];
+							Date d = m.getSentDate();
+							DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
+							String actualDate = formatDate.format(d).toString();
+							String actualSubject = m.getSubject();
+							String actualBody = getText(m);
+							if (TestUtils.isNullOrBlank(expectedBody)) {
+								if (actualDate.equals(expectedDate)
+										&& actualSubject.toLowerCase().trim()
+											.contains(expectedSubject.toLowerCase().trim())) {
+									System.out.println("Existing email message found... ");
 									setRequiredValues(m, actualBody);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									result = true;
+									break;
 								}
-								result = true;
-								break;
-							}
-						} else {
-							if (actualDate.equals(expectedDate)
-									&& actualSubject.toLowerCase().trim().contains(expectedSubject
+							} else {
+								if (actualDate.equals(expectedDate)
+										&& actualSubject.toLowerCase().trim().contains(expectedSubject
 											.toLowerCase().trim())
-									&& actualBody.toLowerCase().trim().contains(expectedBody
+										&& actualBody.toLowerCase().trim().contains(expectedBody
 											.toLowerCase().trim())) {
-								System.out.println("Existing email message found... ");
-								try {
+									System.out.println("Existing email message found... ");
 									setRequiredValues(m, actualBody);
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									result = true;
+									break;
 								}
-								result = true;
-								break;
 							}
 						}
+					} catch (Exception e) {
+						result = false;
 					}
 					return result;
                 }
