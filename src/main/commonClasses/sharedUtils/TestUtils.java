@@ -2,7 +2,10 @@ package commonClasses.sharedUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class TestUtils {
 
@@ -32,6 +35,21 @@ public class TestUtils {
 
     public static boolean isNullOrBlank(String param) {
         return param == null || param.trim().length() == 0;
+    }
+    
+    public static String getRandomString(String[] strings) throws Exception {
+    	String result = null;
+    	try {
+            List < String > stringArray = new ArrayList < String > ();
+            for (String i: strings) {
+                stringArray.add(i);
+            }
+            Collections.shuffle(stringArray);
+            result = stringArray.get(0);
+		} catch (Exception e) {
+			throw e;
+		}
+    	return result;
     }
 
 }

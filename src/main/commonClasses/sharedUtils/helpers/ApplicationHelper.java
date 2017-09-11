@@ -1,6 +1,10 @@
 package commonClasses.sharedUtils.helpers;
 
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import commonClasses.sharedUtils.managers.*;
