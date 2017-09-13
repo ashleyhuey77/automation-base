@@ -1,5 +1,9 @@
 package seleniumHelper.methods;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +11,8 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.sun.glass.ui.Window;
 
 import commonClasses.sharedUtils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
@@ -140,5 +146,19 @@ public class Browser extends Commands implements IBrowser {
             throw ex;
         }
     }
+
+	@Override
+	public void switchTo(BrowserObject object, int i) throws Exception {
+        try {
+        	Set<String> windows = LocalDriver.getDriver().getWindowHandles();
+        	List<String> handles = new ArrayList<String>();
+        	for (String window : windows) {
+        		handles.add(window);
+        	}
+            LocalDriver.getDriver().switchTo().window(handles.get(i));
+        } catch (WebDriverException ex) {
+            throw ex;
+        }
+	}
 
 }

@@ -10,27 +10,152 @@ import commonClasses.sharedUtils.managers.*;
 import seleniumHelper.enums.*;
 import org.openqa.selenium.support.ui.*;
 
+/**
+ * <h1>PageHelper</h1>
+ * <p>The abstract PageHelper class was created to hold all methods that 
+ * are shared between page classes in order to reduce repetitive code so that
+ * when a page extends the PageHelper class, it has access to shared methods.</p>
+ * <p>If code is used between two or more page classes regardless of the 
+ * method it is used in, it should be consolidated into a shared void method 
+ * and called from the PageHelper class.</p>
+ * <p>PageHelper methods should not return any page class. It is acceptible for a 
+ * PageHelper method to return void or a data type object or a list, but only
+ * in the event that the method is used between multiple page classes.</p>
+ * @author ashleyhuey
+ *
+ */
 public abstract class PageHelper {
 
+	/**
+	 * <p>The cssSelector identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in cssSelector format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of cssSelectors in the correct format: </p>
+	 * 1. {@code div[class='Test']}
+	 * </br>
+	 * 2. {@code div > div > p}
+	 * </br>
+	 * 3. {@code #TestId}
+	 */
     protected static String cssSelector = IdentifyBy.CssSelector.toString();
+	/**
+	 * <p>The id identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in the id attribute 
+	 * value format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of Ids in the correct format: </p>
+	 * 1. {@code testId}
+	 */
     protected static String id = IdentifyBy.Id.toString();
+	/**
+	 * <p>The name identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in the name attribute 
+	 * value format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of names in the correct format: </p>
+	 * 1. {@code testName}
+	 */
     protected static String name = IdentifyBy.Name.toString();
+	/**
+	 * <p>The xpath identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in xpath format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of xpath in the correct format: </p>
+	 * 1. {@code /bookstore/book[position()<3]}
+	 * </br>
+	 * 2. {@code //title[@lang]}
+	 * </br>
+	 * 3. {@code //title[@lang='en']}
+	 */
     protected static String xpath = IdentifyBy.Xpath.toString();
+	/**
+	 * <p>The ClassName identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in the Class attribute 
+	 * value format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of class names in the correct format: </p>
+	 * 1. {@code testClass}
+	 */
     protected static String className = IdentifyBy.ClassName.toString();
+	/**
+	 * <p>The TagName identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in the html tag format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of tag names in the correct format: </p>
+	 * 1. {@code p}
+	 * </br>
+	 * 2. {@code button}
+	 * </br>
+	 * 3. {@code select}
+	 */
     protected static String tagName = IdentifyBy.TagName.toString();
+	/**
+	 * <p>The LinkText identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in the Link text 
+	 * value format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of link text in the correct format: </p>
+	 * 1. {@code Link to Page}
+	 */
     protected static String linkText = IdentifyBy.LinkText.toString();
+	/**
+	 * <p>The PartialLinkText identifier is used to specify that the selector string
+	 * entered as a param for a particular method is written in a portion of the Link text 
+	 * value format.</p>
+	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
+	 * seleniumHelper package in order to prevent unknown selenium "By" types. Which
+	 * in turn prevents unnecessary exceptions.</p>
+	 * <p>Examples of partial link text in the correct format: </p>
+	 * 1. {@code Link to}
+	 */
     protected static String partialLinkText = IdentifyBy.PartialLinkText.toString();
 
+    /**
+     * <h1>PageHelper</h1>
+     * <p>The abstract PageHelper class was created to hold all void methods that 
+     * are shared between page classes in order to reduce repetitive code so that
+     * when a page extends the PageHelper class, it has access to shared methods.</p>
+     * <p>If code is used between two or more page classes regardless of the 
+     * method it is used in, it should be consolidated into a shared void method 
+     * and called from the PageHelper class.</p>
+     * <p>PageHelper methods should not return any page class. It is acceptible for a 
+     * PageHelper method to return void or a data type object or a list, but only
+     * in the event that the method is used between multiple page classes.</p>
+     * @author ashleyhuey
+     *
+     */
     public PageHelper() throws Exception {
 
     }
 
     /**
-     * <summary> Method to enter a value into a text field </summary>
-     * 
-     * @param value
+     * <p>This is a shared generic method to enter text into a text field
+     * of an element.</p>
+     * <p>The WebElement will be defined in this method provided the selector string
+     * and by value are provided as params.</p>
+     * <p>This method will wait for the text box element to display on the 
+     * page before attempting to enter text into it. If the element is not 
+     * found the test is failed.</p>
+     * <p>If the ValueToBeEntered param is null or an empty string, then
+     * no value will be entered into the text field and the test will continue
+     * without entereing anything.</p>
+     * @param valueToBeEntered
      *            the text that will be entered into the text field
-     * @param webElement
+     * @param selector
      *            the webelement selector string for the field that the text
      *            will be entered into
      * @param byValue
@@ -42,17 +167,16 @@ public abstract class PageHelper {
      *            element that is unique to the method
      * @throws Exception
      */
-    protected void enterAvalueIntoATextField(String value, String webElement, String byValue, String elementBeingTested)
+    protected void enterAvalueIntoATextField(String valueToBeEntered, String selector, String byValue, String elementBeingTested)
     throws Exception {
         try {
-            if (SHelper.get().element().isDisplayed(webElement, byValue, 5)) {
-                clickSomeElement(Via.SELENIUM, webElement, byValue, elementBeingTested);
-                clearAllTextByBackspacing(webElement, byValue);
-
-                if (!TestUtils.isNullOrBlank(value)) {
-                    SHelper.get().enter().clear(webElement, byValue);
-                    clickSomeElement(Via.SELENIUM, webElement, byValue, elementBeingTested);
-                    SHelper.get().enter().textInto(webElement, byValue, value);
+            if (SHelper.get().element().isDisplayed(selector, byValue, 5)) {
+                clickSomeElement(Via.SELENIUM, selector, byValue, elementBeingTested);
+                clearAllTextByBackspacing(selector, byValue);
+                if (!TestUtils.isNullOrBlank(valueToBeEntered)) {
+                    SHelper.get().enter().clear(selector, byValue);
+                    clickSomeElement(Via.SELENIUM, selector, byValue, elementBeingTested);
+                    SHelper.get().enter().textInto(selector, byValue, valueToBeEntered);
                 }
                 LocalReport.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
             } else {
@@ -65,33 +189,36 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to enter a value into a text field </summary>
-     * 
-     * @param value
+     * <p>This is a shared generic method to enter text into a text field
+     * of a pre-defined web element.</p>
+     * <p>This method will wait for the text box element to display on the 
+     * page before attempting to enter text into it. If the element is not 
+     * found the test is failed.</p>
+     * <p>If the valueToBeEntered param is null or an empty string, then
+     * no value will be entered into the text field and the test will continue
+     * without entereing anything.</p>
+     * @param valueToBeEntered
      *            the text that will be entered into the text field
      * @param webElement
      *            the webelement selector string for the field that the text
      *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
      * @param elementBeingTested
      *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
+     *            reporting so that when it is called the report will record an
+     *            element description that is unique to the method
      * @throws Exception
      */
-    protected void enterAvalueIntoATextField(String value, WebElement element, String elementBeingTested)
+    protected void enterAvalueIntoATextField(String valueToBeEntered, WebElement element, String elementBeingTested)
     throws Exception {
         try {
             if (SHelper.get().element().isDisplayed(element, 5)) {
                 SHelper.get().click(Via.SELENIUM).on(element);
                 clearAllTextByBackspacing(element);
 
-                if (!TestUtils.isNullOrBlank(value)) {
+                if (!TestUtils.isNullOrBlank(valueToBeEntered)) {
                     SHelper.get().enter().clear(element);
                     SHelper.get().click(Via.SELENIUM).on(element);
-                    SHelper.get().enter().textInto(element, value);
+                    SHelper.get().enter().textInto(element, valueToBeEntered);
                 }
                 LocalReport.getReport().reportDoneEvent(elementBeingTested + " has been entered successfully");
             } else {
@@ -104,22 +231,33 @@ public abstract class PageHelper {
     }
 
     /**	
-     *	<summary>
-     *	Method to wait for and then click some element
-     *	</summary>
-     *	@return void
-     *	@param webElement the webelement selector string for the field that
-     *					  the text will be entered into
-     *	@param byValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
-     *	@param elementBeingTested the name of the element being tested. This is used for 
-     *							  reporting so that when it is called the report will reflect an
-     *							  element that is unique to the method 
+     * <p>This s a shared generic method to click an element on the page.</p>
+     * <p>The method will catch any exceptions thrown and try to execute/exhaust
+     * every method of clicking possible (e.g via selenium, javascript, jquery, etc.)
+     * before throwing the exception and failing the test. This is to reduce flimsy 
+     * click failures that have been proven to happen infrequently in the NewsApps 
+     * application.</p>
+     * <p>This method will wait for the click element to display on the 
+     * page before attempting to click it. If the element is not 
+     * found the test is failed.</p>
+     * <p></p>
+     * <p></p>
+     * @param via - the method by which to click a web element (e.g click via 
+     * selenium's built in click functionality, javascript, jquery, etc.)
+     * @param selector - the webelement selector string for the field that
+     * the text will be entered into
+     * @param byValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.)
+     * @param elementBeingTested - the name of the element being tested. This is used for 
+     * reporting so that when it is called the report will reflect an
+     * element that is unique to the method
+     * @param index - this is an optional parameter and should be specified when it is necessary to 
+     * click on a web element that is stored in a list of webelements.
      * @throws Exception 
      */
-    protected void clickSomeElement(Via via, String html, String byValue, String elementBeingTested, int...index) throws Exception {
+    protected void clickSomeElement(Via via, String selector, String byValue, String elementBeingTested, int...index) throws Exception {
         try {
-            if (SHelper.get().element().isDisplayed(html, byValue, 5)) {
-                tryAllClicks(html, byValue, via, index);
+            if (SHelper.get().element().isDisplayed(selector, byValue, 5)) {
+                tryAllClicks(selector, byValue, via, index);
                 LocalReport.getReport().reportDoneEvent(elementBeingTested + " clicked successfully.");
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not on the page. Unable to click the " 
@@ -165,32 +303,43 @@ public abstract class PageHelper {
     }
 
     /**	
-     *	<summary>
-     *	Method to select some text from a drop down
-     *	</summary>
+     *	<p>
+     *	Method to select some option from a drop down based on the text value
+     * 	listed as options inside the dropdown.
+     *	</p>
+     *	<p>The selenium select method would not work for some of the dropdowns
+     *	in the newstron application as they are not traditional dropdowns. A new method
+     *	had to be created in order to select an option and it uses the 
+     *	findEqualOptionInListAndSelectIt method in order to do so.</p>
+     *	<p>Method waits for the clickSelector element to display before continuing the
+     *	test. If the element is not found, the test fails.</p>
      *	@return void
-     *	@param option the text value of the option that needs to be selected from the dropdown
-     *	@param clickElement the element selector string of the element that will be clicked
-     *	@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
-     *	@param searchElement the element selector string of the search box element
-     *	@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
-     *	@param optionsElement the element selector string of the options element in the drop down
-     *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
-     *	@param elementBeingTested the name of the element being tested. This is used for 
-     *							  reporting so that when it is called the report will reflect an
-     *							  element that is unique to the method 
+     *	@param option - the text value of the option that needs to be selected from the dropdown
+     *	@param clickSelector - the element selector string of the element that will be clicked
+     *	@param clickByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) 
+     *	for the click element
+     *	@param searchSelector - the element selector string of the search box element
+     *	@param searchByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) 
+     *	for the search box element
+     *	@param optionsSelector - the element selector string of the options element in the drop down
+     *	@param optionsByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) 
+     *	for the options element
+     *	@param elementBeingTested - the name of the element being tested. This is used for 
+     *	reporting so that when it is called the report will reflect an element that is unique to the method 
+     *	@param via - the method by which to click a web element (e.g click via 
+     * selenium's built in click functionality, javascript, jquery, etc.)
      * @throws Exception 
      */
-    protected void selectSomeOptionFromNonDropdown(String option, String clickElement, String clickByValue, String searchElement, 
-    		String searchByValue, String optionsElement, String optionsByValue, String elementBeingTested, Via via) throws Exception {
+    protected void selectSomeOptionFromNonDropdown(String option, String clickSelector, String clickByValue, String searchSelector, 
+    		String searchByValue, String optionsSelector, String optionsByValue, String elementBeingTested, Via via) throws Exception {
         try {
-            if (SHelper.get().element().isDisplayed(clickElement, clickByValue, 10)) {
-                clickSomeElement(Via.SELENIUM, clickElement, clickByValue, elementBeingTested);
+            if (SHelper.get().element().isDisplayed(clickSelector, clickByValue, 10)) {
+                clickSomeElement(Via.SELENIUM, clickSelector, clickByValue, elementBeingTested);
                 Thread.sleep(600);
-                enterAvalueIntoATextField(option, searchElement, searchByValue, elementBeingTested);
-                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
+                enterAvalueIntoATextField(option, searchSelector, searchByValue, elementBeingTested);
+                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsSelector, optionsByValue, 10);
                 Thread.sleep(900);
-                findEqualOptionInListAndSelectIt(via, optionsElement, optionsByValue, option);
+                findEqualOptionInListAndSelectIt(via, optionsSelector, optionsByValue, option);
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not availale. Can not select the " 
                 		+ elementBeingTested + " from the drop down list.");
@@ -201,32 +350,40 @@ public abstract class PageHelper {
     }
 
     /**	
-     *	<summary>
-     *	Method to select some text from a drop down
-     *	</summary>
-     *	@return void
-     *	@param option the text value of the option that needs to be selected from the dropdown
-     *	@param clickElement the element selector string of the element that will be clicked
-     *	@param clickByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
-     *	@param searchElement the element selector string of the search box element
-     *	@param searchByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
-     *	@param optionsElement the element selector string of the options element in the drop down
-     *	@param optionsByValue the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
-     *	@param elementBeingTested the name of the element being tested. This is used for 
+     *	<p>
+     *	Method to select some option from a drop down based on the text value
+     * 	listed as options inside the dropdown.
+     *	</p>
+     *	<p>The selenium select method would not work for some of the dropdowns
+     *	in the newstron application as they are not traditional dropdowns. A new method
+     *	had to be created in order to select an option and it uses the 
+     *	findEqualOptionInListAndSelectIt method in order to do so.</p>
+     *	<p>Method waits for the clickSelector element to display before continuing the
+     *	test. If the element is not found, the test fails.</p>
+     *	@param option - the text value of the option that needs to be selected from the dropdown
+     *	@param clickElement - the element selector string of the element that will be clicked
+     *	@param clickByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the click element
+     *	@param searchElement - the element selector string of the search box element
+     *	@param searchByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the search box element
+     *	@param optionsSelector - the element selector string of the options element in the drop down
+     *	@param optionsByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the options element
+     *	@param elementBeingTested - the name of the element being tested. This is used for 
      *							  reporting so that when it is called the report will reflect an
-     *							  element that is unique to the method 
+     *							  element that is unique to the method
+     * @param via - the method by which to click a web element (e.g click via 
+     * selenium's built in click functionality, javascript, jquery, etc.)
      * @throws Exception 
      */
-    protected void selectSomeOptionFromNonDropdown(String option, WebElement clickEl, WebElement searchEl, String optionsElement, 
+    protected void selectSomeOptionFromNonDropdown(String option, WebElement clickElement, WebElement searchElement, String optionsSelector, 
     		String optionsByValue, String elementBeingTested, Via via) throws Exception {
         try {
-            if (SHelper.get().element().isDisplayed(clickEl, 10)) {
-                SHelper.get().click(Via.SELENIUM).on(clickEl);
+            if (SHelper.get().element().isDisplayed(clickElement, 10)) {
+                SHelper.get().click(Via.SELENIUM).on(clickElement);
                 Thread.sleep(600);
-                enterAvalueIntoATextField(option, searchEl, elementBeingTested);
-                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsElement, optionsByValue, 10);
+                enterAvalueIntoATextField(option, searchElement, elementBeingTested);
+                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsSelector, optionsByValue, 10);
                 Thread.sleep(900);
-                findEqualOptionInListAndSelectIt(via, optionsElement, optionsByValue, option);
+                findEqualOptionInListAndSelectIt(via, optionsSelector, optionsByValue, option);
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not availale. Can not select the " 
                 		+ elementBeingTested + " from the drop down list.");
@@ -237,25 +394,22 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify some element is present </summary>
-     * 
-     * @return void
-     * @param elementHtml
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
+     * <p> Method to verify some element is present on the page using the SHelper isDisplayed 
+     *  method.</p>
+     * <p>If the element is not displayed on te page, the test fails.</p>
+     * @param selector - the webelement selector string for the field that the text
+     * will be entered into
+     * @param byValue - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an element that is 
+     * unique to the method
      * @throws Exception
      */
-    protected void verifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested)
+    protected void verifySomeElementIsPresent(String selector, String byValue, String elementBeingTested)
     throws Exception {
         try {
-            if (SHelper.get().element().isDisplayed(elementHtml, byValue, 10)) {
+            if (SHelper.get().element().isDisplayed(selector, byValue, 10)) {
                 LocalValidation.getValidations()
                     .assertionPass(elementBeingTested + " displays in the page as expected.");
             } else {
@@ -268,25 +422,22 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify some element is not present </summary>
-     * 
-     * @return void
-     * @param elementHtml
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
+     * <p> Method to verify some element is not present on the page using the SHelper isDisplayed 
+     *  method.</p>
+     * <p>If the element is displayed on te page, the test fails.</p>
+     * @param selector - the webelement selector string for the field that the text
+     * will be entered into
+     * @param byValue - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an element that is 
+     * unique to the method
      * @throws Exception
      */
-    protected void verifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested)
+    protected void verifySomeElementIsNotPresent(String selector, String byValue, String elementBeingTested)
     throws Exception {
         try {
-            if (!SHelper.get().element().isDisplayed(elementHtml, byValue, 5)) {
+            if (!SHelper.get().element().isDisplayed(selector, byValue, 5)) {
                 LocalValidation.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
             } else {
                 throw LocalValidation.getValidations().assertionFailed(
@@ -299,19 +450,21 @@ public abstract class PageHelper {
 
 
     /**	
-     *	<summary>
-     *	Method to find some option in a list of options 
-     *	and select it based on text
-     *	</summary>
-     *	@return void
-     *	@param webElements a list of webelements that share a similar selector in order
-     *					   to loop through and execute an action based on some parameter
-     *	@param webelementListHtml the webelement selector string for the field that
-     *					   		  the text will be entered into
-     *	@param expectedOption the option that is expected to be found
-     *	@param clickViaJQuery boolean value to execute a jquery click command instead of a 
-     *				          click via selenium. Is not necessary for all methods, but has been 
-     *				          necessary in some instances.
+     *	<p>
+     *	Method to find some element in a list of elements and select it based on the visible 
+     *	text that displays within the element.
+     *	</p>
+     *	<p>If the text is not found in any element in the list of elements, the test fails.</p>
+     *	<p>The text must exactly equal the expected option text (letter casing is not a factor), but
+     *	spelling and in some cases spacing could cause the option to not be found in the list.</p>
+     *	@param via - the method by which to click a web element (e.g click via 
+     * selenium's built in click functionality, javascript, jquery, etc.)
+     * 	@param selector - the webelement selector string for the field that the text should
+     * 	be found in. This selector should create a list of webelements.
+     * 	@param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     *	@param expectedOption the option (based on text value) that is expected to be 
+     *	found in the list of options.
      * @throws Exception 
      */
 
@@ -339,19 +492,20 @@ public abstract class PageHelper {
     }
 
     /**	
-     *	<summary>
-     *	Method to find some option in a list of options 
-     *	and select it based on text
-     *	</summary>
-     *	@return void
-     *	@param webElements a list of webelements that share a similar selector in order
-     *					   to loop through and execute an action based on some parameter
-     *	@param webelementListHtml the webelement selector string for the field that
-     *					   		  the text will be entered into
-     *	@param expectedOption the option that is expected to be found
-     *	@param clickViaJQuery boolean value to execute a jquery click command instead of a 
-     *				          click via selenium. Is not necessary for all methods, but has been 
-     *				          necessary in some instances.
+     *	<p>
+     *	Method to find some element in a list of elements and select it based on the visible 
+     *	text that displays within the element.
+     *	</p>
+     *	<p>If the text is not found in any element in the list of elements, the test fails.</p>
+     *	<p>The text must only contain the expected option text (letter casing is not a factor).</p>
+     *	@param via - the method by which to click a web element (e.g click via 
+     * selenium's built in click functionality, javascript, jquery, etc.)
+     * 	@param selector - the webelement selector string for the field that the text should
+     * 	be found in. This selector should create a list of webelements.
+     * 	@param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     *	@param expectedOption the option (based on text value) that is expected to be 
+     *	found in the list of options.
      * @throws Exception 
      */
 
@@ -381,27 +535,23 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify some element contains the expected text
-     * </summary>
-     * 
-     * @return void
-     * @param elementHtml
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param expectedText
-     *            the text that is expected to be in the element
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
-     * @param removeAllSpaces
-     *            boolean to determine whether validation needs to occur with
-     *            all spaces removed to producce a more accurate comparison. Not
-     *            neccesary for all consumers of this method, however has been
-     *            necessary for some instances.
+     * <p>Method to verify some element contains the expected text.</p>
+     * <p>This method contains the functionality to remove all spacing in
+     * the actual string pulled from the page as well as all spacing in the expected
+     * string in order to more accurately compare the two strings. This was added
+     * due to weird spacing issues found on some pages in the Newston application.
+     * It seemed easier to just compare two strings with absolutely no spaces then
+     * try to make the strings match up in other ways.</p>
+     * <p>The text must only contain the expected text (letter casing is not a factor).</p>
+     * @param element - the webelement for the field that the text
+     * will be compared against.
+     * @param expectedText - the text that is expected to be in the element
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an element that is 
+     * unique to the method
+     * @param removeAllSpaces - boolean to determine whether validation needs to occur with
+     * all spaces removed to produce a more accurate comparison. Not neccesary for all 
+     * users of this method, however has been necessary for some instances.
      * @throws Exception
      */
     protected void verifySomeElementContainsTheExpectedText(WebElement element, String expectedText,
@@ -428,27 +578,26 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify some element contains the expected text
-     * </summary>
-     * 
-     * @return void
-     * @param elementHtml
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param expectedText
-     *            the text that is expected to be in the element
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
-     * @param removeAllSpaces
-     *            boolean to determine whether validation needs to occur with
-     *            all spaces removed to producce a more accurate comparison. Not
-     *            neccesary for all consumers of this method, however has been
-     *            necessary for some instances.
+     * <p>Method to verify some element contains the expected text.</p>
+     * <p>This method contains the functionality to remove all spacing in
+     * the actual string pulled from the page as well as all spacing in the expected
+     * string in order to more accurately compare the two strings. This was added
+     * due to weird spacing issues found on some pages in the Newston application.
+     * It seemed easier to just compare two strings with absolutely no spaces then
+     * try to make the strings match up in other ways.</p>
+     * <p>The text must only contain the expected text (letter casing is not a factor).</p>
+     * @param selector - the webelement selector string for the field that the text
+     * will be compared against.
+     * @param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     * @param expectedText - the text that is expected to be in the element
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an
+     * element that is unique to the method
+     * @param removeAllSpaces - boolean to determine whether validation needs to occur with
+     * all spaces removed to producce a more accurate comparison. Not
+     * neccesary for all consumers of this method, however has been
+     *  necessary for some instances.
      * @throws Exception
      */
     protected void verifySomeElementContainsTheExpectedText(String selector, String by, String expectedText,
@@ -476,32 +625,26 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify a field is blank </summary>
-     * 
-     * @return void
-     * @param html
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param requiresIndex
-     *            boolean value that determines whether the index is used or not
-     *            in the javascript script. Not necessary for all methods, but
-     *            has been necessary for some.
-     * @param webElementIndex
-     *            the index of the element if there are more than one elements
-     *            with the same selector
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
+     * <p>Method to verify a field is blank utilizing the javascript function of
+     * getting a value from a text box webelement.</p>
+     * <p>This method is typically only used for validating a textbox or textarea 
+     * is blank and void of text. It is not typcially used to verify other elements
+     * such as divs or table rows/columns, etc. are blank.</p>
+     * @param selector - the webelement selector string for the field that
+     * will be evaluated
+     * @param byValue - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     * @param webElementIndex - the index of the element if there are more than one elements
+     * with the same selector
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an
+     * element that is unique to the method
      * @throws Exception
      */
-    protected void verifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex,
+    protected void verifyTextFieldIsBlank(String selector, String byValue, String webElementIndex,
         String elementBeingTested) throws Exception {
         try {
-            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue,
+            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(selector, byValue,
                 webElementIndex);
             if (TestUtils.isNullOrBlank(actualValueInTextBox)) {
                 LocalValidation.getValidations().assertionPass(elementBeingTested + " is blank as expected.");
@@ -517,39 +660,40 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify the text in a text field contains the correct
-     * text </summary>
-     * 
-     * @return void
-     * @param html
-     *            the webelement selector string for the field that the text
-     *            will be entered into
-     * @param byValue
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.)
-     * @param requiresIndex
-     *            boolean value that determines whether the index is used or not
-     *            in the javascript script. Not necessary for all methods, but
-     *            has been necessary for some.
-     * @param webElementIndex
-     *            the index of the element if there are more than one elements
-     *            with the same selector
-     * @param expectedText
-     *            the text that is expected to be in the element
-     * @param elementBeingTested
-     *            the name of the element being tested. This is used for
-     *            reporting so that when it is called the report will reflect an
-     *            element that is unique to the method
+     * <p>Method to verify that text in a text field contains the expected text
+     * utilizing the javascript function of getting a value from a text box webelement.</p>
+     * <p>This method is typically only used for validating a textbox or textarea 
+     * contains the expected text. It is not typcially used to verify other elements
+     * such as divs or table rows/columns, etc.</p>
+     * <p>The text must only contain the expected text (letter casing is not a factor).</p>
+     * <p>This method contains the functionality to remove all spacing in
+     * the actual string pulled from the page as well as all spacing in the expected
+     * string in order to more accurately compare the two strings. This was added
+     * due to weird spacing issues found on some pages in the Newston application.
+     * It seemed easier to just compare two strings with absolutely no spaces then
+     * try to make the strings match up in other ways.</p>
+     * <p>This method also removes the \n character if it is at any point returned
+     * in the actual text string that is retrieved from the element.</p>
+     * @param selector - the webelement selector string for the field of the text
+     * being verified
+     * @param byValue - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.)
+     * @param webElementIndex - the index of the element if there are more than one elements
+     * with the same selector. Leave this value null to not include an index.
+     * @param expectedText - the text that is expected to be in the element
+     * @param elementBeingTested - the name of the element being tested. This is used for
+     * reporting so that when it is called the report will reflect an
+     * element that is unique to the method
      * @throws Exception
      */
-    protected void verifyTextInTextField(String html, String byValue, String webElementIndex, String expectedText,
+    protected void verifyTextInTextField(String selector, String byValue, String webElementIndex, String expectedText,
         String elementBeingTested, Boolean removeAllSpaces) throws Exception {
         try {
             String index = null;
             if (!TestUtils.isNullOrBlank(webElementIndex)) {
                 index = webElementIndex;
             }
-            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(html, byValue,
+            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(selector, byValue,
                 index);
             if (actualValueInTextBox.contains("\n")) {
                 actualValueInTextBox = actualValueInTextBox.replace("\n", " ");
@@ -575,7 +719,7 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> enum of accepted timezones within the newstron app </summary>
+     * <p> enum of the accepted timezones within the newstron app </p>
      */
     public enum Timezones {
         Pacific,
@@ -587,8 +731,8 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Entity enum that holds all of the api models object categories
-     * </summary>
+     * <p> Entity enum that holds all of the api models object categories
+     * </p>
      */
 
     public enum Entity {
@@ -596,12 +740,11 @@ public abstract class PageHelper {
         MS2,
         CrashRecords,
         Requests
-
     }
 
     /**
-     * <summary> Method to get the current date and split it into a string array
-     * </summary>
+     * <p> Method to get the current date and split it into a string array
+     * </p>
      * 
      * @return String[]
      */
@@ -613,10 +756,9 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to get the total days in the current month of the
-     * current year - taking into account leap year </summary>
+     * <p> Method to get the total days in the current month of the
+     * current year - taking into account leap year </p>
      * 
-     * @return void
      */
 
     protected int getTotalDaysInMonth() throws Exception {
@@ -632,12 +774,11 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to get the future date based on user input of how many
-     * days they wish to select from today's date </summary>
+     * <p> Method to get the future date based on user input of how many
+     * days they wish to select from today's date </p>
      * 
      * @return int
-     * @param daysOutFromCurrentDay
-     *            the number of days out from today to select
+     * @param daysOutFromCurrentDay - the number of days out from today to select
      */
 
     protected int getFutureDate(int daysOutFromCurrentDay) throws Exception {
@@ -648,9 +789,9 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> days of the week combinations enum. This enum holds all the
+     * <p> Days of the week combinations enum. This enum holds all the
      * different combinations of days of the week that may need to be selected
-     * in order to properly test </summary>
+     * in order to properly test as listed in the Newstron Application. </p>
      */
     public enum DaysOfTheWeek {
         ALL,
@@ -659,12 +800,9 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to clean up static global variables </summary>
-     * 
-     * @return void
-     * @param value
-     *            the static global value that needs to be cleaned up. Is set to
-     *            null if it is not already null or empty
+     * <p> Method to clean up static global variables. </p>
+     * @param value - the static global value that needs to be cleaned up. Is set to
+     * null if it is not already null or empty
      */
     protected void cleanUp(String value) {
         if (!TestUtils.isNullOrBlank(value)) {
@@ -673,18 +811,13 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to evaluate whether a variable is null and fail the test
+     * <p>Method to evaluate whether a variable is null and fail the test
      * case if it is null. Used primarily in for loops to assure the loop is
-     * executed properly and fails at the right place if not. </summary>
-     * 
-     * @param variable
-     *            the string variable being evaluated
-     * @param passMessage
-     *            the message for reporting if the test passes
-     * @param failMessage
-     *            the message for reporting if the test fails
+     * executed properly and fails at the right place if not.</p>
+     * @param variable - the string variable being evaluated
+     * @param passMessage - the message for reporting if the test passes
+     * @param failMessage - the message for reporting if the test fails
      * @throws Exception
-     * @return void
      */
     protected void failTestIfVariableIsNull(String variable, String passMessage, String failMessage) throws Exception {
         if (variable != null) {
@@ -695,17 +828,13 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to remove an unwanted character or to replace it with a
-     * different character if it is present in the String </summary>
-     * 
-     * @param variable
-     *            the string variable that is to be modified
-     * @param character
-     *            the character or string that is unwanted that will be removed
-     *            or replaced if present in the variable
-     * @param replaceValue
-     *            the value to replace the character. Leave as empty string to
-     *            remove character completely.
+     * <p> Method to remove an unwanted character or to replace it with a
+     * different character if it is present in the String.</p>
+     * @param variable - the string variable that is to be modified
+     * @param character - the character or string that is unwanted that will be removed
+     * or replaced if present in the variable
+     * @param replaceValue - the value to replace the character. Leave as empty string to
+     * remove character completely.
      * @return String
      * @throws Exception
      */
@@ -725,15 +854,20 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify an expected value matches an actual value
-     * </summary>
-     * 
-     * @return void
-     * @param expectedValue
-     *            the value that is expected to have returned in the api
-     *            response
-     * @param actualValue
-     *            the actual value that returned in the api response
+     * <p> Method to verify an expected value matches an actual value.</p>
+     * <p>Method is primarily used to compare api actual values with
+     * expected values, but can also be used for other comparisons.</p>
+     * <p>Method first evaluates whether the expected value and/or the actual value is
+     * null or an empty string. If one of them are null or empty the test is failed. Then
+     * the comparison is made.</p>
+     * <p>The text must exactly equal the expected option text (letter casing is not a factor), but
+     *	spelling and in some cases spacing could cause the option to not match.</p>
+     * @param expectedValue - the value that is expected to have returned in the api
+     * response
+     * @param actualValue - the actual value that returned in the api response
+     * @param variableBeingTested - the name of the variable being tested. This is used for
+     * reporting so that when it is called the report will reflect wording that is unique to the
+     * variable it is testing.
      * @throws Exception
      */
     protected void verifyTheActualValueMatchesTheExpectedValue(String expectedValue, String actualValue,
@@ -760,15 +894,11 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to add i number of days to a date </summary>
-     * 
+     * <p> Method to add i number of days to a date </p>
      * @return String
-     * @param date
-     *            the date that needs to be subtracted from
-     * @param totalDays
-     *            the total number of days in the month
-     * @param daysToSubtract
-     *            the number of days to subtract from the date
+     * @param date - the date that needs to be subtracted from
+     * @param totalDays - the total number of days in the month
+     * @param daysToAdd - the number of days to add to the date
      * @throws Exception
      */
     protected String subtractDays(String date, int totalDays, int daysToAdd) throws Exception {
@@ -790,15 +920,19 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to verify an expected value matches an actual value
-     * </summary>
-     * 
-     * @return void
-     * @param expectedValue
-     *            the value that is expected to have returned in the api
-     *            response
-     * @param actualValue
-     *            the actual value that returned in the api response
+     * <p> Method to verify an expected value contains an actual value.</p>
+     * <p>Method is primarily used to compare api actual values with
+     * expected values, but can also be used for other comparisons.</p>
+     * <p>Method first evaluates whether the expected value and/or the actual value is
+     * null or an empty string. If one of them are null or empty the test is failed. Then
+     * the comparison is made.</p>
+     * <p>The text must only contain the expected text (letter casing is not a factor).</p>
+     * @param expectedValue - the value that is expected to have returned in the api
+     * response
+     * @param actualValue - the actual value that returned in the api response
+     * @param variableBeingTested - the name of the variable being tested. This is used for
+     * reporting so that when it is called the report will reflect wording that is unique to the
+     * variable it is testing.
      * @throws Exception
      */
     protected void verifyTheActualValueContainsTheExpectedValue(String expectedValue, String actualValue,
@@ -830,15 +964,15 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to generate a random string of text </summary>
-     * 
-     * @param length
-     *            the total length that the random string of text should be when
-     *            completed
-     * @param value
-     *            the String of characters that will be used to create the
-     *            random string of text. Method takes the the characters in this
-     *            string and scrambles them to generte thte random string.
+     * <p> Method to generate a random string of text by taking a string of
+     * text and scrambling it into a new string at a randomly selected length
+     * that will not surpass the specified length param.</p>
+     * @param length - the total length that the random string of text should be when
+     * completed. This will randomly select a length with the number specified in this
+     * param being the highest length possible.
+     * @param value - the String of characters that will be used to create the
+     * random string of text. Method takes the the characters in this
+     * string and scrambles them to generte the random string.
      * @return String
      * @throws Exception
      */
@@ -861,15 +995,13 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> Method to generate a random string of text </summary>
-     * 
-     * @param length
-     *            the total length that the random string of text should be when
-     *            completed
-     * @param value
-     *            the String of characters that will be used to create the
-     *            random string of text. Method takes the the characters in this
-     *            string and scrambles them to generte thte random string.
+     * <p>Method to generate a random string of text by taking a string of
+     * text and scrambling it into a new string at a specifically set length.</p>
+     * @param length - the total length that the random string of text should be when
+     * completed
+     * @param value - the String of characters that will be used to create the
+     * random string of text. Method takes the the characters in this
+     * string and scrambles them to generte the random string.
      * @return String
      * @throws Exception
      */
@@ -887,16 +1019,13 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> method to clear a field by selecting all text and backspacing
-     * </summary>
-     * 
-     * @param selectorString
-     *            the webelement selector string necessary for the webelement to
-     *            be found
-     * @param by
-     *            the type of selector being used (i.e id, name, cssSelector,
-     *            xpath, etc.). Necessary for the WebElement to be found
-     * @return void
+     * <p> Method to clear all text in a field by selecting all text and selecting 
+     * the backspace key on the keyboard.
+     * </p>
+     * @param selectorString - the webelement selector string necessary for the webelement to
+     * be found
+     * @param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.). Necessary for the WebElement to be found
      * @throws Exception
      */
     protected void clearAllTextByBackspacing(String selectorString, String by) throws Exception {
@@ -909,12 +1038,10 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary> method to clear a field by selecting all text and backspacing
-     * </summary>
-     * 
-     * @param element
-     *            a webelement that is defined and found in the calling method
-     * @return void
+     * <p> Method to clear all text in a field by selecting all text and selecting 
+     * the backspace key on the keyboard.
+     * </p>
+     * @param element - a webelement that is defined and found in the calling method
      * @throws Exception
      */
     protected void clearAllTextByBackspacing(WebElement element) throws Exception {
@@ -927,11 +1054,17 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary>Refresh a page and wial for element to display</summary>
-     * 
-     * @param selectorString
-     * @param by
-     * @param i
+     * <p>This method refreshes the page and waits for an element to appear on the page.
+     * The wait is explicit and will wait up to the specified amount of time for the 
+     * condition to be met (i.e the element to be displayed after the page is refreshed). 
+     * If the element is not found in the specified amount of time, the test will fail.
+     * If the element is found sooner than the specified time, the test will not longer wait
+     * and will continue executing the next method in the chain.</p>
+     * @param selectorString - the webelement selector string necessary for the webelement to
+     * be found
+     * @param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.). Necessary for the WebElement to be found
+     * @param i - the total amount of time the test should wait for the element to be found.
      */
     public void refreshPageAndWaitForElementToDisplay(String selectorString, String by, int i) {
         WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
@@ -956,16 +1089,17 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary>Method to extract digits from strings</summary>
-     * 
-     * @param locator
-     * @param type
+     * <p>Method to extract digits from strings</p>
+     * @param selector - the webelement selector string necessary for the webelement to
+     * be found
+     * @param by - the type of selector being used (i.e id, name, cssSelector,
+     * xpath, etc.). Necessary for the WebElement to be found
      * @return String
      */
-    protected String getNumbersFromString(String locator, String type) throws Exception {
+    protected String getNumbersFromString(String selector, String by) throws Exception {
         String z = null;
         try {
-            z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator, type);
+            z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(selector, by);
             return z.replaceAll("[^0-9]", "");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
@@ -973,14 +1107,14 @@ public abstract class PageHelper {
     }
 
     /**
-     * <summary>retrieve number form field</summary>
-     * 
-     * @param elemnt
-     * @return
+     * <p>Method to extract digits from strings</p>
+     * @param element - the element from which the digits need to be
+     * extracted.
+     * @return String
      */
-    protected String getNumbersFromString(WebElement elemnt) throws Exception {
+    protected String getNumbersFromString(WebElement element) throws Exception {
         try {
-            String z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(elemnt);
+            String z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
             return z.replaceAll("[^0-9]", "");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);

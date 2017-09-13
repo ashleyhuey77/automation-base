@@ -53,7 +53,7 @@ public class SMTPHelper {
 			Multipart mp = new MimeMultipart("alternative");
 			
 			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent("<h1> " + testMessage + " </h1> <br>" + IMAPHelper.getBody(), "text/html; charset=utf-8");
+			htmlPart.setContent("<p id='testReply'> " + testMessage + " </p> <br>" + IMAPHelper.getBody(), "text/html; charset=utf-8");
 			
 			mp.addBodyPart(htmlPart);
 			

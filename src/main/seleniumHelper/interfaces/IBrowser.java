@@ -21,5 +21,7 @@ public interface IBrowser {
 	public void navigateTo(String url) throws Exception;
 	
 	public void waitForWindowCount(int i, int expectedCount) throws Exception;
+	
+	public void switchTo(BrowserObject object, int i) throws Exception;
 
 }

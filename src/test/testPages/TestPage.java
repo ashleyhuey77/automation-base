@@ -156,7 +156,7 @@ public class TestPage extends PageTemplate {
 	
 	public void testVerifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
 	{
-		verifyTextFieldIsBlank(html, byValue, requiresIndex, webElementIndex, elementBeingTested);
+		verifyTextFieldIsBlank(html, byValue, webElementIndex, elementBeingTested);
 	}
 	
 	public void testVerifyTextInTextField(String html, String byValue, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
