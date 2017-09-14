@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.sun.glass.ui.Window;
+//import com.sun.glass.ui.Window;
 
 import commonClasses.sharedUtils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
