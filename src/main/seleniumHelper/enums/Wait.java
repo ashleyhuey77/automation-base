@@ -1,6 +1,6 @@
 package seleniumHelper.enums;
 
-public enum WaitFor {
+public enum Wait {
 	PRESENCE_OF_ELEMENT_OR_VALUE,
 	ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT,
 	PRESENCE_OF_ATTRIBUTE_OR_VALUE,

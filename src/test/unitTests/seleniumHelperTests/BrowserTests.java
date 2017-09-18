@@ -46,7 +46,7 @@ public class BrowserTests {
 	@Test
 	public void verifySwitchToNewWindow() throws Exception
 	{
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
 		SHelper.get().browser().switchTo(BrowserObject.WINDOW);
 	}
@@ -54,7 +54,7 @@ public class BrowserTests {
 	@Test(expectedExceptions=Exception.class)
 	public void verifySwitchToUndefinedBrowserObject() throws Exception
 	{
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
 		SHelper.get().browser().switchTo(BrowserObject.TAB);
 	}
@@ -128,24 +128,24 @@ public class BrowserTests {
 	public void verifyOpenNewTab_ThrowsException() throws Exception {
 		
 		LocalDriver.getDriver().close();
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 	}
 	
 	@Test
 	public void verifyCloseOpenTabs() throws Exception {
 		
 		Thread.sleep(500);
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
-		SHelper.get().browser().open(BrowserObject.TAB);
+		SHelper.get().browser().open();
 		Thread.sleep(500);
 		
 		SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
-		SHelper.get().browser().close(BrowserObject.TAB);
+		SHelper.get().browser().close();
 		SHelper.get().browser().waitForWindowCount(30, 1);
 		assertTrue("Total tabs open is not correct", LocalDriver.getDriver().getWindowHandles().size() == 1);
 	}
@@ -154,7 +154,7 @@ public class BrowserTests {
 	public void verifyCloseOpenTabs_ThrowsException() throws Exception {
 		
 		LocalDriver.getDriver().close();
-		SHelper.get().browser().close(BrowserObject.TAB);
+		SHelper.get().browser().close();
 	}
 	
 	@Test

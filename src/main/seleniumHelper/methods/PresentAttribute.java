@@ -18,7 +18,7 @@ import seleniumHelper.interfaces.IWait;
 public class PresentAttribute extends Commands implements IWait {
 
     @Override
-    public void waitOn(String selectorString, String by, int i, String...attribute) throws Exception {
+    public void on(String selectorString, String by, int i, String...attribute) throws Exception {
         try {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
@@ -38,7 +38,7 @@ public class PresentAttribute extends Commands implements IWait {
     }
 
     @Override
-    public void waitOn(WebElement element, int i, String...attribute) throws Exception {
+    public void on(WebElement element, int i, String...attribute) throws Exception {
         try {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
@@ -58,7 +58,7 @@ public class PresentAttribute extends Commands implements IWait {
     }
 
     @Override
-    public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
+    public void on(String selectorString, String by, Condition condition, String expectedValue, int i,
         String...attribute) throws Exception {
         try {
             switch (condition) {
@@ -78,7 +78,7 @@ public class PresentAttribute extends Commands implements IWait {
     }
 
     @Override
-    public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
+    public void on(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
     throws Exception {
         try {
             switch (condition) {
@@ -234,14 +234,14 @@ public class PresentAttribute extends Commands implements IWait {
 
     @Override
     @DoNotCall
-    public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
+    public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
         // TODO Auto-generated method stub
 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
+    public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
         // TODO Auto-generated method stub
 
     }

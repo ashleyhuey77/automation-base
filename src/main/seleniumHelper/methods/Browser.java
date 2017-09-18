@@ -1,19 +1,8 @@
 package seleniumHelper.methods;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.sun.glass.ui.Window;
-
+import java.util.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 import commonClasses.sharedUtils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.enums.BrowserObject;
@@ -67,7 +56,7 @@ public class Browser extends Commands implements IBrowser {
     }
 
     @Override
-    public void close(BrowserObject object) throws Exception {
+    public void close() throws Exception {
         try {
             String originalHandle = LocalDriver.getDriver().getWindowHandle();
 
@@ -85,7 +74,7 @@ public class Browser extends Commands implements IBrowser {
     }
 
     @Override
-    public void open(BrowserObject object) throws Exception {
+    public void open() throws Exception {
         try {
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("window.open();");
         } catch (WebDriverException ex) {

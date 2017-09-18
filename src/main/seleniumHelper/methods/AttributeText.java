@@ -8,6 +8,12 @@ import seleniumHelper.interfaces.IText;
 
 public class AttributeText extends Commands implements IText {
 
+	/**
+	 * <p>This is  a test to see how this works.</p>
+	 * @param selectorString - test
+	 * @param by - test
+	 * @param attribute - test
+	 */
     @Override
     public String getFrom(String selectorString, String by, String...attribute) throws Exception {
         return getElement(selectorString, by).getAttribute(attribute[0]);

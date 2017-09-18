@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import commonClasses.sharedUtils.TestUtils;
 import commonClasses.sharedUtils.managers.*;
+import seleniumHelper.enums.Wait;
 import seleniumHelper.enums.*;
 import org.openqa.selenium.support.ui.*;
 
@@ -337,7 +338,7 @@ public abstract class PageHelper {
                 clickSomeElement(Via.SELENIUM, clickSelector, clickByValue, elementBeingTested);
                 Thread.sleep(600);
                 enterAvalueIntoATextField(option, searchSelector, searchByValue, elementBeingTested);
-                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsSelector, optionsByValue, 10);
+                SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(optionsSelector, optionsByValue, 10);
                 Thread.sleep(900);
                 findEqualOptionInListAndSelectIt(via, optionsSelector, optionsByValue, option);
             } else {
@@ -381,7 +382,7 @@ public abstract class PageHelper {
                 SHelper.get().click(Via.SELENIUM).on(clickElement);
                 Thread.sleep(600);
                 enterAvalueIntoATextField(option, searchElement, elementBeingTested);
-                SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(optionsSelector, optionsByValue, 10);
+                SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(optionsSelector, optionsByValue, 10);
                 Thread.sleep(900);
                 findEqualOptionInListAndSelectIt(via, optionsSelector, optionsByValue, option);
             } else {
@@ -512,7 +513,7 @@ public abstract class PageHelper {
     protected void findOptionContainedInListAndSelectIt(Via via, String selector, String by, String expectedOption) throws Exception {
         try {
             String value = null;
-            SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selector, by, 40);
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(selector, by, 40);
             List < WebElement > webElements = SHelper.get().element().getListOf(selector, by);
             for (int i = 0; i < webElements.size(); i++) {
                 WebElement element = webElements.get(i);

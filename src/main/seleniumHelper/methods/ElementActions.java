@@ -127,13 +127,13 @@ public class ElementActions extends Commands implements IActions {
 
             IWait wait = new ClickableElement();
 
-            wait.waitOn(dragable, dragableby, timeTowait);
+            wait.on(dragable, dragableby, timeTowait);
             // List<WebElement> locate = getElements(dragable, dragableby);
             List < WebElement > locate = SHelper.get().element().getListOf(dragable, dragableby);
             dragElement = locate.get(0);
-            wait.waitOn(dragable, dragableby, timeTowait);
+            wait.on(dragable, dragableby, timeTowait);
             dragElement = locate.get(0);
-            wait.waitOn(dragable, dragableby, 20);
+            wait.on(dragable, dragableby, 20);
             // List<WebElement> locateDroppable =
             // getElements(dropable,dropableby);
             List < WebElement > locateDroppable = SHelper.get().element().getListOf(dropable, dropableby);

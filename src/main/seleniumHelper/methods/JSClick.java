@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import commonClasses.sharedUtils.managers.LocalDriver;
 import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.abstracts.Commands;
-import seleniumHelper.enums.WaitFor;
+import seleniumHelper.enums.Wait;
 import seleniumHelper.interfaces.IClick;
 
 public class JSClick extends Commands implements IClick {
@@ -52,7 +52,7 @@ public class JSClick extends Commands implements IClick {
     @Override
     public void on(String selectorString, String by) throws Exception {
         try {
-            SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(selectorString, by, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
             clickViaJavascriptElementType(selectorString, "0", (by.toLowerCase().contains(id) ? LocatorTypes.ID :
                 (by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
                 (by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME :
@@ -67,7 +67,7 @@ public class JSClick extends Commands implements IClick {
     @Override
     public void on(WebElement element) throws Exception {
         try {
-            SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(element, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(element, 40);
             if (element.isEnabled() && element.isDisplayed()) {
                 ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
             } else {
@@ -81,7 +81,7 @@ public class JSClick extends Commands implements IClick {
     @Override
     public void on(String selectorString, String by, String index) throws Exception {
         try {
-            SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(selectorString, by, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
             clickViaJavascriptElementType(selectorString, index, (by.toLowerCase().contains(id) ? LocatorTypes.ID :
                 (by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
                 (by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME :
@@ -96,7 +96,7 @@ public class JSClick extends Commands implements IClick {
     @Override
     public void on(String selectorString, String by, int index) throws Exception {
         try {
-            SHelper.get().waitMethod(WaitFor.CLICKABILITY_OF_ELEMENT).waitOn(selectorString, by, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
             clickViaJavascriptElementType(selectorString, Integer.toString(index), (by.toLowerCase().contains(id) ? LocatorTypes.ID :
                 (by.toLowerCase().contains(cssSelector)) ? LocatorTypes.CSSSELECTOR :
                 (by.toLowerCase().contains(className)) ? LocatorTypes.CLASSNAME :

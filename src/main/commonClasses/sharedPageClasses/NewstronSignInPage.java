@@ -76,7 +76,7 @@ public class NewstronSignInPage<T> extends PageTemplate {
     @Override
     public void WaitForPageLoad() throws Exception {
         try {
-            SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(BaseGeneric.usrNameTxtField, cssSelector, 60);
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(BaseGeneric.usrNameTxtField, cssSelector, 60);
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -93,9 +93,9 @@ public class NewstronSignInPage<T> extends PageTemplate {
         try {
             String pwd = LocalTest.getCredentials().getNewstronPWord();
             String usrnm = LocalTest.getCredentials().getNewstronUN();
-            SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(BaseGeneric.usrNameTxtField, cssSelector, 30);
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(BaseGeneric.usrNameTxtField, cssSelector, 30);
             enterAvalueIntoATextField(usrnm.trim(), BaseGeneric.usrNameTxtField, cssSelector, "Username field");
-            SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(BaseGeneric.pwdTxtField, cssSelector, 30);
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(BaseGeneric.pwdTxtField, cssSelector, 30);
             Thread.sleep(800);
             enterAvalueIntoATextField(pwd.trim(), BaseGeneric.pwdTxtField, cssSelector, "Password field");
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");

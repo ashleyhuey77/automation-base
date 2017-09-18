@@ -101,7 +101,8 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
             } else if (browserName.toLowerCase().trim().equals("chrome") && !LocalTest.getEnvironment().isHeadlessEnabled()) {
                 LocalTest.getEnvironment();
                 if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
-                    maximizeScreen();
+                	//LocalDriver.getDriver().manage().window().maximize();
+                    //maximizeScreen();
                 }
             }
         } catch (Exception ex) {

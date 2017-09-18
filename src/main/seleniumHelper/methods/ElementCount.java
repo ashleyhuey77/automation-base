@@ -14,42 +14,42 @@ import commonClasses.sharedUtils.managers.LocalDriver;
 import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.enums.Condition;
-import seleniumHelper.enums.WaitFor;
+import seleniumHelper.enums.Wait;
 import seleniumHelper.interfaces.IWait;
 
 public class ElementCount extends Commands implements IWait {
 
     @Override
     @DoNotCall
-    public void waitOn(String selectorString, String by, int i, String...attribute) throws Exception {
+    public void on(String selectorString, String by, int i, String...attribute) throws Exception {
         // TODO Auto-generated method stub
 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(WebElement element, int i, String...attribute) throws Exception {
+    public void on(WebElement element, int i, String...attribute) throws Exception {
         // TODO Auto-generated method stub
 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(String selectorString, String by, Condition condition, String expectedValue, int i,
+    public void on(String selectorString, String by, Condition condition, String expectedValue, int i,
         String...attribute) throws Exception {
         // TODO Auto-generated method stub 
     }
 
     @Override
     @DoNotCall
-    public void waitOn(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
+    public void on(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
     throws Exception {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void waitOn(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
+    public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
         try {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
@@ -60,7 +60,7 @@ public class ElementCount extends Commands implements IWait {
 
                     }
                     try {
-                        SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(selectorString, by, 30);
+                        SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(selectorString, by, 30);
                     } catch (Exception e) {
 
                     }
@@ -78,7 +78,7 @@ public class ElementCount extends Commands implements IWait {
     }
 
     @Override
-    public void waitOn(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
+    public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
         try {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
@@ -89,7 +89,7 @@ public class ElementCount extends Commands implements IWait {
 
                     }
                     try {
-                        SHelper.get().waitMethod(WaitFor.PRESENCE_OF_ELEMENT_OR_VALUE).waitOn(element.get(0), 30);
+                        SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(element.get(0), 30);
                     } catch (Exception e) {}
                     int actualElementCount = element.size();
                     if (actualElementCount == expectedTotalCount) {
