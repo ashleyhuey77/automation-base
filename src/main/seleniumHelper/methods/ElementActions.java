@@ -286,7 +286,13 @@ public class ElementActions extends Commands implements IActions {
         values.add(Integer.toString(dy));
         return values;
     }
-
+    /**
+     * <summary> method for selecting from dropdown</summary>
+     * @param element - the DOM element from dropdown
+     * @param value - the value to select from dropdown
+     * @param selectType - the selection type eithe by value, by visible text or by index
+     * @author OJ
+     */
     @Override
     public void selectFromDropDown(WebElement element, String value, SelectType selectType) throws Exception {
         try {
@@ -294,9 +300,16 @@ public class ElementActions extends Commands implements IActions {
             selectOption(sel, value, selectType);
         } catch (Exception ex) {
             throw ex;
-        }
+        }    
     }
-
+    /**
+     * <summary> method for selecting from dropdown</summary>
+     * @param selectorString- the DOM element from dropdown
+     * @param value - the value to select from dropdown
+     * @param by - the css selector
+     * @param selectType - the selection type eithe by value, by visible text or by index
+     * @author OJ
+     */
     @Override
     public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType)
     throws Exception {
@@ -307,7 +320,13 @@ public class ElementActions extends Commands implements IActions {
             throw e;
         }
     }
-
+/**
+ * <summary>Make the selection</summary>
+ * @param select
+ * @param value
+ * @param selectType
+ * @throws Exception
+ */
     private void selectOption(Select select, String value, SelectType selectType) throws Exception {
         try {
             switch (selectType) {
