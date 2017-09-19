@@ -73,4 +73,5 @@ dependencies {
 
  jar {
      from sourceSets.main.allSource
+     baseName 'automation.base-all'
  }
