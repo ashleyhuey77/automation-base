@@ -59,7 +59,7 @@ public class Element extends Commands implements IElement {
     }
 
     @Override
-    public WebElement find(String firstESelectorString, String firstEBy, String by, String selectorString) throws Exception {
+    public WebElement find(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception {
         try {
             return getElement(firstESelectorString, firstEBy).findElement(getByValueBasedOnUserInput(selectorString, by));
         } catch (WebDriverException ex) {
@@ -77,7 +77,7 @@ public class Element extends Commands implements IElement {
     }
 
     @Override
-    public List < WebElement > findListOf(String firstESelectorString, String firstEBy, String by, String selectorString) throws Exception {
+    public List < WebElement > findListOf(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception {
         try {
             return getElement(firstESelectorString, firstEBy).findElements(getByValueBasedOnUserInput(selectorString, by));
         } catch (WebDriverException ex) {

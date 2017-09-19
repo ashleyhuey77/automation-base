@@ -102,7 +102,7 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
                 LocalTest.getEnvironment();
                 if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
                 	//LocalDriver.getDriver().manage().window().maximize();
-                    //maximizeScreen();
+                    maximizeScreen();
                 }
             }
         } catch (Exception ex) {
