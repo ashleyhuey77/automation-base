@@ -35,8 +35,9 @@ public class SMTPHelper {
 	public static void sendEmailMessage() throws Exception {
 		try {
 			Transport t = session.get().getTransport();
-            t.connect(LocalTest.getEmailCredentials().getEmailServerUN(), 
-					LocalTest.getEmailCredentials().getEmailServerPWD());
+			String uN = LocalTest.getEmailCredentials().getEmailServerUN();
+			String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
+            t.connect(uN, pwd);
             t.sendMessage(replyMessage.get(), replyMessage.get().getRecipients(RecipientType.TO));;
             t.close();
             System.out.println("Replied to message successfully ....");

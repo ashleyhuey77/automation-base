@@ -2,6 +2,8 @@ package commonClasses.sharedUtils.helpers;
 
 import java.text.*;
 import java.util.*;
+
+import javax.activation.MimeType;
 import javax.mail.*;
 import javax.mail.internet.*;
 
@@ -67,14 +69,13 @@ public class IMAPHelper {
 	
 	public static void getTheSpecifiedEmailAndRetrieveContents(String expectedDate, String expectedSubject, String expectedBody) throws Exception {
 		try {
-			Message[] messages = folder.get().getMessages();
-			waitForMessageToBeAvailable(messages, expectedBody, expectedDate, expectedSubject);
+			waitForMessageToBeAvailable(expectedBody, expectedDate, expectedSubject);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	private static void waitForMessageToBeAvailable(Message[] messages, String expectedBody, String expectedDate, String expectedSubject) throws Exception {
+	private static void waitForMessageToBeAvailable(String expectedBody, String expectedDate, String expectedSubject) throws Exception {
 		try {
 			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 200);
 
@@ -82,35 +83,8 @@ public class IMAPHelper {
                 public Boolean apply(WebDriver driver) {
                 	Boolean result = false;
 					try {
-						for (int i=0; i < messages.length; i++) {
-							Message m = messages[i];
-							Date d = m.getSentDate();
-							DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
-							String actualDate = formatDate.format(d).toString();
-							String actualSubject = m.getSubject();
-							String actualBody = getText(m);
-							if (TestUtils.isNullOrBlank(expectedBody)) {
-								if (actualDate.equals(expectedDate)
-										&& actualSubject.toLowerCase().trim()
-											.contains(expectedSubject.toLowerCase().trim())) {
-									System.out.println("Existing email message found... ");
-									setRequiredValues(m, actualBody);
-									result = true;
-									break;
-								}
-							} else {
-								if (actualDate.equals(expectedDate)
-										&& actualSubject.toLowerCase().trim().contains(expectedSubject
-											.toLowerCase().trim())
-										&& actualBody.toLowerCase().trim().contains(expectedBody
-											.toLowerCase().trim())) {
-									System.out.println("Existing email message found... ");
-									setRequiredValues(m, actualBody);
-									result = true;
-									break;
-								}
-							}
-						}
+						Message[] messages = folder.get().getMessages();
+						result = getMessages(messages, expectedBody, expectedDate, expectedSubject);
 					} catch (Exception e) {
 						result = false;
 					}
@@ -123,13 +97,52 @@ public class IMAPHelper {
 		}
 	}
 	
+	private static Boolean getMessages(Message[] messages, String expectedBody, String expectedDate, String expectedSubject) throws Exception {
+		Boolean result = false;
+		try {
+			for (int i=0; i < messages.length; i++) {
+				Message m = messages[i];
+				Date d = m.getSentDate();
+				DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
+				String actualDate = formatDate.format(d).toString();
+				String actualSubject = m.getSubject();
+				String actualBody = getText(m);
+				System.out.println("Body is " + actualBody + "...");
+				if (TestUtils.isNullOrBlank(expectedBody)) {
+					if (actualDate.equals(expectedDate)
+							&& actualSubject.toLowerCase().trim()
+								.contains(expectedSubject.toLowerCase().trim())) {
+						System.out.println("Existing email message found... ");
+						setRequiredValues(m, actualBody);
+						result = true;
+						break;
+					}
+				} else {
+					if (actualDate.equals(expectedDate)
+							&& actualSubject.toLowerCase().trim().contains(expectedSubject
+								.toLowerCase().trim())
+							&& actualBody.toLowerCase().trim().contains(expectedBody
+								.toLowerCase().trim())) {
+						System.out.println("Existing email message found... ");
+						setRequiredValues(m, actualBody);
+						result = true;
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+	
 	public static void closeStoreAndFolder() throws Exception {
 		try {
 			if (store.get().isConnected()) {
 				store.get().close();
 			}
 			if (folder.get().isOpen()) {
-				folder.get().close();
+				folder.get().close(false);
 			}
 		} catch (Exception e) {
 			throw e;
@@ -172,6 +185,19 @@ public class IMAPHelper {
 	            } else if (bodyPart.isMimeType("text/html")) {
 	                String html = (String) bodyPart.getContent();
 	                result = html;
+	            } else if (bodyPart.isMimeType("multipart/*")) {
+	            	MimeMultipart mimeMP2 = (MimeMultipart)bodyPart.getContent();
+	            	int count2 = mimeMP2.getCount();
+	            	for (int b = 0; i < count2; i ++) {
+	            		BodyPart bP2 = mimeMP2.getBodyPart(b);
+	            		if (bP2.isMimeType("text/plain")) {
+	    	                result = result + "\n" + bP2.getContent();
+	    	                //break;
+	    	            } else if (bP2.isMimeType("text/html")) {
+	    	                String html = (String) bP2.getContent();
+	    	                result = html;
+	    	            }
+	            	}
 	            }
 	        }
 	        return result;
