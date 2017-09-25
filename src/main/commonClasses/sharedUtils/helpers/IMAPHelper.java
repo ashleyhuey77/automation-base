@@ -2,19 +2,13 @@ package commonClasses.sharedUtils.helpers;
 
 import java.text.*;
 import java.util.*;
-
-import javax.activation.MimeType;
 import javax.mail.*;
 import javax.mail.internet.*;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.openqa.selenium.support.ui.*;
 import commonClasses.sharedUtils.*;
 import commonClasses.sharedUtils.enums.Protocol;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.LocalTest;
+import commonClasses.sharedUtils.managers.*;
 
 public class IMAPHelper {
 	
