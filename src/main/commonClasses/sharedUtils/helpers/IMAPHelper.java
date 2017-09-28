@@ -2,6 +2,9 @@ package commonClasses.sharedUtils.helpers;
 
 import java.text.*;
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import javax.mail.*;
 import javax.mail.Authenticator;
 import javax.mail.internet.*;
@@ -81,6 +84,7 @@ public class IMAPHelper {
 					try {
 						Message[] messages = folder.get().getMessages();
 						result = getMessages(messages, expectedBody, expectedDate, expectedSubject);
+						
 					} catch (Exception e) {
 						result = false;
 					}
@@ -97,7 +101,8 @@ public class IMAPHelper {
 		Boolean result = false;
 		try {
 			for (int i=0; i < messages.length; i++) {
-				Message m = messages[i];
+				
+			        Message m = messages[i];
 				Date d = m.getSentDate();
 				DateFormat formatDate = new SimpleDateFormat("MM/dd/YYYY");
 				String actualDate = formatDate.format(d).toString();
@@ -123,7 +128,8 @@ public class IMAPHelper {
 						result = true;
 						break;
 					}
-				}
+				} 
+				
 			}
 		} catch (Exception e) {
 			throw e;
@@ -207,9 +213,11 @@ public class IMAPHelper {
 					.getRecipients(Message.RecipientType.TO)));
 			from.set(InternetAddress.toString(mess.getFrom()));
 			body.set(actualBody);
+			
 		} catch (Exception e) {
 			throw e;
 		}
 	}
+	
 	
 }
