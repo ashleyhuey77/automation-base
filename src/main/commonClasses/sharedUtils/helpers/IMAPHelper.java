@@ -3,6 +3,7 @@ package commonClasses.sharedUtils.helpers;
 import java.text.*;
 import java.util.*;
 import javax.mail.*;
+import javax.mail.Authenticator;
 import javax.mail.internet.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.*;
@@ -22,14 +23,14 @@ public class IMAPHelper {
 
 	public static void setUpIMAPServer() throws Exception {
 		try {
-			EmailReceiver e = new EmailReceiver(Protocol.imap, "outlook.office365.com", "993", true);
+			EmailReceiver e = new EmailReceiver(Protocol.imap, "imap.mail.yahoo.com", "993", true);
 		      Properties properties = e.property.get();
-
+		      String un = LocalTest.getEmailCredentials().getEmailServerUN();
+		      String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
 		      Session sess = Session.getInstance(properties,
-		    		  new javax.mail.Authenticator() {
+		    		  new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(LocalTest.getEmailCredentials().getEmailServerUN(), 
-								LocalTest.getEmailCredentials().getEmailServerPWD());
+						return new PasswordAuthentication(un, pwd);
 					}
 				  });
 		      
@@ -45,8 +46,9 @@ public class IMAPHelper {
 		try {
 			 Store st = session.get().getStore("imap");
 			 store.set(st);
-	         store.get().connect("outlook.office365.com", LocalTest.getCredentials().getEmailServerUN(), 
-						LocalTest.getCredentials().getEmailServerUN());
+		     String un = LocalTest.getEmailCredentials().getEmailServerUN();
+		     String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
+	         store.get().connect("imap.mail.yahoo.com", un, pwd);
 	         System.out.println("Store opened... ");
 	         Folder f = store.get().getFolder(folderPath);
 	         folder.set(f);
@@ -101,7 +103,6 @@ public class IMAPHelper {
 				String actualDate = formatDate.format(d).toString();
 				String actualSubject = m.getSubject();
 				String actualBody = getText(m);
-				System.out.println("Body is " + actualBody + "...");
 				if (TestUtils.isNullOrBlank(expectedBody)) {
 					if (actualDate.equals(expectedDate)
 							&& actualSubject.toLowerCase().trim()

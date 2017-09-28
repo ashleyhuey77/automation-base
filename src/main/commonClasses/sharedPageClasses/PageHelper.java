@@ -4,12 +4,12 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import commonClasses.sharedUtils.TestUtils;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import commonClasses.sharedUtils.managers.*;
-import seleniumHelper.enums.Wait;
-import seleniumHelper.enums.*;
 import org.openqa.selenium.support.ui.*;
+import seleniumHelper.enums.*;
+import seleniumHelper.enums.Wait;
 
 /**
  * <h1>PageHelper</h1>
@@ -51,6 +51,7 @@ public abstract class PageHelper {
 	 * <p>Examples of Ids in the correct format: </p>
 	 * 1. {@code testId}
 	 */
+/*-?|TestReview|ashleyhuey|c1|?Testing123*/
     protected static String id = IdentifyBy.Id.toString();
 	/**
 	 * <p>The name identifier is used to specify that the selector string
@@ -88,7 +89,7 @@ public abstract class PageHelper {
 	 * 1. {@code testClass}
 	 */
     protected static String className = IdentifyBy.ClassName.toString();
-	/**
+    /**
 	 * <p>The TagName identifier is used to specify that the selector string
 	 * entered as a param for a particular method is written in the html tag format.</p>
 	 * <p>It is turned to string format from the IdentifyBy enum defined in the 
@@ -314,7 +315,6 @@ public abstract class PageHelper {
      *	findEqualOptionInListAndSelectIt method in order to do so.</p>
      *	<p>Method waits for the clickSelector element to display before continuing the
      *	test. If the element is not found, the test fails.</p>
-     *	@return void
      *	@param option - the text value of the option that needs to be selected from the dropdown
      *	@param clickSelector - the element selector string of the element that will be clicked
      *	@param clickByValue - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) 
@@ -778,8 +778,8 @@ public abstract class PageHelper {
      * <p> Method to get the future date based on user input of how many
      * days they wish to select from today's date </p>
      * 
-     * @return int
      * @param daysOutFromCurrentDay - the number of days out from today to select
+     * @return int
      */
 
     protected int getFutureDate(int daysOutFromCurrentDay) throws Exception {
@@ -896,10 +896,10 @@ public abstract class PageHelper {
 
     /**
      * <p> Method to add i number of days to a date </p>
-     * @return String
      * @param date - the date that needs to be subtracted from
      * @param totalDays - the total number of days in the month
      * @param daysToAdd - the number of days to add to the date
+     * @return String
      * @throws Exception
      */
     protected String subtractDays(String date, int totalDays, int daysToAdd) throws Exception {

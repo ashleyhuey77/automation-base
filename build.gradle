@@ -17,6 +17,7 @@ buildscript {
   	
   	dependencies {
     	classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
+    	classpath "com.sun.mail:javax.mail:1.6.0"
   	}
   
  }
@@ -64,11 +65,13 @@ dependencies {
     // 'test.useTestNG()' to your build script.
     compile group: 'junit', name: 'junit', version: '4.12' 
     compile "org.testng:testng:6.3.1"
-    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.+'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.6.0'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
     compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
-    compile group: 'com.google.guava', name: 'guava', version: '22.0'
-    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.0'
+    compile group: 'com.google.guava', name: 'guava', version: '23.0'
+   	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.0'
+   	compile group: 'javax.activation', name: 'activation', version: '1.1.1'
 }
 
  jar {
