@@ -104,13 +104,17 @@ public class PresentElement extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(selectorString, by);
-                    String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                	try {
+	                    WebElement elementToBeTested = getElement(selectorString, by);
+	                    String actualText = elementToBeTested.getText();
+	                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+					} catch (Exception e) {
+						return false;
+					}
                 }
             });
         } catch (WebDriverException ex) {
@@ -133,13 +137,17 @@ public class PresentElement extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(selectorString, by);
-                    String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                	try {
+	                    WebElement elementToBeTested = getElement(selectorString, by);
+	                    String actualText = elementToBeTested.getText();
+	                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+                	} catch (Exception e) {
+                		return false;
+                	}
                 }
             });
         } catch (WebDriverException ex) {
@@ -162,13 +170,17 @@ public class PresentElement extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = element;
-                    String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                	try {
+	                    WebElement elementToBeTested = element;
+	                    String actualText = elementToBeTested.getText();
+	                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+                	} catch (Exception e) {
+                		return false;
+                	}
                 }
             });
         } catch (WebDriverException ex) {
@@ -191,13 +203,17 @@ public class PresentElement extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = element;
-                    String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                	try {
+	                    WebElement elementToBeTested = element;
+	                    String actualText = elementToBeTested.getText();
+	                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+                	} catch (Exception e) {
+                		return false;
+                	}
                 }
             });
         } catch (WebDriverException ex) {

@@ -31,6 +31,7 @@ public class Browser extends Commands implements IBrowser {
     @Override
     public void switchTo(BrowserObject object, WebElement element) throws Exception {
         try {
+        	Thread.sleep(300);
             LocalDriver.getDriver().switchTo().frame(element);
         } catch (WebDriverException ex) {
             throw ex;
@@ -40,6 +41,7 @@ public class Browser extends Commands implements IBrowser {
     @Override
     public void switchTo(BrowserObject object, String selectorString, String by) throws Exception {
         try {
+        	Thread.sleep(300);
             LocalDriver.getDriver().switchTo().frame(getElement(selectorString, by));
         } catch (WebDriverException ex) {
             throw ex;
@@ -49,6 +51,7 @@ public class Browser extends Commands implements IBrowser {
     @Override
     public void switchTo(BrowserObject object, String name) throws Exception {
         try {
+        	Thread.sleep(300);
             LocalDriver.getDriver().switchTo().frame(name);
         } catch (Exception ex) {
             throw ex;

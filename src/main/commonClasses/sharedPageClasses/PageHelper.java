@@ -1075,7 +1075,7 @@ public abstract class PageHelper {
                 Boolean result = false;
                 try {
                     SHelper.get().page().refresh();
-                    Thread.sleep(900);
+                    SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(selectorString, by, 15);
                     if (SHelper.get().element().isDisplayed(SHelper.get().element().get(selectorString, by), 10)) {
                         result = true;
                     } else {
