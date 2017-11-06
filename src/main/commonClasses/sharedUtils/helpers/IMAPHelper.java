@@ -2,9 +2,6 @@ package commonClasses.sharedUtils.helpers;
 
 import java.text.*;
 import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import javax.mail.*;
 import javax.mail.Authenticator;
 import javax.mail.internet.*;

@@ -2,6 +2,7 @@ package commonClasses.sharedPageClasses;
 
 import org.openqa.selenium.WebDriverException;
 import seleniumHelper.enums.*;
+import commonClasses.sharedUtils.TestUtils;
 import commonClasses.sharedUtils.managers.*;
 
 /**
@@ -117,10 +118,13 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public T clickTheSignInButton() throws Exception {
         try {
-            clickSomeElement(Via.SELENIUM, BaseGeneric.signInBtn, cssSelector, "Newstron Sign in Button");
-            if (SHelper.get().element().isDisplayed(BaseGeneric.errorText, xpath, 7)) {
+            clickSomeElement(Via.JAVASCRIPT, BaseGeneric.signInBtn, cssSelector, "Newstron Sign in Button");
+            if (SHelper.get().element().isDisplayed(BaseGeneric.errorMessage, id, 7)) {
+            		Thread.sleep(3000);
                 String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.errorMessage, id);
-                throw LocalValidation.getValidations().assertionFailed(errorText);
+                if (!TestUtils.isNullOrBlank(errorText)) {
+                		throw LocalValidation.getValidations().assertionFailed(errorText);
+                }
             }
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
