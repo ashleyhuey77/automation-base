@@ -41,7 +41,8 @@ public class ChromeDriverHelper {
         driver = new InheritableThreadLocal < WebDriver > () {
             @Override
             protected ChromeDriver initialValue() {
-                ChromeDriver chromeDriver = new ChromeDriver(caps);
+                @SuppressWarnings("deprecation")
+				ChromeDriver chromeDriver = new ChromeDriver(caps);
                 drivers.add(chromeDriver);
                 return chromeDriver;
             }
