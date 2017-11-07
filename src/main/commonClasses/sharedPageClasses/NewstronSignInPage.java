@@ -97,9 +97,10 @@ public class NewstronSignInPage<T> extends PageTemplate {
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(BaseGeneric.usrNameTxtField, cssSelector, 30);
             enterAvalueIntoATextField(usrnm.trim(), BaseGeneric.usrNameTxtField, cssSelector, "Username field");
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(BaseGeneric.pwdTxtField, cssSelector, 30);
-            Thread.sleep(800);
+            Thread.sleep(2000);
             enterAvalueIntoATextField(pwd.trim(), BaseGeneric.pwdTxtField, cssSelector, "Password field");
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            Thread.sleep(2000);
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -123,8 +124,13 @@ public class NewstronSignInPage<T> extends PageTemplate {
             		Thread.sleep(3000);
                 String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.errorMessage, id);
                 if (!TestUtils.isNullOrBlank(errorText)) {
-                		throw LocalValidation.getValidations().assertionFailed(errorText);
-                }
+                		clickSomeElement(Via.JAVASCRIPT, BaseGeneric.signInBtn, cssSelector, "Newstron Sign in Button");
+                		Thread.sleep(3000);
+                    String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.errorMessage, id);
+                    if (!TestUtils.isNullOrBlank(errorText2)) {
+                    		throw LocalValidation.getValidations().assertionFailed(errorText2);
+                    } 
+                } 
             }
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
