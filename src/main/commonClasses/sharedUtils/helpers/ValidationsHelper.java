@@ -2,17 +2,20 @@ package commonClasses.sharedUtils.helpers;
 
 
 import java.io.IOException;
-
-import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.TestReport;
 import junit.framework.AssertionFailedError;
-import reporting.framework.utilities.FrameworkException;
 
 public class ValidationsHelper {
 
-    private HtmlReport htmlReport;
+    //private HtmlReport htmlReport;
+	private TestReport testReport;
 
-    public ValidationsHelper(HtmlReport htmlReport) {
+/*    public ValidationsHelper(HtmlReport htmlReport) {
         this.htmlReport = htmlReport;
+    }*/
+	
+    public ValidationsHelper(TestReport htmlReport) {
+        this.testReport = htmlReport;
     }
 
     /**
@@ -29,9 +32,9 @@ public class ValidationsHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public void assertionPass(String message) throws FrameworkException, IOException {
+    public void assertionPass(String message) throws Exception {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        htmlReport.reportPassEvent(stepName, message);
+        testReport.reportPassEvent(stepName, message);
         System.out.println("Step: " + stepName + " has passed. " + message);
     }
 
@@ -49,12 +52,12 @@ public class ValidationsHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public FrameworkException assertionFailed(String message) throws FrameworkException, IOException {
+    public Exception assertionFailed(String message) throws Exception {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
-        htmlReport.reportFailEvent(stepName, message);
+        testReport.reportFailEvent(stepName, message);
         System.out.println(assertionFailedError.toString());
-        FrameworkException ex = reportAssertionFailed(assertionFailedError);
+        Exception ex = reportAssertionFailed(assertionFailedError);
         return ex;
     }
 
@@ -64,8 +67,8 @@ public class ValidationsHelper {
         return assertionFailedError;
     }
 
-    private FrameworkException reportAssertionFailed(AssertionFailedError assertionFailedError) throws FrameworkException {
-        FrameworkException exception = new FrameworkException(assertionFailedError.toString());
+    private Exception reportAssertionFailed(AssertionFailedError assertionFailedError) throws Exception {
+        Exception exception = new Exception(assertionFailedError.toString());
         System.out.println(exception);
         return exception;
     }

@@ -25,7 +25,7 @@ public class UtilsTest {
 		SecurityHelper s = new SecurityHelper();
 		System.out.println(s);
 		
-		String p = "Test";
+		String p = "Testing123456";
 		String result1 = SecurityHelper.encrypt(p);
 		
 		Assert.assertTrue(!TestUtils.isNullOrBlank(result1));

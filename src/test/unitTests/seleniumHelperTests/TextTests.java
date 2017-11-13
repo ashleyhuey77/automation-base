@@ -272,6 +272,99 @@ public class TextTests {
 		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(test, "test");
 	}
 	
+	@Test
+	public void verifyJSGetPageTextFrom_AttributeIsNull() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		String[] var = {};
+		
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom("Test", "id", var);
+		
+		Assert.assertEquals(result, "Testing", "The two values do not match");
+	}
+	
+	@Test
+	public void verifyJSGetPageTextFrom_PredefinedElement() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element);
+		
+		Assert.assertEquals(result, "Testing", "The two values do not match");
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyJSGetPageTextFrom_PredefinedElement_ThrowsException() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		SHelper.get().page().refresh();
+		Thread.sleep(900);
+		
+		SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element);
+		
+	}
+	
+	@Test
+	public void verifyGetTextFromElement() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		
+		String value = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom("Test", "id");
+		
+		Assert.assertTrue(TestUtils.isNullOrBlank(value), "A value was returned. Expected the value to return null");
+	}
+	
+	@Test
+	public void verifyDoesAttributeContainTheExpectedValue_PredefinedElement_AttributeContainsValue() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
+		
+		Assert.assertTrue(result, "The boolean results do not match");
+		
+	}
+	
+	@Test
+	public void verifyDoesAttributeContainTheExpectedValue_PredefinedElement_AttributeDoesNotContainValue() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "not correct", "class");
+		
+		Assert.assertFalse(result, "The boolean results do not match");
+	}
+	
+	@Test
+	public void verifyDoesAttributeContainTheExpectedValue_PredefinedElement_NullValue() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
+		
+		Assert.assertFalse(result, "The boolean results do not match");
+	}
+	
+	@Test(expectedExceptions=WebDriverException.class)
+	public void verifyDoesAttributeContainTheExpectedValue_PredefinedElement_ExceptionThrown() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		SHelper.get().page().refresh();
+		Thread.sleep(900);
+		
+		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
+	}
+	
 	@AfterMethod
 	public void afterScenario() {
 /*		try {

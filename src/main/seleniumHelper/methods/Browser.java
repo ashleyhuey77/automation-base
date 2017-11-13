@@ -106,6 +106,7 @@ public class Browser extends Commands implements IBrowser {
                     break;
                 case ALERT:
                     LocalDriver.getDriver().switchTo().alert().accept();
+                    break;
                 default:
                     throw new Exception("Please select an available browser object to switch to.");
             }
@@ -142,13 +143,13 @@ public class Browser extends Commands implements IBrowser {
 	@Override
 	public void switchTo(BrowserObject object, int i) throws Exception {
         try {
-        	Set<String> windows = LocalDriver.getDriver().getWindowHandles();
-        	List<String> handles = new ArrayList<String>();
-        	for (String window : windows) {
-        		handles.add(window);
-        	}
+            	Set<String> windows = LocalDriver.getDriver().getWindowHandles();
+            	List<String> handles = new ArrayList<String>();
+            	for (String window : windows) {
+            		handles.add(window);
+            	}
             LocalDriver.getDriver().switchTo().window(handles.get(i));
-        } catch (WebDriverException ex) {
+        } catch (Exception ex) {
             throw ex;
         }
 	}

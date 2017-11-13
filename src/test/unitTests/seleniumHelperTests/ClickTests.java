@@ -27,25 +27,93 @@ public class ClickTests {
 	}
 	
 	@Test
-	public void verifyClickViaJQuery_IndexIsNotNull() throws Exception
+	public void verifyClickViaJQuery() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on("input", null, "0");
+		SHelper.get().click(Via.JQUERY).on("#Test", "cssSelector");
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJQuery_TrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on(null, null);
 	}
 	
 	@Test
-	public void verifyClickViaJQuery_IndexIsNumeric() throws Exception
+	public void verifyClickViaJQuery_ContainsSpecialChar() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on("input", null, 0);
+		SHelper.get().click(Via.JQUERY).on("input[id='Test']", "cssSelector");
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_PredefinedElement() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		SHelper.get().click(Via.JQUERY).on(element);
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJQuery_PredefinedElement_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		SHelper.get().page().refresh();
+		Thread.sleep(900);
+		
+		SHelper.get().click(Via.JQUERY).on(element);
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_IntIndex() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("#Test", "cssSelector", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_IntIndex_SpecialChar() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("input[id='Test']", "cssSelector", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_IntIndex_IndexIsNumeric() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("#Test", "cssSelector", 0);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -67,7 +135,40 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on("#Test", null, null);
+		SHelper.get().click(Via.JQUERY).on("#Test", "cssSelector", null);
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_StringIndex() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("#Test", "cssSelector", "0");
+	}
+	
+	@Test
+	public void verifyClickViaJQuery_StringIndex_SpecialChar() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("input[id='Test']", "cssSelector", "0");
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJQuery_IndexIsString_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
+		Thread.sleep(700);
+		
+		SHelper.get().click(Via.JQUERY).on("input", null, "-2");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -88,6 +189,68 @@ public class ClickTests {
 		SHelper.get().click(Via.SELENIUM).on(test, null);
 	}
 	
+	@Test
+	public void verifyClick() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		String test = "Test";
+	
+		SHelper.get().click(Via.SELENIUM).on(test, "id");
+	}
+	
+	@Test
+	public void verifyClick_PredefinedWebElement() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		WebElement element = SHelper.get().element().get("Test", "id");
+	
+		SHelper.get().click(Via.SELENIUM).on(element);
+	}
+	
+	@Test
+	public void verifyClickWithStringIndex() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		String test = "Test";
+	
+		SHelper.get().click(Via.SELENIUM).on(test, "id", "0");
+	}
+	
+	@Test
+	public void verifyClickWithIntIndex() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		String test = "Test";
+	
+		SHelper.get().click(Via.SELENIUM).on(test, "id", 0);
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickWithStringIndex_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		String test = "Test";
+	
+		SHelper.get().click(Via.SELENIUM).on(test, "id", "7");
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickWithIntIndex_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
+		String test = "Test";
+	
+		SHelper.get().click(Via.SELENIUM).on(test, "id", 7);
+	}
+	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyClick_PredefinedWebElement_ThrowsException() throws Exception
 	{
@@ -106,7 +269,7 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("Test", "id", null);
+		SHelper.get().click(Via.JAVASCRIPT).on("Test", "id");
 	}
 	
 	@Test
@@ -114,7 +277,7 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("#Test", "cssselector", null);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", "cssselector");
 	}
 	
 	@Test
@@ -122,7 +285,7 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("testClass", "classname", "0");
+		SHelper.get().click(Via.JAVASCRIPT).on("testClass", "classname");
 	}
 	
 	@Test
@@ -130,7 +293,7 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("button", "tagname", "0");
+		SHelper.get().click(Via.JAVASCRIPT).on("button", "tagname");
 	}
 	
 	@Test
@@ -138,23 +301,149 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("testName", "name", "0");
-	}
-	
-	@Test
-	public void verifyClickViaJavascript_DEFAULT() throws Exception
-	{
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
-		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("Test", "xpath", null);
+		SHelper.get().click(Via.JAVASCRIPT).on("testName", "name");
 	}
 	
 	@Test(expectedExceptions=Exception.class)
-	public void verifyClickViaJavascript_ExceptionThrown() throws Exception
+	public void verifyClickViaJavascript_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on("blah", "id", null);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", null);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_PredefinedElement() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
+	}
+	
+	@Test(expectedExceptions=WebDriverException.class)
+	public void verifyClickViaJavascript_PredefinedElement_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		WebElement element = SHelper.get().element().get("Test", "id");
+		SHelper.get().page().refresh();
+		
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_StringIndex_ID() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("Test", "id", "0");
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_StringIndex_CSSSELECTOR() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", "cssselector", "0");
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_StringIndex_CLASSNAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("testClass", "classname", "0");
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_StringIndex_TAGNAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("button", "tagname", "0");
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_StringIndex_NAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("testName", "name", "0");
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJavascript_StringIndex_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", null, "0");
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_IntIndex_ID() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("Test", "id", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_IntIndex_CSSSELECTOR() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", "cssselector", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_IntIndex_CLASSNAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("testClass", "classname", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_IntIndex_TAGNAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("button", "tagname", 0);
+	}
+	
+	@Test
+	public void verifyClickViaJavascript_IntIndex_NAME() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("testName", "name", 0);
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJavascript_IntIndex_ThrowsException() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("#Test", null, 0);
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifyClickViaJavascriptElementType_ExceptionThrown() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
+		Thread.sleep(500);
+		SHelper.get().click(Via.JAVASCRIPT).on("testClass", "className", 2);
 	}
 	
 	@AfterMethod

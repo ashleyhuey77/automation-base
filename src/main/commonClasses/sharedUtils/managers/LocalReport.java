@@ -1,6 +1,6 @@
 package commonClasses.sharedUtils.managers;
 
-import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.TestReport;
 import commonClasses.sharedUtils.helpers.ReportHelper;
 
 /**
@@ -13,7 +13,7 @@ import commonClasses.sharedUtils.helpers.ReportHelper;
 public class LocalReport {
 
     private static ThreadLocal < ReportHelper > report = new ThreadLocal < ReportHelper > ();
-    private static ThreadLocal < HtmlReport > HtmlReport = new ThreadLocal < HtmlReport > ();
+    private static ThreadLocal < TestReport > HtmlReport = new ThreadLocal < TestReport > ();
     private static ThreadLocal < String > filePath = new ThreadLocal < String > ();
 
     /**
@@ -36,7 +36,7 @@ public class LocalReport {
      * <p>Get the threadsafe instance of HtmlReport.</p>
      * @return HtmlReport
      */
-    public static HtmlReport getHtmlReport() {
+    public static TestReport getHtmlReport() {
         return HtmlReport.get();
     }
 
@@ -44,7 +44,7 @@ public class LocalReport {
      * <p>Set the threadsafe instance of HtmlReport </p>
      * @param value - the HtmlReport instance to set.
      */
-    public static void setHtmlReport(HtmlReport value) {
+    public static void setHtmlReport(TestReport value) {
         HtmlReport.set(value);
     }
 

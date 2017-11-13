@@ -1,4 +1,4 @@
-package reporting.framework.reporting;
+package reporting.report;
 
 public class ReportThemeFactory {
     

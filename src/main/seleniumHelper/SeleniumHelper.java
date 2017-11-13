@@ -1,6 +1,5 @@
 package seleniumHelper;
 
-import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.enums.*;
 import seleniumHelper.interfaces.*;
 import seleniumHelper.methods.*;
@@ -229,18 +228,6 @@ public class SeleniumHelper {
         sActions = new ElementActions();
 
         return sActions;
-    }
-
-    @SuppressWarnings("unused")
-	private void test() throws Exception {
-        SHelper.get().click(Via.JAVASCRIPT).on("", "", "");
-        SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom("", "");
-        SHelper.get().enter().textInto("", "", "");
-        SHelper.get().browser().switchTo(BrowserObject.WINDOW);
-        SHelper.get().element().isDisplayed("", "", 30);
-        SHelper.get().page().scrollTo(Location.TOP_OF_PAGE);
-        SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("", "", Condition.CONTAINS, "", 40);
-
     }
 
 }

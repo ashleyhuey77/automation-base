@@ -3,6 +3,7 @@ package commonClasses.sharedUtils.helpers;
 import java.awt.Toolkit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
+import commonClasses.sharedUtils.TestReport;
 import commonClasses.sharedUtils.managers.*;
 
 /**
@@ -59,9 +60,9 @@ public abstract class ApplicationHelper {
      * @return HtmlReport
      * @throws Exception
      */
-    protected commonClasses.sharedUtils.HtmlReport getHtmlReport(String testScenarioName) throws Exception {
+    protected TestReport getHtmlReport(String testScenarioName) throws Exception {
         try {
-            HtmlReportHelper helper = new HtmlReportHelper();
+            TestReportHelper helper = new TestReportHelper();
             return helper.initialize(LocalReport.getHtmlReport(), testScenarioName, browserName);
         } catch (Exception ex) {
             throw ex;

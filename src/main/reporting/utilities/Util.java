@@ -1,4 +1,4 @@
-package reporting.framework.utilities;
+package reporting.utilities;
 
 import java.io.File;
 import java.text.DateFormat;

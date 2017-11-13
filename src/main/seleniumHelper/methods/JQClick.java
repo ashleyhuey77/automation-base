@@ -13,19 +13,17 @@ public class JQClick extends Commands implements IClick {
 
     @Override
     public void on(String selectorString, String by) throws Exception {
-        String webElement = null;
+        String webElement = selectorString;
         try {
-            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 20);
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
         } catch (Exception ex) {
             try {
                 if (selectorString.contains("'")) {
                     webElement = selectorString.replace("'", "");
-                } else {
-                    webElement = selectorString;
                 }
+                
                 ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
-
             } catch (Exception e) {
                 throw ex;
             }
@@ -35,8 +33,8 @@ public class JQClick extends Commands implements IClick {
     @Override
     public void on(WebElement element) throws Exception {
         try {
-            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(element, 40);
-            ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$arguments[0].click();", element);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(element, 20);
+            ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
         } catch (Exception ex) {
             throw ex;
         }
@@ -45,7 +43,7 @@ public class JQClick extends Commands implements IClick {
     @Override
     public void on(String selectorString, String by, String index) throws Exception {
         try {
-            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 20);
             String webElement = null;
             if (selectorString.contains("'")) {
                 webElement = selectorString.replace("'", "");
@@ -61,13 +59,12 @@ public class JQClick extends Commands implements IClick {
     @Override
     public void on(String selectorString, String by, int index) throws Exception {
         try {
-            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 40);
-            String webElement = null;
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(selectorString, by, 20);
+            String webElement = selectorString;
             if (selectorString.contains("'")) {
                 webElement = selectorString.replace("'", "");
-            } else {
-                webElement = selectorString;
-            }
+            } 
+            
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "')[" + Integer.toString(index) + "].click();");
         } catch (Exception ex) {
             throw ex;

@@ -3,8 +3,6 @@ package unitTests;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -159,9 +157,10 @@ public class PageClassTests extends TestInitialization {
 			 System.out.flush();
 			 System.setOut(old);
 			 String inputString = baos.toString();
+			 String newInputString = inputString.replaceAll(" ", "");
 			 
-			Assert.assertTrue(inputString.trim().contains("Step: verifyTheActualValueContainsTheExpectedValue has passed. Test is set correctly in Test"));
-			Assert.assertTrue(inputString.trim().contains("ErrorMessage : Test returned null. Variable was not expected to return null."));
+			Assert.assertTrue(newInputString.trim().contains("Step:verifyTheActualValueContainsTheExpectedValuehaspassed.TestissetcorrectlyinTest"));
+			Assert.assertTrue(newInputString.trim().contains("ErrorMessage:Testreturnednull.Variablewasnotexpectedtoreturnnull."));
 			ps.close();
 			baos.close();
 			    
@@ -183,7 +182,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test returned null in the actual variable that was set. Check the test to verify all variables are being assigned a value appropriately."));
 		}
 	}
 	
@@ -201,7 +200,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueContainsTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test is not set as expected. Nothing is set instead."));
 		}
 	}
 	
@@ -295,8 +294,9 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{			    
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: Test. Expected: null"));
+			String newM = m.replaceAll(" ", "");
+			Assert.assertTrue(newM.trim().contains("StepName:verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(newM.trim().contains("ErrorMessage:Testreturnednullineithertheactualortheexpectedvariablethatwasset.Checkthetesttoverifyallvariablesarebeingassignedavalueappropriately.Actual:Test.Expected:null"));
 		}
 	}
 	
@@ -313,8 +313,9 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test returned null in either the actual or the expected variable that was set. Check the test to verify all variables are being assigned a value appropriately. Actual: null. Expected: Test"));
+			String newM = m.replaceAll(" ", "");
+			Assert.assertTrue(newM.trim().contains("StepName:verifyTheActualValueMatchesTheExpectedValue"));
+			Assert.assertTrue(newM.trim().contains("ErrorMessage:Testreturnednullineithertheactualortheexpectedvariablethatwasset.Checkthetesttoverifyallvariablesarebeingassignedavalueappropriately.Actual:null.Expected:Test"));
 		}
 	}
 	
@@ -332,7 +333,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifyTheActualValueMatchesTheExpectedValue"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test is not set as expected. Nothing is set instead."));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test is not set as expected. Nothing is set instead."));
 		}
 	}
 	
@@ -622,8 +623,9 @@ public class PageClassTests extends TestInitialization {
 		page.testEnterAValueIntoATextField(null, test, "cssSelector", "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
+		String newIS = inputString.replaceAll(" ", "");
     
-		Assert.assertTrue(inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
+		Assert.assertTrue(newIS.trim().contains("Step:clickSomeElementhaspassed.TestElementclickedsuccessfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -737,94 +739,6 @@ public class PageClassTests extends TestInitialization {
 	}
 	
 	@Test
-	public void verifyFindOptionInLitAndSelectIt_OptionAvailable_NoJquery() throws Exception
-	{
-		TestPage page = new TestPage();
-		createListOfLinks(7, "a", "testLink", "Link");
-		String test = "testLink";
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-		List<WebElement> list = SHelper.get().element().getListOf(test, "id");
-    
-		page.testFindOptionInListAndSelectIt(list, null, "Link3", false);
-	
-		getByteStreamMessage(baos, old);
-    
-		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test
-	public void verifyFindOptionInListAndSelectIt_NoOptionsAvailable_NoJquery() throws Exception
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			createListOfLinks(7, "a", "testLink", "Link");
-			String test = "testLink";
-	
-			List<WebElement> list = SHelper.get().element().getListOf(test, "id");
-    
-			page.testFindOptionInListAndSelectIt(list, null, "Link10", false);
-			Assert.fail("Exception was expected to have been thrown");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: findOptionInListAndSelectIt"));
-		}
-	
-	}
-	
-	@Test
-	public void verifyFindOptionInListAndSelectIt_OptionAvailable_Jquery() throws Exception
-	{
-		TestPage page = new TestPage();
-		createListOfLinks(7, "a", "testLink", "Link");
-		makeJQueryActive();
-		String test = "a[id=testLink]";
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-		List<WebElement> list = SHelper.get().element().getListOf(test, "cssSelector");
-    
-		page.testFindOptionInListAndSelectIt(list, test, "Link3", true);
-	
-		getByteStreamMessage(baos, old);
-    
-		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link3 has been selected successfully."));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test
-	public void verifyFindOptionInListAndSelectIt_ExceptionThrown() throws Exception
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			createListOfLinks(7, "a", "testLink", "Link");
-			String test = "testLink";
-	
-			List<WebElement> list = SHelper.get().element().getListOf(test, "id");
-    
-			page.testFindOptionInListAndSelectIt(list, test, "Link10", true);
-			Assert.fail("Exception was expected to have been thrown");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: findOptionInListAndSelectIt"));
-		}
-	}
-	
-	@Test
 	public void verifyClickSomeElement_ElementFound() throws InterruptedException, Exception, IOException
 	{
 		TestPage page = new TestPage();
@@ -898,206 +812,6 @@ public class PageClassTests extends TestInitialization {
 		Assert.assertEquals(expectedTotal, totalDays);
 	}
 	
-	@Test
-	public void verifySelectSomeOptionFromNonDropDown_ElementFound() throws Exception
-	{
-		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
-		Thread.sleep(500);
-		createListOfLinks(7, "a", "testLink", "Link");
-		String testLink = "testLink";
-		String test = "input[id='Test']";
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-    
-		page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, "id", "Test Element", false);
-	
-		getByteStreamMessage(baos, old);
-    
-		//Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link2 has been selected successfully."));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test
-	public void verifySelectSomeOptionFromNonDropDown_ElementNotFound() throws Exception
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			createListOfLinks(7, "a", "testLink", "Link");
-			String testLink = "testLink";
-			String test = "input[id='Test']";
-    
-			page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, "id", "Test Element", false);
-			Assert.fail("Test was supposed to throw an error for element not being found");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
-		}
-	}
-	
-	@Test
-	public void verifySelectSomeOptionFromNonDropDown_ThrowsException() throws Exception
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
-			Thread.sleep(500);
-			createListOfLinks(7, "a", "testLink", "Link");
-			String testLink = "testLink";
-			String test = "input[id='Test']";
-    
-			page.testSelectSomeOptionFromNonDropdown("Link2", test, "cssSelector", test, "cssSelector", testLink, null, "Test Element", false);
-			Assert.fail("Test was supposed to throw an error for element not being found");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
-		}
-	}
-	
-	@Test
-	public void verifySelectSomeOptionFromNonDropDown_WebElementPredefined_ElementFound() throws Exception
-	{
-		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
-		Thread.sleep(500);
-		createListOfLinks(7, "a", "testLink", "Link");
-		String testLink = "testLink";
-		WebElement clickSearch = SHelper.get().element().get("input[id='Test']", "cssSelector");
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-    
-		page.testSelectSomeOptionFromNonDropdown("Link2", clickSearch, clickSearch, testLink, "id", "Test Element", false);
-	
-		String inputString = getByteStreamMessage(baos, old);
-    
-		Assert.assertTrue(inputString.trim().contains("Step: findOptionInListAndSelectIt has passed. Link2 has been selected successfully."));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test
-	public void verifySelectSomeOptionFromNonDropDown_WebElementPredefined_ElementNotFound() throws Exception
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
-			Thread.sleep(500);
-			String testLink = "testLink";
-			WebElement test = SHelper.get().element().get("Test", "id");
-			WebElement test2 = SHelper.get().element().get("input[id='Test']", "cssSelector");
-			LocalDriver.getDriver().navigate().refresh();
-			Thread.sleep(500);
-    
-			page.testSelectSomeOptionFromNonDropdown("Link2", test, test2, testLink, "id", "Test Element", false);
-			Assert.fail("Test was supposed to throw an error for element not being found");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: selectSomeOptionFromNonDropdown"));
-			//Assert.assertTrue(m.trim().contains("ErrorMessage : Element is not availale. Can not select the Test Element from the drop down list."));
-		}
-	}
-	
-	@Test 
-	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
-	{
-		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
-		Thread.sleep(500);
-		String textEl = "Test";
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-    
-		page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Testing 123", "Test Element", false);
-	
-		getByteStreamMessage(baos, old);
-    
-		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing 123"));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test 
-	public void verifySomeElementContainsTheExpectedText_RemoveAllSpacesTrue() throws Exception, InterruptedException, IOException
-	{
-		TestPage page = new TestPage();
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
-		Thread.sleep(500);
-		String textEl = "Test";
-	
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		PrintStream old = System.out;
-		System.setOut(ps);
-    
-		page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Testing 123", "Test Element", true);
-	
-		getByteStreamMessage(baos, old);
-    
-		//Assert.assertTrue(inputString.trim().contains("Step: verifySomeElementContainsTheExpectedText has passed. Test Element contains the correct text: Testing123"));
-
-		closeByteStream(ps, baos);
-	}
-	
-	@Test 
-	public void verifySomeElementContainsTheExpectedText_ElementDoesNotContainCorrectText() throws Exception, InterruptedException, IOException
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
-			Thread.sleep(500);
-			String textEl = "Test";
-    
-			page.testVerifySomeElementContainsTheExpectedText(textEl, "id", "Not correct", "Test Element", false);
-			Assert.fail("Assertion failed error was supposed to have been thrown.");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
-		}
-	}
-	
-	@Test 
-	public void verifySomeElementContainsTheExpectedText_NullExpectedValue() throws Exception, InterruptedException, IOException
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
-			Thread.sleep(500);
-			String textEl = "Test";
-    
-			page.testVerifySomeElementContainsTheExpectedText(textEl, "id", null, "Test Element", false);
-			Assert.fail("Assertion failed error was supposed to have been thrown.");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
-		}
-	}
-	
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException
 	{
@@ -1159,7 +873,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
 		}
 	}
 	
@@ -1222,7 +936,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsNotPresent"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should not display in the page. It does display. This is not expected."));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element should not display in the page. It does display. This is not expected."));
 			
 		}
 	}
@@ -1286,7 +1000,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsPresent"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should display in the page. It does not display as expected."));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element should display in the page. It does not display as expected."));
 			
 		}
 	}
@@ -1327,8 +1041,10 @@ public class PageClassTests extends TestInitialization {
 		page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
 	
 		String inputString = getByteStreamMessage(baos, old);
+		
+		String newIS = inputString.replaceAll(" ", "");
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifyTextFieldIsBlank has passed. Test Element is blank as expected."));
+		Assert.assertTrue(newIS.trim().contains("Step:verifyTextFieldIsBlankhaspassed.TestElementisblankasexpected."));
 
 		closeByteStream(ps, baos);
 	}
@@ -1353,7 +1069,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifyTextFieldIsBlank"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
 			
 		}
 	}
@@ -1397,8 +1113,9 @@ public class PageClassTests extends TestInitialization {
 		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", false);
 	
 		String inputString = getByteStreamMessage(baos, old);
+		String newIS = inputString.replaceAll(" ", "");
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifyTextInTextField has passed. Test Element contains Test 123 as expected."));
+		Assert.assertTrue(newIS.trim().contains("Step:verifyTextInTextFieldhaspassed.TestElementcontainsTest123asexpected."));
 
 		closeByteStream(ps, baos);
 	}
@@ -1419,8 +1136,9 @@ public class PageClassTests extends TestInitialization {
 		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", true);
 	
 		String inputString = getByteStreamMessage(baos, old);
+		String newIS = inputString.replaceAll(" ", "");
     
-		Assert.assertTrue(inputString.trim().contains("Step: verifyTextInTextField has passed. Test Element contains Test123 as expected."));
+		Assert.assertTrue(newIS.trim().contains("Step:verifyTextInTextFieldhaspassed.TestElementcontainsTest123asexpected."));
 
 		closeByteStream(ps, baos);
 	}
@@ -1442,7 +1160,7 @@ public class PageClassTests extends TestInitialization {
 		{
 			String m = ex.toString();
 			Assert.assertTrue(m.trim().contains("StepName: verifyTextInTextField"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage : Test Element should contain Test 123 but is retaining an incorrect value instead. The value being retained is Testing123"));		
+			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element should contain Test 123 but is retaining an incorrect value instead. The value being retained is Testing123"));		
 		}
 	}
 	
@@ -1466,6 +1184,7 @@ public class PageClassTests extends TestInitialization {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void createListOfLinks(int i, String tagName, String id, String linkText) throws Exception
 	{
 		try
@@ -1482,6 +1201,7 @@ public class PageClassTests extends TestInitialization {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void makeJQueryActive() throws Exception
 	{
 		try
@@ -1517,28 +1237,40 @@ public class PageClassTests extends TestInitialization {
 		{
 			case "JAN":
 				totalDays = 31;
+				break;
 			case "FEB":
 				totalDays = 28;
+				break;
 			case "MAR":
 				totalDays = 31;
+				break;
 			case "APR":
 				totalDays = 30;
+				break;
 			case "MAY":
 				totalDays = 31;
+				break;
 			case "JUN":
 				totalDays = 30;
+				break;
 			case "JUL":
 				totalDays = 31;
+				break;
 			case "AUG":
 				totalDays = 31;
+				break;
 			case "SEP":
 				totalDays = 30;
+				break;
 			case "OCT":
 				totalDays = 31;
+				break;
 			case "NOV":
 				totalDays = 30;
+				break;
 			case "DEC":
 				totalDays = 31;
+				break;
 		}
 		return totalDays;
 	}

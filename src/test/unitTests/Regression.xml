@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite"  thread-count="6" parallel="methods">
+<suite name="Suite"  thread-count="5" parallel="methods" configfailurepolicy="continue">
   <test name="Regression">
   	<classes>
-  		<class name="unitTests.seleniumHelperTests.BrowserTests"/>
+		<class name="unitTests.seleniumHelperTests.BrowserTests"/>
   		<class name="unitTests.seleniumHelperTests.ClickTests"/>
-  		<class name="unitTests.seleniumHelperTests.EnterTests"/>
+		<class name="unitTests.seleniumHelperTests.EnterTests"/>
   		<class name="unitTests.seleniumHelperTests.PageTests"/>
   		<class name="unitTests.seleniumHelperTests.TextTests"/>
   		<class name="unitTests.seleniumHelperTests.ElementTests"/>
   		<class name="unitTests.seleniumHelperTests.ActionsTests"/>
   		<class name="unitTests.seleniumHelperTests.WaitTests"/>
-  		<class name="unitTests.PageClassTests"/>
+		<class name="unitTests.PageClassTests"/>
   		<class name="unitTests.UtilsTest"/>
   	</classes>
   </test> <!-- Test -->

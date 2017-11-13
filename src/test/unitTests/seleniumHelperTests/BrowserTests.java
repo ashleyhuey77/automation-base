@@ -17,6 +17,7 @@ import commonClasses.sharedUtils.managers.LocalDriver;
 import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.SeleniumHelper;
 import seleniumHelper.enums.BrowserObject;
+import seleniumHelper.enums.Via;
 
 @Listeners(WebDriverListener.class)
 public class BrowserTests {
@@ -183,6 +184,47 @@ public class BrowserTests {
 	public void verifyWaitForWindowCount_ThrowsException() throws Exception
 	{
 		SHelper.get().browser().waitForWindowCount(1, 2);
+	}
+	
+	@Test
+	public void verifySwitchToSpecificWindow() throws Exception {
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		
+		SHelper.get().browser().switchTo(BrowserObject.WINDOW, 0);
+	}
+	
+	@Test(expectedExceptions=Exception.class)
+	public void verifySwitchToSpecificWindow_ThrowException() throws Exception {
+		SHelper.get().browser().open();
+		Thread.sleep(500);
+		
+		SHelper.get().browser().switchTo(BrowserObject.WINDOW, 8);
+	}
+	
+	@Test
+	public void verifySwitchToAlertAndAccept() throws Exception {
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<p>Click the button to display an alert box.</p>" + 
+				"<button id=Test onclick=myFunction()>Try it</button>" + 
+				"<script>" + 
+				"function myFunction() {" + 
+				"    alert(\"Hello! I am an alert box!\");" + 
+				"}" + 
+				"</script>');");
+		Thread.sleep(700);
+		SHelper.get().click(Via.SELENIUM).on("Test", "id");
+		Thread.sleep(500);
+		SHelper.get().browser().switchTo(BrowserObject.ALERT);
 	}
 	
 	@AfterMethod

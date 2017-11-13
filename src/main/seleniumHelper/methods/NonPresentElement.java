@@ -42,6 +42,7 @@ public class NonPresentElement extends Commands implements IWait {
                             return result;
                         }
                     } catch (StaleElementReferenceException ex) {
+                    		result = true;
                         return result;
                     }
                     return result;
@@ -107,7 +108,7 @@ public class NonPresentElement extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = getElement(selectorString, by);
                     String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+                    if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
                         return true;
                     } else {
                         return false;
@@ -136,7 +137,7 @@ public class NonPresentElement extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = getElement(selectorString, by);
                     String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+                    if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
                         return true;
                     } else {
                         return false;
@@ -165,7 +166,7 @@ public class NonPresentElement extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = element;
                     String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+                    if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
                         return true;
                     } else {
                         return false;
@@ -194,7 +195,7 @@ public class NonPresentElement extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = element;
                     String actualText = elementToBeTested.getText();
-                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+                    if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
                         return true;
                     } else {
                         return false;

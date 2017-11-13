@@ -54,22 +54,20 @@ public class ElementCount extends Commands implements IWait {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
+                	Boolean result = false;
                     try {
                         SHelper.get().page().refresh();
-                    } catch (Exception e1) {
-
-                    }
-                    try {
                         SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(selectorString, by, 30);
+                        int actualElementCount = getElements(selectorString, by).size();
+                        if (actualElementCount == expectedTotalCount) {
+                            result = true;
+                        } else {
+                            result = false;
+                        }
                     } catch (Exception e) {
-
+						// TODO: handle exception
                     }
-                    int actualElementCount = getElements(selectorString, by).size();
-                    if (actualElementCount == expectedTotalCount) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+					return result;
                 }
             });
         } catch (WebDriverException ex) {
@@ -83,20 +81,22 @@ public class ElementCount extends Commands implements IWait {
             WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
+                	Boolean result = false;
                     try {
-                        SHelper.get().page().refresh();
-                    } catch (Exception e1) {
-
-                    }
-                    try {
+                    	//refresh can't live in this method. If refresh is necessary, then a new loop will need to be created that contains the refresh
+                    	//The list of web elements needs to be refreshed every time the page is refreshed or this method will not work correctly.
+                        //SHelper.get().page().refresh();
                         SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(element.get(0), 30);
-                    } catch (Exception e) {}
-                    int actualElementCount = element.size();
-                    if (actualElementCount == expectedTotalCount) {
-                        return true;
-                    } else {
-                        return false;
+                        int actualElementCount = element.size();
+                        if (actualElementCount == expectedTotalCount) {
+                            result = true;
+                        } else {
+                            result = false;
+                        }
+                    } catch (Exception e) {
+                    	
                     }
+					return result;
                 }
             });
         } catch (WebDriverException ex) {

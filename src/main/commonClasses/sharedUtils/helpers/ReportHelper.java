@@ -2,16 +2,20 @@ package commonClasses.sharedUtils.helpers;
 
 
 import java.io.IOException;
-
-import commonClasses.sharedUtils.HtmlReport;
-import reporting.framework.utilities.FrameworkException;
+import commonClasses.sharedUtils.TestReport;
 
 public class ReportHelper {
 
-    private HtmlReport htmlReport;
+    //private HtmlReport htmlReport;
+	
+	private TestReport testReport;
 
-    public ReportHelper(HtmlReport htmlReport) {
+/*    public ReportHelper(HtmlReport htmlReport) {
         this.htmlReport = htmlReport;
+    }*/
+    
+    public ReportHelper(TestReport htmlReport) {
+        this.testReport = htmlReport;
     }
 
     /**
@@ -28,9 +32,9 @@ public class ReportHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public void reportDoneEvent(String description) throws FrameworkException, IOException {
+    public void reportDoneEvent(String description) throws Exception {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        htmlReport.reportDoneEvent(stepName, description);
+        testReport.reportDoneEvent(stepName, description);
         System.out.println("Step: " + stepName + " has passed. " + description);
     }
 
@@ -49,11 +53,11 @@ public class ReportHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public FrameworkException reportException(Exception webDriverException) throws FrameworkException, IOException {
+    public Exception reportException(Exception webDriverException) throws Exception {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        htmlReport.reportFailEvent(stepName, webDriverException.getMessage());
+        testReport.reportFailEvent(stepName, webDriverException.getMessage());
         String message = "StepName: " + stepName + "\n ErrorMessage : " + webDriverException.getMessage();
-        FrameworkException assertionFailedException = new FrameworkException(message);
+        Exception assertionFailedException = new Exception(message);
         return assertionFailedException;
     }
 

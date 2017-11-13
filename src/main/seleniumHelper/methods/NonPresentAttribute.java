@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.errorprone.annotations.DoNotCall;
 
 import commonClasses.sharedUtils.managers.LocalDriver;
+import commonClasses.sharedUtils.managers.LocalReport;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.enums.Condition;
 import seleniumHelper.interfaces.IWait;
@@ -246,15 +247,15 @@ public class NonPresentAttribute extends Commands implements IWait {
     @Override
     @DoNotCall
     public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
+    		LocalReport.getReport().reportDoneEvent("This wait on method did not contain any code to be executed. It is located in the NonPresentAttribute class."
+    				+ "Add code if necessary. Or change methods to one that contains the correct code.");
     }
 
     @Override
     @DoNotCall
     public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
+        	LocalReport.getReport().reportDoneEvent("This wait on method did not contain any code to be executed. It is located in the NonPresentAttribute class."
+    				+ "Add code if necessary. Or change methods to one that contains the correct code.");
     }
 
 

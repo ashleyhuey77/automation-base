@@ -105,7 +105,7 @@ public class JSPageText extends Commands implements IText {
     @Override
     public String getFrom(WebElement element, String...attribute) throws Exception {
         try {
-            return (String)((JavascriptExecutor) LocalDriver.getDriver()).executeScript("return argument[0].value", element);
+            return (String)((JavascriptExecutor) LocalDriver.getDriver()).executeScript("return arguments[0].value", element);
         } catch (Exception ex) {
             throw ex;
         }

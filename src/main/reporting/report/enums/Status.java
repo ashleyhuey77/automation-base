@@ -1,4 +1,4 @@
- package reporting.framework.reporting;
+ package reporting.report.enums;
 
 public enum Status {
 	

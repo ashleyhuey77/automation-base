@@ -2,7 +2,7 @@ package commonClasses.sharedUtils.facades;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.WebDriver;
-import commonClasses.sharedUtils.HtmlReport;
+import commonClasses.sharedUtils.TestReport;
 import commonClasses.sharedUtils.contexts.OSContext;
 import commonClasses.sharedUtils.enums.*;
 import commonClasses.sharedUtils.helpers.*;
@@ -28,11 +28,11 @@ public class HelperFacade {
         }
         return driver;
     }
-
-    public static void initializeReportType(ReportType type, commonClasses.sharedUtils.HtmlReport getHTMLReport) throws Exception {
+    
+    public static void initializeReportType(ReportType type, TestReport getHTMLReport) throws Exception {
         switch (type) {
             case REPORT:
-                HtmlReport report = getHTMLReport;
+                TestReport report = getHTMLReport;
                 LocalReport.setHtmlReport(report);
                 LocalReport.setReport(new ReportHelper(LocalReport.getHtmlReport()));
                 break;

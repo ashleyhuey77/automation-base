@@ -1,6 +1,7 @@
 package unitTests.seleniumHelperTests;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
@@ -32,7 +33,7 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		String test = "#Ha";
 		
-		SHelper.get().enter().textInto(test, "cssSelector", "Testing");
+		SHelper.get().enter().textInto(test, "cssSelector", Keys.ENTER);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -45,7 +46,67 @@ public class EnterTests {
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().enter().textInto(test, "Testing");
+		SHelper.get().enter().textInto(test, Keys.ENTER);
+	}
+	
+	@Test
+	public void verifySendKeys() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		String test = "#Test";
+		
+		SHelper.get().enter().textInto(test, "cssSelector", Keys.ENTER);
+	}
+	
+	@Test
+	public void verifySendKeys_ElementPreDefined() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement test = SHelper.get().element().get("Test", "id");
+		
+		SHelper.get().enter().textInto(test, Keys.ENTER);
+	}
+	
+	@Test
+	public void verifyEnterText() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		String test = "#Test";
+		
+		SHelper.get().enter().textInto(test, "cssSelector", "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_ElementPreDefined() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement test = SHelper.get().element().get("Test", "id");
+		
+		SHelper.get().enter().textInto(test, "SomeText");
+	}
+	
+	@Test(expectedExceptions=WebDriverException.class)
+	public void verifyEnterText_ExceptionThrown() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		String test = "#Ha";
+		
+		SHelper.get().enter().textInto(test, "cssSelector", "SomeText");
+	}
+	
+	@Test(expectedExceptions=WebDriverException.class)
+	public void verifyEnterText_ElementPreDefined_ExceptionThrown() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement test = SHelper.get().element().get("Test", "id");
+		Thread.sleep(500);
+		LocalDriver.getDriver().navigate().refresh();
+		Thread.sleep(500);
+		
+		SHelper.get().enter().textInto(test, "SomeText");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -66,6 +127,25 @@ public class EnterTests {
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
+		
+		SHelper.get().enter().clear(test);
+	}
+	
+	@Test
+	public void verifyClear() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		String test = "#Test";
+		
+		SHelper.get().enter().clear(test, "cssSelector");
+	}
+	
+	@Test
+	public void verifyClear_ElementPreDefined() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
+		WebElement test = SHelper.get().element().get("Test", "id");
 		
 		SHelper.get().enter().clear(test);
 	}
