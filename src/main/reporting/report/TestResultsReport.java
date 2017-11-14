@@ -19,12 +19,8 @@ public class TestResultsReport implements ReportContent {
 	
 	 private String _resultSummaryPath;
 	 private ThreadLocal<Document> document = new ThreadLocal<Document>();
-
-	 @SuppressWarnings("unused")
-	private ReportTheme _reportTheme;
 	 
-	 public TestResultsReport(ReportSettings reportSettings, ReportTheme reportTheme) {
-	        this._reportTheme = reportTheme;
+	 public TestResultsReport(ReportSettings reportSettings) {
 	        String reportPath = reportSettings.getReportPath() + Util.GetFileSeparator() + "HTML Results" + Util.GetFileSeparator() + reportSettings.getReportName() +".html";
 	        this._resultSummaryPath = reportPath;
 	}
@@ -41,14 +37,7 @@ public class TestResultsReport implements ReportContent {
         		Document css = Jsoup.parse(cssstream, "utf-8", "/src/main/reporting/report/web/reportCss.html");
         		Element head = newDoc.head();
         		head.append(css.html());
-        		Element title = head.appendElement("title");
-        		Element testHeading = newDoc.getElementById("testHeading");
-        		Element browser = newDoc.getElementById("browser");
-        		Element url = newDoc.getElementById("url");
-        		title.text(report.testScenarioName() + "_" + report.browserName() + " – " + "Automation Execution Results");
-        		testHeading.text(report.testScenarioName());
-        		browser.text(report.browserName());
-        		url.text(report.url());
+        		changeBaseReportPageText(head, newDoc, report);
             String objArray = newDoc.outerHtml();
             streamWriter.write(objArray);
             streamWriter.close();
@@ -125,6 +114,21 @@ public class TestResultsReport implements ReportContent {
 			} else {
 				statusRow.text(status.toUpperCase());
 			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	private void changeBaseReportPageText(Element head, Document newDoc, TestContent report) {
+		try {
+        		Element title = head.appendElement("title");
+        		Element testHeading = newDoc.getElementById("testHeading");
+        		Element browser = newDoc.getElementById("browser");
+        		Element url = newDoc.getElementById("url");
+        		title.text(report.testScenarioName() + "_" + report.browserName() + " – " + "Automation Execution Results");
+        		testHeading.text(report.testScenarioName());
+        		browser.text(report.browserName());
+        		url.text(report.url());
 		} catch (Exception e) {
 			throw e;
 		}

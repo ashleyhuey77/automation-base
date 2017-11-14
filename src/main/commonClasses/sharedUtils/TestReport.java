@@ -6,15 +6,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import commonClasses.sharedUtils.managers.LocalDriver;
 import reporting.report.ReportTemplate;
-import reporting.report.ReportTheme;
 import reporting.report.dataObjects.ReportSettings;
 import reporting.report.dataObjects.TestStepContent;
 import reporting.report.enums.Status;
 
 public class TestReport extends ReportTemplate {
 
-	public TestReport(ReportSettings reportSettings, ReportTheme reportTheme) throws Exception {
-		super(reportSettings, reportTheme);
+	public TestReport(ReportSettings reportSettings) throws Exception {
+		super(reportSettings);
 		// TODO Auto-generated constructor stub
 	}
 	

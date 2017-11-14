@@ -1,8 +1,27 @@
-
 <style type="text/css">
+    	@font-face {
+  			font-family: 'CNNSans Condensed';
+  			src:  url('/Users/ashleyhuey/Downloads/CNN_SANS_CONDENSED/CNNSans-CondensedMedium.ttf') format('truetype');
+	}
+	
+    @font-face {
+            font-family: 'CNNSans Condensed Bold';
+  			src:  url('/Users/ashleyhuey/Downloads/CNN_SANS_CONDENSED/CNNSans-CondensedBold.ttf') format('truetype');
+    }
+    
+    @font-face {
+  			font-family: 'CNNSans Display Light';
+  			src:  url('/Users/ashleyhuey/Downloads/CNN_SANS_DISPLAY/CNNSansDisplay-Light.ttf') format('truetype');
+    }
+    
+        @font-face {
+  			font-family: 'CNNSans Display Bold';
+  			src:  url('/Users/ashleyhuey/Downloads/CNN_SANS_DISPLAY/CNNSansDisplay-Medium.ttf') format('truetype');
+    }
+        
 			 body { 
-				 background-color: #000000; 
-				 font-family: sans-serif; 
+				 background: url('file:///Users/ashleyhuey/Downloads/Pattern_2.jpg');; 
+				 font-family: CNNSans Condensed Bold; 
 				 text-align: center; 
 			 	width: 97%
 			 } 
@@ -12,28 +31,41 @@
 			 } 
 
 			 table { 
-				 border: 2px solid #868686; 
+				 border: 2px solid  rgb(70, 70, 70); 
 				 border-collapse: collapse; 
 				 border-spacing: 0px; 
 				 width: 1200px; 
 				 margin-left: auto; 
 				 margin-right: auto; 
-			 } 
+			 }
+    
+    			#testHeading {
+                font-family: CNNSans Display Bold;
+                font-size: 1.9em;
+    			}
 
 			 tr.heading { 
-				 background-color: #2b9cd8; 
+				 background-color: #0ccdff;
+                 font-family: CNNSans Condensed;
 				 color: #FFFFFF; 
-				 font-size: 1.4em; 
-				 font-weight: bold; 
+				 font-size: 1.7em; 
+				 font-weight: bold;
+                 text-shadow: 0px 0px 6.5px #464646;
 			 } 
 
 			 tr.subheading { 
-				 background-color: #FFFFFF; 
-				 color: #2b9cd8; 
-				 font-weight: bold; 
-				 font-size: 1em; 
-				 text-align: justify; 
-			 } 
+				 background-color: #FFFFFF;
+				 font-weight: bold;
+                 font-family: CNNSans Display Bold;
+				 font-size: 1.2em; 
+				 text-align: left;
+                 color: #282828;
+                 text-shadow: 0px 0px 5.5px #464646;
+			 }
+			 
+			 th.title {
+                text-align: center;
+             } 
 
 			 tr.section { 
 				 background-color: #D6D8D8; 
@@ -50,8 +82,9 @@
 
 			 tr.content { 
 				 background-color: #FFFFFF; 
-				 color: #000000; 
-				 font-size: 0.9em; 
+				 color: #000000;
+                 font-family: CNNSans Display Light;
+				 font-size: 1.0em; 
 				 display: table-row; 
 			 } 
 
@@ -87,5 +120,10 @@
 			 td.warning { 
 				 font-weight: bold; 
 				 color: orange; 
-			 }	 
+			 }
+			 
+			 img.turnerLogo {
+          		display: block;
+          		margin: 0 auto;
+        			padding-bottom: 5px; 
 </style>

@@ -3,7 +3,6 @@ package commonClasses.sharedUtils.helpers;
 import commonClasses.sharedUtils.TestReport;
 import commonClasses.sharedUtils.builders.ReportPathBuilder;
 import commonClasses.sharedUtils.managers.LocalTest;
-import reporting.report.ReportThemeFactory;
 import reporting.report.dataObjects.ReportSettings;
 import reporting.report.dataObjects.TestContent;
 import reporting.report.enums.ReportType;
@@ -20,7 +19,7 @@ public class TestReportHelper {
             reportSettings.IncludeTestDataInReport = false;
             reportSettings.TakeScreenshotFailedStep = true;
             reportSettings.TakeScreenshotPassedStep = true;
-            htmlReport = new TestReport(reportSettings, ReportThemeFactory.GetReportsTheme(ReportThemeFactory.Theme.COOL));
+            htmlReport = new TestReport(reportSettings);
             htmlReport.addBaseReportContent(tContent);
 
             return htmlReport;

@@ -13,8 +13,6 @@ public class ReportTemplate implements ReportContent {
     
     private ReportSettings _reportSettings;
     
-    private ReportTheme _reportTheme;
-    
 	private ReportContent content;
 	
     private int _nStepsPassed = 0;
@@ -25,12 +23,11 @@ public class ReportTemplate implements ReportContent {
     
     private ArrayList<ReportContent> _reportTypes = new ArrayList<ReportContent>();
 	
-	public ReportTemplate(ReportSettings reportSettings, ReportTheme reportTheme) throws Exception {
+	public ReportTemplate(ReportSettings reportSettings) throws Exception {
         this._reportSettings = reportSettings;
-        this._reportTheme = reportTheme;
 		switch(reportSettings.getReportType()) {
             	case TEST_RESULTS_REPORT:
-            		this.content = new TestResultsReport(reportSettings, reportTheme);
+            		this.content = new TestResultsReport(reportSettings);
             		break;
             	default:
             		break;
@@ -103,7 +100,7 @@ public class ReportTemplate implements ReportContent {
 	private void InitializeReportTypes() throws IOException {
         if (this._reportSettings.GenerateHtmlReports) {
             new File(this._reportSettings.getReportPath() + Util.GetFileSeparator() + "HTML Results");
-            TestResultsReport htmlReport = new TestResultsReport(this._reportSettings, this._reportTheme);
+            TestResultsReport htmlReport = new TestResultsReport(this._reportSettings);
             this._reportTypes.add(htmlReport);
         }
         File screenshots = new File(this._reportSettings.getReportPath() + Util.GetFileSeparator() + "Screenshots");
