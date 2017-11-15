@@ -59,7 +59,7 @@ public class TestResultsReport implements ReportContent {
         		Element tr = tbody.appendElement("tr").addClass("content").attr("id", testStep.number());
         		createStepNumberRow(tr, null, testStep.number());
             	createNewRowInTable(tr, "justified", testStep.name());
-            	createNewRowInTable(tr, "justified", testStep.description());
+            	createNewRowInTable(tr, "description", testStep.description());
             	createStatusRow(tr, testStep.status().toString().toLowerCase(), testStep.screenshotName());
             	createNewRowInTable(tr, null, TestUtils.GetCurrentDateTime("HH:mm:ss"));
             streamWriter.write(document.get().toString());
