@@ -22,6 +22,7 @@ public class ReportingTests {
       
       LocalReport.getReport().reportDoneEvent("Test Done Event.");
       LocalValidation.getValidations().assertionPass("Test Pass");
+      LocalValidation.getValidations().assertionFailed("Test Fail");
   }
   
   @Test

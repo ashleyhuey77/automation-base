@@ -57,7 +57,7 @@ public class TestResultsReport implements ReportContent {
         		Element mainTable = body.getElementById("main");
         		Element tbody = mainTable.getElementById("testStepsTable");
         		Element tr = tbody.appendElement("tr").addClass("content").attr("id", testStep.number());
-            	createNewRowInTable(tr, null, testStep.number());
+        		createStepNumberRow(tr, null, testStep.number());
             	createNewRowInTable(tr, "justified", testStep.name());
             	createNewRowInTable(tr, "justified", testStep.description());
             	createStatusRow(tr, testStep.status().toString().toLowerCase(), testStep.screenshotName());
@@ -107,13 +107,46 @@ public class TestResultsReport implements ReportContent {
 	private void createStatusRow(Element tr, String status, String screenShotName) throws Exception {
 		try {
 			Element statusRow = tr.appendElement("td").attr("class", status);
-			if (status.equals("pass") ||
-				status.equals("fail")) {
-        			Element link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
-        			link.text(status.toUpperCase());
-			} else {
-				statusRow.text(status.toUpperCase());
+			Element link = null;
+			Element element = null;
+			switch(status) {
+				case "pass":
+					element = statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src", "../../../resources/reportContent/64x64_ICONS_Navigation_Checkmark.jpg");
+        				link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+        				link.text(status.toUpperCase());
+        				break;
+				case "fail":
+					element = statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src", "../../../resources/reportContent/64x64_ICONS_Navigation_Alert.jpg");
+    					link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+    					link.text(status.toUpperCase());
+    					break;
+				case "done":
+					element = statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src", "../../../resources/reportContent/64x64_ICONS_Navigation_Checkmark.jpg");
+					element.text(status.toUpperCase());
+    					break;
+				case "warning":
+					element = statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src", "../../../resources/reportContent/64x64_ICONS_Navigation_Alert.jpg");
+					element.text(status.toUpperCase());
+					break;
+				default:
+					break;
 			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	private void createStepNumberRow(Element tr, String className, String content) throws Exception {
+		try {
+			Element td = null;
+			
+			if (TestUtils.isNullOrBlank(className)) {
+				td =	 tr.appendElement("td");
+			} else {
+				td = tr.appendElement("td").attr("class", className);
+			}
+			
+			td.text(content);
 		} catch (Exception e) {
 			throw e;
 		}
