@@ -347,4 +347,30 @@ public class ElementActions extends Commands implements IActions {
         }
     }
 
+@Override
+public void dragAndDrop(WebElement elementToBeDragged, WebElement elementToBeDropped, int timeTowait) throws Exception {
+	try {
+        WebElement dragElement = null;
+        WebElement dropElement = null;
+
+        IWait wait = new ClickableElement();
+
+        wait.on(elementToBeDragged, timeTowait);
+        dragElement = elementToBeDragged;
+        wait.on(elementToBeDragged, 20);
+        Actions act = new Actions(LocalDriver.getDriver());
+        dropElement = elementToBeDropped;
+        act.clickAndHold(dragElement).build().perform();
+        Thread.sleep(5000);
+        act.moveToElement(dropElement).build().perform();
+        Thread.sleep(5000);
+        act.release();
+        act.release(dragElement).build().perform();
+        Thread.sleep(5000);
+        System.out.print(dragElement.getText() + "and dropped was: " + dropElement.getText());
+    } catch (WebDriverException ex) {
+        throw ex;
+    }
+}
+
 }

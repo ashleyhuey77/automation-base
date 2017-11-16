@@ -99,6 +99,23 @@ public void moveTo(String selectorString, String by) throws Exception;
 	public void dragAndDrop(String dragable, String dragableby,  String dropable, String dropableby, int timeTowait) throws Exception;
 	
 	/**
+	 * <p>This method is meant to simulate the mouse dragging and dropping an element
+	 * using code from the Selenium libraries.</p>
+	 * <p>Overall, the methods linked together should form a sentence that
+	 * shapes which methods are executed.<p>
+	 * </p>
+	 * <p>Examples of the different types of sentences that can be formed are
+	 * as follows: </p>
+	 * {@code SHelper.get().actions().dragAndDrop("someSelectorString", id, "someOtherSelectorString", id, 10)}</br>
+	 * </p>
+	 * @param elementToBeDragged - the webelement for the item that is to be dragged.
+	 * @param elementToBeDropped - the webelement for the element that is to be dropped into.
+	 * @param timeTowait - the total time to wait inbetween drags and drops.
+	 * @throws Exception
+	 */
+	public void dragAndDrop(WebElement elementToBeDragged,  WebElement elementToBeDropped, int timeTowait) throws Exception;
+	
+	/**
 	 * <p>This method is meant to simulate scrolling on the page to a specified
 	 * webelement.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
