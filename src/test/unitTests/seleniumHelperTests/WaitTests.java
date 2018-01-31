@@ -8,52 +8,73 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import commonClasses.sharedUtils.TestUtils;
-import commonClasses.sharedUtils.WebDriverListener;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.SHelper;
+import common.utils.TestUtils;
+import common.utils.WebDriverListener;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
 import seleniumHelper.SeleniumHelper;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.enums.Condition;
 import seleniumHelper.enums.Wait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 @Listeners(WebDriverListener.class)
 public class WaitTests {
+	Locator locator = new Locator("Test");
+	By by = new By("id");
 	
 	@BeforeMethod
 	public void beforeScenario()
 	{
 		SHelper.set(new SeleniumHelper());
-        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/ExternalLibraries/chromedriver");
+        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
         LocalDriver.getDriver().get("http://www.google.com");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyWaitForElementToLoad_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForAttributeToNotHaveValueInvalidCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.TESTCONDITION, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForAttributeToNotHaveValueInvalidCondition_PreDefinedWebElement_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
+
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.TESTCONDITION, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForAttributeToNotHaveValueNullCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", null, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(null)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -61,15 +82,25 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, null, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(null)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForAttributeToHaveValueInvalidCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", Condition.TESTCONDITION, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -77,15 +108,25 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, Condition.TESTCONDITION, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForAttributeToHaveValueNullCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", null, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(null)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -93,9 +134,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, null, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(null)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test
@@ -103,16 +149,28 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.CONTAINS, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyWaitForAttributeToNotContainACertainValue_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("notHere", "id", Condition.CONTAINS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(locator2, by2);
 	}
 	
 	@Test
@@ -120,16 +178,28 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.EQUALS, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyWaitForAttributeToNotEqualACertainValue_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("notHere", "id", Condition.EQUALS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(locator2, by2);
 	}
 	
 	@Test
@@ -137,9 +207,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.CONTAINS, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -147,9 +222,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.CONTAINS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
@@ -157,9 +237,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.EQUALS, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -167,9 +252,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.EQUALS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 
 	@Test
@@ -178,16 +268,28 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", Condition.CONTAINS, "someClassValue", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("someClassValue")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyWaitForAttributeToContainACertainValue_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("notHere", "id", Condition.CONTAINS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(locator2, by2);
 	}
 	
 	@Test
@@ -195,9 +297,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, Condition.CONTAINS, "someClassValue", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+        			.to(Condition.CONTAIN)
+        			.value("someClassValue")
+        			.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -205,20 +312,28 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, Condition.CONTAINS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.CONTAIN)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
 	public void verifyWaitForElementToDisappear() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test></input>');");
+		Locator locator2 = new Locator("Help");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Help", "id", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator2, by2);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -227,7 +342,8 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test></button>');");
 		Thread.sleep(600);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator, by);
 	}
 	
 	@Test
@@ -235,11 +351,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		SHelper.get().page().refresh();
 		Thread.sleep(1000);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT,
+				new WaitBuilder().forAMaxTimeOf(2)).on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -247,15 +364,20 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClassValue></button>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForElementToNotHaveValueInvalidCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.TESTCONDITION, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -263,15 +385,22 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.TESTCONDITION, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.INVALID_CONDITION)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForElementToNotHaveValueNullCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", null, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -279,9 +408,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, null, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test
@@ -289,7 +421,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.CONTAINS, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.CONTAIN)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -298,7 +434,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.CONTAINS, "Test", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.CONTAIN)
+				.value("Test")
+				.forAMaxTimeOf(1))
+				.on(locator, by);
 	}
 	
 	@Test
@@ -306,7 +446,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.EQUALS, "help", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.EQUAL)
+				.value("help")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -315,7 +459,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", Condition.EQUALS, "Test", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.EQUAL)
+				.value("Test")
+				.forAMaxTimeOf(1))
+				.on(locator, by);
 	}
 	
 	@Test
@@ -323,9 +471,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=SomeClass>Help</button>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.CONTAINS, "Test", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.CONTAIN)
+				.value("Test")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -333,9 +485,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.CONTAINS, "Test", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.CONTAIN)
+				.value("Test")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
@@ -343,9 +499,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=SomeClass>Help</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.EQUALS, "Test", 2);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.EQUAL)
+				.value("Test")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -353,9 +513,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(test, Condition.EQUALS, "Test", 1);
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.to(Condition.EQUAL)
+				.value("Test")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
@@ -364,7 +528,10 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test></input>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", 1, "value");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("value")
+        			.forAMaxTimeOf(1))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -373,7 +540,10 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("Test", "id", 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+    				.forAMaxTimeOf(1))
+				.on(locator, by);
 	}
 	
 	@Test
@@ -381,9 +551,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, 1, "value");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("value")
+    				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -391,9 +564,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(test, 1, "class");
+		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
+				.forAttribute("class")
+    				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
@@ -402,16 +578,28 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", Condition.EQUALS, "someClassValue", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(2))
+				.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyWaitForAttributeToEqualACertainValue_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("notHere", "id", Condition.EQUALS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(locator2, by2);
 	}
 	
 	@Test
@@ -419,9 +607,14 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, Condition.EQUALS, "someClassValue", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(2))
+				.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -429,11 +622,16 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue></div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(test, Condition.EQUALS, "someClassValue", 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
+				.forAttribute("class")
+				.to(Condition.EQUAL)
+				.value("someClassValue")
+				.forAMaxTimeOf(1))
+				.on(test);
 	}
 	
 	@Test
@@ -442,7 +640,8 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on("Test", "id", 1);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator, by);
 		
 	}
 	
@@ -450,9 +649,12 @@ public class WaitTests {
 	public void verifyWaitForElementToBeClickable_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Button</button>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on("NotHere", "id", 1);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator2, by2);
 		
 	}
 	
@@ -461,9 +663,10 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Button</button>');");
 		Thread.sleep(300);
-		WebElement button = SHelper.get().element().get("Test", "id");
+		WebElement button = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(button, 1);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(button);
 		
 	}
 	
@@ -472,11 +675,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Button</button>');");
 		Thread.sleep(300);
-		WebElement button = SHelper.get().element().get("Test", "id");
+		WebElement button = SHelper.get().element().get(locator, by);
 		SHelper.get().page().refresh();
 		Thread.sleep(1000);
 		
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(button, 1);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(button);
 		
 	}
 	
@@ -485,35 +689,41 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(2)).on(locator, by);
 	}
 	
 	@Test
 	public void verifyElementIsPresent_PredefinedElement() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
-		WebElement element = SHelper.get().element().get("Test", "id");
+		WebElement element = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(element, 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyElementIsPresent_ThrowsException() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
+		Locator locator2 = new Locator("NotHere");
+		By by2 = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Help", "id", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(locator2, by2);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyElementIsPresent_PredefinedElement_ThrowsException() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
-		WebElement element = SHelper.get().element().get("Test", "id");
+		WebElement element = SHelper.get().element().get(locator, by);
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(element, 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(1)).on(element);
 	}
 	
 	@Test
@@ -522,7 +732,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", Condition.CONTAINS, "Test", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.CONTAIN)
+        		.value("Test")
+        		.forAMaxTimeOf(2))
+			.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -531,7 +745,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", Condition.CONTAINS, "Nope", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.CONTAIN)
+        		.value("Nope")
+        		.forAMaxTimeOf(1))
+			.on(locator, by);
 	}
 	
 	@Test
@@ -539,9 +757,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, Condition.CONTAINS, "Test", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.CONTAIN)
+        		.value("Test")
+        		.forAMaxTimeOf(2))
+			.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -549,9 +771,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, Condition.CONTAINS, "Nope", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.CONTAIN)
+        		.value("Nope")
+        		.forAMaxTimeOf(1))
+			.on(test);
 	}
 	
 	@Test
@@ -560,7 +786,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", Condition.EQUALS, "Test", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.EQUAL)
+        		.value("Test")
+        		.forAMaxTimeOf(2))
+			.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -569,7 +799,11 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", Condition.EQUALS, "Nope", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.EQUAL)
+        		.value("Tes")
+        		.forAMaxTimeOf(1))
+			.on(locator, by);
 	}
 	
 	@Test
@@ -577,9 +811,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, Condition.EQUALS, "Test", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.EQUAL)
+        		.value("Test")
+        		.forAMaxTimeOf(2))
+			.on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -587,9 +825,13 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=someClassValue>Test</div>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, Condition.EQUALS, "Nope", 1);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.EQUAL)
+        		.value("Tes")
+        		.forAMaxTimeOf(1))
+			.on(test);
 	}
 	
 	@Test
@@ -597,16 +839,22 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
+			.forAttribute("class")
+        		.forAMaxTimeOf(1))
+			.on(locator, by);
 	}
 	
 	@Test
 	public void verifyAttributeIsPresent_PredefinedElement() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
-		WebElement element = SHelper.get().element().get("Test", "id");
+		WebElement element = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(element, 1, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
+			.forAttribute("class")
+        		.forAMaxTimeOf(1))
+			.on(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -614,29 +862,38 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("Test", "id", 1, "style");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
+			.forAttribute("style")
+        		.forAMaxTimeOf(1))
+			.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
 	public void verifyAttributeIsPresent_PredefinedElement_ThrowsException() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
-		WebElement element = SHelper.get().element().get("Test", "id");
+		WebElement element = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(element, 1, "style");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
+			.forAttribute("style")
+        		.forAMaxTimeOf(1))
+			.on(element);
 	}
 	
 	@Test
 	public void verifyWaitOnElementCount() throws Exception {
-		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on("input[type='submit']", "cssSelector", 2, 5);
+		Locator locator2 = new Locator("input[type='submit']");
+		By by2 = new By("css");
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(2).forAMaxTimeOf(10)).on(locator2, by2);
 	}
 	
 	@Test
 	public void verifyWaitOnElementCount_PredefinedElementList() throws Exception {
-		List<WebElement> element = SHelper.get().element().getListOf("input[type='submit']", "cssSelector");
+		Locator locator2 = new Locator("input[type='submit']");
+		By by2 = new By("css");
+		List<WebElement> element = SHelper.get().element().getListOf(locator2, by2);
 		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on(element, 2, 1);
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(2).forAMaxTimeOf(10)).on(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -645,7 +902,7 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on("Test", "id", 1, 1);
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(1)).on(locator, by);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -653,9 +910,9 @@ public class WaitTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
-		List<WebElement> element = SHelper.get().element().getListOf("Test", "id");
+		List<WebElement> element = SHelper.get().element().getListOf(locator, by);
 		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on(element, 1, 1);
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(1)).on(element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -663,21 +920,32 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, Condition.TESTCONDITION, "help", 2, "class");
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.INVALID_CONDITION)
+        		.value("help")
+        		.forAMaxTimeOf(2))
+			.on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForElementToHaveValueInvalidCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", Condition.TESTCONDITION, "help", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+			.to(Condition.INVALID_CONDITION)
+        		.value("help")
+        		.forAMaxTimeOf(2))
+			.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyWaitForElementToHaveValueNullCondition_ExceptionThrown() throws Exception
 	{
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("Test", "id", null, "help", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+        		.value("help")
+        		.forAMaxTimeOf(2))
+			.on(locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -685,9 +953,12 @@ public class WaitTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=SomeClass></input>');");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(test, null, "help", 2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
+        		.value("help")
+        		.forAMaxTimeOf(2))
+			.on(test);
 	}
 	
 	@AfterMethod

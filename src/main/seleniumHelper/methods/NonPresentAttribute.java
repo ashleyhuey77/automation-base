@@ -1,31 +1,39 @@
 package seleniumHelper.methods;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.errorprone.annotations.DoNotCall;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.LocalReport;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
-import seleniumHelper.enums.Condition;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.interfaces.IWait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class NonPresentAttribute extends Commands implements IWait {
 
-    @Override
-    public void on(String selectorString, String by, int i, String...attribute) throws Exception {
+	protected int time = 0;
+	protected String attribute;
+	
+	public NonPresentAttribute(WaitBuilder build) throws Exception{
+		LocalWaitBuilder builder = new LocalWaitBuilder(build);
+		this.time = builder.time;
+		this.attribute = builder.attribute;
+	}
+
+	@Override
+    public void on(Locator locator, By by) throws Exception {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+    			verifyAttributeIsNotNull(attribute);
+    			verifyMaxWaitTimeIsNotZero(time);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(selectorString, by);
-                    String value = elementToBeTested.getAttribute(attribute[0]);
+                    WebElement elementToBeTested = getElement(locator, by);
+                    String value = elementToBeTested.getAttribute(attribute);
                     if (value == null || value.equals("")) {
                         return true;
                     } else {
@@ -39,13 +47,15 @@ public class NonPresentAttribute extends Commands implements IWait {
     }
 
     @Override
-    public void on(WebElement element, int i, String...attribute) throws Exception {
+    public void on(WebElement element) throws Exception {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+			verifyAttributeIsNotNull(attribute);
+			verifyMaxWaitTimeIsNotZero(time);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = element;
-                    String value = elementToBeTested.getAttribute(attribute[0]);
+                    String value = elementToBeTested.getAttribute(attribute);
                     if (value == null || value.equals("")) {
                         return true;
                     } else {
@@ -58,205 +68,21 @@ public class NonPresentAttribute extends Commands implements IWait {
         }
     }
 
-    @Override
-    public void on(String selectorString, String by, Condition condition, String expectedValue, int i,
-        String...attribute) throws Exception {
-        try {
-            switch (condition) {
-                case EQUALS:
-                    waitForAttributeToNoLongerEqualACertainValue(selectorString, by, attribute[0], expectedValue, i);
-                    break;
-                case CONTAINS:
-                    waitForAttributeToNoLongerContainACertainValue(selectorString, by, attribute[0], expectedValue, i);
-                    break;
-                default:
-                    throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+	@Override
+	public void on(List<WebElement> element) throws Exception {
+	}
 
-    @Override
-    public void on(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
-    throws Exception {
-        try {
-            switch (condition) {
-                case EQUALS:
-                    waitForAttributeToNoLongerEqualACertainValue(element, attribute[0], expectedValue, i);
-                    break;
-                case CONTAINS:
-                    waitForAttributeToNoLongerContainACertainValue(element, attribute[0], expectedValue, i);
-                    break;
-                default:
-                    throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+	public static class LocalWaitBuilder extends Commands {
+		private int time;
+		private String attribute;
+		
+		public LocalWaitBuilder(WaitBuilder base) throws Exception {
+			this.time = base.baseTime;
+			this.attribute = base.baseAttribute;
+    			failIfConditionIsNotNull(base.baseCondition);
+    			failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
+    			failIfValueIsNotNull(base.baseValue);
+		}
 
-    /**
-     * <summary> 
-     * method to wait for an attribute to equal a certain value
-     * </summary>
-  		@param selectorString the webelement selector string necessary for the webelement to be found
-  		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-    				  WebElement to be found
-     * @param attribute the html attribute whose value is to be evaluated and obtained
-     * @param expectedValue the expected value of the html attribute
-     * @param i the total amount of time allotted to wait for the condition to return true
-     * @return void
-     */
-    private void waitForAttributeToNoLongerContainACertainValue(String selectorString, String by, String attribute, String expectedValue, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(selectorString, by);
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning true if attribute is null because it still means the attribute does not contain the desired value.
-                    if (actualValue != null) {
-                        if (!actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return true;
-                    }
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**
-       * <summary> 
-       * method to wait for an attribute to equal a certain value
-       * </summary>
-    		@param selectorString the webelement selector string necessary for the webelement to be found
-    		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-      				  WebElement to be found
-       * @param attribute the html attribute whose value is to be evaluated and obtained
-       * @param expectedValue the expected value of the html attribute
-       * @param i the total amount of time allotted to wait for the condition to return true
-       * @return void
-       */
-    private void waitForAttributeToNoLongerContainACertainValue(WebElement element, String attribute, String expectedValue, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = element;
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning true if attribute is null because it still means the attribute does not contain the desired value.
-                    if (actualValue != null) {
-                        if (!actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return true;
-                    }
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**
-         * <summary> 
-         * method to wait for an attribute to equal a certain value
-         * </summary>
-      		@param selectorString the webelement selector string necessary for the webelement to be found
-      		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-        				  WebElement to be found
-         * @param attribute the html attribute whose value is to be evaluated and obtained
-         * @param expectedValue the expected value of the html attribute
-         * @param i the total amount of time allotted to wait for the condition to return true
-         * @return void
-         */
-    private void waitForAttributeToNoLongerEqualACertainValue(String selectorString, String by, String attribute, String expectedValue, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(selectorString, by);
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning true if attribute is null because it still means the attribute does not contain the desired value.
-                    if (actualValue != null) {
-                        if (!actualValue.trim().toLowerCase().equals(expectedValue.toLowerCase().trim())) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return true;
-                    }
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**
-           * <summary> 
-           * method to wait for an attribute to equal a certain value
-           * </summary>
-        		@param selectorString the webelement selector string necessary for the webelement to be found
-        		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-          				  WebElement to be found
-           * @param attribute the html attribute whose value is to be evaluated and obtained
-           * @param expectedValue the expected value of the html attribute
-           * @param i the total amount of time allotted to wait for the condition to return true
-           * @return void
-           */
-    private void waitForAttributeToNoLongerEqualACertainValue(WebElement element, String attribute, String expectedValue, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = element;
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning true if attribute is null because it still means the attribute does not contain the desired value.
-                    if (actualValue != null) {
-                        if (!actualValue.trim().toLowerCase().equals(expectedValue.toLowerCase().trim())) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return true;
-                    }
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    @Override
-    @DoNotCall
-    public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
-    		LocalReport.getReport().reportDoneEvent("This wait on method did not contain any code to be executed. It is located in the NonPresentAttribute class."
-    				+ "Add code if necessary. Or change methods to one that contains the correct code.");
-    }
-
-    @Override
-    @DoNotCall
-    public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
-        	LocalReport.getReport().reportDoneEvent("This wait on method did not contain any code to be executed. It is located in the NonPresentAttribute class."
-    				+ "Add code if necessary. Or change methods to one that contains the correct code.");
-    }
-
-
+	}
 }

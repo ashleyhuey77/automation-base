@@ -1,67 +1,61 @@
 package seleniumHelper.methods;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.errorprone.annotations.DoNotCall;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
-import seleniumHelper.enums.Condition;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.interfaces.IWait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class ClickableElement extends Commands implements IWait {
+	
+	protected int time = 0;
+	
+	public ClickableElement(WaitBuilder build) throws Exception {
+		LocalWaitBuilder builder = new LocalWaitBuilder(build);
+		this.time = builder.time;
+	}
 
-    @Override
-    public void on(String selectorString, String by, int i, String...attribute) throws Exception {
+	@Override
+    public void on(Locator locator, By by) throws Exception {
         try {
-            new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(selectorString, by)));
+        		verifyMaxWaitTimeIsNotZero(time);
+        		new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(locator, by)));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
     @Override
-    public void on(WebElement element, int i, String...attribute) throws Exception {
+    public void on(WebElement element) throws Exception {
         try {
-            new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.elementToBeClickable(element));
+        		verifyMaxWaitTimeIsNotZero(time);
+        		new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.elementToBeClickable(element));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
-    @Override
-    @DoNotCall
-    public void on(String selectorString, String by, Condition condition, String expectedValue, int i,
-        String...attribute) throws Exception {
-        // TODO Auto-generated method stub
+	@Override
+	public void on(List<WebElement> element) throws Exception {
 
-    }
+	}
 
-    @Override
-    @DoNotCall
-    public void on(WebElement element, Condition condition, String expectedValue, int i, String...attribute)
-    throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @DoNotCall
-    public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @DoNotCall
-    public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
+	public static class LocalWaitBuilder extends Commands {
+		private int time;
+		
+		public LocalWaitBuilder(WaitBuilder base) throws Exception {
+			this.time = base.baseTime;
+        		failIfValueIsNotNull(base.baseValue);
+        		failIfConditionIsNotNull(base.baseCondition);
+        		failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
+        		failIfAttributeIsNotNull(base.baseAttribute);
+		}
+		
+	}
 }

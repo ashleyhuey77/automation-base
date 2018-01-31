@@ -1,10 +1,23 @@
 package testPages;
 
-import java.util.List;
-
 import org.openqa.selenium.WebElement;
-import commonClasses.sharedPageClasses.PageTemplate;
+import common.basePage.PageTemplate;
+import common.basePage.enums.DaysOfTheWeek;
+import common.basePage.enums.Entity;
+import common.basePage.enums.Timezones;
+import common.basePage.helpers.ClickHelper;
+import common.basePage.helpers.DropdownHelper;
+import common.basePage.helpers.EnterTextHelper;
+import common.basePage.helpers.EnterTextHelper.EnterTextBuilder;
+import common.basePage.helpers.VerifyTextHelper;
+import common.basePage.helpers.VerifyTextHelper.VerifyTextBuilder;
+import common.basePage.helpers.DropdownHelper.DropdownBuilder;
+import common.basePage.helpers.ClickHelper.ClickBuilder;
+import common.basePage.valueObjects.ReportInfo;
 import seleniumHelper.enums.Via;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
+import seleniumHelper.valueObjects.TestElement;
 
 
 public class TestPage extends PageTemplate {
@@ -99,19 +112,24 @@ public class TestPage extends PageTemplate {
 		return getFutureDate(daysOutFromCurrentDay);
 	}
 	
-	public void testEnterAValueIntoATextField(String value, String webElement, String byValue, String elementBeingTested) throws Exception
+	public void testEnterAValueIntoATextField(String value, Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		enterAvalueIntoATextField(value, webElement, byValue, elementBeingTested);
+		new EnterTextHelper(new EnterTextBuilder(new ReportInfo(elementBeingTested))
+				.enterText(value)
+				.into(new TestElement(locator, by)));
 	}
 	
 	public void testEnterAValueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws Exception
 	{
-		enterAvalueIntoATextField(value, webElement, elementBeingTested);
+		new EnterTextHelper(new EnterTextBuilder(new ReportInfo(elementBeingTested))
+				.enterText(value)
+				.into(webElement));
 	}
 	
-	public void testClickSomeElement(String html, String byValue, String elementBeingTested) throws Exception
+	public void testClickSomeElement(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		clickSomeElement(Via.SELENIUM, html, byValue, elementBeingTested);
+		//clickSomeElement(Via.SELENIUM, locator, by, elementBeingTested);
+		new ClickHelper(new ClickBuilder(new ReportInfo(elementBeingTested)).clickOn(new TestElement(locator, by)).via(Via.SELENIUM));
 	}
 	
 	public int testGetTotalDaysInMonth() throws Exception
@@ -121,27 +139,43 @@ public class TestPage extends PageTemplate {
 	
 	public void testVerifySomeElementContainsTheExpectedText(WebElement element, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
-		verifySomeElementContainsTheExpectedText(element, expectedText, elementBeingTested, removeAllSpaces);
+		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo(elementBeingTested))
+				.verify(element)
+				.contains(expectedText)
+				.removeAllSpaces(removeAllSpaces));
 	}
 	
-	public void testverifySomeElementIsNotPresent(String elementHtml, String byValue, String elementBeingTested) throws Exception
+	public void testverifySomeElementIsNotPresent(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		verifySomeElementIsNotPresent(elementHtml, byValue, elementBeingTested);
+		verifySomeElementIsNotPresent(locator, by, elementBeingTested);
 	}
 	
-	public void testVerifySomeElementIsPresent(String elementHtml, String byValue, String elementBeingTested) throws Exception
+	public void testVerifySomeElementIsPresent(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		verifySomeElementIsPresent(elementHtml, byValue, elementBeingTested);
+		verifySomeElementIsPresent(locator, by, elementBeingTested);
 	}
 	
-	public void testVerifyTextFieldIsBlank(String html, String byValue, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
+	public void testVerifyTextFieldIsBlank(Locator locator, By by, Boolean requiresIndex, String webElementIndex, String elementBeingTested) throws Exception
 	{
-		verifyTextFieldIsBlank(html, byValue, webElementIndex, elementBeingTested);
+		verifyTextFieldIsBlank(locator, by, webElementIndex, elementBeingTested);
 	}
 	
-	public void testVerifyTextInTextField(String html, String byValue, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
+	public void testVerifyTextInTextField(Locator locator, By by, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
 	{
-		verifyTextInTextField(html, byValue, webElementIndex, expectedText, elementBeingTested, removeAllSpaces);
+		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo(elementBeingTested))
+				.verify(new TestElement(locator, by))
+				.contains(expectedText)
+				.via(Via.JAVASCRIPT)
+				.withIndexOf(webElementIndex)
+				.removeAllSpaces(removeAllSpaces));
+	}
+	
+	public void testDropDownHelper() throws Exception {
+		new DropdownHelper(new DropdownBuilder(new ReportInfo("Drop Down"))
+				.clickMenuToOpen(new TestElement(locator("someLocator"), by(id)))
+				.searchForOption(new TestElement(locator("searchLocator"), by(id)))
+				.selectOption("Option to select")
+				.fromOptionList(new TestElement(locator("optionListSelector"), by(xpath))));
 	}
 	
 	 public static void superficialEnumCodeCoverage(Class<? extends Enum<?>> enumClass) {
@@ -153,6 +187,6 @@ public class TestPage extends PageTemplate {
 		    catch (Throwable e) {
 		      throw new RuntimeException(e);
 		    }
-		  }
+	 }
 
 }

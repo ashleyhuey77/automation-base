@@ -3,6 +3,8 @@ package seleniumHelper.interfaces;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IElement {
 	
@@ -25,7 +27,7 @@ public interface IElement {
 	 * @return WebElement
 	 * @throws Exception
 	 */
-	public WebElement get(String selectorString, String by) throws Exception;
+	public WebElement get(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to get a list of webelements that
@@ -49,7 +51,7 @@ public interface IElement {
 	 * @return List<<WebElement>>
 	 * @throws Exception
 	 */
-	public List<WebElement> getListOf(String selectorString, String by) throws Exception;
+	public List<WebElement> getListOf(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to wait for an element to display and then return
@@ -70,7 +72,7 @@ public interface IElement {
 	 * @return Boolean
 	 * @throws Exception
 	 */
-	public Boolean isDisplayed(String selectorString, String by, int i) throws Exception;
+	public Boolean isDisplayed(Locator locator, By by, int i) throws Exception;
 	
 	/**
 	 * <p>This method is used to wait for an element to display and then return
@@ -110,7 +112,7 @@ public interface IElement {
 	 * @return WebElement
 	 * @throws Exception
 	 */
-	public WebElement find(WebElement firstElement, String selectorString, String by) throws Exception;
+	public WebElement find(WebElement firstElement, Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to find an element that is 
@@ -132,7 +134,7 @@ public interface IElement {
 	 * @return WebElement
 	 * @throws Exception
 	 */
-	public WebElement find(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception;
+	public WebElement find(Locator firstESelectorString, By firstEBy, Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to find a list of elements that contain
@@ -153,7 +155,7 @@ public interface IElement {
 	 * @return List<<WebElement>>
 	 * @throws Exception
 	 */
-	public List<WebElement> findListOf(WebElement firstElement, String selectorString, String by) throws Exception;
+	public List<WebElement> findListOf(WebElement firstElement, Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to find a list of elements that contain
@@ -177,7 +179,7 @@ public interface IElement {
 	 * @return List<<WebElement>>
 	 * @throws Exception
 	 */
-	public List<WebElement> findListOf(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception;
+	public List<WebElement> findListOf(Locator firstESelectorString, By firstEBy, Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to return whether an attribute is present or not.</p>
@@ -219,7 +221,7 @@ public interface IElement {
 	 * @return Boolean
 	 * @throws Exception
 	 */
-	public Boolean isAttributePresent(String selectorString, String by, String attribute) throws Exception;
+	public Boolean isAttributePresent(Locator locator, By by, String attribute) throws Exception;
 	
 	/**
 	 * <p>This method is used to return whether an element is enabled on
@@ -239,7 +241,7 @@ public interface IElement {
 	 * @return Boolean
 	 * @throws Exception
 	 */
-	public Boolean isEnabled(String selectorString, String by) throws Exception;
+	public Boolean isEnabled(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to return whether an element is enabled on

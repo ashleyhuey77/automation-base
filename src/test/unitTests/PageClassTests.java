@@ -8,10 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import commonClasses.sharedUtils.*;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.SHelper;
+import common.utils.*;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 import testPages.TestInitialization;
 import testPages.TestPage;
 
@@ -551,7 +552,7 @@ public class PageClassTests extends TestInitialization {
 	    PrintStream old = System.out;
 	    System.setOut(ps);
 	    
-		page.testNavigateViaNewsappsToggle("Test", "id", "TestElement");
+		page.testNavigateViaNewsappsToggle(locator, by, "TestElement");
 		
 	    System.out.flush();
 	    System.setOut(old);
@@ -590,14 +591,15 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(800);
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		String test = "input[id='Test']";
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
 	    PrintStream old = System.out;
 	    System.setOut(ps);
 	    
-		page.testEnterAValueIntoATextField("Test123", test, "cssSelector", "Test Element");;
+		page.testEnterAValueIntoATextField("Test123", locator, by, "Test Element");;
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
@@ -613,14 +615,15 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(800);
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		String test = "input[id='Test']";
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testEnterAValueIntoATextField(null, test, "cssSelector", "Test Element");;
+		page.testEnterAValueIntoATextField(null, locator, by, "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
 		String newIS = inputString.replaceAll(" ", "");
@@ -636,29 +639,10 @@ public class PageClassTests extends TestInitialization {
 	    try
 		{
 			TestPage page = new TestPage();
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
 			
-			page.testEnterAValueIntoATextField(null, "input[id='Test']", "cssSelector", "Test Element");
-			Assert.fail("Error expected to be thrown");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
-		}
-	}
-	
-	@Test
-	public void verifyEnterAValueIntoATextField_ByValueUndefined()
-	{
-		try
-		{
-			TestPage page = new TestPage();
-			Thread.sleep(800);
-			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
-			Thread.sleep(500);
-			String test = "input[id='Test']";
-			
-			page.testEnterAValueIntoATextField("Test", test, null, "Test Element");
+			page.testEnterAValueIntoATextField(null, locator, by, "Test Element");
 			Assert.fail("Error expected to be thrown");
 		}
 		catch (Exception ex)
@@ -676,13 +660,14 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(800);
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		String test = "Test";
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(baos);
 	    PrintStream old = System.out;
 	    System.setOut(ps);
-	    WebElement el = SHelper.get().element().get(test, "id");
+	    WebElement el = SHelper.get().element().get(locator, by);
 	    
 		page.testEnterAValueIntoATextField("Test123", el, "Test Element");;
 		
@@ -700,14 +685,15 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(800);
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		String test = "input[id='Test']";
+		Locator locator = new Locator("input[id='Test']");
+		By by = new By("css");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testEnterAValueIntoATextField(null, SHelper.get().element().get(test, "cssSelector"), "Test Element");;
+		page.testEnterAValueIntoATextField(null, SHelper.get().element().get(locator, by), "Test Element");;
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -723,8 +709,10 @@ public class PageClassTests extends TestInitialization {
 		{
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
 			Thread.sleep(500);
-			WebElement test = SHelper.get().element().get("input[id='Test']", "cssSelector");
+			WebElement test = SHelper.get().element().get(locator, by);
 			LocalDriver.getDriver().navigate().refresh();
 			Thread.sleep(500);
 			
@@ -744,18 +732,19 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
-		String test = "input[id='Test']";
+		Locator locator = new Locator("input[id='Test']");
+		By by = new By("css");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testClickSomeElement(test, "cssSelector", "Test Element");;
+		page.testClickSomeElement(locator, by, "Test Element");
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: clickSomeElement has passed. Test Element clicked successfully."));
+		Assert.assertTrue(inputString.trim().contains("Step: <init> has passed. Test Element clicked successfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -768,9 +757,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
-			String test = "input[id='NotHere']";
+			Locator locator = new Locator("input[id='NotHere']");
+			By by = new By("css");
 	    
-			page.testClickSomeElement(test, "cssSelector", "Test Element");
+			page.testClickSomeElement(locator, by, "Test Element");
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		}
 		catch (Exception ex)
@@ -788,9 +778,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 			Thread.sleep(500);
-			String test = "input[id='NotHere']";
+			Locator locator = new Locator("#NotHere");
+			By by = new By("id");
 	    
-			page.testClickSomeElement(test, null, "Test Element");
+			page.testClickSomeElement(locator, by, "Test Element");
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		}
 		catch (Exception ex)
@@ -817,8 +808,10 @@ public class PageClassTests extends TestInitialization {
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(500);
-		WebElement textEl = SHelper.get().element().get("Test", "id");
+		WebElement textEl = SHelper.get().element().get(locator, by);
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -839,8 +832,10 @@ public class PageClassTests extends TestInitialization {
 	{
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(500);
-		WebElement textEl = SHelper.get().element().get("Test", "id");
+		WebElement textEl = SHelper.get().element().get(locator, by);
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
@@ -863,8 +858,10 @@ public class PageClassTests extends TestInitialization {
 		{
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Locator locator = new Locator("Test");
+			By by = new By("id");
 			Thread.sleep(500);
-			WebElement textEl = SHelper.get().element().get("Test", "id");
+			WebElement textEl = SHelper.get().element().get(locator, by);
     
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "Not correct", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -884,8 +881,10 @@ public class PageClassTests extends TestInitialization {
 		{
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Locator locator = new Locator("Test");
+			By by = new By("id");
 			Thread.sleep(500);
-			WebElement textEl = SHelper.get().element().get("Test", "id");
+			WebElement textEl = SHelper.get().element().get(locator, by);
     
 			page.testVerifySomeElementContainsTheExpectedText(textEl, null, "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -903,14 +902,15 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
-		String test = "NotHere";
+		Locator locator = new Locator("NotHere");
+		By by = new By("id");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
+		page.testverifySomeElementIsNotPresent(locator, by, "Test Element");
 	
 		getByteStreamMessage(baos, old);
     
@@ -927,9 +927,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			String test = "Test";
+			Locator locator = new Locator("Test");
+			By by = new By("id");
     
-			page.testverifySomeElementIsNotPresent(test, "id", "Test Element");
+			page.testverifySomeElementIsNotPresent(locator, by, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -949,9 +950,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			String test = "Test";
+			Locator locator = new Locator("Test");
+			By by = new By("id");
     
-			page.testverifySomeElementIsNotPresent(test, null, "Test Element");
+			page.testverifySomeElementIsNotPresent(locator, by, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -967,14 +969,15 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Thread.sleep(500);
-		String test = "Test";
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifySomeElementIsPresent(test, "id", "Test Element");
+		page.testVerifySomeElementIsPresent(locator, by, "Test Element");
 	
 		String inputString = getByteStreamMessage(baos, old);
     
@@ -991,9 +994,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			String test = "NotHere";
+			Locator locator = new Locator("NotHere");
+			By by = new By("id");
     
-			page.testVerifySomeElementIsPresent(test, "id", "Test Element");
+			page.testVerifySomeElementIsPresent(locator, by, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1013,9 +1017,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			String test = "Test";
+			Locator locator = new Locator("NotHere");
+			By by = new By("id");
     
-			page.testVerifySomeElementIsPresent(test, null, "Test Element");
+			page.testVerifySomeElementIsPresent(locator, by, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1031,14 +1036,15 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value= ></input>');");
 		Thread.sleep(500);
-		String test = "#Test";
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
+		page.testVerifyTextFieldIsBlank(locator, by, false, null, "Test Element");
 	
 		String inputString = getByteStreamMessage(baos, old);
 		
@@ -1057,12 +1063,13 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
-			String test = "#Test";
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
 			
-			page.testEnterAValueIntoATextField("Test123", test, "cssSelector", "Test Element");
+			page.testEnterAValueIntoATextField("Test123", locator, by, "Test Element");
 			Thread.sleep(500);
     
-			page.testVerifyTextFieldIsBlank(test, "cssSelector", false, null, "Test Element");
+			page.testVerifyTextFieldIsBlank(locator, by, false, null, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1082,9 +1089,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=></input>');");
 			Thread.sleep(500);
-			String test = "#Test";
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
     
-			page.testVerifyTextFieldIsBlank(test, "cssSelector", true, "1", "Test Element");
+			page.testVerifyTextFieldIsBlank(locator, by, true, "1", "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1100,9 +1108,10 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<textarea id=Test value=></textarea>');");
 		Thread.sleep(500);
-		String test = "#Test";
+		Locator locator = new Locator("textarea[id='Test']");
+		By by = new By("css");
 		
-		page.testEnterAValueIntoATextField("Test\n123", test, "cssSelector", "Test Element");
+		page.testEnterAValueIntoATextField("Test\n123", locator, by, "Test Element");
 		Thread.sleep(500);
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -1110,7 +1119,7 @@ public class PageClassTests extends TestInitialization {
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", false);
+		page.testVerifyTextInTextField(locator, by, null, "Test 123", "Test Element", false);
 	
 		String inputString = getByteStreamMessage(baos, old);
 		String newIS = inputString.replaceAll(" ", "");
@@ -1126,14 +1135,15 @@ public class PageClassTests extends TestInitialization {
 		TestPage page = new TestPage();
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
 		Thread.sleep(500);
-		String test = "#Test";
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		PrintStream old = System.out;
 		System.setOut(ps);
     
-		page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", true);
+		page.testVerifyTextInTextField(locator, by, null, "Test 123", "Test Element", true);
 	
 		String inputString = getByteStreamMessage(baos, old);
 		String newIS = inputString.replaceAll(" ", "");
@@ -1151,9 +1161,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing123 ></input>');");
 			Thread.sleep(500);
-			String test = "#Test";
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
     
-			page.testVerifyTextInTextField(test, "cssSelector", null, "Test 123", "Test Element", false);
+			page.testVerifyTextInTextField(locator, by, null, "Test 123", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)
@@ -1172,9 +1183,10 @@ public class PageClassTests extends TestInitialization {
 			TestPage page = new TestPage();
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
 			Thread.sleep(500);
-			String test = "#Test";
+			Locator locator = new Locator("#Test");
+			By by = new By("css");
     
-			page.testVerifyTextInTextField(test, "cssSelector", "1", "Test 123", "Test Element", false);
+			page.testVerifyTextInTextField(locator, by, "1", "Test 123", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		}
 		catch (Exception ex)

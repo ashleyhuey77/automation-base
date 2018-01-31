@@ -2,6 +2,8 @@ package seleniumHelper.interfaces;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IEnter {
 	
@@ -19,7 +21,7 @@ public interface IEnter {
 	 * @param text - the text value to type into the element
 	 * @throws Exception
 	 */
-	public void textInto(String selectorString, String by, String text) throws Exception;
+	public void textInto(Locator locator, By by, String text) throws Exception;
 	
 	/**
 	 * <p>This method is used to enter any text into a specified WebElement.</p>
@@ -53,7 +55,7 @@ public interface IEnter {
 	 * @param key - representations of pressable keys that aren't text.
 	 * @throws Exception
 	 */
-	public void textInto(String selectorString, String by, Keys key) throws Exception;
+	public void textInto(Locator locator, By by, Keys key) throws Exception;
 	
 	/**
 	 * <p>This method is used to send and key or keys (as simulated on a keyboard) to a specified
@@ -87,7 +89,7 @@ public interface IEnter {
 	 * WebElement to be found
 	 * @throws Exception
 	 */
-	public void clear(String selectorString, String by) throws Exception;
+	public void clear(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is used to clear any and all text that is

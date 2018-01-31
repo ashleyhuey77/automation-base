@@ -7,27 +7,28 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.errorprone.annotations.DoNotCall;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.interfaces.IElement;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class Element extends Commands implements IElement {
 
-    @Override
-    public WebElement get(String selectorString, String by) throws Exception {
-        return getElement(selectorString, by);
+	@Override
+    public WebElement get(Locator locator, By by) throws Exception {
+        return getElement(locator, by);
     }
 
     @Override
-    public List < WebElement > getListOf(String selectorString, String by) throws Exception {
-        return getElements(selectorString, by);
+    public List < WebElement > getListOf(Locator locator, By by) throws Exception {
+        return getElements(locator, by);
     }
 
     @Override
-    public Boolean isDisplayed(String selectorString, String by, int i) throws Exception {
+    public Boolean isDisplayed(Locator locator, By by, int i) throws Exception {
         try {
-            new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+            new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(locator, by)));
             return true;
         } catch (WebDriverException ex) {
             return false;
@@ -50,36 +51,36 @@ public class Element extends Commands implements IElement {
     }
 
     @Override
-    public WebElement find(WebElement firstElement, String selectorString, String by) throws Exception {
+    public WebElement find(WebElement firstElement, Locator locator, By by) throws Exception {
         try {
-            return firstElement.findElement(getByValueBasedOnUserInput(selectorString, by));
+            return firstElement.findElement(getByValueBasedOnUserInput(locator, by));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
     @Override
-    public WebElement find(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception {
+    public WebElement find(Locator firstElocator, By firstEBy, Locator locator, By by) throws Exception {
         try {
-            return getElement(firstESelectorString, firstEBy).findElement(getByValueBasedOnUserInput(selectorString, by));
+            return getElement(firstElocator, firstEBy).findElement(getByValueBasedOnUserInput(locator, by));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
     @Override
-    public List < WebElement > findListOf(WebElement firstElement, String selectorString, String by) throws Exception {
+    public List < WebElement > findListOf(WebElement firstElement, Locator locator, By by) throws Exception {
         try {
-            return firstElement.findElements(getByValueBasedOnUserInput(selectorString, by));
+            return firstElement.findElements(getByValueBasedOnUserInput(locator, by));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
     @Override
-    public List < WebElement > findListOf(String firstESelectorString, String firstEBy, String selectorString, String by) throws Exception {
+    public List < WebElement > findListOf(Locator firstElocator, By firstEBy, Locator locator, By by) throws Exception {
         try {
-            return getElement(firstESelectorString, firstEBy).findElements(getByValueBasedOnUserInput(selectorString, by));
+            return getElement(firstElocator, firstEBy).findElements(getByValueBasedOnUserInput(locator, by));
         } catch (WebDriverException ex) {
             throw ex;
         }
@@ -101,10 +102,10 @@ public class Element extends Commands implements IElement {
     }
 
     @Override
-    public Boolean isAttributePresent(String selectorString, String by, String attribute) throws Exception {
+    public Boolean isAttributePresent(Locator locator, By by, String attribute) throws Exception {
         Boolean result = false;
         try {
-            String value = getElement(selectorString, by).getAttribute(attribute);
+            String value = getElement(locator, by).getAttribute(attribute);
             if (value != null) {
                 result = true;
             }
@@ -116,10 +117,10 @@ public class Element extends Commands implements IElement {
     }
 
     @Override
-    public Boolean isEnabled(String selectorString, String by) throws Exception {
+    public Boolean isEnabled(Locator locator, By by) throws Exception {
         try {
             Boolean result = false;
-            WebElement element = getElement(selectorString, by);
+            WebElement element = getElement(locator, by);
             if (element.isEnabled()) {
                 result = true;
             }

@@ -2,10 +2,12 @@ package seleniumHelper.interfaces;
 
 import org.openqa.selenium.WebElement;
 import seleniumHelper.enums.SelectType;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IActions {
 	
-public void moveTo(String selectorString, String by) throws Exception;
+public void moveTo(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is meant to simulate moving the mouse to the middle 
@@ -36,7 +38,7 @@ public void moveTo(String selectorString, String by) throws Exception;
 	 * WebElement to be found
 	 * @throws Exception
 	 */
-	public void mouseOver(String selectorString, String by) throws Exception;
+	public void mouseOver(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse hovering over 
@@ -73,7 +75,7 @@ public void moveTo(String selectorString, String by) throws Exception;
 	 * </p>
 	 * @throws Exception
 	 */
-	public void dragAndDrop(String firstElementSelectorString, String firstElementBy, String secondElementSelectorString, String secondElementBy, String stepWidth, String stepDelay, String dx, String dy) throws Exception;
+	public void dragAndDrop(Locator locator1, By by1, Locator locator2, By by2, String stepWidth, String stepDelay, String dx, String dy) throws Exception;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse dragging and dropping an element
@@ -96,7 +98,7 @@ public void moveTo(String selectorString, String by) throws Exception;
 	 * @param timeTowait - the total time to wait inbetween drags and drops.
 	 * @throws Exception
 	 */
-	public void dragAndDrop(String dragable, String dragableby,  String dropable, String dropableby, int timeTowait) throws Exception;
+	public void dragAndDrop(Locator dragLocator, By dragBy,  Locator dropLocator, By dropBy, int timeTowait) throws Exception;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse dragging and dropping an element
@@ -129,7 +131,7 @@ public void moveTo(String selectorString, String by) throws Exception;
 	 * WebElement to be found
 	 * @throws Exception
 	 */
-	public void scrollTo(String selectorString, String by) throws Exception;
+	public void scrollTo(Locator locator, By by) throws Exception;
 	
 	
 	/**
@@ -180,6 +182,6 @@ public void moveTo(String selectorString, String by) throws Exception;
 	 * @param selectType - the method by which the option is to be selected
 	 * @throws Exception
 	 */
-	public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType) throws Exception;
+	public void selectFromDropDown(Locator locator, By by, String value, SelectType selectType) throws Exception;
 
 }

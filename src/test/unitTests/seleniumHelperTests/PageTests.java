@@ -4,18 +4,20 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import common.utils.TestUtils;
+import common.utils.WebDriverListener;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
-
-import commonClasses.sharedUtils.TestUtils;
-import commonClasses.sharedUtils.WebDriverListener;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.SHelper;
 import seleniumHelper.SeleniumHelper;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.enums.Location;
 import seleniumHelper.enums.Via;
 import seleniumHelper.enums.Wait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 @Listeners(WebDriverListener.class)
 public class PageTests {
@@ -24,7 +26,7 @@ public class PageTests {
 	public void beforeScenario()
 	{
 		SHelper.set(new SeleniumHelper());
-        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/ExternalLibraries/chromedriver");
+        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
         LocalDriver.getDriver().get("http://www.google.com");
 	}
 	
@@ -32,10 +34,17 @@ public class PageTests {
 	@Test
 	public void verifyScrollToBottomOfPage() throws Exception
 	{
-		SHelper.get().enter().textInto("input[name='q']", "cssSelector", "Test");
+		Locator locator = new Locator("input[name='q']");
+		By by = new By("css");
+		Locator locator2 = new Locator("input[value='Google Search']");
+		By by2 = new By("css");
+		Locator locator3 = new Locator("table[id='nav']");
+		By by3 = new By("css");
+		SHelper.get().enter().textInto(locator, by, "Test");
 		Thread.sleep(400);
-		SHelper.get().click(Via.SELENIUM).on("input[value='Google Search']", "cssSelector");
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("table[id='nav']", "cssSelector", 30);
+		SHelper.get().click(Via.SELENIUM).on(locator2, by2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(30)).on(locator3, by3);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
@@ -92,10 +101,17 @@ public class PageTests {
 	@Test
 	public void verifyScrollToTopOfPage() throws Exception
 	{
-		SHelper.get().enter().textInto("input[name='q']", "cssSelector", "Test");
+		Locator locator = new Locator("input[name='q']");
+		By by = new By("css");
+		Locator locator2 = new Locator("input[value='Google Search']");
+		By by2 = new By("css");
+		Locator locator3 = new Locator("table[id='nav']");
+		By by3 = new By("css");
+		SHelper.get().enter().textInto(locator, by, "Test");
 		Thread.sleep(400);
-		SHelper.get().click(Via.SELENIUM).on("input[value='Google Search']", "cssSelector");
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("table[id='nav']", "cssSelector", 30);
+		SHelper.get().click(Via.SELENIUM).on(locator2, by2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+				new WaitBuilder().forAMaxTimeOf(30)).on(locator3, by3);
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();

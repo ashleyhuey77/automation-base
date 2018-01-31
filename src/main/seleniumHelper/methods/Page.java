@@ -2,15 +2,14 @@ package seleniumHelper.methods;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.enums.Location;
 import seleniumHelper.interfaces.IPage;
 
 public class Page extends Commands implements IPage {
 
-    @Override
+	@Override
     public void scrollTo(Location location) throws Exception {
         try {
             JavascriptExecutor js = ((JavascriptExecutor) LocalDriver.getDriver());

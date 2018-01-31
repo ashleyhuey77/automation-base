@@ -1,6 +1,8 @@
 package seleniumHelper.interfaces;
 
 import org.openqa.selenium.WebElement;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IClick {
 
@@ -20,7 +22,7 @@ public interface IClick {
 	 * WebElement to be found
 	 * @throws Exception
 	 */
-	public void on(String selectorString, String by) throws Exception;
+	public void on(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is meant to form the overall text command that specifies
@@ -57,7 +59,7 @@ public interface IClick {
      * more than one element with a similar selector
 	 * @throws Exception
 	 */
-	public void on(String selectorString, String by, String index) throws Exception;
+	public void on(Locator locator, By by, String index) throws Exception;
 	
 	/**
 	 * <p>This method is meant to form the overall text command that specifies
@@ -77,5 +79,5 @@ public interface IClick {
      * more than one element with a similar selector
 	 * @throws Exception
 	 */
-	public void on(String selectorString, String by, int index) throws Exception;
+	public void on(Locator locator, By by, int index) throws Exception;
 }

@@ -1,14 +1,14 @@
 package unitTests;
 
 import org.testng.annotations.Test;
-import commonClasses.sharedUtils.TestReport;
-import commonClasses.sharedUtils.builders.Environment;
-import commonClasses.sharedUtils.enums.ReportType;
-import commonClasses.sharedUtils.facades.HelperFacade;
-import commonClasses.sharedUtils.helpers.TestReportHelper;
-import commonClasses.sharedUtils.managers.LocalReport;
-import commonClasses.sharedUtils.managers.LocalTest;
-import commonClasses.sharedUtils.managers.LocalValidation;
+import common.utils.TestReport;
+import common.utils.builders.Environment;
+import common.utils.enums.ReportType;
+import common.utils.facades.HelperFacade;
+import common.utils.helpers.TestReportHelper;
+import common.utils.managers.LocalReport;
+import common.utils.managers.LocalTest;
+import common.utils.managers.LocalValidation;
 
 public class ReportingTests {
   @Test

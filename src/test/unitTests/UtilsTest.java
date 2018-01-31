@@ -2,9 +2,8 @@ package unitTests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import commonClasses.sharedUtils.TestUtils;
-import commonClasses.sharedUtils.helpers.SecurityHelper;
+import common.utils.TestUtils;
+import common.utils.helpers.SecurityHelper;
 
 //@Listeners(WebDriverListener.class)
 public class UtilsTest {

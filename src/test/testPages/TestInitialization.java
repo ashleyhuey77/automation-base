@@ -8,9 +8,8 @@ import java.util.Date;
 import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
-import commonClasses.sharedUtils.managers.LocalReport;
-import commonClasses.sharedUtils.managers.LocalTest;
+import common.utils.managers.LocalReport;
+import common.utils.managers.LocalTest;
 
 public class TestInitialization {
 

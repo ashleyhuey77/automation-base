@@ -1,6 +1,8 @@
 package seleniumHelper.interfaces;
 
 import org.openqa.selenium.WebElement;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IText {
 
@@ -25,7 +27,7 @@ public interface IText {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String getFrom(String selectorString, String by, String...attribute) throws Exception;
+	public String getFrom(Locator locator, By by, String...attribute) throws Exception;
 	
 	/**
 	 * <p>This method is meant to get the visible (i.e. not hidden by CSS) 
@@ -76,7 +78,7 @@ public interface IText {
 	 * @return Boolean
 	 * @throws Exception
 	 */
-	public Boolean isDisplayed(String selectorString, String by, String expectedText, String...attribute) throws Exception;
+	public Boolean isDisplayed(Locator locator, By by, String expectedText, String...attribute) throws Exception;
 	
 	/**
 	 * <p>This method is meant to verify whether or not a specific text displays in a webelement and

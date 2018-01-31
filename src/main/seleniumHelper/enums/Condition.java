@@ -1,5 +1,5 @@
 package seleniumHelper.enums;
 
 public enum Condition {
-	EQUALS, CONTAINS, TESTCONDITION
+	EQUAL, CONTAIN, INVALID_CONDITION
 }

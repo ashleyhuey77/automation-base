@@ -4,12 +4,13 @@ import org.openqa.selenium.WebElement;
 
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.interfaces.IText;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class PageText extends Commands implements IText {
-
-    @Override
-    public String getFrom(String selectorString, String by, String...attribute) throws Exception {
-        return getElement(selectorString, by).getText().trim();
+	@Override
+    public String getFrom(Locator locator, By by, String...attribute) throws Exception {
+        return getElement(locator, by).getText().trim();
     }
 
     @Override
@@ -18,9 +19,9 @@ public class PageText extends Commands implements IText {
     }
 
     @Override
-    public Boolean isDisplayed(String selectorString, String by, String expectedText, String...attribute) throws Exception {
+    public Boolean isDisplayed(Locator locator, By by, String expectedText, String...attribute) throws Exception {
         try {
-            String actualText = getElement(selectorString, by).getText();
+            String actualText = getElement(locator, by).getText();
             String modifiedActualText = actualText.replace("\r\n", " ");
             if (modifiedActualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
                 return true;

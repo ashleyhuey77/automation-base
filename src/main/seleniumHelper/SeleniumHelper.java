@@ -1,5 +1,6 @@
 package seleniumHelper;
 
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.enums.*;
 import seleniumHelper.interfaces.*;
 import seleniumHelper.methods.*;
@@ -182,26 +183,38 @@ public class SeleniumHelper {
 	 * @return IWait
 	 * @throws Exception
 	 */
-    public IWait waitMethod(Wait condition) throws Exception {
+    public IWait waitMethod(Wait condition, WaitBuilder builder) throws Exception {
         IWait iWait = null;
         switch (condition) {
-            case PRESENCE_OF_ELEMENT_OR_VALUE:
-                iWait = new PresentElement();
+            case PRESENCE_OF_ELEMENT:
+                iWait = new PresentElement(builder);
                 break;
-            case ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT:
-                iWait = new NonPresentElement();
+            case PRESENCE_OF_ELEMENT_TEXT:
+            		iWait = new PresentElementText(builder);
+            		break;
+            case ELEMENT_NOT_TO_BE_PRESENT:
+                iWait = new NonPresentElement(builder);
                 break;
-            case PRESENCE_OF_ATTRIBUTE_OR_VALUE:
-                iWait = new PresentAttribute();
+            case ELEMENT_TEXT_NOT_TO_BE_PRESENT:
+            		iWait = new NonPresentElementText(builder);
+            		break;
+            case PRESENCE_OF_ATTRIBUTE:
+                iWait = new PresentAttribute(builder);
                 break;
-            case ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT:
-                iWait = new NonPresentAttribute();
+            case PRESENCE_OF_ATTRIBUTE_TEXT:
+            		iWait = new PresentAttributeText(builder);
+            		break;
+            case ATTRIBUTE_NOT_TO_BE_PRESENT:
+                iWait = new NonPresentAttribute(builder);
                 break;
+            case ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT:
+            		iWait = new NonPresentAttributeText(builder);
+            		break;
             case CLICKABILITY_OF_ELEMENT:
-                iWait = new ClickableElement();
+                iWait = new ClickableElement(builder);
                 break;
             case COUNT_OF_ELEMENTS:
-                iWait = new ElementCount();
+                iWait = new ElementCount(builder);
                 break;
             default:
                 throw new Exception("Please select an appropriate action type from the action type enum.");

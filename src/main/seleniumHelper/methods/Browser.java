@@ -3,14 +3,15 @@ package seleniumHelper.methods;
 import java.util.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
-import commonClasses.sharedUtils.managers.LocalDriver;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
 import seleniumHelper.enums.BrowserObject;
 import seleniumHelper.interfaces.IBrowser;
+import seleniumHelper.valueObjects.Locator;
 
 public class Browser extends Commands implements IBrowser {
 
-    private void switchToDefaultContent() throws Exception {
+	private void switchToDefaultContent() throws Exception {
         try {
             LocalDriver.getDriver().switchTo().defaultContent();
         } catch (WebDriverException ex) {
@@ -39,10 +40,10 @@ public class Browser extends Commands implements IBrowser {
     }
 
     @Override
-    public void switchTo(BrowserObject object, String selectorString, String by) throws Exception {
+    public void switchTo(BrowserObject object, Locator locator, seleniumHelper.valueObjects.By by) throws Exception {
         try {
         	Thread.sleep(300);
-            LocalDriver.getDriver().switchTo().frame(getElement(selectorString, by));
+            LocalDriver.getDriver().switchTo().frame(getElement(locator, by));
         } catch (WebDriverException ex) {
             throw ex;
         }

@@ -1,10 +1,9 @@
 package seleniumHelper.interfaces;
 
 import java.util.List;
-
 import org.openqa.selenium.WebElement;
-
-import seleniumHelper.enums.Condition;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IWait {
 	
@@ -29,12 +28,9 @@ public interface IWait {
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
 	 * WebElement to be found
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param i - the total amount of time alotted to wait for the condition to return true
 	 * @throws Exception
 	 */
-	public void on(String selectorString, String by, int i, String... attribute) throws Exception;
+	public void on(Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is meant to wait for an element or attribute to be
@@ -56,34 +52,9 @@ public interface IWait {
 	 * {@code SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on(element, 30);} </br>
 	 * </p>
 	 * @param element - a webelement that is defined and found in the calling method
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param i - the total amount of time alotted to wait for the condition to return true
 	 * @throws Exception
 	 */
-	public void on(WebElement element, int i, String... attribute) throws Exception;
-
-	/**
-	 * <p>This method is meant to wait for the total number of elements to equal a certain
-	 * number.</p>
-	 * <p>This method waits up to the specified amount of time for the condition
-	 * to be true. If the condition returns true before the specified time, then
-	 * the test moves on to the next method. If the condition does not return true
-	 * by the specified time, the text fails.</p>
-	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
-	 * <p>Examples of the different types of sentences that can be formed are
-	 * as follows: </p>
-	 * {@code SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on("someSelectorString", id, 3, 30);}</br>
-	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
-	 * @param i - the total amount of time alotted to wait for the condition to return true
-	 * @param expectedTotalCount - the total number of elements expected to be displayed at one time
-	 * @throws Exception
-	 */
-	public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception;
+	public void on(WebElement element) throws Exception;
 	
 	/**
 	 * <p>This method is meant to wait for the total number of elements to equal a certain
@@ -100,64 +71,9 @@ public interface IWait {
 	 * {@code SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on(element, 3, 30);}</br>
 	 * </p>
 	 * @param element - a list of webelements that are defined and found in the calling method
-	 * @param i - the total amount of time alotted to wait for the condition to return true
-	 * @param expectedTotalCount - the total number of elements expected to be displayed at one time
+	 * @return TODO
 	 * @throws Exception
 	 */
-	public void on(List<WebElement> element, int expectedTotalCount, int i) throws Exception;
-	
-	/**
-	 * <p>This method is meant to wait for a value in a specific element or attribute
-	 * to equal or contain (based on the specified param) a particular text value.</p>
-	 * <p>This method waits up to the specified amount of time for the condition
-	 * to be true. If the condition returns true before the specified time, then
-	 * the test moves on to the next method. If the condition does not return true
-	 * by the specified time, the text fails.</p>
-	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
-	 * <p>Examples of the different types of sentences that can be formed are
-	 * as follows: </p>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on("someSelectorString", id, Condition.CONTAINS, "Some Text", 30);}</br>
-	 * {@code SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on("someSelectorString", id, Condition.EQUALS, "Some Text", 30);} </br>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on("someSelectorString", id, Condition.EQUALS, "display: none;", 30, "style");} </br>
-	 * {@code SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("someSelectorString", cssSelector, Condition.CONTAINS, "hide", 30, "class");} </br>
-	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param i - the total amount of time alotted to wait for the condition to return true
-	 * @param expectedValue - the text value that is expected to be displayed in the element or attribute
-	 * @param condition - the string comparison that will be executed (either contains or equals).
-	 * @throws Exception
-	 */
-	public void on(String selectorString, String by, Condition condition, String expectedValue, int i, String... attribute) throws Exception;
+	public void on(List<WebElement> element) throws Exception;
 
-	/**
-	 * <p>This method is meant to wait for a value in a specific element or attribute
-	 * to equal or contain (based on the specified param) a particular text value.</p>
-	 * <p>This method waits up to the specified amount of time for the condition
-	 * to be true. If the condition returns true before the specified time, then
-	 * the test moves on to the next method. If the condition does not return true
-	 * by the specified time, the text fails.</p>
-	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
-	 * <p>Examples of the different types of sentences that can be formed are
-	 * as follows: </p>
-	 * {@code WebElement element = SHelper.get().element().get("someSelectorString", id);}</br>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE).on(element, Condition.CONTAINS, "Some Text", 30);}</br>
-	 * {@code SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT).on(element, Condition.EQUALS, "Some Text", 30);} </br>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE).on(element, Condition.EQUALS, "display: none;", 30, "style");} </br>
-	 * {@code SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on(element, Condition.CONTAINS, "hide", 30, "class");} </br>
-	 * </p>
-	 * @param element - a webelement that is defined and found in the calling method
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param i - the total amount of time alotted to wait for the condition to return true
-	 * @param expectedValue - the text value that is expected to be displayed in the element or attribute
-	 * @param condition - the string comparison that will be executed (either contains or equals).
-	 * @throws Exception
-	 */
-	public void on(WebElement element, Condition condition, String expectedValue, int i, String... attribute) throws Exception;
 }

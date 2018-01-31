@@ -3,6 +3,8 @@ package seleniumHelper.interfaces;
 import org.openqa.selenium.WebElement;
 
 import seleniumHelper.enums.BrowserObject;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public interface IBrowser {
 	
@@ -37,7 +39,7 @@ public interface IBrowser {
 	 * WebElement to be found
 	 * @throws Exception
 	 */
-	public void switchTo(BrowserObject object, String selectorString, String by) throws Exception;
+	public void switchTo(BrowserObject object, Locator locator, By by) throws Exception;
 	
 	/**
 	 * <p>This method is meant to switch to a browser object. This method is primarily used

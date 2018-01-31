@@ -10,14 +10,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import commonClasses.sharedUtils.TestUtils;
-import commonClasses.sharedUtils.WebDriverListener;
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.SHelper;
+import common.utils.TestUtils;
+import common.utils.WebDriverListener;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
 import seleniumHelper.SeleniumHelper;
 import seleniumHelper.enums.BrowserObject;
 import seleniumHelper.enums.Via;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 @Listeners(WebDriverListener.class)
 public class BrowserTests {
@@ -26,7 +27,7 @@ public class BrowserTests {
 	public void beforeScenario()
 	{
 		SHelper.set(new SeleniumHelper());
-        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/ExternalLibraries/chromedriver");
+        System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
         LocalDriver.getDriver().get("http://www.google.com");
 	}
 	
@@ -71,26 +72,32 @@ public class BrowserTests {
 	public void verifySwitchToIFrame() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().browser().switchTo(BrowserObject.FRAME, "Test", "id");
+		SHelper.get().browser().switchTo(BrowserObject.FRAME, locator, by);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifySwitchToIFrame_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
+		Locator locator = new Locator("NotHere");
+		By by = new By("id");
 		Thread.sleep(300);
 		
-		SHelper.get().browser().switchTo(BrowserObject.FRAME,"NotHere", "id");
+		SHelper.get().browser().switchTo(BrowserObject.FRAME,locator, by);
 	}
 	
 	@Test
 	public void verifySwitchToIFrame_PredefinedElement() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		
 		SHelper.get().browser().switchTo(BrowserObject.FRAME, test);
 	}
@@ -99,8 +106,10 @@ public class BrowserTests {
 	public void verifySwitchToIFrame_PredefinedElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get("Test", "id");
+		WebElement test = SHelper.get().element().get(locator, by);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -221,8 +230,10 @@ public class BrowserTests {
 				"    alert(\"Hello! I am an alert box!\");" + 
 				"}" + 
 				"</script>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
 		Thread.sleep(700);
-		SHelper.get().click(Via.SELENIUM).on("Test", "id");
+		SHelper.get().click(Via.SELENIUM).on(locator, by);
 		Thread.sleep(500);
 		SHelper.get().browser().switchTo(BrowserObject.ALERT);
 	}

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import commonClasses.sharedUtils.TestUtils;
+import common.utils.TestUtils;
 import reporting.report.dataObjects.ReportSettings;
 import reporting.report.dataObjects.TestContent;
 import reporting.report.dataObjects.TestStepContent;

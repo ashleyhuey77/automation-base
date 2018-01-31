@@ -8,231 +8,72 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.errorprone.annotations.DoNotCall;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
+import common.utils.managers.LocalDriver;
 import seleniumHelper.abstracts.Commands;
-import seleniumHelper.enums.Condition;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.interfaces.IWait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class PresentElement extends Commands implements IWait {
 
-    @Override
-    public void on(String selectorString, String by, int i, String...attribute) throws Exception {
+	protected int time = 0;
+	
+	public PresentElement(WaitBuilder build) throws Exception {
+		LocalWaitBuilder builder = new LocalWaitBuilder(build);
+		this.time = builder.time;
+	}
+
+	@Override
+    public void on(Locator locator, By by) throws Exception {
         try {
-            new WebDriverWait(LocalDriver.getDriver(), i).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(selectorString, by)));
+        		verifyMaxWaitTimeIsNotZero(time);
+        		new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(locator, by)));
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
     @Override
-    public void on(WebElement element, int i, String...attribute) throws Exception {
+    public void on(WebElement element) throws Exception {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                    Boolean result = false;
-                    try {
-                        if (element.isDisplayed()) {
-                            result = true;
+        		verifyMaxWaitTimeIsNotZero(time);
+                WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+    
+                wait.until(new ExpectedCondition < Boolean > () {
+                    public Boolean apply(WebDriver driver) {
+                        Boolean result = false;
+                        try {
+                            if (element.isDisplayed()) {
+                                result = true;
+                                return result;
+                            }
+                        } catch (StaleElementReferenceException ex) {
                             return result;
                         }
-                    } catch (StaleElementReferenceException ex) {
                         return result;
-                    }
-                    return result;
-                };
-            });
+                    };
+                });
         } catch (WebDriverException ex) {
             throw ex;
         }
     }
 
-    @Override
-    public void on(String selectorString, String by, Condition condition, String expectedValue, int i,
-        String...attribute) throws Exception {
-        try {
-            switch (condition) {
-                case EQUALS:
-                    waitForElementToEqualText(selectorString, by, expectedValue, i);
-                    break;
-                case CONTAINS:
-                    waitForElementToContainText(selectorString, by, expectedValue, i);
-                    break;
-                default:
-                    throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
+	@Override
+	public void on(List<WebElement> element) throws Exception {
 
-    }
-
-    @Override
-    public void on(WebElement element, Condition condition, String expectedValue, int i, String...attribute) throws Exception {
-        try {
-            switch (condition) {
-                case EQUALS:
-                    waitForElementToEqualText(element, expectedValue, i);
-                    break;
-                case CONTAINS:
-                    waitForElementToContainText(element, expectedValue, i);
-                    break;
-                default:
-                    throw new Exception("Please select a valid condition. Unable to execute because condition is not valid.");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    /**<summary> method to wait for a particular text to be present in a web element
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  				  WebElement to be found
-     * @param expectedText the text that is expected to be in the webelement
-     * @param i the total amount of time allotted to wait for the condition to return true
-     * @return void
-     */
-    private void waitForElementToContainText(String selectorString, String by, String expectedText, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                	try {
-	                    WebElement elementToBeTested = getElement(selectorString, by);
-	                    String actualText = elementToBeTested.getText();
-	                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-	                        return true;
-	                    } else {
-	                        return false;
-	                    }
-					} catch (Exception e) {
-						return false;
-					}
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**<summary> method to wait for a particular text to be present in a web element
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  				  WebElement to be found
-     * @param expectedText the text that is expected to be in the webelement
-     * @param i the total amount of time allotted to wait for the condition to return true
-     * @return void
-     */
-    private void waitForElementToEqualText(String selectorString, String by, String expectedText, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                	try {
-	                    WebElement elementToBeTested = getElement(selectorString, by);
-	                    String actualText = elementToBeTested.getText();
-	                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-	                        return true;
-	                    } else {
-	                        return false;
-	                    }
-                	} catch (Exception e) {
-                		return false;
-                	}
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**<summary> method to wait for a particular text to be present in a web element
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  				  WebElement to be found
-     * @param expectedText the text that is expected to be in the webelement
-     * @param i the total amount of time allotted to wait for the condition to return true
-     * @return void
-     */
-    private void waitForElementToContainText(WebElement element, String expectedText, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                	try {
-	                    WebElement elementToBeTested = element;
-	                    String actualText = elementToBeTested.getText();
-	                    if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-	                        return true;
-	                    } else {
-	                        return false;
-	                    }
-                	} catch (Exception e) {
-                		return false;
-                	}
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    /**<summary> method to wait for a particular text to be present in a web element
-     * </summary>
-		@param selectorString the webelement selector string necessary for the webelement to be found
-		@param by the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-  				  WebElement to be found
-     * @param expectedText the text that is expected to be in the webelement
-     * @param i the total amount of time allotted to wait for the condition to return true
-     * @return void
-     */
-    private void waitForElementToEqualText(WebElement element, String expectedText, int i) throws Exception {
-        try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-            wait.until(new ExpectedCondition < Boolean > () {
-                public Boolean apply(WebDriver driver) {
-                	try {
-	                    WebElement elementToBeTested = element;
-	                    String actualText = elementToBeTested.getText();
-	                    if (actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-	                        return true;
-	                    } else {
-	                        return false;
-	                    }
-                	} catch (Exception e) {
-                		return false;
-                	}
-                }
-            });
-        } catch (WebDriverException ex) {
-            throw ex;
-        }
-    }
-
-    @Override
-    @DoNotCall
-    public void on(String selectorString, String by, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @DoNotCall
-    public void on(List < WebElement > element, int expectedTotalCount, int i) throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
+	}
+	
+	public static class LocalWaitBuilder extends Commands {
+		private int time;
+		
+		public LocalWaitBuilder(WaitBuilder base) throws Exception {
+			this.time = base.baseTime;
+        		failIfValueIsNotNull(base.baseValue);
+        		failIfConditionIsNotNull(base.baseCondition);
+        		failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
+        		failIfAttributeIsNotNull(base.baseAttribute);
+		}
+		
+	}
 }

@@ -1,10 +1,9 @@
 package testPages;
 
 import org.openqa.selenium.WebDriverException;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.LocalReport;
-import commonClasses.sharedUtils.templates.ApplicationTemplate;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.LocalReport;
+import common.utils.templates.ApplicationTemplate;
 
 public class NewsAppsApplication extends ApplicationTemplate {
   

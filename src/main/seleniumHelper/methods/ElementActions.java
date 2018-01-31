@@ -8,21 +8,23 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-
-import commonClasses.sharedUtils.managers.LocalDriver;
-import commonClasses.sharedUtils.managers.SHelper;
+import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
 import seleniumHelper.abstracts.Commands;
+import seleniumHelper.builders.WaitBuilder;
 import seleniumHelper.enums.SelectType;
+import seleniumHelper.enums.Wait;
 import seleniumHelper.interfaces.IActions;
-import seleniumHelper.interfaces.IWait;
+import seleniumHelper.valueObjects.By;
+import seleniumHelper.valueObjects.Locator;
 
 public class ElementActions extends Commands implements IActions {
 
-    @Override
-    public void moveTo(String selectorString, String by) throws Exception {
+	@Override
+    public void moveTo(Locator locator, By by) throws Exception {
         try {
             Actions actions = new Actions(LocalDriver.getDriver());
-            actions.moveToElement(getElement(selectorString, by)).perform();
+            actions.moveToElement(getElement(locator, by)).perform();
         } catch (WebDriverException ex) {
             throw ex;
         }
@@ -39,10 +41,10 @@ public class ElementActions extends Commands implements IActions {
     }
 
     @Override
-    public void mouseOver(String selectorString, String by) throws Exception {
+    public void mouseOver(Locator locator, By by) throws Exception {
         try {
             Actions actions = new Actions(LocalDriver.getDriver());
-            actions.clickAndHold(getElement(selectorString, by)).perform();
+            actions.clickAndHold(getElement(locator, by)).perform();
         } catch (WebDriverException ex) {
             throw ex;
         }
@@ -59,7 +61,7 @@ public class ElementActions extends Commands implements IActions {
     }
 
     @Override
-    public void dragAndDrop(WebElement firstElement, WebElement secondElement, String firstElementSelectorString,
+    public void dragAndDrop(WebElement firstElement, WebElement secondElement, String firstElementlocator,
         String index, String stepWidth, String stepDelay, String dx, String dy) throws Exception {
         try {
             WebElement LocatorFrom = firstElement;
@@ -78,9 +80,9 @@ public class ElementActions extends Commands implements IActions {
                 ArrayList < String > values = dXAnddYValues(xto, yto, xFrom, yFrom, LocatorTo.getSize().height,
                     LocatorFrom.getSize().height, difference);
 
-                executeDragNDrop(firstElementSelectorString, values.get(0), values.get(1), stepWidth, stepDelay, index);
+                executeDragNDrop(firstElementlocator, values.get(0), values.get(1), stepWidth, stepDelay, index);
             } else {
-                executeDragNDrop(firstElementSelectorString, dx, dy, stepWidth, stepDelay, index);
+                executeDragNDrop(firstElementlocator, dx, dy, stepWidth, stepDelay, index);
             }
         } catch (Exception ex) {
             throw ex;
@@ -88,11 +90,11 @@ public class ElementActions extends Commands implements IActions {
     }
 
     @Override
-    public void dragAndDrop(String firstElementSelectorString, String firstElementBy,
-        String secondElementSelectorString, String secondElementBy, String stepWidth, String stepDelay, String dx,
+    public void dragAndDrop(Locator firstElementlocator, By firstElementBy,
+        Locator secondElementlocator, By secondElementBy, String stepWidth, String stepDelay, String dx,
         String dy) throws Exception {
         try {
-            WebElement LocatorFrom = getElement(firstElementSelectorString, firstElementBy);
+            WebElement LocatorFrom = getElement(firstElementlocator, firstElementBy);
             int xFrom = LocatorFrom.getLocation().x;
             int yFrom = LocatorFrom.getLocation().y;
             int[] difference = {
@@ -102,15 +104,15 @@ public class ElementActions extends Commands implements IActions {
             addDragNDropScriptsToPage();
 
             if (dx == null && dy == null) {
-                WebElement LocatorTo = getElement(secondElementSelectorString, secondElementBy);
+                WebElement LocatorTo = getElement(secondElementlocator, secondElementBy);
                 int xto = LocatorTo.getLocation().x;
                 int yto = LocatorTo.getLocation().y;
                 ArrayList < String > values = dXAnddYValues(xto, yto, xFrom, yFrom, LocatorTo.getSize().height,
                     LocatorFrom.getSize().height, difference);
 
-                executeDragNDrop(firstElementSelectorString, values.get(0), values.get(1), stepWidth, stepDelay);
+                executeDragNDrop(firstElementlocator.value(), values.get(0), values.get(1), stepWidth, stepDelay);
             } else {
-                executeDragNDrop(firstElementSelectorString, dx, dy, stepWidth, stepDelay);
+                executeDragNDrop(firstElementlocator.value(), dx, dy, stepWidth, stepDelay);
             }
         } catch (Exception ex) {
             throw ex;
@@ -118,22 +120,20 @@ public class ElementActions extends Commands implements IActions {
     }
 
     @Override
-    public void dragAndDrop(String dragable, String dragableby, String dropable, String dropableby, int timeTowait)
+    public void dragAndDrop(Locator dragable, By dragableby, Locator dropable, By dropableby, int timeTowait)
     throws Exception {
 
         try {
             WebElement dragElement = null;
             WebElement dropElement = null;
 
-            IWait wait = new ClickableElement();
-
-            wait.on(dragable, dragableby, timeTowait);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragable, dragableby);
             // List<WebElement> locate = getElements(dragable, dragableby);
             List < WebElement > locate = SHelper.get().element().getListOf(dragable, dragableby);
             dragElement = locate.get(0);
-            wait.on(dragable, dragableby, timeTowait);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(dragable, dragableby);
             dragElement = locate.get(0);
-            wait.on(dragable, dragableby, 20);
+            SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragable, dragableby);
             // List<WebElement> locateDroppable =
             // getElements(dropable,dropableby);
             List < WebElement > locateDroppable = SHelper.get().element().getListOf(dropable, dropableby);
@@ -154,9 +154,9 @@ public class ElementActions extends Commands implements IActions {
     }
 
     @Override
-    public void scrollTo(String selectorString, String by) throws Exception {
+    public void scrollTo(Locator locator, By by) throws Exception {
         try {
-            WebElement element = getElement(selectorString, by);
+            WebElement element = getElement(locator, by);
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].scrollIntoView();", element);
         } catch (WebDriverException ex) {
             throw ex;
@@ -304,17 +304,17 @@ public class ElementActions extends Commands implements IActions {
     }
     /**
      * <summary> method for selecting from dropdown</summary>
-     * @param selectorString- the DOM element from dropdown
+     * @param locator- the DOM element from dropdown
      * @param value - the value to select from dropdown
      * @param by - the css selector
      * @param selectType - the selection type eithe by value, by visible text or by index
      * @author OJ
      */
     @Override
-    public void selectFromDropDown(String selectorString, String by, String value, SelectType selectType)
+    public void selectFromDropDown(Locator locator, By by, String value, SelectType selectType)
     throws Exception {
         try {
-            Select sel = new Select(getElement(selectorString, by));
+            Select sel = new Select(getElement(locator, by));
             selectOption(sel, value, selectType);
         } catch (Exception e) {
             throw e;
@@ -353,11 +353,9 @@ public void dragAndDrop(WebElement elementToBeDragged, WebElement elementToBeDro
         WebElement dragElement = null;
         WebElement dropElement = null;
 
-        IWait wait = new ClickableElement();
-
-        wait.on(elementToBeDragged, timeTowait);
+        SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(elementToBeDragged);
         dragElement = elementToBeDragged;
-        wait.on(elementToBeDragged, 20);
+        SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(elementToBeDragged);
         Actions act = new Actions(LocalDriver.getDriver());
         dropElement = elementToBeDropped;
         act.clickAndHold(dragElement).build().perform();
