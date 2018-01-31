@@ -24,11 +24,9 @@ public class DropdownHelper {
 					.value(builder.option)
 					.verifyValueIsNotNull(true));
 			if (builder.clickElement != null &&
-					builder.searchElement != null &&
 						builder.optionsElement != null) {
 				selectTestElementFromNonDropdown(builder);
 			} else if (builder.clickWebElement != null &&
-					   		builder.searchWebElement != null &&
 					   			builder.optionsElement != null) {
 				selectWebElementFromNonDropdown(builder);
 			} else {
@@ -73,9 +71,11 @@ public class DropdownHelper {
             		new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle()))
             				.clickOn(new TestElement(builder.clickElement.locator, builder.clickElement.by)));
                 Thread.sleep(600);
-                new EnterTextHelper(new EnterTextBuilder(new ReportInfo(builder.info.elementTitle()))
-                		.enterText(builder.option)
-                		.into(new TestElement(builder.searchElement.locator, builder.searchElement.by)));
+                if (builder.searchElement != null) {
+                    new EnterTextHelper(new EnterTextBuilder(new ReportInfo(builder.info.elementTitle()))
+                    		.enterText(builder.option)
+                    		.into(new TestElement(builder.searchElement.locator, builder.searchElement.by)));
+                }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
                 		new WaitBuilder().forAMaxTimeOf(30)).on(builder.optionsElement.locator, builder.optionsElement.by);
                 Thread.sleep(900);
@@ -122,9 +122,11 @@ public class DropdownHelper {
             if (SHelper.get().element().isDisplayed(builder.clickWebElement, 10)) {
                 SHelper.get().click(Via.SELENIUM).on(builder.clickWebElement);
                 Thread.sleep(600);
-                new EnterTextHelper(new EnterTextBuilder(new ReportInfo(builder.info.elementTitle()))
-                		.enterText(builder.option)
-                		.into(builder.searchWebElement));
+                if (builder.searchWebElement != null) {
+                    new EnterTextHelper(new EnterTextBuilder(new ReportInfo(builder.info.elementTitle()))
+                    		.enterText(builder.option)
+                    		.into(builder.searchWebElement));
+                }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
                 		new WaitBuilder().forAMaxTimeOf(10)).on(builder.optionsElement.locator, builder.optionsElement.by);
                 Thread.sleep(900);

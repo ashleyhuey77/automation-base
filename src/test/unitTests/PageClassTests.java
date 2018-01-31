@@ -160,8 +160,7 @@ public class PageClassTests extends TestInitialization {
 			 String inputString = baos.toString();
 			 String newInputString = inputString.replaceAll(" ", "");
 			 
-			Assert.assertTrue(newInputString.trim().contains("Step:verifyTheActualValueContainsTheExpectedValuehaspassed.TestissetcorrectlyinTest"));
-			Assert.assertTrue(newInputString.trim().contains("ErrorMessage:Testreturnednull.Variablewasnotexpectedtoreturnnull."));
+			Assert.assertTrue(newInputString.trim().contains("verifyTheActualValueContainsTheExpectedValuehaspassed.TestissetcorrectlyinTest"));
 			ps.close();
 			baos.close();
 			    
@@ -371,7 +370,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: removeOrChangeUnwantedCharacter"));
+			Assert.assertTrue(m.trim().contains("Object must not be null"));
 		}
 	}
 	
@@ -603,7 +602,7 @@ public class PageClassTests extends TestInitialization {
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
-	    Assert.assertTrue(inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
+	    Assert.assertTrue(inputString.trim().contains("enterTextIntoTestElement has passed. Test Element has been entered successfully"));
 	
 	    closeByteStream(ps, baos);
 	}
@@ -628,7 +627,7 @@ public class PageClassTests extends TestInitialization {
 		String inputString = getByteStreamMessage(baos, old);
 		String newIS = inputString.replaceAll(" ", "");
     
-		Assert.assertTrue(newIS.trim().contains("Step:clickSomeElementhaspassed.TestElementclickedsuccessfully."));
+		Assert.assertTrue(newIS.trim().contains("Step:clickSomeTestElementhaspassed.TestElementclickedsuccessfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -648,7 +647,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("Test Element does not display as expected. Unable to enter text in this field."));
 		}
 	}
 	
@@ -673,7 +672,7 @@ public class PageClassTests extends TestInitialization {
 		
 	    String inputString = getByteStreamMessage(baos, old);
 	    
-	    Assert.assertTrue(inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
+	    Assert.assertTrue(inputString.trim().contains("enterTextIntoWebElement has passed. Test Element has been entered successfully"));
 	
 	    closeByteStream(ps, baos);
 	}
@@ -697,7 +696,7 @@ public class PageClassTests extends TestInitialization {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: enterAvalueIntoATextField has passed. Test Element has been entered successfully"));
+		Assert.assertTrue(inputString.trim().contains("enterTextIntoWebElement has passed. Test Element has been entered successfully"));
 
 		closeByteStream(ps, baos);
 	}
@@ -722,7 +721,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: enterAvalueIntoATextField"));
+			Assert.assertTrue(m.trim().contains("enterTextIntoWebElement"));
 		}
 	}
 	
@@ -744,7 +743,7 @@ public class PageClassTests extends TestInitialization {
 	
 		String inputString = getByteStreamMessage(baos, old);
     
-		Assert.assertTrue(inputString.trim().contains("Step: <init> has passed. Test Element clicked successfully."));
+		Assert.assertTrue(inputString.trim().contains("clickSomeTestElement has passed. Test Element clicked successfully."));
 
 		closeByteStream(ps, baos);
 	}
@@ -766,7 +765,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: clickSomeElement"));
+			Assert.assertTrue(m.trim().contains("Element is not on the page. Unable to click the Test Element"));
 		}
 	}
 	
@@ -787,7 +786,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: clickSomeElement"));
+			Assert.assertTrue(m.trim().contains("StepName: clickSomeTestElement"));
 		}
 	}
 	
@@ -869,8 +868,8 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
-			Assert.assertTrue(m.trim().contains("ErrorMessage: Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
+			Assert.assertTrue(m.trim().contains("StepName: verifySomeWebElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("Test Element does not contain the correct text. Expected text: Not correct. Actual text: Testing 123"));
 		}
 	}
 	
@@ -892,7 +891,7 @@ public class PageClassTests extends TestInitialization {
 		catch (Exception ex)
 		{
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementContainsTheExpectedText"));
+			Assert.assertTrue(m.trim().contains("The Expected Text was not provided. Please add the appropriate method to the chain."));
 		}
 	}
 	

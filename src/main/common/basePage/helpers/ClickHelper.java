@@ -1,5 +1,6 @@
 package common.basePage.helpers;
 
+import org.openqa.selenium.WebElement;
 import common.basePage.valueObjects.ReportInfo;
 import common.utils.NullReportTool;
 import common.utils.NullReportTool.NullReportBuilder;
@@ -38,16 +39,38 @@ public class ClickHelper {
      * @throws Exception 
      */
 		public ClickHelper(ClickBuilder builder) throws Exception {
-				new NullReportTool(new NullReportBuilder(new ReportInfo("TestElement"))
-						.object(builder.element)
-						.verifyObjectIsNotNull(true));
-	           clickSomeElement(builder);
+				if (builder.element != null) {
+					clickSomeTestElement(builder);
+				} else if (builder.webElement != null) {
+					clickSomeWebElement(builder);
+				} else {
+					new NullReportTool(new NullReportBuilder(new ReportInfo("TestElement"))
+							.object(builder.element)
+							.verifyObjectIsNotNull(true));
+					new NullReportTool(new NullReportBuilder(new ReportInfo("WebElement"))
+							.object(builder.webElement)
+							.verifyObjectIsNotNull(true));
+				}
 		}
 		
-		private void clickSomeElement(ClickBuilder builder) throws Exception {
+		private void clickSomeTestElement(ClickBuilder builder) throws Exception {
 			try {
 				if (SHelper.get().element().isDisplayed(builder.element.locator, builder.element.by, 5)) {
 	                tryAllClicks(builder.element.locator, builder.element.by, builder.via, builder.index);
+	                LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " clicked successfully.");
+	            } else {
+	                throw LocalValidation.getValidations().assertionFailed("Element is not on the page. Unable to click the " 
+	                		+ builder.info.elementTitle());
+	            }
+			} catch (Exception e) {
+				throw LocalReport.getReport().reportException(e);
+			}
+		}
+		
+		private void clickSomeWebElement(ClickBuilder builder) throws Exception {
+			try {
+				if (SHelper.get().element().isDisplayed(builder.webElement, 5)) {
+	                SHelper.get().click(builder.via).on(builder.webElement);
 	                LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " clicked successfully.");
 	            } else {
 	                throw LocalValidation.getValidations().assertionFailed("Element is not on the page. Unable to click the " 
@@ -99,6 +122,7 @@ public class ClickHelper {
 			
 			//optional params
 			private TestElement element;
+			private WebElement webElement;
 			private Via via;
 			private int index;
 			
@@ -108,6 +132,11 @@ public class ClickHelper {
 			
 			public ClickBuilder clickOn(TestElement element) {
 				this.element = element;
+				return this;
+			}
+			
+			public ClickBuilder clickOn(WebElement element) {
+				this.webElement = element;
 				return this;
 			}
 			
