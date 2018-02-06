@@ -214,41 +214,6 @@ public abstract class PageHelper {
             throw LocalReport.getReport().reportException(ex);
         }
     }
-    
-    /**
-     * <p>Method to verify a field is blank utilizing the javascript function of
-     * getting a value from a text box webelement.</p>
-     * <p>This method is typically only used for validating a textbox or textarea 
-     * is blank and void of text. It is not typcially used to verify other elements
-     * such as divs or table rows/columns, etc. are blank.</p>
-     * @param locator - the webelement locator string for the field that
-     * will be evaluated
-     * @param by - the type of locator being used (i.e id, name, csslocator,
-     * xpath, etc.)
-     * @param webElementIndex - the index of the element if there are more than one elements
-     * with the same locator
-     * @param elementBeingTested - the name of the element being tested. This is used for
-     * reporting so that when it is called the report will reflect an
-     * element that is unique to the method
-     * @throws Exception
-     */
-    protected void verifyTextFieldIsBlank(Locator locator, By by, String webElementIndex,
-        String elementBeingTested) throws Exception {
-        try {
-            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by,
-                webElementIndex);
-            if (TestUtils.isNullOrBlank(actualValueInTextBox)) {
-                LocalValidation.getValidations().assertionPass(elementBeingTested + " is blank as expected.");
-            } else {
-                throw LocalValidation.getValidations()
-                    .assertionFailed(elementBeingTested +
-                        " should be blank but is retaining a value instead. The value being retained is " +
-                        actualValueInTextBox);
-            }
-        } catch (Exception ex) {
-            throw LocalReport.getReport().reportException(ex);
-        }
-    }
 
     /**
      * <p> Method to get the current date and split it into a string array
