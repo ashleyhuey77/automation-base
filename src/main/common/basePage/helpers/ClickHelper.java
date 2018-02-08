@@ -128,6 +128,9 @@ public class ClickHelper {
 			
 			public ClickBuilder(ReportInfo info) {
 				this.info = info;
+				if (this.via == null) {
+					this.via = Via.SELENIUM;
+				}
 			}
 			
 			public ClickBuilder clickOn(TestElement element) {
@@ -141,11 +144,7 @@ public class ClickHelper {
 			}
 			
 			public ClickBuilder via(Via via) {
-				if (via == null) {
-					this.via = Via.SELENIUM;
-				} else {
-					this.via = via;
-				}
+				this.via = via;
 				return this;
 			}
 			

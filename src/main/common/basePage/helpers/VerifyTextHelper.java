@@ -200,6 +200,10 @@ public class VerifyTextHelper {
 			if (this.removeAllSpaces == null) {
 				this.removeAllSpaces = false;
 			}
+			
+			if(this.via == null) {
+				this.via = Via.SELENIUM;
+			}
 		}
 		
 		public VerifyTextBuilder verify(TestElement element) {
@@ -227,11 +231,7 @@ public class VerifyTextHelper {
 		}
 		
 		public VerifyTextBuilder via(Via via) {
-			if(via == null) {
-				this.via = Via.SELENIUM;
-			} else {
-				this.via = via;
-			}
+			this.via = via;
 			return this;
 		}
 		
