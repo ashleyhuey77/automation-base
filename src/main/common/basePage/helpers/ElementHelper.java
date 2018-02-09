@@ -17,7 +17,7 @@ public class ElementHelper {
 	public ElementHelper(List<WebElement> elementList, String elementText) throws Exception {
 		try {
         		element = elementList.stream()
-        		          .filter(d -> d.getText().contentEquals(elementText))
+        		          .filter(d -> d.getText().equalsIgnoreCase(elementText))
         		          .findFirst()
         		          .get();
 		} catch (Exception e) {

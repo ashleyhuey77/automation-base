@@ -63,20 +63,12 @@ public class OptionSelector {
     protected void findOptionThatIsEqualToOptionInAList(OptionSelectorBuilder builder) throws Exception {
         try {
             List < WebElement > webElements = SHelper.get().element().getListOf(builder.element.locator,  builder.element.by);
-            String value = null;
-            for (int i = 0; i < webElements.size(); i++) {
-                String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(webElements.get(i));
-                if (actualOption.toLowerCase().trim().equals(builder.option.toLowerCase().trim())) {
-                		new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
-                				.clickOn(new TestElement(builder.element.locator, builder.element.by))
-                				.withAnIndexOf(i));
-                    value = actualOption;
-                    LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");
-                    break;
-                }
-            }
-
-            if (value == null) {
+            WebElement element = new ElementHelper(webElements, builder.option).get();
+            if (element != null) {
+                	new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
+            				.clickOn(element));
+                LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");
+            } else {
                 throw LocalValidation.getValidations().assertionFailed(builder.option + " is not found in the "
                 		+ "list of available options. Unable to select the expected option.");
             }
