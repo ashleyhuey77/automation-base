@@ -90,13 +90,18 @@ public class PresentAttributeText extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = element;
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    	Boolean result = false;
+                		try {
+                        WebElement elementToBeTested = element;
+                        String actualValue = elementToBeTested.getAttribute(attribute);
+                        System.out.println("Actual attribute text is " + actualValue + ". Expected attribute text is " + expectedValue);
+                        if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
+                            result = true;
+                        }
+                		} catch (Exception e) {
+                			result = false;
+                		}
+                		return result;
                 }
             });
         } catch (WebDriverException ex) {
@@ -123,13 +128,18 @@ public class PresentAttributeText extends Commands implements IWait {
 
             wait.until(new ExpectedCondition < Boolean > () {
                 public Boolean apply(WebDriver driver) {
-                    WebElement elementToBeTested = getElement(locator, by);
-                    String actualValue = elementToBeTested.getAttribute(attribute);
-                    if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                		Boolean result = false;
+                		try {
+                        WebElement elementToBeTested = getElement(locator, by);
+                        String actualValue = elementToBeTested.getAttribute(attribute);
+                        System.out.println("Actual attribute text is " + actualValue + ". Expected attribute text is " + expectedValue);
+                        if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
+                            result = true;
+                        }
+                		} catch (Exception e) {
+                			result = false;
+                		}
+                		return result;
                 }
             });
         } catch (WebDriverException ex) {
@@ -157,7 +167,8 @@ public class PresentAttributeText extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = getElement(locator, by);
                     String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning false if attribute is null.
+                    System.out.println("Element text that is displayed is " + actualValue);
+                    System.out.println("Expected text is " + expectedValue);
                     if (actualValue != null) {
                         if (actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
                             return true;
@@ -195,7 +206,8 @@ public class PresentAttributeText extends Commands implements IWait {
                 public Boolean apply(WebDriver driver) {
                     WebElement elementToBeTested = element;
                     String actualValue = elementToBeTested.getAttribute(attribute);
-                    //returning false if attribute is null.
+                    System.out.println("Element text that is displayed is " + actualValue);
+                    System.out.println("Expected text is " + expectedValue);
                     if (actualValue != null) {
                         if (actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
                             return true;

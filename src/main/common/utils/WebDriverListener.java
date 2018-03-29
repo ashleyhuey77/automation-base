@@ -39,9 +39,7 @@ public class WebDriverListener implements IInvokedMethodListener {
         WebDriver driver = LocalDriver.getDriver();
         if (method.toString().toLowerCase().contains("afterscenario")) {
             try {
-                if (driver != null) {
-                    driver.quit();
-                }
+                driver.quit();
             } catch (Exception e) {
                 driver.quit();
                 throw e;

@@ -515,6 +515,42 @@ public abstract class PageHelper {
             };
         });
     }
+    
+    /**
+     * <p>This method refreshes the page and waits for an element to appear on the page.
+     * The wait is explicit and will wait up to the specified amount of time for the 
+     * condition to be met (i.e the element to be displayed after the page is refreshed). 
+     * If the element is not found in the specified amount of time, the test will fail.
+     * If the element is found sooner than the specified time, the test will not longer wait
+     * and will continue executing the next method in the chain.</p>
+     * @param locatorString - the webelement locator string necessary for the webelement to
+     * be found
+     * @param by - the type of locator being used (i.e id, name, csslocator,
+     * xpath, etc.). Necessary for the WebElement to be found
+     * @param i - the total amount of time the test should wait for the element to be found.
+     */
+    public void refreshPageAndWaitForElementToDisplay(WebElement element, int i) {
+        WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+
+        wait.until(new ExpectedCondition < Boolean > () {
+            public Boolean apply(WebDriver driver) {
+                Boolean result = false;
+                try {
+                    SHelper.get().page().refresh();
+                    SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+                    		new WaitBuilder().forAMaxTimeOf(15)).on(element);
+                    if (SHelper.get().element().isDisplayed(element, 10)) {
+                        result = true;
+                    } else {
+                        result = false;
+                    }
+				} catch (Exception e) {
+					result = false;
+				}
+				return result;
+            };
+        });
+    }
 
     /**
      * <p>Method to extract digits from strings</p>

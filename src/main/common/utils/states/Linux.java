@@ -8,7 +8,7 @@ public class Linux implements State {
     @Override
     public void doAction() {
         try {
-            System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/lchromedriver");
+            System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/chromedriver");
         } catch (Exception e) {
             throw e;
         }

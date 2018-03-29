@@ -94,9 +94,8 @@ public class ClickHelper {
 	                    try {
 	                        indexCheckClick(Via.JQUERY, locator, by, index);
 	                    } catch (Exception e4) {
-	                        LocalValidation.getValidations().assertionFailed("Test has exhausted all different click "
+	                       throw LocalValidation.getValidations().assertionFailed("Test has exhausted all different click "
 	                        		+ "methods. Not able to click element with the specified locator.");
-	                        throw LocalReport.getReport().reportException(e4);
 	                    }
 	                }
 	            }
