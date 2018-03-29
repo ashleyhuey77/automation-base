@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.basePage.interfaces.DatePicker;
+import common.basePage.methods.PresentDate;
 import common.utils.TestUtils;
 import common.utils.managers.*;
 import org.openqa.selenium.support.How;
@@ -223,7 +225,8 @@ public abstract class PageHelper {
      */
     protected String[] getCurrentSplitDate() throws Exception {
         String[] currentDate = null;
-        String date = TestUtils.GetCurrentDateTime("dd-MM-yyyy");
+        DatePicker picker = new PresentDate();
+        String date = picker.getDate("dd-MM-yyyy");
         currentDate = date.split("-");
         return currentDate;
     }

@@ -453,7 +453,7 @@ public class PageClassTests extends TestInitialization {
 		Assert.assertEquals("The two times do not match", "Test", value);
 	}*/
 	
-	@Test
+/*	@Test
 	public void verifyGetCurrentSplitDate() throws Exception
 	{
 		TestPage page = new TestPage();
@@ -463,7 +463,7 @@ public class PageClassTests extends TestInitialization {
 		Assert.assertTrue(TestUtils.GetCurrentDateTime("dd-MM-yyyy").contains(value[0]));
 		Assert.assertTrue(TestUtils.GetCurrentDateTime("dd-MM-yyyy").contains(value[1]));
 		Assert.assertTrue(TestUtils.GetCurrentDateTime("dd-MM-yyyy").contains(value[2]));
-	}
+	}*/
 	
 /*	@Test
 	public void verifyActualSlug_ContainsValue() throws Exception
@@ -527,7 +527,7 @@ public class PageClassTests extends TestInitialization {
 		Assert.assertEquals("The two dates do not match", time, Generic.scheduledRecordingEndDate);
 	}
 	*/
-	@Test
+/*	@Test
 	public void verifyGetFutureDate() throws Exception
 	{
 		TestPage page = new TestPage();
@@ -537,7 +537,7 @@ public class PageClassTests extends TestInitialization {
 		int value = page.testGetFutureDate(1);
 		
 		Assert.assertEquals(value, Integer.parseInt(day) + 1);
-	}
+	}*/
 	
 /*	@Test
 	public void verifyNavigateViaNewsAppsToggle() throws Exception, IOException
@@ -790,7 +790,7 @@ public class PageClassTests extends TestInitialization {
 		}
 	}
 	
-	@Test
+/*	@Test
 	public void getTotalDaysInMonth() throws Exception
 	{
 		TestPage page = new TestPage();
@@ -800,7 +800,7 @@ public class PageClassTests extends TestInitialization {
 		int expectedTotal = getTotalExpectedMonths(month);
 		
 		Assert.assertEquals(expectedTotal, totalDays);
-	}
+	}*/
 	
 	@Test 
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse() throws Exception, InterruptedException, IOException

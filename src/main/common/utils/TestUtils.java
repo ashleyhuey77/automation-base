@@ -1,10 +1,7 @@
 package common.utils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,39 +14,6 @@ import java.util.List;
  *
  */
 public class TestUtils {
-
-	/**
-	 * <p>This method gets the current DateTime and returns it in
-	 * the format specified by the params. Typical date formats include:</p>
-	 * <p>1. dd/MM/yyyy </br>
-	 * 	  2. MM/dd/yyyy </br>
-	 *    3. MM/dd/yy </br>
-	 *    4. MMM dd yyyy </br>
-	 * </p>
-	 * @param format - the date format that the returned date string
-	 * should be in.
-	 * @return String
-	 */
-    public static String GetCurrentDateTime(String format) {
-        DateFormat formatDate = new SimpleDateFormat(format);
-        Date now = new Date();
-        return formatDate.format(now).toString();
-    }
-
-    /**
-     * <p>Gets the current timestamp and returns it in the MM_dd_yyyy_HHmmss format</p>
-     * <p>Specifically used for reporting purposes as to assign a unique name for each report
-     * folder to prevent overwriting and better organize the reports. However, it can be used for 
-     * other purposes as well.</p>
-     * <p>The date format should not be changed in this method as it is crucial to reporting.
-     * The GetCurrentDateTime method Should be used for any date stamps that are not the one
-     * specified in this method.</p>
-     * @return String
-     */
-    public static String getTimeStamp() {
-        String getCurrentTimeStamp = GetCurrentDateTime("MM_dd_yyyy_HHmmss");
-        return getCurrentTimeStamp;
-    }
 
 	/**
 	 * <p>This method is used to get the relative path of the test framework.</p>

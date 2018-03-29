@@ -8,7 +8,7 @@ import common.utils.helpers.SecurityHelper;
 //@Listeners(WebDriverListener.class)
 public class UtilsTest {
 
-	@Test
+/*	@Test
 	public void verifyGetTimeStamp() {
 		TestUtils test = new TestUtils();
 		System.out.println(test);
@@ -16,7 +16,7 @@ public class UtilsTest {
 		String timeStamp = TestUtils.getTimeStamp();
 		
 		Assert.assertTrue(!TestUtils.isNullOrBlank(timeStamp));
-	}
+	}*/
 	
 	@Test
 	public void verifyEncryptAndDecrypt() throws Exception

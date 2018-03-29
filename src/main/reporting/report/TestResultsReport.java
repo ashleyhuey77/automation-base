@@ -8,6 +8,8 @@ import java.io.InputStream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import common.basePage.interfaces.DatePicker;
+import common.basePage.methods.PresentDate;
 import common.utils.TestUtils;
 import reporting.report.dataObjects.ReportSettings;
 import reporting.report.dataObjects.TestContent;
@@ -50,6 +52,7 @@ public class TestResultsReport implements ReportContent {
 	@Override
 	public void addResultContent(TestStepContent testStep) throws Exception {
 		try {
+			DatePicker picker = new PresentDate();
         		File test = new File(this._resultSummaryPath);
         		BufferedWriter streamWriter = new BufferedWriter(new FileWriter(test, false));
         		Document doc = document.get();
@@ -61,7 +64,7 @@ public class TestResultsReport implements ReportContent {
             	createNewRowInTable(tr, "justified", testStep.name());
             	createNewRowInTable(tr, "description", testStep.description());
             	createStatusRow(tr, testStep.status().toString().toLowerCase(), testStep.screenshotName());
-            	createNewRowInTable(tr, null, TestUtils.GetCurrentDateTime("HH:mm:ss"));
+            	createNewRowInTable(tr, null, picker.getDate("HH:mm:ss"));
             streamWriter.write(document.get().toString());
             streamWriter.close();
 		} catch (Exception e) {
