@@ -55,15 +55,15 @@ public class LocalTest {
 
             props.load(inputStream);
 
-            String appUrl = setValueIfSystemPropIsNull(props, "ApplicationUrl", "AppUrl");
+            String appUrl = setValueIfSystemPropIsNull(props, "ApplicationUrl", "appUrl");
             String newstronUN = setValueIfSystemPropIsNull(props, "NewstronEncryptedUserName", "");
             String newstronPWD = setValueIfSystemPropIsNull(props, "NewstronEncryptedPassword", "");
-            String env = setValueIfSystemPropIsNull(props, "Environment", "Env");
-            String browser = setValueIfSystemPropIsNull(props, "Browser", "Browser");
-            Boolean isHeadless = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsHeadless", "IsHeadless"));
+            String env = setValueIfSystemPropIsNull(props, "Environment", "env");
+            String browser = setValueIfSystemPropIsNull(props, "Browser", "browser");
+            Boolean isHeadless = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsHeadless", "isHeadless"));
             String miraUserName = setValueIfSystemPropIsNull(props, "miraEncryptedUserName", "");
             String miraPassword = setValueIfSystemPropIsNull(props, "miraEncryptedPassword", "");
-            String os = setValueIfSystemPropIsNull(props, "OS", "OS");
+            String os = setValueIfSystemPropIsNull(props, "OS", "oS");
 
             Environment environment = new Environment(appUrl, env, browser, os, isHeadless);
             Credentials credentials = new Credentials(miraUserName, miraPassword, newstronUN, newstronPWD);
