@@ -97,10 +97,8 @@ version='2.0.2'
  	}
     String newVersion=buildFile.getText().replaceFirst("version='$version'","version='"+major+ "." +minor+"." +patch+"'")
     buildFile.setText(newVersion)
-    doLast {
     		from sourceSets.main.allSource
      	baseName 'automation.base'
-    }
  }
  
  
