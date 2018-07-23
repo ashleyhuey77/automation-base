@@ -78,27 +78,33 @@ dependencies {
 
 version='2.1.2'
 
+task updateVersion {
+	doLast {
+		def ver = version
+	 	def (a, b, c) = ver.tokenize('.')
+	 	int major = a.toInteger()
+	 	int minor = b.toInteger()
+	 	int patch = c.toInteger()
+	 	if (project.hasProperty('v')) {
+	 		if(v.toLowerCase() == "major") {
+	 			major = major+1
+	 		} else if (v.toLowerCase() == "minor") {
+	 			minor = minor+1
+	 		} else {
+	 			patch = patch+1
+	 		}
+	 	} else {
+	 		patch = patch+1
+	 	}
+	    String newVersion=buildFile.getText().replaceFirst("version='$version'","version='"+major+ "." +minor+"." +patch+"'")
+	    buildFile.setText(newVersion)
+		println 'Verison is ' + newVersion
+	}
+}
+
  jar {
- 	def ver = version
- 	def (a, b, c) = ver.tokenize('.')
- 	int major = a.toInteger()
- 	int minor = b.toInteger()
- 	int patch = c.toInteger()
- 	if (project.hasProperty('v')) {
- 		if(v.toLowerCase() == "major") {
- 			major = major+1
- 		} else if (v.toLowerCase() == "minor") {
- 			minor = minor+1
- 		} else {
- 			patch = patch+1
- 		}
- 	} else {
- 		patch = patch+1
- 	}
-    String newVersion=buildFile.getText().replaceFirst("version='$version'","version='"+major+ "." +minor+"." +patch+"'")
-    buildFile.setText(newVersion)
-    		from sourceSets.main.allSource
-     	baseName 'automation.base'
+ 	from sourceSets.main.allSource
+	baseName 'automation.base'
  }
  
  
