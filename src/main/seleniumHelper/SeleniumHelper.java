@@ -77,6 +77,9 @@ public class SeleniumHelper {
             case JQUERY:
                 click = new JQClick();
                 break;
+            case ALTERNATE:
+            		click = new RightClick();
+            		break;
             default:
                 throw new Exception("Please select an appropriate action type from the action type enum.");
         }

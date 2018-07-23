@@ -1,5 +1,5 @@
 package seleniumHelper.enums;
 
 public enum Via {
-	JAVASCRIPT, JQUERY, SELENIUM
+	JAVASCRIPT, JQUERY, SELENIUM, ALTERNATE
 }
