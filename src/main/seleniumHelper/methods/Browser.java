@@ -155,4 +155,13 @@ public class Browser extends Commands implements IBrowser {
         }
 	}
 
+	@Override
+	public void back() throws Exception {
+		try {
+			LocalDriver.getDriver().navigate().back();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 }

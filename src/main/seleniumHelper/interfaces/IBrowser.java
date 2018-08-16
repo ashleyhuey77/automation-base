@@ -148,5 +148,7 @@ public interface IBrowser {
 	 * @throws Exception
 	 */
 	public void switchTo(BrowserObject object, int i) throws Exception;
+	
+	public void back() throws Exception; 
 
 }
