@@ -33,13 +33,6 @@ public class TestPage extends PageTemplate {
 		
 	}
 	
-	public String someRandomString(int length, String value) throws Exception
-	{
-		String someValue = null;
-		someValue = randomStringAtSetLength(length, value);
-		return someValue;
-	}
-	
 	public void testActualVersusExpected(String expectedValue, String actualValue, String variableBeingTested) throws Exception
 	{
 		verifyTheActualValueContainsTheExpectedValue(expectedValue, actualValue, variableBeingTested);

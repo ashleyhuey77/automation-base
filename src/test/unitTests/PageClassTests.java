@@ -18,102 +18,6 @@ import testPages.TestPage;
 
 @Listeners(WebDriverListener.class)
 public class PageClassTests extends TestInitialization {
-
-	@Test
-	public void randomString_enteredLengthSameAsStringLength() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String test = page.someRandomString(5, "Hello");
-		page.enums();
-		
-		Assert.assertEquals(5, test.length());
-		Assert.assertNotEquals(7, test.length());
-	}
-	
-	@Test
-	public void randomString_enteredLengthLongerThanStringLength() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String value = "Test";
-		String test = page.someRandomString(50, value);
-		
-		Assert.assertEquals(50, test.length());
-		Assert.assertNotEquals(test.length(), value);
-	}
-	
-	@Test
-	public void randomString_enteredLengthShorterThanStringLength() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String value = "ReallyLongTestStringForAGoodReason";
-		String test = page.someRandomString(2, value);
-		
-		Assert.assertEquals(2, test.length());
-		Assert.assertNotEquals(test.length(), value);
-	}
-	
-	@Test
-	public void randomString_CorrectLetters() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String test = page.someRandomString(7, "Testing");
-		
-		String[] charactersNotInString = { "a", "b", "c", "d", "f", "h", "j", "k", "l", "m", "o", "p", "q", "r", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4",
-											"5", "6", "7", "8", "9", "0", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "{", "}", "[", "]",
-											";", ":", "'", "<", ">", ".", ",", "?", "/", "|", "~", "`" };
-		verifyCharactersNotInString(charactersNotInString, test);
-		
-	}
-	
-	@Test
-	public void randomString_Integers() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String test = page.someRandomString(9, "123456789");
-		
-		Assert.assertEquals(9, test.length());
-		
-		String[] charactersNotInString = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 
-									       "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "{", "}", "[", "]",
-										   ";", ":", "'", "<", ">", ".", ",", "?", "/", "|", "~", "`" };
-		verifyCharactersNotInString(charactersNotInString, test);
-	}
-	
-	@Test
-	public void randomString_SpecialCharacters() throws Exception {
-		
-		TestPage page = new TestPage();
-		
-		String test = page.someRandomString(9, "!@#$%^&*()_+-=~`{[}]|/:;'<,>.?");
-		
-		Assert.assertEquals(9, test.length());
-		
-		String[] charactersNotInString = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-										   "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",};
-		verifyCharactersNotInString(charactersNotInString, test);
-	}
-	
-	@Test
-	public void randomString_NullString() throws Exception {
-
-		try
-		{	
-			TestPage page = new TestPage();
-			String value = null;
-			page.someRandomString(9, value);
-			Assert.fail("Expected a NumberFormatException to be thrown");
-		}
-		catch (Exception ex)
-		{
-			String m = ex.toString();
-			Assert.assertTrue(m.contains("StepName: randomStringAtSetLength"));
-		}
-	}
 	
 	@Test
 	public void verifyTheExpectedValueContainsTheActualValue() throws Exception
@@ -1226,7 +1130,7 @@ public class PageClassTests extends TestInitialization {
 		}
 	}
 	
-	private void verifyCharactersNotInString(String[] characters, String value) throws Exception
+/*	private void verifyCharactersNotInString(String[] characters, String value) throws Exception
 	{
 		try
 		{
@@ -1284,7 +1188,7 @@ public class PageClassTests extends TestInitialization {
 				break;
 		}
 		return totalDays;
-	}
+	}*/
 	
 	
 	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old)

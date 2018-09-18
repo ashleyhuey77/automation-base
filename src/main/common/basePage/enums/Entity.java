@@ -7,5 +7,6 @@ public enum Entity {
     CrashRecords,
     Requests,
     Encoders,
-    Recurrences
+    Recurrences,
+    MS2Metadata
 }

@@ -1,6 +1,5 @@
 package common.basePage;
 
-import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.openqa.selenium.*;
@@ -426,61 +425,6 @@ public abstract class PageHelper {
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
-    }
-
-    /**
-     * <p> Method to generate a random string of text by taking a string of
-     * text and scrambling it into a new string at a randomly selected length
-     * that will not surpass the specified length param.</p>
-     * @param length - the total length that the random string of text should be when
-     * completed. This will randomly select a length with the number specified in this
-     * param being the highest length possible.
-     * @param value - the String of characters that will be used to create the
-     * random string of text. Method takes the the characters in this
-     * string and scrambles them to generte the random string.
-     * @return String
-     * @throws Exception
-     */
-    protected String randomStringAtRandomLength(int length, String value) throws Exception {
-        StringBuilder sb = new StringBuilder(length);
-        try {
-            SecureRandom rnd = new SecureRandom();
-            Random rand = new Random();
-            int randomLength = rand.nextInt(length);
-            if (randomLength == 0) {
-                randomLength++;
-            }
-            for (int i = 0; i < randomLength; i++) {
-                sb.append(value.charAt(rnd.nextInt(value.length())));
-            }
-        } catch (Exception ex) {
-            throw LocalReport.getReport().reportException(ex);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * <p>Method to generate a random string of text by taking a string of
-     * text and scrambling it into a new string at a specifically set length.</p>
-     * @param length - the total length that the random string of text should be when
-     * completed
-     * @param value - the String of characters that will be used to create the
-     * random string of text. Method takes the the characters in this
-     * string and scrambles them to generte the random string.
-     * @return String
-     * @throws Exception
-     */
-    protected String randomStringAtSetLength(int length, String value) throws Exception {
-        StringBuilder sb = new StringBuilder(length);
-        try {
-            SecureRandom rnd = new SecureRandom();
-            for (int i = 0; i < length; i++) {
-                sb.append(value.charAt(rnd.nextInt(value.length())));
-            }
-        } catch (Exception ex) {
-            throw LocalReport.getReport().reportException(ex);
-        }
-        return sb.toString();
     }
 
     /**

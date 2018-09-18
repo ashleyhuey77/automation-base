@@ -1,9 +1,5 @@
 package common.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * <h2>TestUtils</h2>
  * <p>The TestUtils class is meant to hold methods that are used accross
@@ -32,29 +28,6 @@ public class TestUtils {
      */
     public static boolean isNullOrBlank(String value) {
         return value == null || value.trim().length() == 0;
-    }
-    
-    /**
-     * <p>This method takes an array of strings and selects a random
-     * string from the array.</p>
-     * @param strings - the array of strings that a string value should be randomly 
-     * selected from
-     * @return String
-     * @throws Exception
-     */
-    public static String getRandomString(String[] strings) throws Exception {
-    	String result = null;
-    	try {
-            List < String > stringArray = new ArrayList < String > ();
-            for (String i: strings) {
-                stringArray.add(i);
-            }
-            Collections.shuffle(stringArray);
-            result = stringArray.get(0);
-		} catch (Exception e) {
-			throw e;
-		}
-    	return result;
     }
 
 }
