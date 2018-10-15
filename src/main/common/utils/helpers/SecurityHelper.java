@@ -7,7 +7,6 @@ import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -16,9 +15,13 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class SecurityHelper {
+	
+	public SecurityHelper() {
+		
+	}
 
     private static SecretKeySpec createSecretKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-	byte[] salt = new String("12345678").getBytes();
+	byte[] salt = "12345678".getBytes();
 	SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
 	PBEKeySpec keySpec = new PBEKeySpec("1Hbfh667adfDEJ78".toCharArray(), salt, 40000, 128);
 	SecretKey keyTmp = keyFactory.generateSecret(keySpec);
@@ -47,7 +50,7 @@ public class SecurityHelper {
 	return new String(pbeCipher.doFinal(base64Decode(property)), "UTF-8");
     }
 
-    private static byte[] base64Decode(String property) throws IOException {
+    private static byte[] base64Decode(String property){
 	return Base64.getDecoder().decode(property);
     }
 }

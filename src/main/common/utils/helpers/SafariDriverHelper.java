@@ -9,6 +9,10 @@ import org.openqa.selenium.safari.SafariOptions;
 
 public class SafariDriverHelper {
 	
+	private SafariDriverHelper() {
+		
+	}
+	
 	public static final ThreadLocal<SafariDriver> driver;
 	private static final Set<SafariDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	

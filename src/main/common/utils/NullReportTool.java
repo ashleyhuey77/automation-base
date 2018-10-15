@@ -1,11 +1,11 @@
 package common.utils;
 
-import common.basePage.valueObjects.ReportInfo;
+import common.base.vobjects.ReportInfo;
+import log.TestException;
 
 public class NullReportTool {
 	
-	public NullReportTool(NullReportBuilder builder) throws Exception {
-		try {
+	public NullReportTool(NullReportBuilder builder) throws TestException {
         		if (builder.value == null 
         				&& builder.verifyValueIsNotNull) {
         			checkStringFailIfNull(builder);
@@ -25,72 +25,45 @@ public class NullReportTool {
         					&& !builder.verifyObjectIsNotNull) {
         			checkObjectFailIfNotNull(builder);
         		}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkStringFailIfNull(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkStringFailIfNull(NullReportBuilder builder) throws TestException {
 			if (TestUtils.isNullOrBlank(builder.value)) {
-				throw new Exception("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
+				throw new TestException("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
 			}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkNumberFailIfNotZero(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkNumberFailIfNotZero(NullReportBuilder builder) throws TestException {
 			if (builder.number != 0) {
-				throw new Exception("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
+				throw new TestException("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
 						+ "Please recheck the " + builder.info.elementTitle() + " and verify it is set to the correct value or remove the appropriate method from the chain.");
 			}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkStringFailIfNotNull(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkStringFailIfNotNull(NullReportBuilder builder) throws TestException {
 			if (!TestUtils.isNullOrBlank(builder.value)) {
-				throw new Exception("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
+				throw new TestException("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
 						+ "Please recheck the " + builder.info.elementTitle() + " and verify it is set to the correct value or remove the appropriate method from the chain.");
 			}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkNumberFailIfZero(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkNumberFailIfZero(NullReportBuilder builder) throws TestException {
 			if (builder.number == 0) {
-				throw new Exception("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
+				throw new TestException("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
 			}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkObjectFailIfNull(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkObjectFailIfNull(NullReportBuilder builder) throws TestException {
         		if (builder.object == null) {
-        			throw new Exception("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
+        			throw new TestException("The " + builder.info.elementTitle() + " was not provided. Please add the appropriate method to the chain.");
         		}
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 	
-	private void checkObjectFailIfNotNull(NullReportBuilder builder) throws Exception {
-		try {
+	private void checkObjectFailIfNotNull(NullReportBuilder builder) throws TestException {
         		if (builder.object != null) {
-        			throw new Exception("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
+        			throw new TestException("This method's " + builder.info.elementTitle() + " is set to a value that does not require validation. "
     						+ "Please recheck the " + builder.info.elementTitle() + " and verify it is set to the correct value or remove the appropriate method from the chain.");
         		}
-        	} catch (Exception e) {
-        		throw e;
-        	}
 	}
 	
 	public static class NullReportBuilder {

@@ -14,13 +14,14 @@ import common.utils.facades.HelperFacade;
 import common.utils.interfaces.State;
 import common.utils.managers.*;
 import common.utils.states.*;
+import log.TestException;
 
 public class ChromeDriverHelper {
 
     public ThreadLocal < WebDriver > driver;
     private Set < WebDriver > drivers = Collections.newSetFromMap(new ConcurrentHashMap < > ());
 
-    public ChromeDriverHelper() throws Exception {
+    public ChromeDriverHelper() throws TestException {
         HelperFacade.setDriverLocalPathBasedOnOS(OS.valueOf(LocalTest.getEnvironment().getOS().toUpperCase()));
         System.setProperty("java.awt.headless", Boolean.toString(LocalTest.getEnvironment().isHeadlessEnabled()));
         DesiredCapabilities caps = DesiredCapabilities.chrome();

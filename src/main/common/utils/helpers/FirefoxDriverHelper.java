@@ -9,6 +9,10 @@ import common.utils.TestUtils;
 
 public class FirefoxDriverHelper {
 	
+	private FirefoxDriverHelper() {
+		
+	}
+	
 	public static final InheritableThreadLocal<FirefoxDriver> driver;
 	private static final Set<FirefoxDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	

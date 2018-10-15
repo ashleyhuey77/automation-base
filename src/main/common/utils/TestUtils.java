@@ -10,14 +10,17 @@ package common.utils;
  *
  */
 public class TestUtils {
+	
+	private TestUtils() {
+		
+	}
 
 	/**
 	 * <p>This method is used to get the relative path of the test framework.</p>
 	 * @return String
 	 */
     public static String getRelativePath() {
-        String getFrameWorkRelativePath = System.getProperty("user.dir");
-        return getFrameWorkRelativePath;
+        return System.getProperty("user.dir");
     }
 
     /**

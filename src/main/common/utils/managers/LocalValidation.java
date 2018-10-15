@@ -10,8 +10,12 @@ import common.utils.helpers.ValidationsHelper;
  *
  */
 public class LocalValidation {
+	
+	private LocalValidation() {
+		
+	}
 
-    private static ThreadLocal < ValidationsHelper > validations = new ThreadLocal < ValidationsHelper > ();
+    private static ThreadLocal < ValidationsHelper > validations = new ThreadLocal <> ();
 
     /**
      * <p>Get the threadsafe instance of ValidationsHelper.</p>

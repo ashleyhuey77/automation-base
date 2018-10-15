@@ -8,7 +8,7 @@ public class EmailReceiver {
 	public ThreadLocal < Properties > property;
     private Set < Properties > properties = Collections.newSetFromMap(new ConcurrentHashMap < > ());
 
-    public EmailReceiver(Protocol protocol, String host, String port, Boolean isSSLRequired) throws Exception {
+    public EmailReceiver(Protocol protocol, String host, String port, Boolean isSSLRequired) {
     	
     	Properties props = new Properties();
     	 

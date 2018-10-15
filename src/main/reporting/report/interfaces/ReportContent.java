@@ -1,14 +1,15 @@
 package reporting.report.interfaces;
 
-import reporting.report.dataObjects.TestContent;
-import reporting.report.dataObjects.TestStepContent;
+import log.TestException;
+import reporting.report.dobjects.TestContent;
+import reporting.report.dobjects.TestStepContent;
 
 public interface ReportContent {
 	
-	public void createTestReportFile() throws Exception; 
+	public void createTestReportFile() throws TestException; 
 	
-	public void addBaseReportContent(TestContent report) throws Exception;
+	public void addBaseReportContent(TestContent report) throws TestException;
 	
-	public void addResultContent(TestStepContent testStep) throws Exception; 
+	public void addResultContent(TestStepContent testStep) throws TestException; 
 
 }

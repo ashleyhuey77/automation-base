@@ -7,14 +7,18 @@ import java.util.Date;
 
 public class Util {
 	
-	public static String GetCurrentFormattedTime(String dateFormatString)
+	private Util() {
+		
+	}
+	
+	public static String getCurrentFormattedTime()
     { 
         DateFormat formatDate = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
 		Date now = new Date();
-        return formatDate.format(now).toString();
+        return formatDate.format(now);
     }
 
-    public static String GetFileSeparator()
+    public static String getFileSeparator()
     {
         return File.separator;
     }

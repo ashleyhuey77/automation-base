@@ -3,108 +3,111 @@ package reporting.report;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import reporting.report.dataObjects.ReportSettings;
-import reporting.report.dataObjects.TestContent;
-import reporting.report.dataObjects.TestStepContent;
+import log.TestException;
+import reporting.report.dobjects.ReportSettings;
+import reporting.report.dobjects.TestContent;
+import reporting.report.dobjects.TestStepContent;
 import reporting.report.interfaces.ReportContent;
 import reporting.utilities.Util;
 
 public class ReportTemplate implements ReportContent {
-    
-    private ReportSettings _reportSettings;
-    
+
+	private ReportSettings reportSettings;
+
 	private ReportContent content;
-	
-    private int _nStepsPassed = 0;
 
-    private int _nStepsFailed = 0;
-    
-    private String _stepNumber;
-    
-    private ArrayList<ReportContent> _reportTypes = new ArrayList<ReportContent>();
-	
-	public ReportTemplate(ReportSettings reportSettings) throws Exception {
-        this._reportSettings = reportSettings;
-		switch(reportSettings.getReportType()) {
-            	case TEST_RESULTS_REPORT:
-            		this.content = new TestResultsReport(reportSettings);
-            		break;
-            	default:
-            		break;
-        }
-		InitializeReportTypes();
-        createTestReportFile();
-    }
-	
-	public void createTestReportFile() throws Exception {
-        for (int i = 0; i < this._reportTypes.size(); i++)
-        {
-        		content.createTestReportFile();
-        }
+	private int nStepsPassed = 0;
+
+	private int nStepsFailed = 0;
+
+	private String stepNumber;
+
+	private ArrayList<ReportContent> reportTypes = new ArrayList<>();
+
+	public ReportTemplate(ReportSettings reportSettings) throws TestException {
+		try {
+			this.reportSettings = reportSettings;
+			switch (reportSettings.getReportType()) {
+				case TEST_RESULTS_REPORT:
+					this.content = new TestResultsReport(reportSettings);
+					break;
+				default:
+					break;
+			}
+			initializeReportTypes();
+			createTestReportFile();
+		} catch (Exception e) {
+
+		}
 	}
-	
-	@Override
-	public void addBaseReportContent(TestContent report) throws Exception {
-        for (int i = 0; i < this._reportTypes.size(); i++)
-        {
-        		content.addBaseReportContent(report);
-        }
+
+	public void createTestReportFile() throws TestException {
+		for (int i = 0; i < this.reportTypes.size(); i++) {
+			content.createTestReportFile();
+		}
 	}
-	
+
 	@Override
-	public void addResultContent(TestStepContent testStep) throws Exception {
+	public void addBaseReportContent(TestContent report) throws TestException {
+		for (int i = 0; i < this.reportTypes.size(); i++) {
+			content.addBaseReportContent(report);
+		}
+	}
+
+	@Override
+	public void addResultContent(TestStepContent testStep) throws TestException {
 		String reportPath;
-        String str = null;
-        if (this._stepNumber == null) {
-    			this._stepNumber = "1";
-        }
-        switch(testStep.status()) {
-            	case FAIL:
-            		_nStepsFailed = _nStepsFailed + 1;
-                if (this._reportSettings.TakeScreenshotFailedStep) {
-                		str = this._reportSettings.getReportName() + "_" + Util.GetCurrentFormattedTime(
-                				this._reportSettings.getDateFormatString()).replace(" ", "_").replace(":", "-") + ".png";
-                		reportPath = this._reportSettings.getReportPath() + Util.GetFileSeparator() + 
-                				"Screenshots" + Util.GetFileSeparator() + str;
-                		this.TakeScreenshot(reportPath);
-                }
-                break;
-            	case PASS:
-            		_nStepsPassed = _nStepsPassed + 1;
-                if (this._reportSettings.TakeScreenshotPassedStep) {
-                		str = this._reportSettings.getReportName() + "_" + Util.GetCurrentFormattedTime(
-                				this._reportSettings.getDateFormatString()).replace(" ", "_").replace(":", "-") + ".png";
-                		reportPath = this._reportSettings.getReportPath() + Util.GetFileSeparator() + 
-                				"Screenshots" + Util.GetFileSeparator() + str;
-                		this.TakeScreenshot(reportPath);
-                }
-                break;
-            default:
-            		break;
-         
-        }
-        for (int i = 0; i < this._reportTypes.size(); i++)
-        {
-            TestStepContent tsc = new TestStepContent(this._stepNumber, testStep.name(), testStep.description(), 
-            											testStep.status(), str);
-            this.content.addResultContent(tsc);
-        }
-        int _stepNumber = Integer.parseInt(this._stepNumber) + 1;
-        this._stepNumber = Integer.toString(_stepNumber);
-	}
-	
-	protected void TakeScreenshot(String screenshotPath) throws Exception {
+		String str = null;
+		String msg = "Screenshots";
+		if (this.stepNumber == null) {
+			this.stepNumber = "1";
+		}
+		switch (testStep.status()) {
+			case FAIL:
+				nStepsFailed = nStepsFailed + 1;
+				if (this.reportSettings.TakeScreenshotFailedStep) {
+					str = this.reportSettings.getReportName() + "_"
+							+ Util.getCurrentFormattedTime().replace(" ", "_").replace(":", "-") + ".png";
+					reportPath = this.reportSettings.getReportPath() + Util.getFileSeparator() + msg
+							+ Util.getFileSeparator() + str;
+					this.takeScreenshot(reportPath);
+				}
+				break;
+			case PASS:
+				nStepsPassed = nStepsPassed + 1;
+				if (this.reportSettings.TakeScreenshotPassedStep) {
+					str = this.reportSettings.getReportName() + "_"
+							+ Util.getCurrentFormattedTime().replace(" ", "_").replace(":", "-") + ".png";
+					reportPath = this.reportSettings.getReportPath() + Util.getFileSeparator() + msg
+							+ Util.getFileSeparator() + str;
+					this.takeScreenshot(reportPath);
+				}
+				break;
+			default:
+				break;
 
-    }
-	
-	private void InitializeReportTypes() throws IOException {
-        if (this._reportSettings.GenerateHtmlReports) {
-            new File(this._reportSettings.getReportPath() + Util.GetFileSeparator() + "HTML Results");
-            TestResultsReport htmlReport = new TestResultsReport(this._reportSettings);
-            this._reportTypes.add(htmlReport);
-        }
-        File screenshots = new File(this._reportSettings.getReportPath() + Util.GetFileSeparator() + "Screenshots");
-        screenshots.mkdir();
-        screenshots.createNewFile();
-    }
+		}
+		for (int i = 0; i < this.reportTypes.size(); i++) {
+			TestStepContent tsc = new TestStepContent(this.stepNumber, testStep.name(), testStep.description(),
+					testStep.status(), str);
+			this.content.addResultContent(tsc);
+		}
+		int sNumber = Integer.parseInt(this.stepNumber) + 1;
+		this.stepNumber = Integer.toString(sNumber);
+	}
+
+	protected void takeScreenshot(String screenshotPath) throws TestException {
+		throw new UnsupportedOperationException();
+	}
+
+	private void initializeReportTypes() throws IOException {
+		if (this.reportSettings.GENERATE_HTML_REPORTS) {
+			new File(this.reportSettings.getReportPath() + Util.getFileSeparator() + "HTML Results");
+			TestResultsReport htmlReport = new TestResultsReport(this.reportSettings);
+			this.reportTypes.add(htmlReport);
+		}
+		File screenshots = new File(this.reportSettings.getReportPath() + Util.getFileSeparator() + "Screenshots");
+		screenshots.mkdir();
+		screenshots.createNewFile();
+	}
 }

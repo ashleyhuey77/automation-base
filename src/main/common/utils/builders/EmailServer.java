@@ -20,7 +20,7 @@ public class EmailServer {
         return port;
     }
 
-    public EmailServer(Protocol protocol, String host, String port) throws Exception {
+    public EmailServer(Protocol protocol, String host, String port) {
     	EmailServer.protocol = protocol;
     	EmailServer.host = host;
     	EmailServer.port = port;

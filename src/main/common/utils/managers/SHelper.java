@@ -1,6 +1,6 @@
 package common.utils.managers;
 
-import seleniumHelper.SeleniumHelper;
+import shelper.SeleniumHelper;
 
 /**
  * <h2>SHelper</h2>
@@ -11,14 +11,18 @@ import seleniumHelper.SeleniumHelper;
  */
 public class SHelper {
 	
-    private static ThreadLocal<SeleniumHelper> sHelper = new ThreadLocal<SeleniumHelper>();
+	private SHelper() {
+		
+	}
+	
+    private static ThreadLocal<SeleniumHelper> sHelperInstance = new ThreadLocal<>();
  
     /**
      * <p>Get the threadsafe instance of SeleniumHelper.</p>
      * @return SeleniumHelper
      */
     public static SeleniumHelper get() {
-    	return sHelper.get();
+    	return sHelperInstance.get();
     }
     
     /**
@@ -26,6 +30,6 @@ public class SHelper {
      * @param value - the SeleniumHelper instance to set.
      */
     public static void set(SeleniumHelper value) {
-    	sHelper.set(value);
+    	sHelperInstance.set(value);
     }
 }

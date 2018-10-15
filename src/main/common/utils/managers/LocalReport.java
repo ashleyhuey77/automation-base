@@ -11,10 +11,14 @@ import common.utils.helpers.ReportHelper;
  *
  */
 public class LocalReport {
+	
+	private LocalReport() {
+		
+	}
 
-    private static ThreadLocal < ReportHelper > report = new ThreadLocal < ReportHelper > ();
-    private static ThreadLocal < TestReport > HtmlReport = new ThreadLocal < TestReport > ();
-    private static ThreadLocal < String > filePath = new ThreadLocal < String > ();
+    private static ThreadLocal < ReportHelper > report = new ThreadLocal <> ();
+    private static ThreadLocal < TestReport > htmlReport = new ThreadLocal <> ();
+    private static ThreadLocal < String > filePath = new ThreadLocal <> ();
 
     /**
      * <p>Get the threadsafe instance of ReportHelper.</p>
@@ -37,7 +41,7 @@ public class LocalReport {
      * @return HtmlReport
      */
     public static TestReport getHtmlReport() {
-        return HtmlReport.get();
+        return htmlReport.get();
     }
 
     /**
@@ -45,7 +49,7 @@ public class LocalReport {
      * @param value - the HtmlReport instance to set.
      */
     public static void setHtmlReport(TestReport value) {
-        HtmlReport.set(value);
+        htmlReport.set(value);
     }
 
     /**

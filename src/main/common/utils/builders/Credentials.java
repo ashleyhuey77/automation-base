@@ -1,5 +1,7 @@
 package common.utils.builders;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import common.utils.helpers.SecurityHelper;
 
 public class Credentials {
@@ -35,7 +37,7 @@ public class Credentials {
     	return emailServerPWD;
     }
 
-    public Credentials(String mUser, String mPword, String nUser, String nPword) throws Exception {
+    public Credentials(String mUser, String mPword, String nUser, String nPword) throws GeneralSecurityException, IOException {
         if (mUser.length() > 3) {
             String decryptedMUN = SecurityHelper.decrypt(mUser);
             String decryptedMPword = SecurityHelper.decrypt(mPword);
@@ -50,7 +52,7 @@ public class Credentials {
         }
     }
     
-    public Credentials(String user, String pwd)throws Exception {
+    public Credentials(String user, String pwd) {
     	Credentials.emailServerUN = user;
     	Credentials.emailServerPWD = pwd;
     }

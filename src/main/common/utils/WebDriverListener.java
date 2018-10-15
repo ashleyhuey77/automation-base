@@ -1,5 +1,6 @@
 package common.utils;
 
+import java.util.logging.Level;
 import org.openqa.selenium.WebDriver;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -8,6 +9,7 @@ import common.utils.enums.Drivers;
 import common.utils.facades.HelperFacade;
 import common.utils.managers.LocalDriver;
 import common.utils.managers.LocalTest;
+import log.Log;
 
 public class WebDriverListener implements IInvokedMethodListener {
 
@@ -16,8 +18,10 @@ public class WebDriverListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         try {
+        	Log.set();
             LocalTest.initializeSettings();
         } catch (Exception e) {
+        	Log.get().log(Level.SEVERE, e.getMessage(), e);
         }
         if (method.toString().toLowerCase().contains("beforescenario")) {
             WebDriver driver = null;
@@ -25,12 +29,11 @@ public class WebDriverListener implements IInvokedMethodListener {
                 driver = HelperFacade.getDriver(
                     Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                Log.get().log(Level.SEVERE, e.getMessage(), e);
             }
             LocalDriver.setDriver(driver);
             testNumber++;
-            System.out.println("Now executing test number: " + testNumber);
+            Log.get().log(Level.INFO, "Now executing test number: {0}", testNumber);
         }
     }
 

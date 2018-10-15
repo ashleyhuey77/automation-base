@@ -9,10 +9,15 @@ import common.utils.helpers.*;
 import common.utils.interfaces.State;
 import common.utils.managers.*;
 import common.utils.states.*;
+import log.TestException;
 
 public class HelperFacade {
+	
+	private HelperFacade() {
+		
+	}
 
-    public static WebDriver getDriver(Drivers driverType) throws Exception {
+    public static WebDriver getDriver(Drivers driverType) throws TestException {
         WebDriver driver = null;
         switch (driverType) {
             case CHROME:
@@ -24,12 +29,12 @@ public class HelperFacade {
             case SAFARI:
                 throw new NotImplementedException("Nothing has been entered for Safari. You will need to set up the driver before use.");
             default:
-                throw new Exception("You did not enter a correct driver. Please enter a usable/executable driver name and try again.");
+                throw new TestException("You did not enter a correct driver. Please enter a usable/executable driver name and try again.");
         }
         return driver;
     }
     
-    public static void initializeReportType(ReportType type, TestReport getHTMLReport) throws Exception {
+    public static void initializeReportType(ReportType type, TestReport getHTMLReport) throws TestException {
         switch (type) {
             case REPORT:
                 TestReport report = getHTMLReport;
@@ -40,12 +45,11 @@ public class HelperFacade {
                 LocalValidation.setValidations(new ValidationsHelper(LocalReport.getHtmlReport()));
                 break;
             default:
-                throw new Exception("User did not supply the correct Report Type. Unable to determine which report to initialize for testing.");
+                throw new TestException("User did not supply the correct Report Type. Unable to determine which report to initialize for testing.");
         }
     }
 
-    public static void setDriverLocalPathBasedOnOS(OS os) throws Exception {
-        try {
+    public static void setDriverLocalPathBasedOnOS(OS os) throws TestException {
             State state = null;
             OSContext context = new OSContext();
             switch (os) {
@@ -59,13 +63,10 @@ public class HelperFacade {
                     state = new Linux();
                     break;
                 default:
-                    throw new Exception("User did not provide a valid operating system. Unable to open browser because the operating system is unknown.");
+                    throw new TestException("User did not provide a valid operating system. Unable to open browser because the operating system is unknown.");
             }
             context.setState(state);
             context.doAction();
-        } catch (Exception ex) {
-            throw ex;
-        }
     }
 
 }

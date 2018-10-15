@@ -3,16 +3,11 @@ package common.utils.helpers;
 
 import java.io.IOException;
 import common.utils.TestReport;
+import log.TestException;
 
 public class ReportHelper {
-
-    //private HtmlReport htmlReport;
 	
 	private TestReport testReport;
-
-/*    public ReportHelper(HtmlReport htmlReport) {
-        this.htmlReport = htmlReport;
-    }*/
     
     public ReportHelper(TestReport htmlReport) {
         this.testReport = htmlReport;
@@ -32,7 +27,7 @@ public class ReportHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public void reportDoneEvent(String description) throws Exception {
+    public void reportDoneEvent(String description) throws TestException {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         testReport.reportDoneEvent(stepName, description);
         System.out.println("Step: " + stepName + " has passed. " + description);
@@ -53,12 +48,11 @@ public class ReportHelper {
      * @throws FrameworkException
      * @throws IOException
      */
-    public Exception reportException(Exception webDriverException) throws Exception {
+    public TestException reportException(Exception webDriverException) throws TestException {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         testReport.reportFailEvent(stepName, webDriverException.getMessage());
         String message = "StepName: " + stepName + "\n ErrorMessage : " + webDriverException.getMessage();
-        Exception assertionFailedException = new Exception(message);
-        return assertionFailedException;
+        return new TestException(message);
     }
 
 }

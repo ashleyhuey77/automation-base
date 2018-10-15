@@ -11,7 +11,10 @@ import org.openqa.selenium.WebDriver;
  */
 public class LocalDriver {
 	
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
+	private LocalDriver() {
+	}
+	
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
  
     /**
      * <p>Get the threadsafe instance of WebDriver.</p>

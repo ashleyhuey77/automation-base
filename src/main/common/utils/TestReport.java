@@ -5,24 +5,25 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import common.utils.managers.LocalDriver;
+import log.TestException;
 import reporting.report.ReportTemplate;
-import reporting.report.dataObjects.ReportSettings;
-import reporting.report.dataObjects.TestStepContent;
+import reporting.report.dobjects.ReportSettings;
+import reporting.report.dobjects.TestStepContent;
 import reporting.report.enums.Status;
 
 public class TestReport extends ReportTemplate {
 
-	public TestReport(ReportSettings reportSettings) throws Exception {
+	public TestReport(ReportSettings reportSettings) throws TestException {
 		super(reportSettings);
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@Override
-    protected void TakeScreenshot(String screenshotPath) throws Exception {
+    protected void takeScreenshot(String screenshotPath) throws TestException {
         try {
 
             if (LocalDriver.getDriver() == null) {
-                throw new Exception("Report.driver is not initialized!");
+                throw new TestException("Report.driver is not initialized!");
             }
 
             File source = ((TakesScreenshot)LocalDriver.getDriver()).getScreenshotAs(OutputType.FILE);
@@ -32,17 +33,17 @@ public class TestReport extends ReportTemplate {
         }
     }
 	
-    public void reportDoneEvent(String stepName, String description) throws Exception {
+    public void reportDoneEvent(String stepName, String description) throws TestException {
     		TestStepContent testStepContent = new TestStepContent(stepName, description, Status.DONE);
         super.addResultContent(testStepContent);
     }
     
-    public void reportWarning(String stepName, String description) throws Exception {
+    public void reportWarning(String stepName, String description) throws TestException {
 		TestStepContent testStepContent = new TestStepContent(stepName, description, Status.WARNING);
         super.addResultContent(testStepContent);
     }
     
-    public void reportPassEvent(String stepName, String description) throws Exception {
+    public void reportPassEvent(String stepName, String description) throws TestException {
         try {
     			TestStepContent testStepContent = new TestStepContent(stepName, description, Status.PASS);
             super.addResultContent(testStepContent);
@@ -52,7 +53,7 @@ public class TestReport extends ReportTemplate {
         }
     }
     
-    public void reportFailEvent(String stepName, String description) throws Exception {
+    public void reportFailEvent(String stepName, String description) throws TestException {
         try {
 			TestStepContent testStepContent = new TestStepContent(stepName, description, Status.FAIL);
             super.addResultContent(testStepContent);
