@@ -17,6 +17,7 @@ import shelper.enums.Variable;
 import shelper.enums.Via;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class TextTests {
@@ -48,9 +49,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, "");
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, "");
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -61,9 +63,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, "");
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, "");
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -74,9 +77,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=className value=Testing></input>');");
 		Locator locator = new Locator("className");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, "0");
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, "0");
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -85,11 +89,13 @@ public class TextTests {
 	public void verifyGetTextInTextFieldViaJavascript_TagName() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Thread.sleep(500);
 		Locator locator = new Locator("input");
 		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, "0");
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, "0");
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -100,9 +106,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test name=name value=Testing></input>');");
 		Locator locator = new Locator("name");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, "0");
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, "0");
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -113,9 +120,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass>Some Text</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(locator, by, "Some Text");
+		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(element, "Some Text");
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 	}
@@ -126,9 +134,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass></div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(locator, by, "Some Text");
+		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(element, "Some Text");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -139,9 +148,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass >Testing123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(locator, by, null);
+		SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(element, null);
 	}
 	
 	@Test
@@ -150,8 +160,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass >Testing123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(test, "Testing123");
 		
@@ -164,8 +175,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass >Testing123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Boolean result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(test, "AlternateFacts");
 		
@@ -178,8 +190,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test class=testClass >Testing123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).isDisplayed(test, null);
 	}
@@ -190,9 +203,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(locator, by, "testClass", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 		
@@ -204,9 +218,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(locator, by, "not correct", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "not correct", "class");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -217,9 +232,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(locator, by, "testClass", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -230,9 +246,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Testing");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(locator, by, "testClass", "class");
+		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
 	}
 	
 	@Test
@@ -241,8 +258,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(locator, by, "class");
+		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(element, "class");
 		Assert.assertEquals(result, "testClass", "The attribute values do not match");
 	}
 	
@@ -252,8 +270,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(locator, by, "test");
+		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(element, "test");
 		Assert.assertTrue(TestUtils.isNullOrBlank(result), "The attribute values do not match");
 	}
 	
@@ -263,8 +282,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(locator, by, "test");
+		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(element, "test");
 	}
 	
 	@Test
@@ -273,8 +293,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(test, "class");
 		Assert.assertEquals(result, "testClass", "The attribute values do not match");
 	}
@@ -285,8 +306,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		String result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(test, "test");
 		Assert.assertTrue(TestUtils.isNullOrBlank(result), "The attribute values do not match");
 	}
@@ -297,8 +319,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).getFrom(test, "test");
@@ -309,10 +332,11 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		String[] var = {};
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(locator, by, var);
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element, var);
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -322,10 +346,11 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element);
+		String result = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(test);
 		
 		Assert.assertEquals(result, "Testing", "The two values do not match");
 	}
@@ -335,12 +360,13 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 		
-		SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(element);
+		SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(test);
 		
 	}
 	
@@ -349,9 +375,10 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		String value = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator, by);
+		String value = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 		
 		Assert.assertTrue(TestUtils.isNullOrBlank(value), "A value was returned. Expected the value to return null");
 	}
@@ -362,10 +389,11 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(test, "testClass", "class");
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 		
@@ -377,10 +405,11 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "not correct", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(test, "not correct", "class");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -391,10 +420,11 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(element, "testClass", "class");
+		Boolean result = SHelper.get().text(Variable.ATTRIBUTE, Via.SELENIUM).isDisplayed(test, "testClass", "class");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -405,8 +435,9 @@ public class TextTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement el = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement element = SHelper.get().element().get(el);
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 		

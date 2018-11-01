@@ -21,6 +21,7 @@ import pages.TestInitialization;
 import pages.TestPage;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class PageClassTests extends TestInitialization {
@@ -514,10 +515,11 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(500);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 
 		PrintStream old = System.out;
 		System.setOut(ps.get());
-		WebElement el = SHelper.get().element().get(locator, by);
+		WebElement el = SHelper.get().element().get(element);
 
 		page.testEnterAValueIntoATextField("Test123", el, "Test Element");
 		;
@@ -539,11 +541,12 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(500);
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 
 		PrintStream old = System.out;
 		System.setOut(ps.get());
 
-		page.testEnterAValueIntoATextField(null, SHelper.get().element().get(locator, by), "Test Element");
+		page.testEnterAValueIntoATextField(null, SHelper.get().element().get(element), "Test Element");
 		;
 
 		String inputString = getByteStreamMessage(baos.get(), old);
@@ -563,8 +566,9 @@ public class PageClassTests extends TestInitialization {
 					.executeScript("document.write('<input id=Test > </input>');");
 			Locator locator = new Locator("#Test");
 			By by = new By("css");
+			TestElement element = new TestElement(locator, by);
 			Thread.sleep(500);
-			WebElement test = SHelper.get().element().get(locator, by);
+			WebElement test = SHelper.get().element().get(element);
 			LocalDriver.getDriver().navigate().refresh();
 			Thread.sleep(500);
 
@@ -652,8 +656,9 @@ public class PageClassTests extends TestInitialization {
 				.executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement textEl = SHelper.get().element().get(locator, by);
+		WebElement textEl = SHelper.get().element().get(element);
 
 		PrintStream old = System.out;
 		System.setOut(ps.get());
@@ -677,8 +682,9 @@ public class PageClassTests extends TestInitialization {
 				.executeScript("document.write('<div id=Test >Testing 123</div>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement textEl = SHelper.get().element().get(locator, by);
+		WebElement textEl = SHelper.get().element().get(element);
 
 		PrintStream old = System.out;
 		System.setOut(ps.get());
@@ -704,8 +710,9 @@ public class PageClassTests extends TestInitialization {
 					.executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Locator locator = new Locator("Test");
 			By by = new By("id");
+			TestElement element = new TestElement(locator, by);
 			Thread.sleep(500);
-			WebElement textEl = SHelper.get().element().get(locator, by);
+			WebElement textEl = SHelper.get().element().get(element);
 
 			page.testVerifySomeElementContainsTheExpectedText(textEl, "Not correct", "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -726,8 +733,9 @@ public class PageClassTests extends TestInitialization {
 					.executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Locator locator = new Locator("Test");
 			By by = new By("id");
+			TestElement element = new TestElement(locator, by);
 			Thread.sleep(500);
-			WebElement textEl = SHelper.get().element().get(locator, by);
+			WebElement textEl = SHelper.get().element().get(element);
 
 			page.testVerifySomeElementContainsTheExpectedText(textEl, null, "Test Element", false);
 			Assert.fail("Assertion failed error was supposed to have been thrown.");

@@ -10,8 +10,7 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Condition;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class NonPresentAttributeText extends Commands implements IWait {
 
@@ -29,16 +28,16 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyAttributeIsNotNull(attribute);
 		verifyMaxWaitTimeIsNotZero(time);
 		verifyValueIsNotNull(value);
 		switch (condition) {
 			case EQUAL:
-				waitForAttributeToNoLongerEqualACertainValue(locator, by, attribute, value, time);
+				waitForAttributeToNoLongerEqualACertainValue(element, attribute, value, time);
 				break;
 			case CONTAIN:
-				waitForAttributeToNoLongerContainACertainValue(locator, by, attribute, value, time);
+				waitForAttributeToNoLongerContainACertainValue(element, attribute, value, time);
 				break;
 			default:
 				throw new TestException(
@@ -67,16 +66,7 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -87,20 +77,22 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToNoLongerContainACertainValue(Locator locator, By by, String attribute,
-			String expectedValue, int i) {
+	private void waitForAttributeToNoLongerContainACertainValue(TestElement element, String attribute, String expectedValue,
+			int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String actualValue = elementToBeTested.getAttribute(attribute);
 			// returning true if attribute is null because it
 			// still means the attribute does not contain the
 			// desired value.
-			if (actualValue != null && !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
+			if (actualValue == null 
+					|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
 				result = true;
 			}
 			return result;
@@ -143,7 +135,8 @@ public class NonPresentAttributeText extends Commands implements IWait {
 			// returning true if attribute is null because it
 			// still means the attribute does not contain the
 			// desired value.
-			if (actualValue != null && !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
+			if (actualValue == null 
+					|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
 				result = true;
 			}
 			return result;
@@ -153,16 +146,7 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -173,20 +157,21 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToNoLongerEqualACertainValue(Locator locator, By by, String attribute,
-			String expectedValue, int i) {
+	private void waitForAttributeToNoLongerEqualACertainValue(TestElement element, String attribute, String expectedValue,
+			int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String actualValue = elementToBeTested.getAttribute(attribute);
 			// returning true if attribute is null because it
 			// still means the attribute does not contain the
 			// desired value.
-			if (actualValue != null && !actualValue.equalsIgnoreCase(expectedValue)) {
+			if (actualValue == null || !actualValue.equalsIgnoreCase(expectedValue)) {
 				result = true;
 			}
 			return result;

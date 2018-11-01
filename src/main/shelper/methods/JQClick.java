@@ -9,21 +9,20 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Wait;
 import shelper.interfaces.IClick;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class JQClick extends Commands implements IClick {
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
-		String webElement = locator.value();
+	public void on(TestElement element) throws TestException {
+		String webElement = element.locator().value();
 		try {
-			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
+			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 			((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
 		} catch (Exception ex) {
 			try {
-				if (locator.value().contains("'")) {
-					webElement = locator.value().replace("'", "");
+				if (element.locator().value().contains("'")) {
+					webElement = element.locator().value().replace("'", "");
 				}
 
 				((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
@@ -40,23 +39,23 @@ public class JQClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(Locator locator, By by, String index) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
+	public void on(TestElement element, String index) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 		String webElement = null;
-		if (locator.value().contains("'")) {
-			webElement = locator.value().replace("'", "");
+		if (element.locator().value().contains("'")) {
+			webElement = element.locator().value().replace("'", "");
 		} else {
-			webElement = locator.value();
+			webElement = element.locator().value();
 		}
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "')[" + index + "].click();");
 	}
 
 	@Override
-	public void on(Locator locator, By by, int index) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
-		String webElement = locator.value();
-		if (locator.value().contains("'")) {
-			webElement = locator.value().replace("'", "");
+	public void on(TestElement element, int index) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		String webElement = element.locator().value();
+		if (element.locator().value().contains("'")) {
+			webElement = element.locator().value().replace("'", "");
 		}
 
 		((JavascriptExecutor) LocalDriver.getDriver())

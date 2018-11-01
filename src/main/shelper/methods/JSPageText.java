@@ -2,27 +2,26 @@ package shelper.methods;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.How;
 import com.google.errorprone.annotations.DoNotCall;
 import common.utils.TestUtils;
 import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.interfaces.IText;
-import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class JSPageText extends Commands implements IText {
 
-	private String getValueViaJavascriptIndexNoIndex(String javascriptStartTxt, String locator, String index,
+	private String getValueViaJavascriptIndexNoIndex(String javascriptStartTxt, TestElement element, String index,
 			Boolean requiresIndex) {
 		String textBoxText = null;
 		if (requiresIndex) {
 			textBoxText = (String) ((JavascriptExecutor) LocalDriver.getDriver())
-					.executeScript(javascriptStartTxt + locator + "')[" + index + "].value");
+					.executeScript(javascriptStartTxt + element.locator().value() + "')[" + index + "].value");
 		} else {
 			textBoxText = (String) ((JavascriptExecutor) LocalDriver.getDriver())
-					.executeScript(javascriptStartTxt + locator + "').value");
+					.executeScript(javascriptStartTxt + element.locator().value() + "').value");
 		}
 		return textBoxText;
 	}
@@ -30,11 +29,7 @@ public class JSPageText extends Commands implements IText {
 	/**
 	 * <summary> Method to get text from a textbox via
 	 * javascript based on webelement type </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
+	 * @param element TODO
 	 * @param index
 	 *            the index used to identify a
 	 *            particular element in a list of
@@ -46,34 +41,30 @@ public class JSPageText extends Commands implements IText {
 	 *            index and index cannot be blank or
 	 *            null. False does not use an index
 	 *            and index can be blank or null.
-	 * @param webElements
-	 *            the locator type used to identify
-	 *            webelements on the page. Based on
-	 *            the values in the LocatorTypes enum.
+	 * 
 	 * @return
 	 */
-	private String getTxtBoxValueViaJavascriptScript(String locator, String index, Boolean requiresIndex,
-			How webElements) {
+	private String getTxtBoxValueViaJavascriptScript(TestElement element, String index, Boolean requiresIndex) {
 		String textBoxText = null;
-		switch (webElements) {
+		switch (element.by().value()) {
 			case ID:
-				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementById('", locator, index,
+				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementById('", element, index,
 						requiresIndex);
 				break;
 			case CLASS_NAME:
-				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByClassName('", locator,
+				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByClassName('", element,
 						index, requiresIndex);
 				break;
 			case NAME:
-				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByName('", locator, index,
+				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByName('", element, index,
 						requiresIndex);
 				break;
 			case TAG_NAME:
-				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByTagName('", locator,
+				textBoxText = getValueViaJavascriptIndexNoIndex("return document.getElementsByTagName('", element,
 						index, requiresIndex);
 				break;
 			case CSS:
-				textBoxText = getValueViaJavascriptIndexNoIndex("return document.querySelector('", locator, index,
+				textBoxText = getValueViaJavascriptIndexNoIndex("return document.querySelector('", element, index,
 						requiresIndex);
 				break;
 			default:
@@ -83,13 +74,10 @@ public class JSPageText extends Commands implements IText {
 	}
 
 	@Override
-	public String getFrom(Locator locator, By by, String... attribute) throws TestException {
-		String webElement = null;
-		if (locator.value().contains("'")) {
-			webElement = locator.value().replace("'", "");
-		} else {
-			webElement = locator.value();
-		}
+	public String getFrom(TestElement element, String... attribute) throws TestException {
+		if (element.locator().value().contains("'")) {
+			 element.setLocator(new Locator(element.locator().value().replace("'", "")));
+		} 
 		Boolean requiresIndex = false;
 		int count = attribute.length;
 		String attr = null;
@@ -104,7 +92,7 @@ public class JSPageText extends Commands implements IText {
 			attr = "";
 		}
 
-		return getTxtBoxValueViaJavascriptScript(webElement, attr, requiresIndex, by.value());
+		return getTxtBoxValueViaJavascriptScript(element, attr, requiresIndex);
 	}
 
 	@Override
@@ -115,7 +103,7 @@ public class JSPageText extends Commands implements IText {
 
 	@Override
 	@DoNotCall
-	public Boolean isDisplayed(Locator locator, By by, String expectedText, String... attribute) throws TestException {
+	public Boolean isDisplayed(TestElement element, String expectedText, String... attribute) throws TestException {
 		return null;
 	}
 

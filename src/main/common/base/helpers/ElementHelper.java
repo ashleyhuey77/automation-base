@@ -4,29 +4,28 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import common.utils.managers.SHelper;
 import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class ElementHelper {
 	
-	private WebElement element;
+	private WebElement webElement;
 
-	public ElementHelper(Locator locator, By by) throws TestException {
-		element = SHelper.get().element().get(locator, by);
+	public ElementHelper(TestElement element) throws TestException {
+		webElement = SHelper.get().element().get(element);
 	}
 	
 	public ElementHelper(List<WebElement> elementList, String elementText) {
 		try {
-        		element = elementList.stream()
+        		webElement = elementList.stream()
         		          .filter(d -> d.getText().equalsIgnoreCase(elementText))
         		          .findFirst()
         		          .orElse(null);
 		} catch (Exception e) {
-			element = null;
+			webElement = null;
 		}
 	}
 	
 	public WebElement get() {
-		return element;
+		return webElement;
 	}
 }

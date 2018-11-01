@@ -9,17 +9,16 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Wait;
 import shelper.interfaces.IClick;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class RightClick extends Commands implements IClick {
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
+	public void on(TestElement element) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 
 		Actions action = new Actions(LocalDriver.getDriver());
-		action.contextClick(getElement(locator, by)).build().perform();
+		action.contextClick(getElement(element)).build().perform();
 	}
 
 	@Override
@@ -31,12 +30,12 @@ public class RightClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(Locator locator, By by, String index) throws TestException {
+	public void on(TestElement element, String index) throws TestException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void on(Locator locator, By by, int index) throws TestException {
+	public void on(TestElement element, int index) throws TestException {
 		throw new UnsupportedOperationException();
 	}
 

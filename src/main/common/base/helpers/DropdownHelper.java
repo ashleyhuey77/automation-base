@@ -68,22 +68,22 @@ public class DropdownHelper {
      */
     protected void selectTestElementFromNonDropdown(DropdownBuilder builder) throws TestException {
         try {
-            if (SHelper.get().element().isDisplayed(builder.clickElement.locator, builder.clickElement.by, 10)) {
+            if (SHelper.get().element().isDisplayed(builder.clickElement, 10)) {
             		new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle()))
-            				.clickOn(new TestElement(builder.clickElement.locator, builder.clickElement.by)));
+            				.clickOn(new TestElement(builder.clickElement.locator(), builder.clickElement.by())));
                 Thread.sleep(600);
                 if (builder.searchElement != null) {
                     new EnterTextHelper(new EnterTextBuilder(new ReportInfo(builder.info.elementTitle()))
                     		.enterText(builder.option)
-                    		.into(new TestElement(builder.searchElement.locator, builder.searchElement.by)));
+                    		.into(new TestElement(builder.searchElement.locator(), builder.searchElement.by())));
                 }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-                		new WaitBuilder().forAMaxTimeOf(30)).on(builder.optionsElement.locator, builder.optionsElement.by);
+                		new WaitBuilder().forAMaxTimeOf(30)).on(builder.optionsElement);
                 Thread.sleep(900);
                 new OptionSelector(new OptionSelectorBuilder()
                 		.findOption(builder.option)
                 		.thatIs(Condition.EQUAL)
-                		.For(new TestElement(builder.optionsElement.locator, builder.optionsElement.by)));
+                		.For(new TestElement(builder.optionsElement.locator(), builder.optionsElement.by())));
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not available. Unable to select the " 
                 		+ builder.option + " option from the drop down list.");
@@ -129,12 +129,12 @@ public class DropdownHelper {
                     		.into(builder.searchWebElement));
                 }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-                		new WaitBuilder().forAMaxTimeOf(10)).on(builder.optionsElement.locator, builder.optionsElement.by);
+                		new WaitBuilder().forAMaxTimeOf(10)).on(builder.optionsElement);
                 Thread.sleep(900);
                 new OptionSelector(new OptionSelectorBuilder()
                 		.findOption(builder.option)
                 		.thatIs(Condition.EQUAL)
-                		.For(new TestElement(builder.optionsElement.locator, builder.optionsElement.by)));
+                		.For(new TestElement(builder.optionsElement.locator(), builder.optionsElement.by())));
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not availale. Unable to select the " 
                 		+ builder.option + " option from the drop down list.");

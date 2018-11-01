@@ -19,6 +19,7 @@ import shelper.enums.BrowserObject;
 import shelper.enums.Via;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class BrowserTests {
@@ -74,9 +75,10 @@ public class BrowserTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().browser().switchTo(BrowserObject.FRAME, locator, by);
+		SHelper.get().browser().switchTo(BrowserObject.FRAME, element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -85,9 +87,10 @@ public class BrowserTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().browser().switchTo(BrowserObject.FRAME,locator, by);
+		SHelper.get().browser().switchTo(BrowserObject.FRAME, element);
 	}
 	
 	@Test
@@ -96,8 +99,9 @@ public class BrowserTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().browser().switchTo(BrowserObject.FRAME, test);
 	}
@@ -108,8 +112,9 @@ public class BrowserTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<iframe id=\"Test\" src=\"demo_iframe.htm\" height=\"200\" width=\"300\"></iframe>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -232,8 +237,9 @@ public class BrowserTests {
 				"</script>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
-		SHelper.get().click(Via.SELENIUM).on(locator, by);
+		SHelper.get().click(Via.SELENIUM).on(element);
 		Thread.sleep(500);
 		SHelper.get().browser().switchTo(BrowserObject.ALERT);
 	}

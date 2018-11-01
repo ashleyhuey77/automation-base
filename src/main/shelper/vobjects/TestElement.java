@@ -1,8 +1,8 @@
 package shelper.vobjects;
 
 public class TestElement {
-	public Locator locator;
-	public By by;
+	private Locator locator;
+	private By by;
 	
 	public TestElement(Locator locator, By by) {
 		this.locator = locator;
@@ -15,5 +15,9 @@ public class TestElement {
 	
 	public By by() {
 		return by;
+	}
+	
+	public void setLocator(Locator value) {
+		this.locator = value;
 	}
 }

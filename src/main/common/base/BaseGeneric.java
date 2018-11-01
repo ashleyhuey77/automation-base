@@ -1,20 +1,44 @@
 package common.base;
 
-public class BaseGeneric {
+import shelper.vobjects.By;
+import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
+import org.openqa.selenium.support.How;
+
+
+public enum BaseGeneric implements Type {
 	
-	private BaseGeneric() {
-		throw new IllegalStateException("Base Generic class");
+	USER_NAME_TEXT_FIELD(new Locator("#credentials-username"), new By(How.CSS)),
+	LOG_IN_BOX(new Locator("div[class='qrk-topbar modal fade in']"), new By(How.CSS)),
+	PWD_TEXT_FIELD(new Locator("#credentials-password"), new By(How.CSS)),
+	SIGN_IN_BTN(new Locator("#topbarLoggedoutBox > div > div > div.qrk-topbar.modal-footer > button"), new By(How.CSS)),
+	ERROR_MSG(new Locator("credentials-loginError"), new By(How.ID)),
+	ERROR_TEXT(new Locator("//*[@id='credentials-loginError']/text()[1]"), new By(How.XPATH)),
+	DASHBOARD_LOAD_ELEMENT(new Locator("div[class='dashboard-app']"), new By(How.CSS));
+	
+	private final Locator locator;
+	private final By by;
+	private final TestElement element;
+	
+	private BaseGeneric(Locator locator, By by) {
+		this.locator = locator;
+		this.by = by;
+		element = new TestElement(locator, by);
 	}
 	
-	/** cssSelector */
-	public static final String USER_NAME_TEXT_FIELD = "#credentials-username";
-	/** cssSelector */
-	public static final String LOG_IN_BOX = "div[class='qrk-topbar modal fade in']";
-	/** cssSelector */
-	public static final String PWD_TEXT_FIELD = "#credentials-password";
-	/** cssSelector */ public static final String SIGN_IN_BTN = "#topbarLoggedoutBox > div > div > div.qrk-topbar.modal-footer > button";
-	/** id */ public static final String ERROR_MSG = "credentials-loginError";
-	/** xpath */ public static final String ERROR_TEXT = "//*[@id='credentials-loginError']/text()[1]";
-	/** cssSelector */ public static final String DASHBOARD_LOAD_ELEMENT = "div[class='dashboard-app']";
+	@Override
+	public Locator locator() {
+		return locator;
+	}
+	
+	@Override
+	public By by() {
+		return by;
+	}
+	
+	@Override
+	public TestElement element() {
+		return element;
+	}
 
 }

@@ -9,8 +9,7 @@ import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class ClickableElement extends Commands implements IWait {
 
@@ -22,10 +21,10 @@ public class ClickableElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyMaxWaitTimeIsNotZero(time);
 		new WebDriverWait(LocalDriver.getDriver(), time)
-				.until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(locator, by)));
+				.until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(element)));
 	}
 
 	@Override

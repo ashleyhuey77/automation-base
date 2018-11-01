@@ -4,8 +4,7 @@ import org.openqa.selenium.WebElement;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.interfaces.IText;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class AttributeText extends Commands implements IText {
 
@@ -13,17 +12,12 @@ public class AttributeText extends Commands implements IText {
 	 * <p>
 	 * This is a test to see how this works.
 	 * </p>
-	 * 
-	 * @param locator
-	 *            - test
-	 * @param by
-	 *            - test
 	 * @param attribute
 	 *            - test
 	 */
 	@Override
-	public String getFrom(Locator locator, By by, String... attribute) throws TestException {
-		return getElement(locator, by).getAttribute(attribute[0]);
+	public String getFrom(TestElement element, String... attribute) throws TestException {
+		return getElement(element).getAttribute(attribute[0]);
 	}
 
 	@Override
@@ -32,9 +26,9 @@ public class AttributeText extends Commands implements IText {
 	}
 
 	@Override
-	public Boolean isDisplayed(Locator locator, By by, String expectedText, String... attribute) throws TestException {
+	public Boolean isDisplayed(TestElement element, String expectedText, String... attribute) throws TestException {
 		Boolean result = false;
-		String value = getElement(locator, by).getAttribute(attribute[0]);
+		String value = getElement(element).getAttribute(attribute[0]);
 		if (value != null && value.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 			result = true;
 		}

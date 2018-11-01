@@ -33,7 +33,8 @@ public class NewTest  extends TestInitialization {
 			((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>NO</button>');");
 			Locator locator = new Locator("Test");
 			By by = new By("id");
-			List<WebElement> buttons = SHelper.get().element().getListOf(locator, by);
+			TestElement element = new TestElement(locator, by);
+			List<WebElement> buttons = SHelper.get().element().getListOf(element);
 			WebElement button = new ElementHelper(buttons, "POOP").get();
 		
 			new ClickHelper(new ClickBuilder(new ReportInfo(button.getText() + " button"))

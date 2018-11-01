@@ -13,6 +13,7 @@ import shelper.builders.WaitBuilder;
 import shelper.enums.*;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 import org.openqa.selenium.support.How;
 
 /**
@@ -260,26 +261,19 @@ public abstract class PageHelper {
 	 * If the element is not displayed on te page, the
 	 * test fails.
 	 * </p>
-	 * 
-	 * @param locator
-	 *            - the webelement locator string for
-	 *            the field that the text will be
-	 *            entered into
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.)
+	 * @param element TODO
 	 * @param elementBeingTested
 	 *            - the name of the element being
 	 *            tested. This is used for reporting
 	 *            so that when it is called the report
 	 *            will reflect an element that is
 	 *            unique to the method
+	 * 
 	 * @throws TestException 
 	 */
-	protected void verifySomeElementIsPresent(Locator locator, By by, String elementBeingTested) throws TestException {
+	protected void verifySomeElementIsPresent(TestElement element, String elementBeingTested) throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(locator, by, 10)) {
+			if (SHelper.get().element().isDisplayed(element, 10)) {
 				LocalValidation.getValidations()
 						.assertionPass(elementBeingTested + " displays in the page as expected.");
 			} else {
@@ -300,26 +294,19 @@ public abstract class PageHelper {
 	 * If the element is displayed on te page, the
 	 * test fails.
 	 * </p>
-	 * 
-	 * @param locator
-	 *            - the webelement locator string for
-	 *            the field that the text will be
-	 *            entered into
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.)
+	 * @param element TODO
 	 * @param elementBeingTested
 	 *            - the name of the element being
 	 *            tested. This is used for reporting
 	 *            so that when it is called the report
 	 *            will reflect an element that is
 	 *            unique to the method
+	 * 
 	 * @throws TestException 
 	 */
-	protected void verifySomeElementIsNotPresent(Locator locator, By by, String elementBeingTested) throws TestException {
+	protected void verifySomeElementIsNotPresent(TestElement element, String elementBeingTested) throws TestException {
 		try {
-			if (!SHelper.get().element().isDisplayed(locator, by, 5)) {
+			if (!SHelper.get().element().isDisplayed(element, 5)) {
 				LocalValidation.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
 			} else {
 				throw LocalValidation.getValidations().assertionFailed(
@@ -639,30 +626,25 @@ public abstract class PageHelper {
 	 * and will continue executing the next method in
 	 * the chain.
 	 * </p>
-	 * 
-	 * @param locatorString
-	 *            - the webelement locator string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.). Necessary for the WebElement
-	 *            to be found
+	 * @param element TODO
 	 * @param i
 	 *            - the total amount of time the test
 	 *            should wait for the element to be
 	 *            found.
+	 * @param locatorString
+	 *            - the webelement locator string
+	 *            necessary for the webelement to be
+	 *            found
 	 */
-	public void refreshPageAndWaitForElementToDisplay(Locator locator, By by, int i) {
+	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
 			try {
 				SHelper.get().page().refresh();
-				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(locator, by);
-				if (SHelper.get().element().isDisplayed(SHelper.get().element().get(locator, by), 10)) {
+				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
+				if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 10)) {
 					result = true;
 				} else {
 					result = false;
@@ -727,23 +709,15 @@ public abstract class PageHelper {
 	 * <p>
 	 * Method to extract digits from strings
 	 * </p>
+	 * @param element TODO
 	 * 
-	 * @param locator
-	 *            - the webelement locator string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.). Necessary for the WebElement
-	 *            to be found
 	 * @return String
 	 * @throws TestException 
 	 */
-	protected String getNumbersFromString(Locator locator, By by) throws TestException {
+	protected String getNumbersFromString(TestElement element) throws TestException {
 		String z = null;
 		try {
-			z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator, by);
+			z = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 			return z.replaceAll("[^0-9]", "");
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);

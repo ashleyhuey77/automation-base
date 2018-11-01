@@ -63,7 +63,7 @@ public class OptionSelector {
 
     protected void findOptionThatIsEqualToOptionInAList(OptionSelectorBuilder builder) throws TestException {
         try {
-            List < WebElement > webElements = SHelper.get().element().getListOf(builder.element.locator,  builder.element.by);
+            List < WebElement > webElements = SHelper.get().element().getListOf(builder.element);
             WebElement element = new ElementHelper(webElements, builder.option).get();
             if (element != null) {
                 	new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
@@ -100,14 +100,14 @@ public class OptionSelector {
         try {
             String value = null;
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-            		new WaitBuilder().forAMaxTimeOf(40)).on(builder.element.locator, builder.element.by);
-            List < WebElement > webElements = SHelper.get().element().getListOf(builder.element.locator, builder.element.by);
+            		new WaitBuilder().forAMaxTimeOf(40)).on(builder.element);
+            List < WebElement > webElements = SHelper.get().element().getListOf(builder.element);
             for (int i = 0; i < webElements.size(); i++) {
                 WebElement element = webElements.get(i);
                 String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
                 if (actualOption.toLowerCase().trim().contains(builder.option.toLowerCase().trim())) {
                 		new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
-                				.clickOn(new TestElement(builder.element.locator, builder.element.by))
+                				.clickOn(new TestElement(builder.element.locator(), builder.element.by()))
                 				.withAnIndexOf(i));
                     value = actualOption;
                     LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");

@@ -11,8 +11,7 @@ import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class PresentElement extends Commands implements IWait {
 
@@ -24,10 +23,10 @@ public class PresentElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyMaxWaitTimeIsNotZero(time);
 		new WebDriverWait(LocalDriver.getDriver(), time)
-				.until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(locator, by)));
+				.until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(element)));
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import shelper.SeleniumHelper;
 import shelper.enums.SelectType;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class ActionsTests {
@@ -34,7 +35,8 @@ public class ActionsTests {
 		Thread.sleep(500);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().actions().mouseOver(test);
 	}
@@ -46,8 +48,9 @@ public class ActionsTests {
 		Locator locator = new Locator("Test");
 		By by = new By("id");
 		Thread.sleep(500);
+		TestElement element = new TestElement(locator, by);
 		
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -61,8 +64,9 @@ public class ActionsTests {
 		Thread.sleep(500);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().actions().mouseOver(locator, by);
+		SHelper.get().actions().mouseOver(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -72,11 +76,12 @@ public class ActionsTests {
 		Locator locator = new Locator("Test");
 		By by = new By("id");
 		Thread.sleep(500);
+		TestElement element = new TestElement(locator, by);
 		
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().actions().mouseOver(locator, by);
+		SHelper.get().actions().mouseOver(element);
 	}
 	
 	@Test
@@ -85,9 +90,10 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		SHelper.get().actions().moveTo(locator, by);
+		SHelper.get().actions().moveTo(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -96,8 +102,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().actions().moveTo(locator, by);
+		SHelper.get().actions().moveTo(element);
 	}
 	
 	@Test
@@ -106,8 +113,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().actions().moveTo(test);
 	}
@@ -118,7 +126,8 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -138,7 +147,8 @@ public class ActionsTests {
 				);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
 		SHelper.get().actions().selectFromDropDown(test, "2", SelectType.byValue);
@@ -157,7 +167,8 @@ public class ActionsTests {
 				);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
 		SHelper.get().actions().selectFromDropDown(test, "Saab", SelectType.byVisibleText);
@@ -176,7 +187,8 @@ public class ActionsTests {
 				);
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
 		SHelper.get().actions().selectFromDropDown(test, "Test", SelectType.byVisibleText);
@@ -188,8 +200,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		SHelper.get().actions().scrollTo(locator, by);
+		SHelper.get().actions().scrollTo(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -198,8 +211,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		SHelper.get().actions().scrollTo(locator, by);
+		SHelper.get().actions().scrollTo(element);
 	}
 	
 	@Test
@@ -208,8 +222,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		SHelper.get().actions().scrollTo(test);
 	}
 	
@@ -219,8 +234,9 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Testing123</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(400);
 		SHelper.get().actions().scrollTo(test);
@@ -232,9 +248,10 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown(locator, by, "Test2", SelectType.byIndex);
+		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectType.byIndex);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -243,9 +260,10 @@ public class ActionsTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<select id=Test class=testClass ><option name=test>Test1</option><option>Test2</option><option>Test3</option><option>Test4</option><option>Test5</option></select>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown(locator, by, "Test2", SelectType.byIndex);
+		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectType.byIndex);
 	}
 	
 	@Test
@@ -258,9 +276,11 @@ public class ActionsTests {
 		By by = new By("id");
 		Locator locator2 = new Locator("Test");
 		By by2 = new By("id");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(locator, by, locator2, by2, 1);
+		SHelper.get().actions().dragAndDrop(element, element2, 1);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -273,9 +293,11 @@ public class ActionsTests {
 		By by = new By("id");
 		Locator locator2 = new Locator("Nope");
 		By by2 = new By("id");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(locator, by, locator2, by2, 1);
+		SHelper.get().actions().dragAndDrop(element, element2, 1);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -288,10 +310,12 @@ public class ActionsTests {
 		By by = new By("css");
 		Locator locator2 = new Locator("");
 		By by2 = new By("");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(locator, by, locator2, by2, "0", "0", "0", "50");
+		SHelper.get().actions().dragAndDrop(element, element2, "0", "0", "0", "50");
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -304,9 +328,11 @@ public class ActionsTests {
 		By by = new By("id");
 		Locator locator2 = new Locator("");
 		By by2 = new By("");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(locator, by, locator2, by2, "0", "0", "0", "50");;
+		SHelper.get().actions().dragAndDrop(element, element2, "0", "0", "0", "50");;
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -319,9 +345,11 @@ public class ActionsTests {
 		By by = new By("css");
 		Locator locator2 = new Locator("#Ref_Encoder-02");
 		By by2 = new By("css");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(locator, by, locator2, by2, "0", "0", null, null);
+		SHelper.get().actions().dragAndDrop(element, element2, "0", "0", null, null);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -334,9 +362,11 @@ public class ActionsTests {
 		By by = new By("css");
 		Locator locator2 = new Locator("#Ref_Encoder-02");
 		By by2 = new By("css");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
-		WebElement test2 = SHelper.get().element().get(locator2, by2);
+		WebElement test = SHelper.get().element().get(element);
+		WebElement test2 = SHelper.get().element().get(element2);
 		
 		SHelper.get().actions().dragAndDrop(test, test2, "#resizer", "0", "0", "0", "0", "50");
 	}
@@ -351,9 +381,11 @@ public class ActionsTests {
 		By by = new By("css");
 		Locator locator2 = new Locator("#Ref_Encoder-02");
 		By by2 = new By("css");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
-		WebElement test2 = SHelper.get().element().get(locator2, by2);
+		WebElement test = SHelper.get().element().get(element);
+		WebElement test2 = SHelper.get().element().get(element2);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -370,9 +402,11 @@ public class ActionsTests {
 		By by = new By("css");
 		Locator locator2 = new Locator("#Ref_Encoder-02");
 		By by2 = new By("css");
+		TestElement element = new TestElement(locator, by);
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
-		WebElement test = SHelper.get().element().get(locator, by);
-		WebElement test2 = SHelper.get().element().get(locator2, by2);
+		WebElement test = SHelper.get().element().get(element);
+		WebElement test2 = SHelper.get().element().get(element2);
 		
 		SHelper.get().actions().dragAndDrop(test, test2, "#resizer", "0", "0", "0", null, null);
 	}

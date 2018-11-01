@@ -10,8 +10,6 @@ import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
 import log.TestException;
 import shelper.enums.Via;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
 import shelper.vobjects.TestElement;
 
 public class EnterTextHelper {
@@ -101,13 +99,13 @@ public class EnterTextHelper {
 
 		private void enterTextIntoTestElement(EnterTextBuilder builder) throws TestException {
 			try {
-	            if (SHelper.get().element().isDisplayed(builder.element.locator, builder.element.by, 5)) {
-	            		new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle())).clickOn(new TestElement(builder.element.locator, builder.element.by)));
-	                clearAllTextByBackspacing(builder.element.locator, builder.element.by);
+	            if (SHelper.get().element().isDisplayed(builder.element, 5)) {
+	            		new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle())).clickOn(new TestElement(builder.element.locator(), builder.element.by())));
+	                clearAllTextByBackspacing(builder.element);
 	                if (!TestUtils.isNullOrBlank(builder.value)) {
-	                    SHelper.get().enter().clear(builder.element.locator, builder.element.by);
-	                    new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle())).clickOn(new TestElement(builder.element.locator, builder.element.by)));
-	                    SHelper.get().enter().textInto(builder.element.locator, builder.element.by, builder.value);
+	                    SHelper.get().enter().clear(builder.element);
+	                    new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle())).clickOn(new TestElement(builder.element.locator(), builder.element.by())));
+	                    SHelper.get().enter().textInto(builder.element, builder.value);
 	                }
 	                LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " has been entered successfully");
 	            } else {
@@ -138,13 +136,11 @@ public class EnterTextHelper {
 	     * </p>
 	     * @param locatorString - the webelement locator string necessary for the webelement to
 	     * be found
-	     * @param by - the type of locator being used (i.e id, name, csslocator,
-	     * xpath, etc.). Necessary for the WebElement to be found
 	     * @throws TestException
 	     */
-	    private void clearAllTextByBackspacing(Locator locator, By by) throws TestException {
-	            SHelper.get().enter().textInto(locator, by, Keys.CONTROL + "a");
-	            SHelper.get().enter().textInto(locator, by, Keys.BACK_SPACE);
+	    private void clearAllTextByBackspacing(TestElement element) throws TestException {
+	            SHelper.get().enter().textInto(element, Keys.CONTROL + "a");
+	            SHelper.get().enter().textInto(element, Keys.BACK_SPACE);
 	    }
 		
 		public static class EnterTextBuilder {

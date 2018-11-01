@@ -9,8 +9,7 @@ import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class NonPresentAttribute extends Commands implements IWait {
 
@@ -24,13 +23,13 @@ public class NonPresentAttribute extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyAttributeIsNotNull(attribute);
 		verifyMaxWaitTimeIsNotZero(time);
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String value = elementToBeTested.getAttribute(attribute);
 			if (value == null || value.equals("")) {
 				result = true;

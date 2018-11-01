@@ -10,8 +10,7 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Condition;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class PresentElementText extends Commands implements IWait {
 
@@ -27,15 +26,15 @@ public class PresentElementText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyValueIsNotNull(value);
 		verifyMaxWaitTimeIsNotZero(time);
 		switch (condition) {
 			case EQUAL:
-				waitForElementToEqualText(locator, by, value, time);
+				waitForElementToEqualText(element, value, time);
 				break;
 			case CONTAIN:
-				waitForElementToContainText(locator, by, value, time);
+				waitForElementToContainText(element, value, time);
 				break;
 			default:
 				throw new TestException(
@@ -63,16 +62,7 @@ public class PresentElementText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -80,14 +70,15 @@ public class PresentElementText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForElementToContainText(Locator locator, By by, String expectedText, int i) {
+	private void waitForElementToContainText(TestElement element, String expectedText, int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String actualText = elementToBeTested.getText();
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				result = true;
@@ -99,16 +90,7 @@ public class PresentElementText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -116,14 +98,15 @@ public class PresentElementText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForElementToEqualText(Locator locator, By by, String expectedText, int i) {
+	private void waitForElementToEqualText(TestElement element, String expectedText, int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String actualText = elementToBeTested.getText();
 			if (actualText.equalsIgnoreCase(expectedText.trim())) {
 				result = true;

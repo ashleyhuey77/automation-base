@@ -103,7 +103,7 @@ public class VerifyTextHelper {
      */
     protected void verifySomeElementContainsTheExpectedText(VerifyTextBuilder builder) throws TestException {
         try {
-            WebElement element = SHelper.get().element().get(builder.element.locator, builder.element.by);
+            WebElement element = SHelper.get().element().get(builder.element);
             String actualText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
 
             if (builder.removeAllSpaces) {
@@ -157,8 +157,7 @@ public class VerifyTextHelper {
             if (!TestUtils.isNullOrBlank(builder.index)) {
                 index = builder.index;
             }
-            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(builder.element.locator, builder.element.by,
-                index);
+            String actualValueInTextBox = SHelper.get().text(Variable.ELEMENT, Via.JAVASCRIPT).getFrom(builder.element, index);
             if (actualValueInTextBox.contains("\n")) {
                 actualValueInTextBox = actualValueInTextBox.replace("\n", " ");
             }

@@ -15,6 +15,7 @@ import shelper.SeleniumHelper;
 import shelper.enums.Via;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class ClickTests {
@@ -35,9 +36,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by);
+		SHelper.get().click(Via.JQUERY).on(element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -47,8 +49,11 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Thread.sleep(700);
+		Locator locator = new Locator(null);
+		By by = new By("");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().click(Via.JQUERY).on(null, null);
+		SHelper.get().click(Via.JQUERY).on(element);
 	}
 	
 	@Test
@@ -59,9 +64,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by);
+		SHelper.get().click(Via.JQUERY).on(element);
 	}
 	
 	@Test
@@ -71,10 +77,11 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		SHelper.get().click(Via.JQUERY).on(element);
+		SHelper.get().click(Via.JQUERY).on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -84,12 +91,13 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 		
-		SHelper.get().click(Via.JQUERY).on(element);
+		SHelper.get().click(Via.JQUERY).on(test);
 	}
 	
 	@Test
@@ -100,10 +108,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
-		
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, 0);
+		SHelper.get().click(Via.JQUERY).on(element, 0);
 	}
 	
 	@Test
@@ -114,9 +122,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, 0);
+		SHelper.get().click(Via.JQUERY).on(element, 0);
 	}
 	
 	@Test
@@ -127,9 +136,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, 0);
+		SHelper.get().click(Via.JQUERY).on(element, 0);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -139,9 +149,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("input");
+		TestElement element = new TestElement(locator, new By(""));
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, null, -2);
+		SHelper.get().click(Via.JQUERY).on(element, -2);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -152,9 +163,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, null);
+		SHelper.get().click(Via.JQUERY).on(element, null);
 	}
 	
 	@Test
@@ -165,9 +177,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, "0");
+		SHelper.get().click(Via.JQUERY).on(element, "0");
 	}
 	
 	@Test
@@ -178,9 +191,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, by, "0");
+		SHelper.get().click(Via.JQUERY).on(element, "0");
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -190,9 +204,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("var script = document.createElement('script'); script.src = 'https://code.jquery.com/jquery-1.11.0.min.js'; script.type = 'text/javascript'; document.getElementsByTagName('head')[0].appendChild(script);");
 		Locator locator = new Locator("input");
+		TestElement element = new TestElement(locator, new By(""));
 		Thread.sleep(700);
 		
-		SHelper.get().click(Via.JQUERY).on(locator, null, "-2");
+		SHelper.get().click(Via.JQUERY).on(element, "-2");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -201,8 +216,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("#Ha");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by);
+		SHelper.get().click(Via.SELENIUM).on(element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -210,8 +226,9 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("#Ha");
+		TestElement element = new TestElement(locator, new By(""));
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, null);
+		SHelper.get().click(Via.SELENIUM).on(element);
 	}
 	
 	@Test
@@ -220,8 +237,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by);
+		SHelper.get().click(Via.SELENIUM).on(element);
 	}
 	
 	@Test
@@ -230,9 +248,10 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement element = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 	
-		SHelper.get().click(Via.SELENIUM).on(element);
+		SHelper.get().click(Via.SELENIUM).on(test);
 	}
 	
 	@Test
@@ -243,8 +262,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by, "0");
+		SHelper.get().click(Via.SELENIUM).on(element, "0");
 	}
 	
 	@Test
@@ -255,8 +275,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by, 0);
+		SHelper.get().click(Via.SELENIUM).on(element, 0);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -267,8 +288,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by, "7");
+		SHelper.get().click(Via.SELENIUM).on(element, "7");
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -279,8 +301,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.SELENIUM).on(locator, by, 7);
+		SHelper.get().click(Via.SELENIUM).on(element, 7);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -289,8 +312,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
@@ -304,8 +328,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test
@@ -314,8 +339,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test
@@ -324,8 +350,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("testClass");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test
@@ -334,8 +361,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("button");
 		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test
@@ -344,8 +372,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("testName");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -353,8 +382,9 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("#Test");
+		TestElement element = new TestElement(locator, new By(""));
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, null);
+		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
 	@Test
@@ -363,10 +393,11 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
-		SHelper.get().click(Via.JAVASCRIPT).on(element);
+		SHelper.get().click(Via.JAVASCRIPT).on(test);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -375,11 +406,12 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement element = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		SHelper.get().page().refresh();
 		
-		SHelper.get().click(Via.JAVASCRIPT).on(element);
+		SHelper.get().click(Via.JAVASCRIPT).on(test);
 	}
 	
 	@Test
@@ -389,8 +421,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test
@@ -400,8 +433,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test
@@ -411,8 +445,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("testClass");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test
@@ -422,8 +457,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("button");
 		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test
@@ -433,8 +469,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("testName");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -442,8 +479,9 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("#Test");
+		TestElement element = new TestElement(locator, new By(""));
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, null, "0");
+		SHelper.get().click(Via.JAVASCRIPT).on(element, "0");
 	}
 	
 	@Test
@@ -453,8 +491,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 0);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test
@@ -464,8 +503,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 0);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test
@@ -475,8 +515,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("testClass");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 0);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test
@@ -486,8 +527,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("button");
 		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 0);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test
@@ -497,8 +539,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("testName");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 0);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -507,7 +550,8 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("#Test");
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, null, 0);
+		TestElement element = new TestElement(locator, new By(""));
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 0);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -515,8 +559,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("testClass");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		SHelper.get().click(Via.JAVASCRIPT).on(locator, by, 2);
+		SHelper.get().click(Via.JAVASCRIPT).on(element, 2);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -525,8 +570,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("#Ha");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.ALTERNATE).on(locator, by);
+		SHelper.get().click(Via.ALTERNATE).on(element);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
@@ -534,8 +580,9 @@ public class ClickTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("#Ha");
+		TestElement element = new TestElement(locator, new By(""));
 	
-		SHelper.get().click(Via.ALTERNATE).on(locator, null);
+		SHelper.get().click(Via.ALTERNATE).on(element);
 	}
 	
 	@Test
@@ -544,8 +591,9 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 	
-		SHelper.get().click(Via.ALTERNATE).on(locator, by);
+		SHelper.get().click(Via.ALTERNATE).on(element);
 	}
 	
 	@Test
@@ -554,17 +602,19 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement element = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 	
-		SHelper.get().click(Via.ALTERNATE).on(element);
+		SHelper.get().click(Via.ALTERNATE).on(test);
 	}
 	
 	@Test(expectedExceptions=Exception.class)
 	public void verifyRightClick_PredefinedWebElement_ThrowsWebDriverException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
-	
-		SHelper.get().click(Via.ALTERNATE).on(null);
+
+		WebElement element = SHelper.get().element().get(new TestElement(new Locator(""), new By("")));
+		SHelper.get().click(Via.ALTERNATE).on(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -573,11 +623,12 @@ public class ClickTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement element = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		SHelper.get().page().refresh();
 		Thread.sleep(500);
 	
-		SHelper.get().click(Via.ALTERNATE).on(element);
+		SHelper.get().click(Via.ALTERNATE).on(test);
 	}
 	
 	@AfterMethod

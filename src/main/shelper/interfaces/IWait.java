@@ -3,8 +3,7 @@ package shelper.interfaces;
 import java.util.List;
 import org.openqa.selenium.WebElement;
 import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IWait {
 	
@@ -26,12 +25,11 @@ public interface IWait {
 	 * {@code SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT).on("someSelectorString", id, 30, "style");} </br>
 	 * {@code SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT).on("someSelectorString", id, 30);} </br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @throws TestException
 	 */
-	public void on(Locator locator, By by) throws TestException;
+	public void on(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to wait for an element or attribute to be

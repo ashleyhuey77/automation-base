@@ -11,9 +11,9 @@ import log.Log;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
+import shelper.enums.Wait;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class ElementCount extends Commands implements IWait {
 
@@ -27,7 +27,7 @@ public class ElementCount extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyExpectedCountIsNotZero(expectedTotalCount);
 		verifyMaxWaitTimeIsNotZero(time);
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
@@ -35,7 +35,11 @@ public class ElementCount extends Commands implements IWait {
 			Boolean result = false;
 			try {
 				SHelper.get().page().refresh();
-				int actualElementCount = getElements(locator, by).size();
+				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+						new WaitBuilder()
+						.forAMaxTimeOf(3))
+				.on(element);
+				int actualElementCount = getElements(element).size();
 				if (actualElementCount == expectedTotalCount) {
 					result = true;
 				}

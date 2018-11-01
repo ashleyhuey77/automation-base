@@ -15,6 +15,7 @@ import common.utils.managers.SHelper;
 import shelper.SeleniumHelper;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class EnterTests {
@@ -34,8 +35,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Ha");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(locator, by, Keys.ENTER);
+		SHelper.get().enter().textInto(element, Keys.ENTER);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -44,8 +46,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
@@ -59,8 +62,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(locator, by, Keys.ENTER);
+		SHelper.get().enter().textInto(element, Keys.ENTER);
 	}
 	
 	@Test
@@ -69,8 +73,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().enter().textInto(test, Keys.ENTER);
 	}
@@ -81,8 +86,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(locator, by, "SomeText");
+		SHelper.get().enter().textInto(element, "SomeText");
 	}
 	
 	@Test
@@ -91,8 +97,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().enter().textInto(test, "SomeText");
 	}
@@ -103,8 +110,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Ha");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(locator, by, "SomeText");
+		SHelper.get().enter().textInto(element, "SomeText");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -113,8 +121,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
@@ -128,8 +137,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Ha");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().clear(locator, by);
+		SHelper.get().enter().clear(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -138,8 +148,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
@@ -153,8 +164,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().clear(locator, by);
+		SHelper.get().enter().clear(element);
 	}
 	
 	@Test
@@ -163,8 +175,9 @@ public class EnterTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		SHelper.get().enter().clear(test);
 	}

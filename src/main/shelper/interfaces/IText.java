@@ -2,8 +2,7 @@ package shelper.interfaces;
 
 import org.openqa.selenium.WebElement;
 import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IText {
 
@@ -20,15 +19,14 @@ public interface IText {
 	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).getFrom("someSelectorString", id);} </br>
 	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT).getFrom("someSelectorString", cssSelector);} </br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param attribute - the attribute the method should be validating the presence of.
 	 * (i.e style, class, id, etc.)
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @return String
 	 * @throws TestException
 	 */
-	public String getFrom(Locator locator, By by, String...attribute) throws TestException;
+	public String getFrom(TestElement element, String...attribute) throws TestException;
 	
 	/**
 	 * <p>This method is meant to get the visible (i.e. not hidden by CSS) 
@@ -71,15 +69,14 @@ public interface IText {
 	 * </br> doSomething();} </br>
 	 * </p>
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
+	 * @param expectedText - the text that is expected to appear in the element or attribute.
 	 * @param attribute - the attribute the method should be validating the presence of.
 	 * (i.e style, class, id, etc.)
-	 * @param expectedText - the text that is expected to appear in the element or attribute.
 	 * @return Boolean
 	 * @throws TestException
 	 */
-	public Boolean isDisplayed(Locator locator, By by, String expectedText, String...attribute) throws TestException;
+	public Boolean isDisplayed(TestElement element, String expectedText, String...attribute) throws TestException;
 	
 	/**
 	 * <p>This method is meant to verify whether or not a specific text displays in a webelement and

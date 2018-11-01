@@ -9,8 +9,6 @@ import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
 import log.TestException;
 import shelper.enums.Via;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
 import shelper.vobjects.TestElement;
 
 public class ClickHelper {
@@ -82,8 +80,8 @@ public class ClickHelper {
 
 	private void clickSomeTestElement(ClickBuilder builder) throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(builder.element.locator, builder.element.by, 5)) {
-				tryAllClicks(builder.element.locator, builder.element.by, builder.via, builder.index);
+			if (SHelper.get().element().isDisplayed(builder.element, 5)) {
+				tryAllClicks(builder.element, builder.via, builder.index);
 				LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " clicked successfully.");
 			} else {
 				throw LocalValidation.getValidations().assertionFailed(
@@ -108,18 +106,18 @@ public class ClickHelper {
 		}
 	}
 
-	private void tryAllClicks(Locator locator, By by, Via via, int... index) throws TestException {
+	private void tryAllClicks(TestElement element, Via via, int... index) throws TestException {
 		try {
-			indexCheckClick(via, locator, by, index);
+			indexCheckClick(via, element, index);
 		} catch (Exception ex) {
 			try {
-				indexCheckClick(Via.SELENIUM, locator, by, index);
+				indexCheckClick(Via.SELENIUM, element, index);
 			} catch (Exception e2) {
 				try {
-					indexCheckClick(Via.JAVASCRIPT, locator, by, index);
+					indexCheckClick(Via.JAVASCRIPT, element, index);
 				} catch (Exception e3) {
 					try {
-						indexCheckClick(Via.JQUERY, locator, by, index);
+						indexCheckClick(Via.JQUERY, element, index);
 					} catch (Exception e4) {
 						throw LocalValidation.getValidations().assertionFailed("Test has exhausted all different click "
 								+ "methods. Not able to click element with the specified locator.");
@@ -129,11 +127,11 @@ public class ClickHelper {
 		}
 	}
 
-	private void indexCheckClick(Via via, Locator locator, By by, int... index) throws TestException {
+	private void indexCheckClick(Via via, TestElement element, int... index) throws TestException {
 		if (index.length > 0) {
-			SHelper.get().click(via).on(locator, by, index[0]);
+			SHelper.get().click(via).on(element, index[0]);
 		} else {
-			SHelper.get().click(via).on(locator, by);
+			SHelper.get().click(via).on(element);
 		}
 	}
 

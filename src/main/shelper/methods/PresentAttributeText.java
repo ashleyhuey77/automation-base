@@ -10,8 +10,7 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Condition;
 import shelper.interfaces.IWait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class PresentAttributeText extends Commands implements IWait {
 
@@ -29,16 +28,16 @@ public class PresentAttributeText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
+	public void on(TestElement element) throws TestException {
 		verifyAttributeIsNotNull(attribute);
 		verifyMaxWaitTimeIsNotZero(time);
 		verifyValueIsNotNull(value);
 		switch (condition) {
 			case EQUAL:
-				waitForAttributeToEqualACertainValue(locator, by, attribute, value, time);
+				waitForAttributeToEqualACertainValue(element, attribute, value, time);
 				break;
 			case CONTAIN:
-				waitForAttributeToContainACertainValue(locator, by, attribute, value, time);
+				waitForAttributeToContainACertainValue(element, attribute, value, time);
 				break;
 			default:
 				throw new TestException(
@@ -110,16 +109,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -130,16 +120,16 @@ public class PresentAttributeText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToEqualACertainValue(Locator locator, By by, String attribute, String expectedValue,
-			int i) {
+	private void waitForAttributeToEqualACertainValue(TestElement element, String attribute, String expectedValue, int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
 			try {
-				WebElement elementToBeTested = getElement(locator, by);
+				WebElement elementToBeTested = getElement(element);
 				String actualValue = elementToBeTested.getAttribute(attribute);
 				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
 					result = true;
@@ -154,16 +144,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 * @param element TODO
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -174,15 +155,15 @@ public class PresentAttributeText extends Commands implements IWait {
 	 *            the total amount of time allotted to
 	 *            wait for the condition to return
 	 *            true
+	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToContainACertainValue(Locator locator, By by, String attribute, String expectedValue,
-			int i) {
+	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, int i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(locator, by);
+			WebElement elementToBeTested = getElement(element);
 			String actualValue = elementToBeTested.getAttribute(attribute);
 			if (actualValue != null && actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
 				result = true;

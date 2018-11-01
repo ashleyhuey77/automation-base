@@ -10,26 +10,25 @@ import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.interfaces.IElement;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class Element extends Commands implements IElement {
 
 	@Override
-	public WebElement get(Locator locator, By by) throws TestException {
-		return getElement(locator, by);
+	public WebElement get(TestElement element) throws TestException {
+		return getElement(element);
 	}
 
 	@Override
-	public List<WebElement> getListOf(Locator locator, By by) throws TestException {
-		return getElements(locator, by);
+	public List<WebElement> getListOf(TestElement element) throws TestException {
+		return getElements(element);
 	}
 
 	@Override
-	public Boolean isDisplayed(Locator locator, By by, int i) throws TestException {
+	public Boolean isDisplayed(TestElement element, int i) throws TestException {
 		try {
 			new WebDriverWait(LocalDriver.getDriver(), i)
-					.until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(locator, by)));
+					.until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(element)));
 			return true;
 		} catch (WebDriverException ex) {
 			return false;
@@ -46,23 +45,23 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public WebElement find(WebElement firstElement, Locator locator, By by) throws TestException {
-		return firstElement.findElement(getByValueBasedOnUserInput(locator, by));
+	public WebElement find(WebElement firstElement, TestElement secondElement) throws TestException {
+		return firstElement.findElement(getByValueBasedOnUserInput(secondElement));
 	}
 
 	@Override
-	public WebElement find(Locator firstElocator, By firstEBy, Locator locator, By by) throws TestException {
-		return getElement(firstElocator, firstEBy).findElement(getByValueBasedOnUserInput(locator, by));
+	public WebElement find(TestElement firstElement, TestElement secondElement) throws TestException {
+		return getElement(firstElement).findElement(getByValueBasedOnUserInput(secondElement));
 	}
 
 	@Override
-	public List<WebElement> findListOf(WebElement firstElement, Locator locator, By by) throws TestException {
-		return firstElement.findElements(getByValueBasedOnUserInput(locator, by));
+	public List<WebElement> findListOf(WebElement firstElement, TestElement secondElement) throws TestException {
+		return firstElement.findElements(getByValueBasedOnUserInput(secondElement));
 	}
 
 	@Override
-	public List<WebElement> findListOf(Locator firstElocator, By firstEBy, Locator locator, By by) throws TestException {
-		return getElement(firstElocator, firstEBy).findElements(getByValueBasedOnUserInput(locator, by));
+	public List<WebElement> findListOf(TestElement firstElement, TestElement secondElement) throws TestException {
+		return getElement(firstElement).findElements(getByValueBasedOnUserInput(secondElement));
 	}
 
 	@Override
@@ -81,10 +80,10 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isAttributePresent(Locator locator, By by, String attribute) throws TestException {
+	public Boolean isAttributePresent(TestElement element, String attribute) throws TestException {
 		Boolean result = false;
 		try {
-			String value = getElement(locator, by).getAttribute(attribute);
+			String value = getElement(element).getAttribute(attribute);
 			if (value != null) {
 				result = true;
 			}
@@ -96,10 +95,10 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isEnabled(Locator locator, By by) throws TestException {
+	public Boolean isEnabled(TestElement element) throws TestException {
 		Boolean result = false;
-		WebElement element = getElement(locator, by);
-		if (element.isEnabled()) {
+		WebElement el = getElement(element);
+		if (el.isEnabled()) {
 			result = true;
 		}
 		return result;

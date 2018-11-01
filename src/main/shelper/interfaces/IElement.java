@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IElement {
 	
@@ -22,13 +21,12 @@ public interface IElement {
 	 * as follows: </p>
 	 * {@code WebElement element = SHelper.get().element().get("someSelectorString", id);}</br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @return WebElement
 	 * @throws TestException
 	 */
-	public WebElement get(Locator locator, By by) throws TestException;
+	public WebElement get(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is used to get a list of webelements that
@@ -46,13 +44,12 @@ public interface IElement {
 	 * as follows: </p>
 	 * {@code List<WebElement> element = SHelper.get().element().getListOf("someSelectorString", cssSelector);}</br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @return List<<WebElement>>
 	 * @throws TestException
 	 */
-	public List<WebElement> getListOf(Locator locator, By by) throws TestException;
+	public List<WebElement> getListOf(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is used to wait for an element to display and then return
@@ -66,14 +63,13 @@ public interface IElement {
 	 * {@code if(SHelper.get().element().isDisplayed("someSelectorString", id, 5)) { </br>doSomething();</br>
 	 * }}</br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param i - the total amount of time alotted to wait for the condition to return true
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @return Boolean
 	 * @throws TestException
 	 */
-	public Boolean isDisplayed(Locator locator, By by, int i) throws TestException;
+	public Boolean isDisplayed(TestElement element, int i) throws TestException;
 	
 	/**
 	 * <p>This method is used to wait for an element to display and then return
@@ -106,14 +102,13 @@ public interface IElement {
 	 * WebElement element = SHelper.get().element().find(originalElement, "someSelectorString", id);}</br>
 	 * </p>
 	 * @param firstElement - the original webelement that is defined and found in the calling method 
+	 * @param secondElement TODO
 	 * @param selectorString - the webelement selector string for the second webelement necessary for the 
 	 * webelement to be found. This element should be found in the original element.
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the second webelement. 
-	 * Necessary for the WebElement to be found. This element should be found in the original element.
 	 * @return WebElement
 	 * @throws TestException
 	 */
-	public WebElement find(WebElement firstElement, Locator locator, By by) throws TestException;
+	public WebElement find(WebElement firstElement, TestElement secondElement) throws TestException;
 	
 	/**
 	 * <p>This method is used to find an element that is 
@@ -124,18 +119,14 @@ public interface IElement {
 	 * as follows: </p>
 	 * {@code WebElement element = SHelper.get().element().find("origElementSelectorString", cssSelector,
 	 *  "someSelectorString", id);}</br>
-	 * @param firstESelectorString - the webelement selector string for the original webelement necessary for the 
-	 * webelement to be found.
-	 * @param firstEBy - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the original webelement. 
-	 * Necessary for the WebElement to be found.
+	 * @param firstElement TODO
+	 * @param secondElement TODO
 	 * @param selectorString - the webelement selector string for the second webelement necessary for the 
 	 * webelement to be found. This element should be found in the original element.
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the second webelement. 
-	 * Necessary for the WebElement to be found. This element should be found in the original element.
 	 * @return WebElement
 	 * @throws TestException
 	 */
-	public WebElement find(Locator firstESelectorString, By firstEBy, Locator locator, By by) throws TestException;
+	public WebElement find(TestElement firstElement, TestElement secondElement) throws TestException;
 	
 	/**
 	 * <p>This method is used to find a list of elements that contain
@@ -149,14 +140,13 @@ public interface IElement {
 	 * List<WebElement> element = SHelper.get().element().findListOf(originalElement, "someSelectorString", id);}</br>
 	 * </p>
 	 * @param firstElement - the original webelement that is defined and found in the calling method 
+	 * @param secondElement TODO
 	 * @param selectorString - the webelement selector string for the second webelement necessary for the 
 	 * webelement to be found. This element should be found in the original element.
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the second webelement. 
-	 * Necessary for the WebElement to be found. This element should be found in the original element.
 	 * @return List<<WebElement>>
 	 * @throws TestException
 	 */
-	public List<WebElement> findListOf(WebElement firstElement, Locator locator, By by) throws TestException;
+	public List<WebElement> findListOf(WebElement firstElement, TestElement secondElement) throws TestException;
 	
 	/**
 	 * <p>This method is used to find a list of elements that contain
@@ -169,18 +159,14 @@ public interface IElement {
 	 * {@code List<WebElement> element = SHelper.get().element().findListOf("originalElementSelector", xpath,
 	 *  "someSelectorString", id);}</br>
 	 * </p>
-	 * @param firstESelectorString - the webelement selector string for the original webelement necessary for the 
-	 * webelement to be found.
-	 * @param firstEBy - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the original webelement. 
-	 * Necessary for the WebElement to be found.
+	 * @param firstElement TODO
+	 * @param secondElement TODO
 	 * @param selectorString - the webelement selector string for the second webelement necessary for the 
 	 * webelement to be found. This element should be found in the original element.
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.) for the second webelement. 
-	 * Necessary for the WebElement to be found. This element should be found in the original element.
 	 * @return List<<WebElement>>
 	 * @throws TestException
 	 */
-	public List<WebElement> findListOf(Locator firstESelectorString, By firstEBy, Locator locator, By by) throws TestException;
+	public List<WebElement> findListOf(TestElement firstElement, TestElement secondElement) throws TestException;
 	
 	/**
 	 * <p>This method is used to return whether an attribute is present or not.</p>
@@ -214,15 +200,14 @@ public interface IElement {
 	 * { </br>doSomething();</br>
 	 * }}</br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param attribute - the attribute the method should be validating the presence of.
 	 * (i.e style, class, id, etc.)
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @return Boolean
 	 * @throws TestException
 	 */
-	public Boolean isAttributePresent(Locator locator, By by, String attribute) throws TestException;
+	public Boolean isAttributePresent(TestElement element, String attribute) throws TestException;
 	
 	/**
 	 * <p>This method is used to return whether an element is enabled on
@@ -236,13 +221,12 @@ public interface IElement {
 	 * { </br>doSomething();</br>
 	 * }}</br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @return Boolean
 	 * @throws TestException
 	 */
-	public Boolean isEnabled(Locator locator, By by) throws TestException;
+	public Boolean isEnabled(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is used to return whether an element is enabled on

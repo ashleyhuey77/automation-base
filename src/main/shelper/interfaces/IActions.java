@@ -3,12 +3,11 @@ package shelper.interfaces;
 import org.openqa.selenium.WebElement;
 import log.TestException;
 import shelper.enums.SelectType;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IActions {
 	
-public void moveTo(Locator locator, By by) throws TestException;
+public void moveTo(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to simulate moving the mouse to the middle 
@@ -34,12 +33,11 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * as follows: </p>
 	 * {@code SHelper.get().actions().mouseOver("someSelectorString", id)}</br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @throws TestException
 	 */
-	public void mouseOver(Locator locator, By by) throws TestException;
+	public void mouseOver(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse hovering over 
@@ -74,9 +72,11 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * <p>Overall, the methods linked together should form a sentence that
 	 * shapes which methods are executed.<p>
 	 * </p>
+	 * @param element1 TODO
+	 * @param element2 TODO
 	 * @throws TestException
 	 */
-	public void dragAndDrop(Locator locator1, By by1, Locator locator2, By by2, String stepWidth, String stepDelay, String dx, String dy) throws TestException, InterruptedException;
+	public void dragAndDrop(TestElement element1, TestElement element2, String stepWidth, String stepDelay, String dx, String dy) throws TestException, InterruptedException;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse dragging and dropping an element
@@ -88,6 +88,9 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * as follows: </p>
 	 * {@code SHelper.get().actions().dragAndDrop("someSelectorString", id, "someOtherSelectorString", id, 10)}</br>
 	 * </p>
+	 * @param dragElement TODO
+	 * @param dropElement TODO
+	 * @param timeTowait - the total time to wait inbetween drags and drops.
 	 * @param dragable - the webelement selector string necessary for the webelement to be found for the
 	 * item that is to be dragged.
 	 * @param dragableby - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
@@ -96,10 +99,9 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * element that is to be dropped into.
 	 * @param dropableby - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
 	 * WebElement to be found for the element that is to be dropped into.
-	 * @param timeTowait - the total time to wait inbetween drags and drops.
 	 * @throws TestException
 	 */
-	public void dragAndDrop(Locator dragLocator, By dragBy,  Locator dropLocator, By dropBy, int timeTowait) throws TestException, InterruptedException;
+	public void dragAndDrop(TestElement dragElement, TestElement dropElement,  int timeTowait) throws TestException, InterruptedException;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse dragging and dropping an element
@@ -127,12 +129,11 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * as follows: </p>
 	 * {@code SHelper.get().actions().scrollTo("someSelectorString", cssSelector)}</br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @throws TestException
 	 */
-	public void scrollTo(Locator locator, By by) throws TestException;
+	public void scrollTo(TestElement element) throws TestException;
 	
 	
 	/**
@@ -176,13 +177,12 @@ public void moveTo(Locator locator, By by) throws TestException;
 	 * as follows: </p>
 	 * {@code SHelper.get().actions().selectFromDropDown("someSelectorString", xpath)}</br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param value - the option that is to be selected from the dropdown menu
 	 * @param selectType - the method by which the option is to be selected
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @throws TestException
 	 */
-	public void selectFromDropDown(Locator locator, By by, String value, SelectType selectType) throws TestException;
+	public void selectFromDropDown(TestElement element, String value, SelectType selectType) throws TestException;
 
 }

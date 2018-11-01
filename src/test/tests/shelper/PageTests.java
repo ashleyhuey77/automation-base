@@ -15,6 +15,7 @@ import shelper.enums.Via;
 import shelper.enums.Wait;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
@@ -36,15 +37,18 @@ public class PageTests {
 	{
 		Locator locator = new Locator("input[name='q']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("input[value='Google Search']");
 		By by2 = new By("css");
+		TestElement element2 = new TestElement(locator2, by2);
 		Locator locator3 = new Locator("table[id='nav']");
 		By by3 = new By("css");
-		SHelper.get().enter().textInto(locator, by, "Test");
+		TestElement element3 = new TestElement(locator3, by3);
+		SHelper.get().enter().textInto(element, "Test");
 		Thread.sleep(400);
-		SHelper.get().click(Via.SELENIUM).on(locator2, by2);
+		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-				new WaitBuilder().forAMaxTimeOf(30)).on(locator3, by3);
+				new WaitBuilder().forAMaxTimeOf(30)).on(element3);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
@@ -103,15 +107,18 @@ public class PageTests {
 	{
 		Locator locator = new Locator("input[name='q']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("input[value='Google Search']");
 		By by2 = new By("css");
+		TestElement element2 = new TestElement(locator2, by2);
 		Locator locator3 = new Locator("table[id='nav']");
 		By by3 = new By("css");
-		SHelper.get().enter().textInto(locator, by, "Test");
+		TestElement element3 = new TestElement(locator3, by3);
+		SHelper.get().enter().textInto(element, "Test");
 		Thread.sleep(400);
-		SHelper.get().click(Via.SELENIUM).on(locator2, by2);
+		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-				new WaitBuilder().forAMaxTimeOf(30)).on(locator3, by3);
+				new WaitBuilder().forAMaxTimeOf(30)).on(element3);
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();

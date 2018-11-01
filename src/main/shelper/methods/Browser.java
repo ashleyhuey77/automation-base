@@ -8,7 +8,7 @@ import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.enums.BrowserObject;
 import shelper.interfaces.IBrowser;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class Browser extends Commands implements IBrowser {
 
@@ -28,8 +28,8 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void switchTo(BrowserObject object, Locator locator, shelper.vobjects.By by) throws TestException {
-		LocalDriver.getDriver().switchTo().frame(getElement(locator, by));
+	public void switchTo(BrowserObject object, TestElement element) throws TestException {
+		LocalDriver.getDriver().switchTo().frame(getElement(element));
 	}
 
 	@Override

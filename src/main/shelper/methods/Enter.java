@@ -5,14 +5,13 @@ import org.openqa.selenium.WebElement;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.interfaces.IEnter;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class Enter extends Commands implements IEnter {
 
 	@Override
-	public void textInto(Locator locator, By by, String text) throws TestException {
-		getElement(locator, by).sendKeys(text);
+	public void textInto(TestElement element, String text) throws TestException {
+		getElement(element).sendKeys(text);
 	}
 
 	@Override
@@ -21,8 +20,8 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void textInto(Locator locator, By by, Keys key) throws TestException {
-		getElement(locator, by).sendKeys(key);
+	public void textInto(TestElement element, Keys key) throws TestException {
+		getElement(element).sendKeys(key);
 	}
 
 	@Override
@@ -31,8 +30,8 @@ public class Enter extends Commands implements IEnter {
 	}
 
 	@Override
-	public void clear(Locator locator, By by) throws TestException {
-		getElement(locator, by).clear();
+	public void clear(TestElement element) throws TestException {
+		getElement(element).clear();
 	}
 
 	@Override

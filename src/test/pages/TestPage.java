@@ -140,12 +140,14 @@ public class TestPage extends PageTemplate {
 	
 	public void testverifySomeElementIsNotPresent(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		verifySomeElementIsNotPresent(locator, by, elementBeingTested);
+		TestElement element = new TestElement(locator, by);
+		verifySomeElementIsNotPresent(element, elementBeingTested);
 	}
 	
 	public void testVerifySomeElementIsPresent(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		verifySomeElementIsPresent(locator, by, elementBeingTested);
+		TestElement element = new TestElement(locator, by);
+		verifySomeElementIsPresent(element, elementBeingTested);
 	}
 	
 	public void testVerifyTextInTextField(Locator locator, By by, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception

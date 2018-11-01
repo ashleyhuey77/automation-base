@@ -37,12 +37,13 @@ public class ElementTests {
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
 		TestElement testing = new TestElement(locator, by);
-		System.out.println(testing.locator() + " " + testing.by());
+		System.out.println(testing.locator().value() + " " + testing.by().value());
 		Locator locator2 = new Locator("Test");
 		By by2 = new By("id");
+		TestElement element = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
-		WebElement result = SHelper.get().element().find(test, locator2, by2);
+		WebElement test = SHelper.get().element().get(testing);
+		WebElement result = SHelper.get().element().find(test, element);
 		Assert.assertTrue(result != null, "Web element is null");
 	}
 	
@@ -52,11 +53,13 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("blah");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
-		SHelper.get().element().find(test, locator2, by2);
+		WebElement test = SHelper.get().element().get(element);
+		SHelper.get().element().find(test, element2);
 	}
 	
 	@Test
@@ -65,10 +68,12 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("Test");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		WebElement result = SHelper.get().element().find(locator, by, locator2, by2);
+		WebElement result = SHelper.get().element().find(element, element2);
 		Assert.assertTrue(result != null, "Web element is null");
 	}
 	
@@ -78,10 +83,12 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("blah");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		SHelper.get().element().find(locator, by, locator2, by2);
+		SHelper.get().element().find(element, element2);
 	}
 	
 	@Test
@@ -90,11 +97,13 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("Test");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
-		List<WebElement> result = SHelper.get().element().findListOf(test, locator2, by2);
+		WebElement test = SHelper.get().element().get(element);
+		List<WebElement> result = SHelper.get().element().findListOf(test, element2);
 		Assert.assertTrue(result.size() == 2, "Web element is null");
 	}
 	
@@ -104,14 +113,16 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("blah");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(600);
-		SHelper.get().element().findListOf(test, locator2, by2);
+		SHelper.get().element().findListOf(test, element2);
 	}
 	
 	@Test
@@ -120,10 +131,12 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("Test");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(500);
-		List<WebElement> result = SHelper.get().element().findListOf(locator, by, locator2, by2);
+		List<WebElement> result = SHelper.get().element().findListOf(element, element2);
 		Assert.assertTrue(result.size() == 2, "Web element is null");
 	}
 	
@@ -133,13 +146,15 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<div id=Test2><button id=Test class=testClass >Dont click this button</button><button id=Test class=testClass >Dont click this button</button></div>');");
 		Locator locator = new Locator("Test2");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Locator locator2 = new Locator("blah");
 		By by2 = new By("id");
+		TestElement element2 = new TestElement(locator2, by2);
 		
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(600);
-		SHelper.get().element().findListOf(locator, by, locator2, by2);
+		SHelper.get().element().findListOf(element, element2);
 	}
 	
 /*	@Test
@@ -157,8 +172,9 @@ public class ElementTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
 		Locator locator = new Locator("#Test");
+		TestElement element = new TestElement(locator, new By(""));
 		
-		SHelper.get().element().getListOf(locator, null);
+		SHelper.get().element().getListOf(element);
 	}
 	
 	@Test
@@ -167,8 +183,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -179,8 +196,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("button[id='Test']");
 		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -191,8 +209,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("//*[@id='Test']");
 		By by = new By("xpath");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -203,8 +222,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=className >Dont click this button</button>');");
 		Locator locator = new Locator("className");
 		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -215,8 +235,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("button");
 		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -227,8 +248,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<a>Dont click this button</a>');");
 		Locator locator = new Locator("Dont click this button");
 		By by = new By("link_text");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -239,8 +261,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<a>Dont click this button</a>');");
 		Locator locator = new Locator("Dont click");
 		By by = new By("partial_link_text");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -251,8 +274,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		Locator locator = new Locator("testName");
 		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Assert.assertTrue(test != null, "Web element is null");
 	}
@@ -262,8 +286,9 @@ public class ElementTests {
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
 		By by = new By("xpath");
+		TestElement element = new TestElement(new Locator(null), by);
 		Thread.sleep(500);
-		SHelper.get().element().get(null, by);
+		SHelper.get().element().get(element);
 	}
 	
 	@Test
@@ -272,8 +297,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Boolean result = SHelper.get().element().isAttributePresent(test, "class");
 		
@@ -286,8 +312,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		
 		Boolean result = SHelper.get().element().isAttributePresent(test, "test");
 		
@@ -300,8 +327,9 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
-		WebElement test = SHelper.get().element().get(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
@@ -316,9 +344,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isAttributePresent(locator, by, "class");
+		Boolean result = SHelper.get().element().isAttributePresent(element, "class");
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 	}
@@ -329,9 +358,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isAttributePresent(locator, by, "test");
+		Boolean result = SHelper.get().element().isAttributePresent(element, "test");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -342,11 +372,12 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isAttributePresent(locator, by, "class");
+		Boolean result = SHelper.get().element().isAttributePresent(element, "class");
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -357,9 +388,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(locator, by, 2);
+		Boolean result = SHelper.get().element().isDisplayed(element, 2);
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 	}
@@ -370,9 +402,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(locator, by, 1);
+		Boolean result = SHelper.get().element().isDisplayed(element, 1);
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -384,9 +417,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator(null);
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(locator, by, 2);
+		Boolean result = SHelper.get().element().isDisplayed(element, 2);
 	}
 	
 	@Test
@@ -395,9 +429,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isEnabled(locator, by);
+		Boolean result = SHelper.get().element().isEnabled(element);
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 	}
@@ -408,9 +443,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass disabled>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isEnabled(locator, by);
+		Boolean result = SHelper.get().element().isEnabled(element);
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -422,9 +458,10 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass disabled>Dont click this button</button>');");
 		Locator locator = new Locator(null);
 		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isEnabled(locator, by);
+		Boolean result = SHelper.get().element().isEnabled(element);
 	}
 	
 	@Test
@@ -433,7 +470,8 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
 		Boolean result = SHelper.get().element().isEnabled(test);
@@ -447,7 +485,8 @@ public class ElementTests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass disabled>Dont click this button</button>');");
 		Locator locator = new Locator("Test");
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
 		Boolean result = SHelper.get().element().isEnabled(test);
@@ -460,12 +499,13 @@ public class ElementTests {
 	public void verifyIsElementEnabled_predefined_ExceptionThrown() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass disabled>Dont click this button</button>');");
-/*		Locator locator = new Locator(null);
+		Locator locator = new Locator(null);
 		By by = new By("id");
-		WebElement test = SHelper.get().element().get(locator, by);*/
+		TestElement element = new TestElement(locator, by);
+		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isEnabled(null);
+		Boolean result = SHelper.get().element().isEnabled(test);
 	}
 	
 	@AfterMethod

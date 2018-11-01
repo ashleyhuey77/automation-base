@@ -14,15 +14,14 @@ import shelper.builders.WaitBuilder;
 import shelper.enums.SelectType;
 import shelper.enums.Wait;
 import shelper.interfaces.IActions;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class ElementActions extends Commands implements IActions {
 
 	@Override
-	public void moveTo(Locator locator, By by) throws TestException {
+	public void moveTo(TestElement element) throws TestException {
 		Actions actions = new Actions(LocalDriver.getDriver());
-		actions.moveToElement(getElement(locator, by)).perform();
+		actions.moveToElement(getElement(element)).perform();
 	}
 
 	@Override
@@ -32,9 +31,9 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void mouseOver(Locator locator, By by) throws TestException {
+	public void mouseOver(TestElement element) throws TestException {
 		Actions actions = new Actions(LocalDriver.getDriver());
-		actions.clickAndHold(getElement(locator, by)).perform();
+		actions.clickAndHold(getElement(element)).perform();
 	}
 
 	@Override
@@ -66,58 +65,55 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void dragAndDrop(Locator firstElementlocator, By firstElementBy, Locator secondElementlocator,
-			By secondElementBy, String stepWidth, String stepDelay, String dx, String dy) throws TestException, InterruptedException {
-		WebElement locatorFrom = getElement(firstElementlocator, firstElementBy);
+	public void dragAndDrop(TestElement element1, TestElement element2, String stepWidth,
+			String stepDelay, String dx, String dy) throws TestException, InterruptedException {
+		WebElement locatorFrom = getElement(element1);
 		int xFrom = locatorFrom.getLocation().x;
 		int yFrom = locatorFrom.getLocation().y;
 		int[] difference = { 0, 0 };
 		addDragNDropScriptsToPage();
 
 		if (dx == null && dy == null) {
-			WebElement locatorTo = getElement(secondElementlocator, secondElementBy);
+			WebElement locatorTo = getElement(element2);
 			int xto = locatorTo.getLocation().x;
 			int yto = locatorTo.getLocation().y;
 			ArrayList<String> values = dXAnddYValues(xto, yto, xFrom, yFrom, locatorTo.getSize().height,
 					locatorFrom.getSize().height, difference);
 
-			executeDragNDrop(firstElementlocator.value(), values.get(0), values.get(1), stepWidth, stepDelay);
+			executeDragNDrop(element1.locator().value(), values.get(0), values.get(1), stepWidth, stepDelay);
 		} else {
-			executeDragNDrop(firstElementlocator.value(), dx, dy, stepWidth, stepDelay);
+			executeDragNDrop(element1.locator().value(), dx, dy, stepWidth, stepDelay);
 		}
 	}
 
 	@Override
-	public void dragAndDrop(Locator dragable, By dragableby, Locator dropable, By dropableby, int timeTowait)
+	public void dragAndDrop(TestElement dragElement, TestElement dropElement, int timeTowait)
 			throws TestException, InterruptedException {
 
-		WebElement dragElement = null;
-		WebElement dropElement = null;
+		WebElement dragElement1 = null;
+		WebElement dropElement1 = null;
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragable,
-				dragableby);
-		List<WebElement> locate = SHelper.get().element().getListOf(dragable, dragableby);
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(dragable,
-				dragableby);
-		dragElement = locate.get(0);
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragable,
-				dragableby);
-		List<WebElement> locateDroppable = SHelper.get().element().getListOf(dropable, dropableby);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragElement);
+		List<WebElement> locate = SHelper.get().element().getListOf(dragElement);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(dragElement);
+		dragElement1 = locate.get(0);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragElement);
+		List<WebElement> locateDroppable = SHelper.get().element().getListOf(dropElement);
 		Actions act = new Actions(LocalDriver.getDriver());
-		dropElement = locateDroppable.get(0);
-		act.clickAndHold(dragElement).build().perform();
+		dropElement1 = locateDroppable.get(0);
+		act.clickAndHold(dragElement1).build().perform();
 		Thread.sleep(5000);
-		act.moveToElement(dropElement).build().perform();
+		act.moveToElement(dropElement1).build().perform();
 		Thread.sleep(5000);
 		act.release();
-		act.release(dragElement).build().perform();
+		act.release(dragElement1).build().perform();
 		Thread.sleep(5000);
 	}
 
 	@Override
-	public void scrollTo(Locator locator, By by) throws TestException {
-		WebElement element = getElement(locator, by);
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].scrollIntoView();", element);
+	public void scrollTo(TestElement element) throws TestException {
+		WebElement el = getElement(element);
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].scrollIntoView();", el);
 	}
 
 	@Override
@@ -254,21 +250,19 @@ public class ElementActions extends Commands implements IActions {
 	/**
 	 * <summary> method for selecting from
 	 * dropdown</summary>
-	 * 
-	 * @param locator-
-	 *            the DOM element from dropdown
 	 * @param value
 	 *            - the value to select from dropdown
-	 * @param by
-	 *            - the css selector
 	 * @param selectType
 	 *            - the selection type eithe by value,
 	 *            by visible text or by index
+	 * 
+	 * @param locator-
+	 *            the DOM element from dropdown
 	 * @author OJ
 	 */
 	@Override
-	public void selectFromDropDown(Locator locator, By by, String value, SelectType selectType) throws TestException {
-		Select sel = new Select(getElement(locator, by));
+	public void selectFromDropDown(TestElement element, String value, SelectType selectType) throws TestException {
+		Select sel = new Select(getElement(element));
 		selectOption(sel, value, selectType);
 	}
 

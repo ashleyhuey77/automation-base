@@ -2,7 +2,6 @@ package common.base;
 
 import java.util.logging.Level;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.support.How;
 import common.base.helpers.ClickHelper;
 import common.base.helpers.EnterTextHelper;
 import common.base.helpers.ClickHelper.ClickBuilder;
@@ -14,7 +13,6 @@ import log.Log;
 import log.TestException;
 import shelper.builders.WaitBuilder;
 import shelper.enums.*;
-import shelper.vobjects.TestElement;
 
 /**
  * <p>NewstronSignInPage</p>
@@ -90,7 +88,7 @@ public class NewstronSignInPage<T> extends PageTemplate {
     public void WaitForPageLoad() throws TestException {
         try {
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(60))
-            		.on(locator(BaseGeneric.USER_NAME_TEXT_FIELD), by(cssSelector));
+            		.on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -109,16 +107,16 @@ public class NewstronSignInPage<T> extends PageTemplate {
             String pwd = LocalTest.getCredentials().getNewstronPWord();
             String usrnm = LocalTest.getCredentials().getNewstronUN();
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
-            		new WaitBuilder().forAMaxTimeOf(30)).on(locator(BaseGeneric.USER_NAME_TEXT_FIELD), by(cssSelector));
-            new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Username field"))
+            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
+            new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
             		.enterText(usrnm.trim())
-            		.into(new TestElement(locator(BaseGeneric.USER_NAME_TEXT_FIELD), by(cssSelector))));
+            		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-            		new WaitBuilder().forAMaxTimeOf(30)).on(locator(BaseGeneric.PWD_TEXT_FIELD), by(cssSelector));
+            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
             Thread.sleep(2000);
-            new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Password Field"))
+            new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
             		.enterText(pwd.trim())
-            		.into(new TestElement(locator(BaseGeneric.PWD_TEXT_FIELD), by(cssSelector))));
+            		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
         } catch (WebDriverException ex) {
@@ -144,18 +142,18 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public T clickTheSignInButton() throws TestException, InstantiationException, IllegalAccessException {
         try {
-        		new ClickHelper(new ClickBuilder(new ReportInfo("Sign In button"))
-        				.clickOn(new TestElement(locator(BaseGeneric.SIGN_IN_BTN), by(How.CSS)))
+        		new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
+        				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
         				.via(Via.JAVASCRIPT));
-            if (SHelper.get().element().isDisplayed(locator(BaseGeneric.ERROR_MSG), by(id), 7)) {
+            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 7)) {
             		Thread.sleep(3000);
-                String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator(BaseGeneric.ERROR_MSG), by(id));
+                String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                 if (!TestUtils.isNullOrBlank(errorText)) {
-                    	new ClickHelper(new ClickBuilder(new ReportInfo("Sign In button"))
-                				.clickOn(new TestElement(locator(BaseGeneric.SIGN_IN_BTN), by(How.CSS)))
+                    	new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
+                				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
                 				.via(Via.JAVASCRIPT));
                 		Thread.sleep(3000);
-                    String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(locator(BaseGeneric.ERROR_MSG), by(id));
+                    String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                     if (!TestUtils.isNullOrBlank(errorText2)) {
                     		throw LocalValidation.getValidations().assertionFailed(errorText2);
                     } 

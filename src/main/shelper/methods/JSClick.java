@@ -2,7 +2,6 @@ package shelper.methods;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.How;
 import common.utils.managers.LocalDriver;
 import common.utils.managers.SHelper;
 import log.TestException;
@@ -10,52 +9,43 @@ import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Wait;
 import shelper.interfaces.IClick;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public class JSClick extends Commands implements IClick {
 
 	/**
 	 * <summary> Method to click an element via
 	 * javascript based on webelement type </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
 	 * @param index
 	 *            the index used to identify a
 	 *            particular element in a list of
 	 *            elements tat contain more than one
 	 *            element with a similar selector
-	 * @param webelements
-	 *            the locator type used to identify
-	 *            webelements on the page. Based on
-	 *            the values in the LocatorTypes enum.
+	 * 
 	 * @return void
 	 */
-	private void clickViaJavascriptElementType(String locator, String index, How webelements) {
+	private void clickViaJavascriptElementType(TestElement element, String index) {
 		String click = "].click();";
-		switch (webelements) {
+		switch (element.by().value()) {
 			case ID:
 				((JavascriptExecutor) LocalDriver.getDriver())
-						.executeScript("document.getElementById('" + locator + "').click();");
+						.executeScript("document.getElementById('" + element.locator().value() + "').click();");
 				break;
 			case CLASS_NAME:
 				((JavascriptExecutor) LocalDriver.getDriver())
-						.executeScript("document.getElementsByClassName('" + locator + "')[" + index + click);
+						.executeScript("document.getElementsByClassName('" + element.locator().value() + "')[" + index + click);
 				break;
 			case NAME:
 				((JavascriptExecutor) LocalDriver.getDriver())
-						.executeScript("document.getElementsByName('" + locator + "')[" + index + click);
+						.executeScript("document.getElementsByName('" + element.locator().value() + "')[" + index + click);
 				break;
 			case TAG_NAME:
 				((JavascriptExecutor) LocalDriver.getDriver())
-						.executeScript("document.getElementsByTagName('" + locator + "')[" + index + click);
+						.executeScript("document.getElementsByTagName('" + element.locator().value() + "')[" + index + click);
 				break;
 			case CSS:
 				((JavascriptExecutor) LocalDriver.getDriver())
-						.executeScript("document.querySelector('" + locator + "').click();");
+						.executeScript("document.querySelector('" + element.locator().value() + "').click();");
 				break;
 			default:
 				break;
@@ -63,9 +53,9 @@ public class JSClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(Locator locator, By by) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
-		clickViaJavascriptElementType(locator.value(), "0", by.value());
+	public void on(TestElement element) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		clickViaJavascriptElementType(element, "0");
 	}
 
 	@Override
@@ -75,15 +65,15 @@ public class JSClick extends Commands implements IClick {
 	}
 
 	@Override
-	public void on(Locator locator, By by, String index) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
-		clickViaJavascriptElementType(locator.value(), index, by.value());
+	public void on(TestElement element, String index) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		clickViaJavascriptElementType(element, index);
 	}
 
 	@Override
-	public void on(Locator locator, By by, int index) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(locator, by);
-		clickViaJavascriptElementType(locator.value(), Integer.toString(index), by.value());
+	public void on(TestElement element, int index) throws TestException {
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		clickViaJavascriptElementType(element, Integer.toString(index));
 	}
 
 }

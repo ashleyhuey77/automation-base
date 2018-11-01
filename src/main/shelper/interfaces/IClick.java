@@ -2,8 +2,7 @@ package shelper.interfaces;
 
 import org.openqa.selenium.WebElement;
 import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IClick {
 
@@ -18,12 +17,11 @@ public interface IClick {
 	 * {@code SHelper.get().click(VIA.JQUERY).on("someElementSelector", cssSelector)} </br>
 	 * {@code SHelper.get().click(VIA.JAVASCRIPT).on("someElementSelector", id)} </br>
 	 * </p>
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @throws TestException
 	 */
-	public void on(Locator locator, By by) throws TestException;
+	public void on(TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to form the overall text command that specifies
@@ -53,14 +51,13 @@ public interface IClick {
 	 * {@code SHelper.get().click(VIA.JQUERY).on("someElementSelector", cssSelector, "0")} </br>
 	 * {@code SHelper.get().click(VIA.JAVASCRIPT).on("someElementSelector", id, "3")} </br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param index - the index used to identify a particular element in a list of elements that contain
      * more than one element with a similar selector
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @throws TestException
 	 */
-	public void on(Locator locator, By by, String index) throws TestException;
+	public void on(TestElement element, String index) throws TestException;
 	
 	/**
 	 * <p>This method is meant to form the overall text command that specifies
@@ -73,12 +70,11 @@ public interface IClick {
 	 * {@code SHelper.get().click(VIA.JQUERY).on("someElementSelector", cssSelector, 0)} </br>
 	 * {@code SHelper.get().click(VIA.JAVASCRIPT).on("someElementSelector", id, 3)} </br>
 	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
+	 * @param element TODO
 	 * @param index - the index used to identify a particular element in a list of elements that contain
      * more than one element with a similar selector
+	 * @param selectorString - the webelement selector string necessary for the webelement to be found
 	 * @throws TestException
 	 */
-	public void on(Locator locator, By by, int index) throws TestException;
+	public void on(TestElement element, int index) throws TestException;
 }

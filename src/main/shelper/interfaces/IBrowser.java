@@ -3,8 +3,7 @@ package shelper.interfaces;
 import org.openqa.selenium.WebElement;
 import log.TestException;
 import shelper.enums.BrowserObject;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
+import shelper.vobjects.TestElement;
 
 public interface IBrowser {
 	
@@ -34,12 +33,11 @@ public interface IBrowser {
 	 * {@code SHelper.get().browser().switchTo(BrowserObject.FRAME, "someElementSelector", id)}</br>
 	 * </p>
 	 * @param object - the browser object to which the focus should switch
+	 * @param element TODO
 	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param by - the type of selector being used (i.e id, name, cssSelector, xpath, etc.). Necessary for the 
-	 * WebElement to be found
 	 * @throws TestException
 	 */
-	public void switchTo(BrowserObject object, Locator locator, By by) throws TestException;
+	public void switchTo(BrowserObject object, TestElement element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to switch to a browser object. This method is primarily used
