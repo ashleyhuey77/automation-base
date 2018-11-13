@@ -60,13 +60,14 @@ public class LocalTest {
             String newstronUN = setValueIfSystemPropIsNull(props, "NewstronEncryptedUserName", "");
             String newstronPWD = setValueIfSystemPropIsNull(props, "NewstronEncryptedPassword", "");
             String env = setValueIfSystemPropIsNull(props, "Environment", "env");
+            String bureau = setValueIfSystemPropIsNull(props, "Bureau", "bureau");
             String browser = setValueIfSystemPropIsNull(props, "Browser", "browser");
             Boolean isHeadless = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsHeadless", "isHeadless"));
             String miraUserName = setValueIfSystemPropIsNull(props, "miraEncryptedUserName", "");
             String miraPassword = setValueIfSystemPropIsNull(props, "miraEncryptedPassword", "");
             String os = setValueIfSystemPropIsNull(props, "OS", "oS");
 
-            Environment environment = new Environment(appUrl, env, browser, os, isHeadless);
+            Environment environment = new Environment(appUrl, env, browser, os, bureau, isHeadless);
             Credentials credentials = new Credentials(miraUserName, miraPassword, newstronUN, newstronPWD);
             setCredentials(credentials);
             setEnvironment(environment);

@@ -7,7 +7,7 @@
 </listeners>
   <test name="Regression">
   	<classes>
-		<class name="tests.shelper.BrowserTests"/>
+		<!-- <class name="tests.shelper.BrowserTests"/>
   		<class name="tests.shelper.ClickTests"/>
 		<class name="tests.shelper.EnterTests"/>
   		<class name="tests.shelper.PageTests"/>
@@ -20,7 +20,12 @@
   	    <class name="tests.utils.RandomStringTests"/>
   		<class name="tests.DatePickerTests"/>
   		<class name="tests.ReportingTests"/>
-  		<class name="tests.UtilsTest"/>
+  		<class name="tests.UtilsTest"/>  -->
+  		<class name="tests.loki.PersonTests"/>
+  		<class name="tests.loki.SlugTests"/>
+  		<class name="tests.loki.VideoTests"/>
+  		<class name="tests.loki.WorkOrderTests"/>
+  		<class name="tests.loki.OtherLokiTests"/>
   	</classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
