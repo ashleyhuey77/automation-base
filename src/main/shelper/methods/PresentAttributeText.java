@@ -1,9 +1,11 @@
 package shelper.methods;
 
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.utils.Validator;
 import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
@@ -29,9 +31,6 @@ public class PresentAttributeText extends Commands implements IWait {
 
 	@Override
 	public void on(TestElement element) throws TestException {
-		verifyAttributeIsNotNull(attribute);
-		verifyMaxWaitTimeIsNotZero(time);
-		verifyValueIsNotNull(value);
 		switch (condition) {
 			case EQUAL:
 				waitForAttributeToEqualACertainValue(element, attribute, value, time);
@@ -47,9 +46,6 @@ public class PresentAttributeText extends Commands implements IWait {
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		verifyAttributeIsNotNull(attribute);
-		verifyMaxWaitTimeIsNotZero(time);
-		verifyValueIsNotNull(value);
 		switch (condition) {
 			case EQUAL:
 				waitForAttributeToEqualACertainValue(element, attribute, value, time);
@@ -109,7 +105,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * @param element TODO
+	 * @param element
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -144,7 +140,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * @param element TODO
+	 * @param element
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained
@@ -223,7 +219,12 @@ public class PresentAttributeText extends Commands implements IWait {
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
 			this.attribute = base.baseAttribute;
-			failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
+			Validator.of(base.baseAttribute).validate(Objects::nonNull, result -> base.baseAttribute != null, "Attribute is null. Add the 'forAttribute' method.")
+											.validate(String::valueOf, result -> !result.isEmpty(), "Attribute is empty. Add a value to the 'forAttribute' method.").get();
+			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
+										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();
+			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();
 		}
 
 	}

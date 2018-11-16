@@ -1,5 +1,7 @@
 package tests.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import common.utils.helpers.RandomStringHelper;
@@ -13,6 +15,27 @@ public class RandomStringTests {
 		try {
 			//arrange
 			String[] stringArray = new String[] { "Test1", "Test2", "Test3" };
+			//act
+			String test = new RandomStringHelper(new RandomStringBuilder()
+										.buildAString(stringArray))
+										.get();
+			//assert
+			Assert.assertNotNull(test);
+			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
+		} catch (Exception e) {
+			
+		}
+	}
+	
+	@Test
+	public void getRandomStringFromList() throws TestException {
+		try {
+			//arrange
+			List<String> stringArray = new ArrayList<>();
+					stringArray.add("Test1");
+					stringArray.add("Test2"); 
+					stringArray.add("Test3");
 			//act
 			String test = new RandomStringHelper(new RandomStringBuilder()
 										.buildAString(stringArray))
@@ -95,6 +118,22 @@ public class RandomStringTests {
 	}
 	
 	private Boolean doesResultContainArrayValue(String value, String[] array) {
+		Boolean result = false;
+		try {
+			String actual = "";
+			for (String string : array) {
+				actual = actual + " " + string;
+			}
+			if (actual.trim().contains(value)) {
+				result = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+	
+	private Boolean doesResultContainArrayValue(String value, List<String> array) {
 		Boolean result = false;
 		try {
 			String actual = "";

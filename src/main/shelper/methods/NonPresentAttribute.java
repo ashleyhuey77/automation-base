@@ -1,9 +1,11 @@
 package shelper.methods;
 
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.utils.Validator;
 import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
@@ -24,8 +26,6 @@ public class NonPresentAttribute extends Commands implements IWait {
 
 	@Override
 	public void on(TestElement element) throws TestException {
-		verifyAttributeIsNotNull(attribute);
-		verifyMaxWaitTimeIsNotZero(time);
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
@@ -40,8 +40,6 @@ public class NonPresentAttribute extends Commands implements IWait {
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		verifyAttributeIsNotNull(attribute);
-		verifyMaxWaitTimeIsNotZero(time);
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
@@ -56,7 +54,7 @@ public class NonPresentAttribute extends Commands implements IWait {
 
 	@Override
 	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for the NonPresentAttribute class.");
 	}
 
 	public static class LocalWaitBuilder extends Commands {
@@ -66,9 +64,12 @@ public class NonPresentAttribute extends Commands implements IWait {
 		public LocalWaitBuilder(WaitBuilder base) throws TestException {
 			this.time = base.baseTime;
 			this.attribute = base.baseAttribute;
-			failIfConditionIsNotNull(base.baseCondition);
-			failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
-			failIfValueIsNotNull(base.baseValue);
+			Validator.of(base.baseAttribute).validate(Objects::nonNull, result -> base.baseAttribute != null, "Attribute is null. Add the 'forAttribute' method.")
+											.validate(String::valueOf, result -> !result.isEmpty(), "Attribute is empty. Add a value to the 'forAttribute' method.").get();
+			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			Validator.of(base.baseCondition).validate(Objects::isNull, result -> base.baseCondition == null, "Condition is not null. Remove the 'to' method.").get();
+			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();
+			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue == null, "Value is not null. Remove the 'value' method.").get();
 		}
 
 	}

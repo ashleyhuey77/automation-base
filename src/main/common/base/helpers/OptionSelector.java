@@ -1,11 +1,11 @@
 package common.base.helpers;
 
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import common.base.helpers.ClickHelper.ClickBuilder;
 import common.base.vobjects.ReportInfo;
-import common.utils.NullReportTool;
-import common.utils.NullReportTool.NullReportBuilder;
+import common.utils.Validator;
 import common.utils.managers.LocalReport;
 import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
@@ -21,12 +21,8 @@ public class OptionSelector {
 	
 	public OptionSelector(OptionSelectorBuilder builder) throws TestException {
 		try {
-			new NullReportTool(new NullReportBuilder(new ReportInfo("Option"))
-					.value(builder.option)
-					.verifyValueIsNotNull(true));
-			new NullReportTool(new NullReportBuilder(new ReportInfo("TestElement"))
-					.object(builder.element)
-					.verifyObjectIsNotNull(true));
+			Validator.of(builder.option).validate(Objects::nonNull, result -> builder.element != null, "Option is null.").get();
+			Validator.of(builder.element).validate(Objects::nonNull, result -> builder.element != null, "Test element is null.").get();
 			switch (builder.condition) {
                 case EQUAL:
                     findOptionThatIsEqualToOptionInAList(builder);

@@ -2,10 +2,7 @@ package shelper.abstracts;
 
 import java.util.List;
 import org.openqa.selenium.WebElement;
-import common.utils.TestUtils;
 import common.utils.managers.LocalDriver;
-import log.TestException;
-import shelper.enums.Condition;
 import shelper.vobjects.TestElement;
 
 public class Commands {
@@ -97,61 +94,4 @@ public class Commands {
 		return LocalDriver.getDriver().findElements(getByValueBasedOnUserInput(element));
 	}
 
-	protected void verifyMaxWaitTimeIsNotZero(int time) throws TestException {
-		if (time == 0) {
-			throw new TestException("A max wait time was not provided. When waiting, a max wait time must be provided.");
-		}
-	}
-
-	protected void verifyExpectedCountIsNotZero(int expectedTotalCount) throws TestException {
-		if (expectedTotalCount == 0) {
-			throw new TestException("An expected total count was not provided. When waiting for the total expected count "
-					+ "to be a certain number, that expected count must be provided.");
-		}
-	}
-
-	protected void verifyValueIsNotNull(String value) throws TestException {
-		if (TestUtils.isNullOrBlank(value)) {
-			throw new TestException(
-					"The text value was not provided. If waiting on a text value to be present, that text value must be provided.");
-		}
-	}
-
-	protected void verifyAttributeIsNotNull(String attribute) throws TestException {
-		if (TestUtils.isNullOrBlank(attribute)) {
-			throw new TestException(
-					"The attribute was not provided. If waiting on an attribute value to be present, that attribute value must be provided.");
-		}
-	}
-
-	protected void failIfValueIsNotNull(String value) throws TestException {
-		if (!TestUtils.isNullOrBlank(value)) {
-			throw new TestException("This method's Wait enum is set to a value that does not contain any text validation. "
-					+ "Please check the Wait enum and verify it is set to the correct value or remove the value() method from the wait chain.");
-		}
-	}
-
-	protected void failIfConditionIsNotNull(Condition condition) throws TestException {
-		if (condition != null) {
-			throw new TestException(
-					"This method's Wait enum is set to a value that does not contain any condition validation. "
-							+ "Please check the Wait enum and verify it is set to the correct value or remove the to() method from the wait chain.");
-		}
-	}
-
-	protected void failIfExpectedCountIsNotZero(int expectedTotalCount) throws TestException {
-		if (expectedTotalCount != 0) {
-			throw new TestException(
-					"This method's Wait enum is set to a value that does not require an expected count validation. "
-							+ "Please check the Wait enum and verify it is set to the correct value or remove the withACountOf() method from the wait chain.");
-		}
-	}
-
-	protected void failIfAttributeIsNotNull(String attribute) throws TestException {
-		if (!TestUtils.isNullOrBlank(attribute)) {
-			throw new TestException(
-					"This method's Wait enum is set to a value that does not require an attribute validation. "
-							+ "Please check the Wait enum and verify it is set to the correct value or remove the forAttribute() method from the wait chain.");
-		}
-	}
 }

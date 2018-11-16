@@ -76,7 +76,7 @@ dependencies {
    	compile 'org.jsoup:jsoup:1.11.1'
 }
 
-version='3.6.7'
+version='3.6.10'
 
 task updateVersion {
 	doLast {

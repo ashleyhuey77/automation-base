@@ -16,6 +16,8 @@ public class RandomStringHelper {
 	public RandomStringHelper(RandomStringBuilder builder) throws Exception {
 		if (builder.stringArray != null && builder.stringArray.length > 0) {
 			result = getRandomStringFromArray(builder);
+		} else if (builder.stringList != null && !builder.stringList.isEmpty()) {
+			result = getRandomStringFromList(builder);
 		} else if (!TestUtils.isNullOrBlank(builder.stringValue)) {
 			result = createRandomStringFromCharacters(builder);
 		} else {
@@ -44,6 +46,26 @@ public class RandomStringHelper {
 		}
 		Collections.shuffle(stringArray);
 		result = stringArray.get(0);
+		return result;
+	}
+	
+	/**
+	 * <p>
+	 * This method takes an array of strings and
+	 * selects a random string from the array.
+	 * </p>
+	 * 
+	 * @param strings
+	 *            - the array of strings that a string
+	 *            value should be randomly selected
+	 *            from
+	 * @return String
+	 * @throws TestException
+	 */
+	public static String getRandomStringFromList(RandomStringBuilder builder) {
+		String result = null;
+		Collections.shuffle(builder.stringList);
+		result = builder.stringList.get(0);
 		return result;
 	}
 
@@ -104,6 +126,7 @@ public class RandomStringHelper {
 
 		// optional params
 		private String[] stringArray;
+		private List<String> stringList;
 		private String stringValue;
 		private int maxLength;
 		private Boolean returnsAtRandomLength;
@@ -116,6 +139,11 @@ public class RandomStringHelper {
 
 		public RandomStringBuilder buildAString(String[] stringArray) {
 			this.stringArray = stringArray;
+			return this;
+		}
+		
+		public RandomStringBuilder buildAString(List<String> stringList) {
+			this.stringList = stringList;
 			return this;
 		}
 

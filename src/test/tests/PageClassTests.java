@@ -742,7 +742,7 @@ public class PageClassTests extends TestInitialization {
 		} catch (Exception ex) {
 			String m = ex.toString();
 			Assert.assertTrue(m.trim()
-					.contains("The Expected Text was not provided. Please add the appropriate method to the chain."));
+					.contains("Expected Text is null."));
 		}
 	}
 

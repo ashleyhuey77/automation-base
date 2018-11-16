@@ -1,9 +1,9 @@
 package common.base.helpers;
 
+import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import common.base.vobjects.ReportInfo;
-import common.utils.NullReportTool;
-import common.utils.NullReportTool.NullReportBuilder;
+import common.utils.Validator;
 import common.utils.managers.LocalReport;
 import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
@@ -71,10 +71,8 @@ public class ClickHelper {
 		} else if (builder.webElement != null) {
 			clickSomeWebElement(builder);
 		} else {
-			new NullReportTool(new NullReportBuilder(new ReportInfo("TestElement")).object(builder.element)
-					.verifyObjectIsNotNull(true));
-			new NullReportTool(new NullReportBuilder(new ReportInfo("WebElement")).object(builder.webElement)
-					.verifyObjectIsNotNull(true));
+			Validator.of(builder.element).validate(Objects::nonNull, result -> builder.element != null, "Test element is null.").get();
+			Validator.of(builder.webElement).validate(Objects::nonNull, result -> builder.webElement != null, "Web element is null.").get();
 		}
 	}
 

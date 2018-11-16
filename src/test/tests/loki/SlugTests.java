@@ -47,13 +47,6 @@ public class SlugTests {
 	}
 	
 	@Test
-	public void verifyElements() {
-		String value = loki.slug().elements();
-		Assert.assertNotNull(value);
-		Assert.assertTrue(value.matches("^.*(\\w+ ?|\\,|\\.|\\?|\\'|\\-|\\!|\\d)+."));
-	}
-	
-	@Test
 	public void verifyForProgram() {
 		String value = loki.slug().forProgram();
 		Assert.assertNotNull(value);
@@ -96,22 +89,15 @@ public class SlugTests {
 	}
 	
 	@Test
-	public void verifySummary() {
-		String value = loki.slug().summary();
+	public void verifyShortText() {
+		String value = loki.slug().shortText();
 		Assert.assertNotNull(value);
 		Assert.assertTrue(value.matches("^.*(\\w+ ?|\\,|\\.|\\?|\\'|\\!|\\-|\\d)+."));
 	}
 	
 	@Test
-	public void verifyLongSummary() {
-		String value = loki.slug().longSummary();
-		Assert.assertNotNull(value);
-		Assert.assertTrue(value.matches("^.*(\\w+ ?|\\,|\\.|\\?|\\'|\\!|\\-|\\d)+."));
-	}
-	
-	@Test
-	public void verifyTechNotes() {
-		String value = loki.slug().technicalNotes();
+	public void verifyLongText() {
+		String value = loki.slug().longText();
 		Assert.assertNotNull(value);
 		Assert.assertTrue(value.matches("^.*(\\w+ ?|\\,|\\.|\\?|\\'|\\!|\\-|\\d)+."));
 	}

@@ -1,10 +1,10 @@
 package common.base.helpers;
 
+import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import common.base.vobjects.ReportInfo;
-import common.utils.NullReportTool;
 import common.utils.TestUtils;
-import common.utils.NullReportTool.NullReportBuilder;
+import common.utils.Validator;
 import common.utils.managers.LocalReport;
 import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
@@ -17,9 +17,7 @@ public class VerifyTextHelper {
 	
 	public VerifyTextHelper(VerifyTextBuilder builder) throws TestException {
 		try {
-			new NullReportTool(new NullReportBuilder(new ReportInfo("Expected Text"))
-					.value(builder.expectedText)
-					.verifyValueIsNotNull(true));
+			Validator.of(builder.expectedText).validate(Objects::nonNull, result -> builder.expectedText != null, "Expected Text is null.").get();
 	           if (builder.via != null &&
 	        		   builder.via.equals(Via.JAVASCRIPT)) {
 	        	   		verifyTextInTextField(builder);

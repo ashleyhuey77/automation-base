@@ -1,9 +1,11 @@
 package shelper.methods;
 
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.utils.Validator;
 import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
@@ -29,8 +31,6 @@ public class NonPresentElementText extends Commands implements IWait {
 
 	@Override
 	public void on(TestElement element) throws TestException {
-		verifyValueIsNotNull(value);
-		verifyMaxWaitTimeIsNotZero(time);
 		switch (condition) {
 			case EQUAL:
 				waitForElementToNoLongerEqualText(element, value, time);
@@ -46,8 +46,6 @@ public class NonPresentElementText extends Commands implements IWait {
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		verifyValueIsNotNull(value);
-		verifyMaxWaitTimeIsNotZero(time);
 		switch (condition) {
 			case EQUAL:
 				waitForElementToNoLongerEqualText(element, value, time);
@@ -63,14 +61,13 @@ public class NonPresentElementText extends Commands implements IWait {
 
 	@Override
 	public void on(List<WebElement> element) throws TestException {
-		// unused as of now
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for wait on non present element text.");
 	}
 
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * @param element TODO
+	 * @param element
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -98,7 +95,7 @@ public class NonPresentElementText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * @param element TODO
+	 * @param element
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -204,8 +201,11 @@ public class NonPresentElementText extends Commands implements IWait {
 			this.time = base.baseTime;
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
-			failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
-			failIfAttributeIsNotNull(base.baseAttribute);
+			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
+										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();
+			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();
+			Validator.of(base.baseAttribute).validate(Objects::nonNull, result -> base.baseAttribute == null, "Attribute is not null. Remove the 'forAttribute' method.").get();
 		}
 
 	}

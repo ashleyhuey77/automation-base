@@ -1,9 +1,11 @@
 package shelper.methods;
 
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.utils.Validator;
 import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
@@ -27,8 +29,6 @@ public class PresentElementText extends Commands implements IWait {
 
 	@Override
 	public void on(TestElement element) throws TestException {
-		verifyValueIsNotNull(value);
-		verifyMaxWaitTimeIsNotZero(time);
 		switch (condition) {
 			case EQUAL:
 				waitForElementToEqualText(element, value, time);
@@ -44,8 +44,6 @@ public class PresentElementText extends Commands implements IWait {
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		verifyValueIsNotNull(value);
-		verifyMaxWaitTimeIsNotZero(time);
 		switch (condition) {
 			case EQUAL:
 				waitForElementToEqualText(element, value, time);
@@ -201,8 +199,11 @@ public class PresentElementText extends Commands implements IWait {
 			this.time = base.baseTime;
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
-			failIfAttributeIsNotNull(base.baseAttribute);
-			failIfExpectedCountIsNotZero(base.baseExpectedTotalCount);
+			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
+										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();
+			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();
+			Validator.of(base.baseAttribute).validate(Objects::nonNull, result -> base.baseAttribute == null, "Attribute is not null. Remove the 'forAttribute' method.").get();
 		}
 
 	}

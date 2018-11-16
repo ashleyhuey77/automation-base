@@ -1,12 +1,12 @@
 package common.base.helpers;
 
+import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import common.base.helpers.ClickHelper.ClickBuilder;
 import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.helpers.OptionSelector.OptionSelectorBuilder;
 import common.base.vobjects.ReportInfo;
-import common.utils.NullReportTool;
-import common.utils.NullReportTool.NullReportBuilder;
+import common.utils.Validator;
 import common.utils.managers.LocalReport;
 import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
@@ -21,9 +21,7 @@ public class DropdownHelper {
 	
 	public DropdownHelper(DropdownBuilder builder) throws TestException {
 		try {
-			new NullReportTool(new NullReportBuilder(new ReportInfo("Option"))
-					.value(builder.option)
-					.verifyValueIsNotNull(true));
+			Validator.of(builder.option).validate(Objects::nonNull, result -> builder.option != null, "Option is null.").get();
 			if (builder.clickElement != null &&
 						builder.optionsElement != null) {
 				selectTestElementFromNonDropdown(builder);

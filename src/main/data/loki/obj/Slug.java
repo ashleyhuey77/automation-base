@@ -36,16 +36,12 @@ public class Slug {
 		return loki.mockValuesService().fetchString("slug.alerts");
 	}
 	
-	public String summary() {
-		return loki.mockValuesService().fetchString("slug.summary");
+	public String shortText() {
+		return loki.mockValuesService().fetchString("slug.short_text");
 	}
 	
-	public String longSummary() {
-		return loki.mockValuesService().resolve("slug.long_summary", this, loki);
-	}
-	
-	public String technicalNotes() {
-		return loki.mockValuesService().fetchString("slug.tech_notes");
+	public String longText() {
+		return loki.mockValuesService().resolve("slug.long_text", this, loki);
 	}
 	
 	public String division() {
@@ -66,9 +62,5 @@ public class Slug {
 	
 	public String county() {
 		return loki.mockValuesService().fetchString("slug.county");
-	}
-	
-	public String elements() {
-		return loki.mockValuesService().fetchString("slug.elements");
 	}
 }
