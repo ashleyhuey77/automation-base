@@ -66,7 +66,7 @@ public class DropdownHelper {
      */
     protected void selectTestElementFromNonDropdown(DropdownBuilder builder) throws TestException {
         try {
-            if (SHelper.get().element().isDisplayed(builder.clickElement, 10)) {
+            if (SHelper.get().element().isDisplayed(builder.clickElement, 3)) {
             		new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle()))
             				.clickOn(new TestElement(builder.clickElement.locator(), builder.clickElement.by())));
                 Thread.sleep(600);

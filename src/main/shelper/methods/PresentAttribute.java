@@ -10,16 +10,12 @@ import common.utils.managers.LocalDriver;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
-import shelper.enums.Condition;
 import shelper.interfaces.IWait;
 import shelper.vobjects.TestElement;
 
 public class PresentAttribute extends Commands implements IWait {
 
 	protected int time = 0;
-	protected Condition condition;
-	protected String value;
-	protected int expectedTotalCount = 0;
 	protected String attribute;
 
 	public PresentAttribute(WaitBuilder build) throws TestException {

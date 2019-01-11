@@ -76,7 +76,15 @@ dependencies {
    	compile 'org.jsoup:jsoup:1.11.1'
 }
 
-version='3.6.10'
+	task runSomeTests(type: Test) {
+		useTestNG() {
+			// runlist to executed. path is relative to current folder
+			suites 'src/test/tests/Test.xml'
+		}
+			systemProperties project.properties.subMap(["AppUrl", "Env", "Browser", "IsHeadless", "OS"])
+	}
+
+version='3.7.11'
 
 task updateVersion {
 	doLast {

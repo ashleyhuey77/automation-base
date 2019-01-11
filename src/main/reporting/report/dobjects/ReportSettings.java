@@ -12,21 +12,11 @@ public class ReportSettings {
 
 	public Boolean TakeScreenshotPassedStep = true;
 
-	private String dateFormatString = "dd-MMM-yyyy hh:mm:ss a";
-
 	private String reportName;
 
 	private String reportPath;
 
 	private ReportType type;
-
-	public String getDateFormatString() {
-		return this.dateFormatString;
-	}
-
-	public void setDateFormatString(String value) {
-		this.dateFormatString = value;
-	}
 
 	public String getReportName() {
 		return this.reportName;
@@ -56,12 +46,6 @@ public class ReportSettings {
 		this.setReportPath(reportPath);
 		this.setReportName(reportName);
 		this.setReportType(type);
-
-	}
-
-	public ReportSettings(String reportPath, String reportName) {
-		this.setReportPath(reportPath);
-		this.setReportName(reportName);
 
 	}
 }

@@ -5,17 +5,10 @@ import common.base.PageTemplate;
 import common.base.enums.DaysOfTheWeek;
 import common.base.enums.Entity;
 import common.base.enums.Timezones;
-import common.base.helpers.ClickHelper;
-import common.base.helpers.DropdownHelper;
-import common.base.helpers.EnterTextHelper;
 import common.base.helpers.VerifyTextHelper;
-import common.base.helpers.ClickHelper.ClickBuilder;
-import common.base.helpers.DropdownHelper.DropdownBuilder;
-import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.helpers.VerifyTextHelper.VerifyTextBuilder;
 import common.base.vobjects.ReportInfo;
 import log.TestException;
-import shelper.enums.Via;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
 import shelper.vobjects.TestElement;
@@ -106,25 +99,6 @@ public class TestPage extends PageTemplate {
 		return getFutureDate(daysOutFromCurrentDay);
 	}
 	
-	public void testEnterAValueIntoATextField(String value, Locator locator, By by, String elementBeingTested) throws Exception
-	{
-		new EnterTextHelper(new EnterTextBuilder(new ReportInfo(elementBeingTested))
-				.enterText(value)
-				.into(new TestElement(locator, by)));
-	}
-	
-	public void testEnterAValueIntoATextField(String value, WebElement webElement, String elementBeingTested) throws Exception
-	{
-		new EnterTextHelper(new EnterTextBuilder(new ReportInfo(elementBeingTested))
-				.enterText(value)
-				.into(webElement));
-	}
-	
-	public void testClickSomeElement(Locator locator, By by, String elementBeingTested) throws Exception
-	{
-		new ClickHelper(new ClickBuilder(new ReportInfo(elementBeingTested)).clickOn(new TestElement(locator, by)).via(Via.SELENIUM));
-	}
-	
 	public int testGetTotalDaysInMonth() throws Exception
 	{
 		return getTotalDaysInMonth();
@@ -148,24 +122,6 @@ public class TestPage extends PageTemplate {
 	{
 		TestElement element = new TestElement(locator, by);
 		verifySomeElementIsPresent(element, elementBeingTested);
-	}
-	
-	public void testVerifyTextInTextField(Locator locator, By by, String webElementIndex, String expectedText, String elementBeingTested, Boolean removeAllSpaces) throws Exception
-	{
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo(elementBeingTested))
-				.verify(new TestElement(locator, by))
-				.contains(expectedText)
-				.via(Via.JAVASCRIPT)
-				.withIndexOf(webElementIndex)
-				.removeAllSpaces(removeAllSpaces));
-	}
-	
-	public void testDropDownHelper() throws Exception {
-		new DropdownHelper(new DropdownBuilder(new ReportInfo("Drop Down"))
-				.clickMenuToOpen(new TestElement(locator("someLocator"), by(id)))
-				.searchForOption(new TestElement(locator("searchLocator"), by(id)))
-				.selectOption("Option to select")
-				.fromOptionList(new TestElement(locator("optionListSelector"), by(xpath))));
 	}
 	
 	 public static void superficialEnumCodeCoverage(Class<? extends Enum<?>> enumClass) {

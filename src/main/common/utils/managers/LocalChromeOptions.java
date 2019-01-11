@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class LocalChromeOptions {
 	
 	private LocalChromeOptions() {
-		throw new IllegalStateException("Local Chrome Options");
+		
 	}
 
     private static ThreadLocal < ChromeOptions > cOptions = new ThreadLocal <> ();

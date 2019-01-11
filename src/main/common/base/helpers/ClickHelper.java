@@ -63,7 +63,7 @@ public class ClickHelper {
 	 *            necessary to click on a web element
 	 *            that is stored in a list of
 	 *            webelements.
-	 * @throws TestException 
+	 * @throws TestException
 	 */
 	public ClickHelper(ClickBuilder builder) throws TestException {
 		if (builder.element != null) {
@@ -71,8 +71,8 @@ public class ClickHelper {
 		} else if (builder.webElement != null) {
 			clickSomeWebElement(builder);
 		} else {
-			Validator.of(builder.element).validate(Objects::nonNull, result -> builder.element != null, "Test element is null.").get();
-			Validator.of(builder.webElement).validate(Objects::nonNull, result -> builder.webElement != null, "Web element is null.").get();
+			Validator.of(builder.element)
+					.validate(Objects::nonNull, result -> builder.element != null, "Test element is null.").get();
 		}
 	}
 
@@ -92,13 +92,8 @@ public class ClickHelper {
 
 	private void clickSomeWebElement(ClickBuilder builder) throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(builder.webElement, 5)) {
-				SHelper.get().click(builder.via).on(builder.webElement);
-				LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " clicked successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(
-						"Element is not on the page. Unable to click the " + builder.info.elementTitle());
-			}
+			SHelper.get().click(builder.via).on(builder.webElement);
+			LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " clicked successfully.");
 		} catch (Exception e) {
 			throw LocalReport.getReport().reportException(e);
 		}
@@ -126,11 +121,7 @@ public class ClickHelper {
 	}
 
 	private void indexCheckClick(Via via, TestElement element, int... index) throws TestException {
-		if (index.length > 0) {
-			SHelper.get().click(via).on(element, index[0]);
-		} else {
-			SHelper.get().click(via).on(element);
-		}
+		SHelper.get().click(via).on(element, index[0]);
 	}
 
 	public static class ClickBuilder {

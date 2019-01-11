@@ -32,8 +32,4 @@ public class TestContent {
 		return url.get();
 	}
 
-	public String heading4() {
-		return heading4.get();
-	}
-
 }

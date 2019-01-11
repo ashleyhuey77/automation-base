@@ -51,7 +51,9 @@ public class ValidationsHelper {
 	public void assertionPass(String message) throws TestException {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		testReport.reportPassEvent(stepName, message);
-		System.out.println("Step: " + stepName + " has passed. " + message);
+		synchronized (System.out) {
+			System.out.println("Step: " + stepName + " has passed. " + message);
+		}
 	}
 
 	/**

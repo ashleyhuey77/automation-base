@@ -37,7 +37,10 @@ public class ChromeDriverHelper {
             State headlessStopState = new HeadlessStop();
             context.setState(headlessStopState);
             context.doAction();
-            LocalChromeOptions.get().addExtensions(new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx"));
+            File file = new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx");
+            if (file.exists()) {
+            	LocalChromeOptions.get().addExtensions(new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx"));
+            }
         }
         //LocalChromeOptions.get().addArguments("disable-extensions");
         caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());

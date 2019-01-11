@@ -30,7 +30,9 @@ public class ReportHelper {
     public void reportDoneEvent(String description) throws TestException {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         testReport.reportDoneEvent(stepName, description);
-        System.out.println("Step: " + stepName + " has passed. " + description);
+        synchronized (System.out) {
+        	System.out.println("Step: " + stepName + " has passed. " + description);
+        }
     }
 
     /**

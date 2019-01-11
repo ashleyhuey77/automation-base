@@ -19,8 +19,6 @@ public class NonPresentElementText extends Commands implements IWait {
 	protected int time = 0;
 	protected Condition condition;
 	protected String value;
-	protected int expectedTotalCount = 0;
-	protected String attribute;
 
 	public NonPresentElementText(WaitBuilder build) throws TestException {
 		LocalWaitBuilder builder = new LocalWaitBuilder(build);

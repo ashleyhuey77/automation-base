@@ -10,6 +10,10 @@ import common.utils.builders.Environment;
 import log.TestException;
 
 public class LocalTest {
+	
+	private LocalTest() {
+		
+	}
 
     private static ThreadLocal < String > testName = new ThreadLocal <> ();
     private static ThreadLocal<Environment> environment = new ThreadLocal<>();

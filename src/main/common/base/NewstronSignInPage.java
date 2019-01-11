@@ -1,6 +1,5 @@
 package common.base;
 
-import java.util.logging.Level;
 import org.openqa.selenium.WebDriverException;
 import common.base.helpers.ClickHelper;
 import common.base.helpers.EnterTextHelper;
@@ -9,7 +8,6 @@ import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
 import common.utils.managers.*;
-import log.Log;
 import log.TestException;
 import shelper.builders.WaitBuilder;
 import shelper.enums.*;
@@ -119,11 +117,9 @@ public class NewstronSignInPage<T> extends PageTemplate {
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
-        } catch (WebDriverException ex) {
+        } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
-        } catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
-		}
+        }
         return this;
     }
 
