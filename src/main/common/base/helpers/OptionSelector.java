@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import common.base.helpers.ClickHelper.ClickBuilder;
+import common.base.helpers.ElementHelper.ElementBuilder;
 import common.base.vobjects.ReportInfo;
 import common.utils.Validator;
 import common.utils.managers.LocalReport;
@@ -12,8 +13,6 @@ import common.utils.managers.SHelper;
 import log.TestException;
 import shelper.builders.WaitBuilder;
 import shelper.enums.Condition;
-import shelper.enums.Variable;
-import shelper.enums.Via;
 import shelper.enums.Wait;
 import shelper.vobjects.TestElement;
 
@@ -82,7 +81,7 @@ public class OptionSelector {
 	protected void findOptionThatIsEqualToOptionInAList(OptionSelectorBuilder builder) throws TestException {
 		try {
 			List<WebElement> webElements = SHelper.get().element().getListOf(builder.element);
-			WebElement element = new ElementHelper(webElements, builder.option).get();
+			WebElement element = new ElementHelper(new ElementBuilder(webElements).that(Condition.EQUAL).text(builder.option)).get();
 			if (element != null) {
 				new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option")).clickOn(element));
 				LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");
@@ -133,23 +132,14 @@ public class OptionSelector {
 
 	protected void findTheOptionContainedInAList(OptionSelectorBuilder builder) throws TestException {
 		try {
-			String value = null;
 			SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(5)).on(builder.element);
 			List<WebElement> webElements = SHelper.get().element().getListOf(builder.element);
-			for (int i = 0; i < webElements.size(); i++) {
-				WebElement element = webElements.get(i);
-				String actualOption = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(element);
-				if (actualOption.toLowerCase().trim().contains(builder.option.toLowerCase().trim())) {
-					new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
-							.clickOn(new TestElement(builder.element.locator(), builder.element.by()))
-							.withAnIndexOf(i));
-					value = actualOption;
-					LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");
-					break;
-				}
-			}
-
-			if (value == null) {
+			WebElement element = new ElementHelper(new ElementBuilder(webElements).that(Condition.CONTAIN).text(builder.option)).get();
+			if (element != null) {
+				new ClickHelper(new ClickBuilder(new ReportInfo(builder.option + " option"))
+						.clickOn(new TestElement(builder.element.locator(), builder.element.by())));
+				LocalReport.getReport().reportDoneEvent(builder.option + " has been selected successfully.");
+			} else {
 				throw LocalValidation.getValidations().assertionFailed(builder.option + " is not found in the "
 						+ "list of available options. Unable to select the expected option.");
 			}

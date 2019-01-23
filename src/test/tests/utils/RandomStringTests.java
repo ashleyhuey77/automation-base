@@ -24,7 +24,7 @@ public class RandomStringTests {
 			Assert.assertTrue(test != "", "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 		} catch (Exception e) {
-			
+			throw e;
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class RandomStringTests {
 			Assert.assertTrue(test != "", "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 		} catch (Exception e) {
-			
+			throw e;
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class RandomStringTests {
 			Assert.assertTrue(test != "", "Value returned an empty string value.");
 			Assert.assertTrue(test.length() <= 5, "The length of the string is greater than it should be.");
 		} catch (Exception e) {
-			
+			throw e;
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class RandomStringTests {
 			Assert.assertTrue(test != "", "Value returned an empty string value.");
 			Assert.assertTrue(test.length() == 5, "The length of the string is not exactly 5 as it should be.");
 		} catch (Exception e) {
-			
+			throw e;
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class RandomStringTests {
 			Assert.assertTrue(test != "", "Value returned an empty string value.");
 			Assert.assertTrue(test.length() == 5, "The length of the string is not exactly 5 as it should be.");
 		} catch (Exception e) {
-			
+			throw e;
 		}
 	}
 	
@@ -115,6 +115,68 @@ public class RandomStringTests {
 										.withAMaxLengthOf(5))
 										.get();
 			Assert.fail("Exception was not thrown the following string was created " + test);
+	}
+	
+	@Test
+	public void getRandomStringFromArray_IsPartialTrue() throws TestException {
+		try {
+			//arrange
+			String[] stringArray = new String[] { "Test1", "Test2", "Test3" };
+			//act
+			String test = new RandomStringHelper(new RandomStringBuilder()
+										.buildAString(stringArray)
+										.returnAPartialString(true))
+										.get();
+			//assert
+			Assert.assertNotNull(test);
+			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
+			System.out.println(test);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@Test
+	public void getRandomStringFromList_IsPartialTrue() throws TestException {
+		try {
+			//arrange
+			List<String> stringArray = new ArrayList<>();
+					stringArray.add("TestingHi1");
+					stringArray.add("TesingYou2"); 
+					stringArray.add("TetingFive3");
+			//act
+			String test = new RandomStringHelper(new RandomStringBuilder()
+										.buildAString(stringArray)
+										.returnAPartialString(true))
+										.get();
+			//assert
+			Assert.assertNotNull(test);
+			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
+			System.out.println(test);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@Test
+	public void getRandomStringAtARandomLength_IsPartialTrue() throws TestException {
+		try {
+			//arrange
+			String characters = "TestingTime";
+			//act
+			String test = new RandomStringHelper(new RandomStringBuilder()
+										.buildAString(characters)
+										.returnAPartialString(true))
+										.get();
+			//assert
+			Assert.assertNotNull(test);
+			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			System.out.println(test);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	private Boolean doesResultContainArrayValue(String value, String[] array) {

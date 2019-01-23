@@ -13,13 +13,17 @@ public class RandomStringHelper {
 
 	private String result;
 
-	public RandomStringHelper(RandomStringBuilder builder) throws Exception {
+	public RandomStringHelper(RandomStringBuilder builder) throws TestException {
 		if (builder.stringArray != null && builder.stringArray.length > 0) {
 			result = getRandomStringFromArray(builder);
 		} else if (builder.stringList != null && !builder.stringList.isEmpty()) {
 			result = getRandomStringFromList(builder);
 		} else if (!TestUtils.isNullOrBlank(builder.stringValue)) {
-			result = createRandomStringFromCharacters(builder);
+			if (builder.isPartialString) {
+				result = getPartialString(builder.stringValue);
+			} else {
+				result = createRandomStringFromCharacters(builder);
+			}
 		} else {
 			throw new TestException("Please provide either a string or a string array to be randomized.");
 		}
@@ -38,14 +42,33 @@ public class RandomStringHelper {
 	 * @return String
 	 * @throws TestException
 	 */
-	public static String getRandomStringFromArray(RandomStringBuilder builder) {
+	public static String getRandomStringFromArray(RandomStringBuilder builder) throws TestException {
 		String result = null;
 		List<String> stringArray = new ArrayList<>();
 		for (String i : builder.stringArray) {
 			stringArray.add(i);
 		}
 		Collections.shuffle(stringArray);
-		result = stringArray.get(0);
+		if (builder.isPartialString) {
+			result = getPartialString(stringArray.get(0));
+		} else {
+			result = stringArray.get(0);
+		}
+		return result;
+	}
+	
+	private static String getPartialString(String value) throws TestException {
+		String result = null;
+		try {
+    		int length = getRandomInt(value.length(), false);
+    		if (length == 0) {
+    			result = value;
+    		} else {
+    			result = value.substring(0, length);
+    		}
+		} catch (Exception e) {
+			throw e;
+		}
 		return result;
 	}
 	
@@ -62,10 +85,14 @@ public class RandomStringHelper {
 	 * @return String
 	 * @throws TestException
 	 */
-	public static String getRandomStringFromList(RandomStringBuilder builder) {
+	public static String getRandomStringFromList(RandomStringBuilder builder) throws TestException {
 		String result = null;
 		Collections.shuffle(builder.stringList);
-		result = builder.stringList.get(0);
+		if (builder.isPartialString) {
+			result = getPartialString(builder.stringList.get(0));
+		} else {
+			result = builder.stringList.get(0);
+		}
 		return result;
 	}
 
@@ -99,11 +126,7 @@ public class RandomStringHelper {
 		try {
 			SecureRandom rnd = new SecureRandom();
 			if (builder.returnsAtRandomLength) {
-				Random random = new Random();
-				int randomLength = random.nextInt(builder.maxLength);
-				if (randomLength == 0) {
-					randomLength++;
-				}
+				int randomLength = getRandomInt(builder.maxLength, true);
 				for (int i = 0; i < randomLength; i++) {
 					sb.append(builder.stringValue.charAt(rnd.nextInt(builder.stringValue.length())));
 				}
@@ -116,6 +139,21 @@ public class RandomStringHelper {
 			throw LocalReport.getReport().reportException(ex);
 		}
 		return sb.toString();
+	}
+	
+	private static int getRandomInt(int length, Boolean noZero) throws TestException {
+		int result = 0;
+		try {
+    		Random random = new Random();
+    		result = random.nextInt(length);
+    		if (noZero
+    			 && result == 0) {
+    			result = result++;
+    		}
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
 	}
 
 	public String get() {
@@ -130,10 +168,14 @@ public class RandomStringHelper {
 		private String stringValue;
 		private int maxLength;
 		private Boolean returnsAtRandomLength;
+		private Boolean isPartialString;
 
 		public RandomStringBuilder() {
 			if (returnsAtRandomLength == null) {
 				returnsAtRandomLength = false;
+			}
+			if (isPartialString == null) {
+				isPartialString = false;
 			}
 		}
 
@@ -159,6 +201,11 @@ public class RandomStringHelper {
 
 		public RandomStringBuilder returnsAStringOfRandomLength(Boolean returnsAtRandomLength) {
 			this.returnsAtRandomLength = returnsAtRandomLength;
+			return this;
+		}
+		
+		public RandomStringBuilder returnAPartialString(Boolean value) {
+			this.isPartialString = value;
 			return this;
 		}
 

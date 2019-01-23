@@ -109,10 +109,10 @@ public class OptionSelector_Tests extends TestInitialization {
 	
 	@Test(groups= {"option"}, alwaysRun=true)
 	public void verifyOptionSelector_Contains_OptionFound() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Test 1</a></br>');");
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Test 2</a></br>');");
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Test 3</a></br>');");
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Test 4</a></br>');");
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Yes</a></br>');");
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Yeah</a></br>');");
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Maybe</a></br>');");
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test >Nah</a></br>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("a[id='Test']");
 		By by = new By("css");
@@ -121,7 +121,7 @@ public class OptionSelector_Tests extends TestInitialization {
 		System.setOut(ps.get());
 
 		new OptionSelector(new OptionSelectorBuilder()
-				.findOption("Test 2")
+				.findOption("Yea")
 				.thatIs(Condition.CONTAIN)
 				.For(new TestElement(locator, by)));
 

@@ -84,7 +84,7 @@ dependencies {
 			systemProperties project.properties.subMap(["AppUrl", "Env", "Browser", "IsHeadless", "OS"])
 	}
 
-version='3.7.11'
+version='3.7.13'
 
 task updateVersion {
 	doLast {
