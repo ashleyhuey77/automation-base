@@ -52,8 +52,16 @@ public class Slug {
 		return loki.mockValuesService().fetchString("slug.country");
 	}
 	
+	public String countryAbbr() {
+		return loki.mockValuesService().fetchString("slug.country_abbr");
+	}
+	
 	public String state() {
 		return loki.mockValuesService().fetchString("slug.state");
+	}
+	
+	public String stateAbbr() {
+		return loki.mockValuesService().fetchString("slug.state_abbr");
 	}
 	
 	public String city() {
