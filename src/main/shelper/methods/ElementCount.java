@@ -34,7 +34,13 @@ public class ElementCount extends Commands implements IWait {
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
 			try {
-				SHelper.get().page().refresh();
+				/** refresh can't live in this method. If refresh
+			 	is necessary, then a new loop will need to be
+			 	created that contains the refresh
+			 	The list of web elements needs to be refreshed
+			 	every time the page is refreshed or this method
+			 	will not work correctly.
+			 	SHelper.get().page().refresh(); **/
 				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 						new WaitBuilder()
 						.forAMaxTimeOf(3))

@@ -4,8 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.base.helpers.ClickHelper;
+import common.base.helpers.EnterTextHelper;
+import common.base.helpers.ClickHelper.ClickBuilder;
+import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.interfaces.DatePicker;
 import common.base.methods.PresentDate;
+import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
 import common.utils.managers.*;
 import log.TestException;
@@ -741,6 +746,21 @@ public abstract class PageHelper {
 			return z.replaceAll("[^0-9]", "");
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);
+		}
+	}
+	
+	protected void handleSignInModal() throws TestException {
+		try {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 3)) {
+				String pwd = LocalTest.getCredentials().getNewstronPWord();
+				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(pwd)
+						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));
+				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
+						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));
+				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+			}
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
 		}
 	}
 

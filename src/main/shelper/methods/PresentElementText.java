@@ -76,10 +76,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
-			String actualText = elementToBeTested.getText();
-			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = getElement(element);
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -104,10 +108,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
-			String actualText = elementToBeTested.getText();
-			if (actualText.equalsIgnoreCase(expectedText.trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = getElement(element);
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.equalsIgnoreCase(expectedText.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -140,10 +148,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = element;
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -176,10 +188,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (actualText.equalsIgnoreCase(expectedText.trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = element;
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.equalsIgnoreCase(expectedText.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
