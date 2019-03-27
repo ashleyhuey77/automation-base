@@ -1,6 +1,5 @@
 package tests.shelper;
 
-import java.util.ArrayList;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -221,16 +220,6 @@ public class Wait_PresentAttributeText_Tests {
 				.value("someClassValue")
 				.forAMaxTimeOf(1))
 				.on(element);
-	}
-	
-	@Test(expectedExceptions=UnsupportedOperationException.class)
-	public void verifyWaitForAttributeTextToBePresentPredefinedWebElement_ExceptionThrown() throws Exception {
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
-				.forAttribute("class")
-				.to(Condition.EQUAL)
-				.value("someClassValue")
-				.forAMaxTimeOf(1))
-				.on(new ArrayList<WebElement>());
 	}
 
 	@AfterMethod

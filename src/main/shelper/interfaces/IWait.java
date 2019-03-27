@@ -1,6 +1,5 @@
 package shelper.interfaces;
 
-import java.util.List;
 import org.openqa.selenium.WebElement;
 import log.TestException;
 import shelper.vobjects.TestElement;
@@ -54,24 +53,5 @@ public interface IWait {
 	 * @throws TestException
 	 */
 	public void on(WebElement element) throws TestException;
-	
-	/**
-	 * <p>This method is meant to wait for the total number of elements to equal a certain
-	 * number.</p>
-	 * <p>This method waits up to the specified amount of time for the condition
-	 * to be true. If the condition returns true before the specified time, then
-	 * the test moves on to the next method. If the condition does not return true
-	 * by the specified time, the text fails.</p>
-	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
-	 * <p>Examples of the different types of sentences that can be formed are
-	 * as follows: </p>
-	 * {@code List<WebElement> element = SHelper.get().element().getListOf("someSelectorString", cssSelector);} </br>
-	 * {@code SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS).on(element, 3, 30);}</br>
-	 * </p>
-	 * @param element - a list of webelements that are defined and found in the calling method
-	 * @throws TestException
-	 */
-	public void on(List<WebElement> element) throws TestException;
 
 }

@@ -8,5 +8,7 @@ public enum Entity {
     Requests,
     Encoders,
     Recurrences,
-    MS2Metadata
+    MS2Metadata,
+    EA,
+    EditServiceJobs
 }

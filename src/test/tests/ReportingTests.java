@@ -1,6 +1,5 @@
 package tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import common.utils.TestReport;
 import common.utils.builders.Environment;
@@ -42,7 +41,6 @@ public class ReportingTests {
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.");
 		LocalValidation.getValidations().assertionPass("Test Pass");
-		Assert.fail();
 	}
 
 	@Test

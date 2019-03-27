@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,11 +49,6 @@ public class PresentAttribute extends Commands implements IWait {
 			}
 			return result;
 		});
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for the PresentAttribute class.");
 	}
 
 	public static class LocalWaitBuilder extends Commands {

@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,11 +30,6 @@ public class ClickableElement extends Commands implements IWait {
 	@Override
 	public void on(WebElement element) throws TestException {
 		new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.elementToBeClickable(element));
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for wait on clickability.");
 	}
 
 	public static class LocalWaitBuilder extends Commands {

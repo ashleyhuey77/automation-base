@@ -1,6 +1,5 @@
 package tests.shelper;
 
-import java.util.ArrayList;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -44,6 +43,54 @@ public class Wait_PresentElementText_Tests {
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT,
 				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(2)).on(element);
+	}
+	
+	@Test
+	public void verifyWaitForElementToContainACertainValue_List() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
+		((JavascriptExecutor) LocalDriver.getDriver())
+		.executeScript("document.write('<button id=Test class=someClassValue>Test 2</button>');");
+		Thread.sleep(300);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT,
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").indexOf("0").forAMaxTimeOf(2)).on(element);
+	}
+	
+	@Test
+	public void verifyWaitForElementToEqualACertainValue_List() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
+		((JavascriptExecutor) LocalDriver.getDriver())
+		.executeScript("document.write('<button id=Test class=someClassValue>Nothing</button>');");
+		Thread.sleep(300);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT,
+				new WaitBuilder().to(Condition.EQUAL).value("Test").indexOf("0").forAMaxTimeOf(2)).on(element);
+	}
+	
+	@Test(expectedExceptions = Exception.class)
+	public void verifyWaitForElementToContainACertainValue_List_Exception() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
+		((JavascriptExecutor) LocalDriver.getDriver())
+		.executeScript("document.write('<button id=Test class=someClassValue>Test 2</button>');");
+		Thread.sleep(300);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT,
+				new WaitBuilder().to(Condition.CONTAIN).value("Hello").indexOf("0").forAMaxTimeOf(1)).on(element);
+	}
+	
+	@Test(expectedExceptions = Exception.class)
+	public void verifyWaitForElementToEqualACertainValue_List_Exception() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClassValue>Test</button>');");
+		((JavascriptExecutor) LocalDriver.getDriver())
+		.executeScript("document.write('<button id=Test class=someClassValue>Nothing</button>');");
+		Thread.sleep(300);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT,
+				new WaitBuilder().to(Condition.EQUAL).value("Hello").indexOf("0").forAMaxTimeOf(1)).on(element);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -196,15 +243,6 @@ public class Wait_PresentElementText_Tests {
 				.forAMaxTimeOf(1)
 				.withACountOf(2))
 				.on(element);
-	}
-	
-	@Test(expectedExceptions=UnsupportedOperationException.class)
-	public void verifyWaitForElementToBePresentList_ExceptionThrown() throws Exception {
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder()
-				.to(Condition.EQUAL)
-				.forAMaxTimeOf(2)
-				.value("something"))
-				.on(new ArrayList<WebElement>());
 	}
 
 	@AfterMethod

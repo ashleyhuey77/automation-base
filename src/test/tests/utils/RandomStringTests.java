@@ -21,7 +21,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 		} catch (Exception e) {
 			throw e;
@@ -42,7 +42,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 		} catch (Exception e) {
 			throw e;
@@ -62,7 +62,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(test.length() <= 5, "The length of the string is greater than it should be.");
 		} catch (Exception e) {
 			throw e;
@@ -82,7 +82,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(test.length() == 5, "The length of the string is not exactly 5 as it should be.");
 		} catch (Exception e) {
 			throw e;
@@ -101,7 +101,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(test.length() == 5, "The length of the string is not exactly 5 as it should be.");
 		} catch (Exception e) {
 			throw e;
@@ -129,7 +129,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 			System.out.println(test);
 		} catch (Exception e) {
@@ -152,7 +152,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			Assert.assertTrue(doesResultContainArrayValue(test, stringArray), "The string array does not contain the resulting value.");
 			System.out.println(test);
 		} catch (Exception e) {
@@ -172,7 +172,7 @@ public class RandomStringTests {
 										.get();
 			//assert
 			Assert.assertNotNull(test);
-			Assert.assertTrue(test != "", "Value returned an empty string value.");
+			Assert.assertTrue(!test.equals(""), "Value returned an empty string value.");
 			System.out.println(test);
 		} catch (Exception e) {
 			throw e;

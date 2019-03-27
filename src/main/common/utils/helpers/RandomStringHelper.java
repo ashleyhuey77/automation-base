@@ -146,9 +146,10 @@ public class RandomStringHelper {
 		try {
     		Random random = new Random();
     		result = random.nextInt(length);
-    		if (noZero
-    			 && result == 0) {
-    			result = result++;
+    		if (noZero) {
+    			while (result == 0) {
+    				result = result+1;
+    			}
     		}
 		} catch (Exception e) {
 			throw e;

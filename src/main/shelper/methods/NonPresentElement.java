@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -45,11 +44,6 @@ public class NonPresentElement extends Commands implements IWait {
 			}
 			return result;
 		});
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for wait on presence of element.");
 	}
 
 	public static class LocalWaitBuilder extends Commands {

@@ -9,6 +9,7 @@ public class WaitBuilder {
 	public String baseValue;
 	public int baseExpectedTotalCount = 0;
 	public String baseAttribute;
+	public String indexOf;
 	
 	public WaitBuilder withACountOf(int value) {
 		this.baseExpectedTotalCount = value;
@@ -32,6 +33,11 @@ public class WaitBuilder {
 	
 	public WaitBuilder value(String value) {
 		this.baseValue = value;
+		return this;
+	}
+	
+	public WaitBuilder indexOf(String value) {
+		this.indexOf = value;
 		return this;
 	}
 	
