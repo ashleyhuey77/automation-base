@@ -51,8 +51,10 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 		PrintStream old = System.out;
 		System.setOut(ps.get());
 
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
-				.contains("Test 123").via(Via.JAVASCRIPT));
+		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
+				.verify(new TestElement(locator, by))
+				.contains("Test 123")
+				.how(Via.JAVASCRIPT));
 
 		String inputString = getByteStreamMessage(baos.get(), old);
 		String newIS = inputString.replaceAll(" ", "");
@@ -75,7 +77,7 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 		System.setOut(ps.get());
 
 		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
-				.contains("Test 123").removeAllSpaces(true).via(Via.JAVASCRIPT));
+				.contains("Test 123").removeAllSpaces(true).how(Via.JAVASCRIPT));
 
 		String inputString = getByteStreamMessage(baos.get(), old);
 		String newIS = inputString.replaceAll(" ", "");
@@ -96,7 +98,7 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
-					.verify(new TestElement(locator, by)).contains("Test 123").via(Via.JAVASCRIPT));
+					.verify(new TestElement(locator, by)).contains("Test 123").how(Via.JAVASCRIPT));
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		} catch (Exception ex) {
 			String m = ex.toString();
@@ -283,7 +285,7 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
-					.verify(new TestElement(locator, by)).contains("Test 123").via(Via.JAVASCRIPT).withIndexOf("1"));
+					.verify(new TestElement(locator, by)).contains("Test 123").how(Via.JAVASCRIPT).withIndexOf("1"));
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
 		} catch (Exception ex) {
 			String m = ex.toString();

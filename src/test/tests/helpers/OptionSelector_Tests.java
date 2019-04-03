@@ -49,7 +49,7 @@ public class OptionSelector_Tests extends TestInitialization {
 		new OptionSelector(new OptionSelectorBuilder()
 				.findOption("Test 2")
 				.thatIs(Condition.EQUAL)
-				.For(new TestElement(locator, by)));
+				.in(new TestElement(locator, by)));
 
 		String inputString = getByteStreamMessage(baos.get(), old);
 
@@ -75,7 +75,7 @@ public class OptionSelector_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new OptionSelector(new OptionSelectorBuilder().findOption("Test 8").thatIs(Condition.EQUAL)
-					.For(new TestElement(locator, by)));
+					.in(new TestElement(locator, by)));
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		} catch (Exception ex) {
 			String m = ex.toString();
@@ -99,7 +99,7 @@ public class OptionSelector_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new OptionSelector(new OptionSelectorBuilder().findOption("Test 1").thatIs(Condition.EQUAL)
-					.For(new TestElement(locator, by)));
+					.in(new TestElement(locator, by)));
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		} catch (Exception ex) {
 			String m = ex.toString();
@@ -123,7 +123,7 @@ public class OptionSelector_Tests extends TestInitialization {
 		new OptionSelector(new OptionSelectorBuilder()
 				.findOption("Yea")
 				.thatIs(Condition.CONTAIN)
-				.For(new TestElement(locator, by)));
+				.in(new TestElement(locator, by)));
 
 		String inputString = getByteStreamMessage(baos.get(), old);
 
@@ -148,7 +148,7 @@ public class OptionSelector_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new OptionSelector(new OptionSelectorBuilder().findOption("Test 8").thatIs(Condition.CONTAIN)
-					.For(new TestElement(locator, by)));
+					.in(new TestElement(locator, by)));
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		} catch (Exception ex) {
 			String m = ex.toString();
@@ -172,7 +172,7 @@ public class OptionSelector_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new OptionSelector(new OptionSelectorBuilder().findOption("Test 1").thatIs(Condition.CONTAIN)
-					.For(new TestElement(locator, by)));
+					.in(new TestElement(locator, by)));
 			Assert.fail("Exception was expected to be thrown for a failed test case");
 		} catch (Exception ex) {
 			String m = ex.toString();
@@ -187,12 +187,12 @@ public class OptionSelector_Tests extends TestInitialization {
 	
 	@Test(groups= {"option"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoOptionProvided_ExceptionThrown() throws Exception {
-		new OptionSelector(new OptionSelectorBuilder().thatIs(Condition.CONTAIN).For(new TestElement(new Locator("string"), new By(How.CSS))));
+		new OptionSelector(new OptionSelectorBuilder().thatIs(Condition.CONTAIN).in(new TestElement(new Locator("string"), new By(How.CSS))));
 	}
 	
 	@Test(groups= {"option"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoConditionProvided_ExceptionThrown() throws Exception {
-		new OptionSelector(new OptionSelectorBuilder().findOption("Option").For(new TestElement(new Locator("string"), new By(How.CSS))));
+		new OptionSelector(new OptionSelectorBuilder().findOption("Option").in(new TestElement(new Locator("string"), new By(How.CSS))));
 	}
 	
 	

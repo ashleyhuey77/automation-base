@@ -11,7 +11,7 @@ import common.utils.managers.SHelper;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
-import shelper.enums.SelectType;
+import shelper.enums.SelectBy;
 import shelper.enums.Wait;
 import shelper.interfaces.IActions;
 import shelper.vobjects.TestElement;
@@ -242,7 +242,7 @@ public class ElementActions extends Commands implements IActions {
 	 * @author OJ
 	 */
 	@Override
-	public void selectFromDropDown(WebElement element, String value, SelectType selectType) throws TestException {
+	public void selectFromDropDown(WebElement element, String value, SelectBy selectType) throws TestException {
 		Select sel = new Select(element);
 		selectOption(sel, value, selectType);
 	}
@@ -261,7 +261,7 @@ public class ElementActions extends Commands implements IActions {
 	 * @author OJ
 	 */
 	@Override
-	public void selectFromDropDown(TestElement element, String value, SelectType selectType) throws TestException {
+	public void selectFromDropDown(TestElement element, String value, SelectBy selectType) throws TestException {
 		Select sel = new Select(getElement(element));
 		selectOption(sel, value, selectType);
 	}
@@ -274,15 +274,15 @@ public class ElementActions extends Commands implements IActions {
 	 * @param selectType
 	 * @throws TestException
 	 */
-	private void selectOption(Select select, String value, SelectType selectType) throws TestException {
+	private void selectOption(Select select, String value, SelectBy selectType) throws TestException {
 		switch (selectType) {
-			case byValue:
+			case VALUE:
 				select.selectByValue(value);
 				break;
-			case byVisibleText:
+			case VISIBLE_TEXT:
 				select.selectByVisibleText(value);
 				break;
-			case byIndex:
+			case INDEX:
 				select.selectByIndex(1);
 				break;
 			default:

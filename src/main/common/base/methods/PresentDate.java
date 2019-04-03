@@ -5,6 +5,12 @@ import java.time.format.DateTimeFormatter;
 import common.base.interfaces.DatePicker;
 import log.TestException;
 
+/**
+ * <p>A class that implements the DatePicker interface.
+ * It returns the present date and time. Uses the LocalDateTime
+ * to return now(). Formats the date based on the needed format.</p>
+ * @author ashleyhuey
+ */
 public class PresentDate implements DatePicker {
 
 	@Override

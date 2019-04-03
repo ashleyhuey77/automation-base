@@ -631,7 +631,6 @@ public abstract class PageHelper {
 	 * and will continue executing the next method in
 	 * the chain.
 	 * </p>
-	 * @param element TODO
 	 * @param i
 	 *            - the total amount of time the test
 	 *            should wait for the element to be
@@ -714,7 +713,6 @@ public abstract class PageHelper {
 	 * <p>
 	 * Method to extract digits from strings
 	 * </p>
-	 * @param element TODO
 	 * 
 	 * @return String
 	 * @throws TestException 

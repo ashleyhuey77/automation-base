@@ -5,6 +5,15 @@ import java.time.format.DateTimeFormatter;
 import common.base.interfaces.DatePicker;
 import log.TestException;
 
+/**
+ * <p>A class that implements the DatePicker interface.
+ * It requires a number of days param to specify how many days
+ * into the past to return. Uses the DateTimeFormatter
+ * to return now() and then uses minusDays() to subtract the 
+ * specified number of days. Throws an error if numOfDays
+ * param is not provided. Formats the date based on the needed format.</p>
+ * @author ashleyhuey
+ */
 public class PastDate implements DatePicker {
 
 	@Override

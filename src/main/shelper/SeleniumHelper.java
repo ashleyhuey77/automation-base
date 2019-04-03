@@ -18,29 +18,16 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM)}</br>
-	 * {@code SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM)}
-	 * </br>
-	 * {@code SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT)}
-	 * </br>
-	 * </p>
-	 * 
-	 * @param variable
-	 *            - the variable where the text lives.
-	 *            Is the text in the attribute of an
-	 *            element or is the text in an element
-	 *            itself.
-	 * @param actionType
-	 *            - The type of action that should be
-	 *            executed on the element. Should it
-	 *            get text via javascript means or
-	 *            will selenium suffice.
-	 * @return IText
+	 * <pre>
+	 * {@code SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM)
+	 * SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM)
+	 * SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT)}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IText text(Variable variable, Via actionType) throws TestException {
@@ -77,23 +64,16 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().click(VIA.SELENIUM)}</br>
-	 * {@code SHelper.get().click(VIA.JQUERY)} </br>
-	 * {@code SHelper.get().click(VIA.JAVASCRIPT)}
-	 * </br>
-	 * </p>
-	 * 
-	 * @param type
-	 *            - The type of click action that
-	 *            should be executed on the element.
-	 *            Should it click via javascript means
-	 *            or will selenium suffice.
-	 * @return IClick
+	 * <pre>
+	 * {@code SHelper.get().click(VIA.SELENIUM)
+	 * SHelper.get().click(VIA.JQUERY)
+	 * SHelper.get().click(VIA.JAVASCRIPT)}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IClick click(Via type) throws TestException {
@@ -128,15 +108,14 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().enter()}</br>
-	 * </p>
-	 * 
-	 * @return IEnter
+	 * <pre>
+	 * {@code SHelper.get().enter()}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IEnter enter() {
@@ -157,15 +136,14 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().browser()}</br>
-	 * </p>
-	 * 
-	 * @return IBrowser
+	 * <pre>
+	 * {@code SHelper.get().browser()}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IBrowser browser() {
@@ -186,15 +164,14 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().element()}</br>
-	 * </p>
-	 * 
-	 * @return IElement
+	 * <pre>
+	 * {@code SHelper.get().element()}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IElement element() {
@@ -215,15 +192,14 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().page()}</br>
-	 * </p>
-	 * 
-	 * @return IPage
+	 * <pre>
+	 * {@code SHelper.get().page()}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IPage page() {
@@ -244,29 +220,23 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_OR_VALUE)}</br>
-	 * {@code SHelper.get().waitMethod(Wait.ELEMENT_OR_VALUE_NOT_TO_BE_PRESENT)}
-	 * </br>
-	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_OR_VALUE)}
-	 * </br>
-	 * {@code SHelper.get().waitMethod(Wait.ATTRIBUTE_OR_VALUE_NOT_TO_BE_PRESENT)}
-	 * </br>
-	 * {@code SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT)}
-	 * </br>
-	 * {@code SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS)}
-	 * </br>
-	 * </p>
-	 * 
-	 * @param condition
-	 *            - the wait condition that determines
-	 *            which selenium wait command is
-	 *            executed.
-	 * @return IWait
+	 * <pre>
+	 * {@code SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT)
+	 * SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT)
+	 * SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT)
+	 * SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT)
+	 * SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE)
+	 * SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT)
+	 * SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT)
+	 * SHelper.get().waitMethod(Wait.ATTRIBUTE_TEXT_NOT_TO_BE_PRESENT)
+	 * SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT)
+	 * SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS)}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public IWait waitMethod(Wait condition, WaitBuilder builder) throws TestException {
@@ -319,13 +289,14 @@ public class SeleniumHelper {
 	 * Overall, the methods linked together should
 	 * form a sentence that shapes which methods are
 	 * executed.
-	 * <p>
+	 * </p>
 	 * <p>
 	 * Examples of the different types of sentences
 	 * that can be formed are as follows:
 	 * </p>
-	 * {@code SHelper.get().actions()}</br>
-	 * </p>
+	 * <pre>
+	 * {@code SHelper.get().actions()}
+	 * </pre>
 	 * 
 	 * @return IActions
 	 * @throws TestException
