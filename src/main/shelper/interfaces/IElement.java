@@ -213,4 +213,38 @@ public interface IElement {
 	 * @throws TestException
 	 */
 	public Boolean isEnabled(WebElement element) throws TestException;
+	
+	/**
+	 * <p>This method is used to return whether an element is clickable on
+	 * the page.</p>
+	 * <p>Overall, the methods linked together should form a sentence that
+	 * shapes which methods are executed.</p>
+	 * <p>Examples of the different types of sentences that can be formed are
+	 * as follows: </p>
+	 * <pre>
+	 * {@code WebElement element = SHelper.get().element().get(Generic.ELEMENT.element());
+	 * if(SHelper.get().element().isEnabled(element)) { 
+	 * 	doSomething();
+	 * }
+	 * </pre>
+	 * @throws TestException
+	 */
+	public Boolean isClickable(TestElement element) throws TestException;
+	
+	/**
+	 * <p>This method is used to return whether an element is clickable on
+	 * the page.</p>
+	 * <p>Overall, the methods linked together should form a sentence that
+	 * shapes which methods are executed.</p>
+	 * <p>Examples of the different types of sentences that can be formed are
+	 * as follows: </p>
+	 * <pre>
+	 * {@code WebElement element = SHelper.get().element().get(Generic.ELEMENT.element());
+	 * if(SHelper.get().element().isEnabled(element)) { 
+	 * 	doSomething();
+	 * }
+	 * </pre>
+	 * @throws TestException
+	 */
+	public Boolean isClickable(WebElement element) throws TestException;
 }

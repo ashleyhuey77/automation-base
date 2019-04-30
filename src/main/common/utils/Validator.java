@@ -52,6 +52,7 @@ public class Validator<T> {
 	 * @param message
 	 *            error message when object is invalid
 	 * @return this
+	 * @throws TestException 
 	 */
 	public Validator<T> validate(Predicate<T> validation, String message) {
 		if (!validation.test(t)) {
@@ -80,6 +81,7 @@ public class Validator<T> {
 	 *            see
 	 *            {@link Validator#validate(Function, Predicate, String)}
 	 * @return this
+	 * @throws TestException 
 	 */
 	public <U> Validator<T> validate(Function<T, U> projection, Predicate<U> validation, String message) {
 		return validate(projection.andThen(validation::test)::apply, message);

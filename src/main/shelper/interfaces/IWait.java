@@ -7,13 +7,13 @@ import shelper.vobjects.TestElement;
 public interface IWait {
 	
 	/**
-	 * <p>This method is meant to wait for an element or attribute to be
-	 * present on the page. And if the Wait.CLICKABILITY_OF_ELEMENT param
-	 * is set, it will wait for the element to be clickable.</p>
+	 * <p>This method is meant to wait for some condition 
+	 * to be met on a webpage. The type of wait that is to be executed is
+	 * modified via the Wait enum.</p>
 	 * <p>This method waits up to the specified amount of time for the condition
 	 * to be true. If the condition returns true before the specified time, then
 	 * the test moves on to the next method. If the condition does not return true
-	 * by the specified time, the text fails.</p>
+	 * by the specified time, the test fails.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
 	 * shapes which methods are executed.<p>
 	 * <p>Examples of the different types of sentences that can be formed are
@@ -75,9 +75,9 @@ public interface IWait {
 	public void on(TestElement element) throws TestException;
 	
 	/**
-	 * <p>This method is meant to wait for an element or attribute to be
-	 * present on the page. And if the Wait.CLICKABILITY_OF_ELEMENT param
-	 * is set, it will wait for the element to be clickable.</p>
+	 * <p>This method is meant to wait for some condition 
+	 * to be met on a webpage. The type of wait that is to be executed is
+	 * modified via the Wait enum.</p>
 	 * <p>This method waits up to the specified amount of time for the condition
 	 * to be true. If the condition returns true before the specified time, then
 	 * the test moves on to the next method. If the condition does not return true

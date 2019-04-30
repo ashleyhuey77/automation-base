@@ -62,9 +62,9 @@ public class EnterTextHelper {
 				clearAllTextByBackspacing(builder.webElement);
 
 				if (!TestUtils.isNullOrBlank(builder.value)) {
-					SHelper.get().enter().clear(builder.webElement);
+					SHelper.get().enter(Via.SELENIUM).clear(builder.webElement);
 					SHelper.get().click(Via.SELENIUM).on(builder.webElement);
-					SHelper.get().enter().textInto(builder.webElement, builder.value);
+					SHelper.get().enter(Via.SELENIUM).textInto(builder.webElement, builder.value);
 				}
 				LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " has been entered successfully");
 			} else {
@@ -83,10 +83,10 @@ public class EnterTextHelper {
 						.clickOn(new TestElement(builder.element.locator(), builder.element.by())));
 				clearAllTextByBackspacing(builder.element);
 				if (!TestUtils.isNullOrBlank(builder.value)) {
-					SHelper.get().enter().clear(builder.element);
+					SHelper.get().enter(Via.SELENIUM).clear(builder.element);
 					new ClickHelper(new ClickBuilder(new ReportInfo(builder.info.elementTitle()))
 							.clickOn(new TestElement(builder.element.locator(), builder.element.by())));
-					SHelper.get().enter().textInto(builder.element, builder.value);
+					SHelper.get().enter(Via.SELENIUM).textInto(builder.element, builder.value);
 				}
 				LocalReport.getReport().reportDoneEvent(builder.info.elementTitle() + " has been entered successfully");
 			} else {
@@ -110,8 +110,8 @@ public class EnterTextHelper {
 	 * @throws TestException
 	 */
 	private void clearAllTextByBackspacing(WebElement element) throws TestException {
-		SHelper.get().enter().textInto(element, Keys.CONTROL + "a");
-		SHelper.get().enter().textInto(element, Keys.BACK_SPACE);
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.CONTROL + "a");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.BACK_SPACE);
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class EnterTextHelper {
 	 * @throws TestException
 	 */
 	private void clearAllTextByBackspacing(TestElement element) throws TestException {
-		SHelper.get().enter().textInto(element, Keys.CONTROL + "a");
-		SHelper.get().enter().textInto(element, Keys.BACK_SPACE);
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.CONTROL + "a");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.BACK_SPACE);
 	}
 
 	public static class EnterTextBuilder {

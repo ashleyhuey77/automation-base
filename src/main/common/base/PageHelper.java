@@ -749,7 +749,8 @@ public abstract class PageHelper {
 	
 	protected void handleSignInModal() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 3)) {
+			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
 				String pwd = LocalTest.getCredentials().getNewstronPWord();
 				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(pwd)
 						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));

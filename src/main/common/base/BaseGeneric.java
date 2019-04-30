@@ -17,7 +17,13 @@ public enum BaseGeneric implements Type {
 	ERROR_MSG(new Locator("credentials-loginError"), new By(How.ID)),
 	ERROR_TEXT(new Locator("//*[@id='credentials-loginError']/text()[1]"), new By(How.XPATH)),
 	DASHBOARD_LOAD_ELEMENT(new Locator("div[class='dashboard-app']"), new By(How.CSS)),
-	EA_SIGNIN_BOX(new Locator("#anywhereLoginBox[style='display: block;']"), new By(How.CSS));
+	EA_SIGNIN_BOX(new Locator("#anywhereLoginBox[style='display: block;']"), new By(How.CSS)),
+	NOTIFICATIONS_BUTTON(new Locator("topbar-notification-container"), new By(How.ID)),
+	ALL_APPS_LINK(new Locator("All Apps"), new By(How.LINK_TEXT)),
+	NEWS_APPS_TOGGLE(new Locator("div[class='btn menu-toggle NewsApps']"), new By(How.CSS)),
+	CORE_APPS_TOGGLE(new Locator("div[class='btn menu-toggle CoreApps']"), new By(How.CSS)),
+	TOP_NAV_BAR(new Locator("#topbar-appList"), new By(How.CSS)),
+	NOTIFICATION_CONTENT(new Locator("notificationContent"), new By(How.ID));
 	
 	private final Locator locator;
 	private final By by;

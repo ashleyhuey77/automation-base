@@ -13,6 +13,7 @@ import common.utils.WebDriverListener;
 import common.utils.managers.LocalDriver;
 import common.utils.managers.SHelper;
 import shelper.SeleniumHelper;
+import shelper.enums.Via;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
 import shelper.vobjects.TestElement;
@@ -37,7 +38,7 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(element, Keys.ENTER);
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.ENTER);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -53,7 +54,7 @@ public class EnterTests {
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().enter().textInto(test, Keys.ENTER);
+		SHelper.get().enter(Via.SELENIUM).textInto(test, Keys.ENTER);
 	}
 	
 	@Test
@@ -64,7 +65,18 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(element, Keys.ENTER);
+		SHelper.get().enter(Via.SELENIUM).textInto(element, Keys.ENTER);
+	}
+	
+	@Test
+	public void verifySendKeys_Javascript() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test></input>');");
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "New Text");
 	}
 	
 	@Test
@@ -77,7 +89,7 @@ public class EnterTests {
 		Thread.sleep(500);
 		WebElement test = SHelper.get().element().get(element);
 		
-		SHelper.get().enter().textInto(test, Keys.ENTER);
+		SHelper.get().enter(Via.SELENIUM).textInto(test, Keys.ENTER);
 	}
 	
 	@Test
@@ -88,7 +100,7 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(element, "SomeText");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, "SomeText");
 	}
 	
 	@Test
@@ -101,7 +113,7 @@ public class EnterTests {
 		Thread.sleep(500);
 		WebElement test = SHelper.get().element().get(element);
 		
-		SHelper.get().enter().textInto(test, "SomeText");
+		SHelper.get().enter(Via.SELENIUM).textInto(test, "SomeText");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -112,7 +124,7 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().textInto(element, "SomeText");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, "SomeText");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -128,7 +140,7 @@ public class EnterTests {
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().enter().textInto(test, "SomeText");
+		SHelper.get().enter(Via.SELENIUM).textInto(test, "SomeText");
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -139,7 +151,7 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().clear(element);
+		SHelper.get().enter(Via.SELENIUM).clear(element);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -155,7 +167,7 @@ public class EnterTests {
 		LocalDriver.getDriver().navigate().refresh();
 		Thread.sleep(500);
 		
-		SHelper.get().enter().clear(test);
+		SHelper.get().enter(Via.SELENIUM).clear(test);
 	}
 	
 	@Test
@@ -166,7 +178,7 @@ public class EnterTests {
 		By by = new By("css");
 		TestElement element = new TestElement(locator, by);
 		
-		SHelper.get().enter().clear(element);
+		SHelper.get().enter(Via.SELENIUM).clear(element);
 	}
 	
 	@Test
@@ -179,7 +191,7 @@ public class EnterTests {
 		Thread.sleep(500);
 		WebElement test = SHelper.get().element().get(element);
 		
-		SHelper.get().enter().clear(test);
+		SHelper.get().enter(Via.SELENIUM).clear(test);
 	}
 	
 	

@@ -118,10 +118,18 @@ public class SeleniumHelper {
 	 * </pre>
 	 * @throws TestException
 	 */
-	public IEnter enter() {
+	public IEnter enter(Via via) throws TestException {
 		IEnter enter = null;
-
-		enter = new Enter();
+		switch (via) {
+			case SELENIUM:
+				enter = new Enter();
+				break;
+			case JAVASCRIPT:
+				enter = new JavascriptEnter();
+				break;
+			default:
+				throw new TestException("Please select an appropriate action type from the action type enum.");
+		}
 
 		return enter;
 	}
