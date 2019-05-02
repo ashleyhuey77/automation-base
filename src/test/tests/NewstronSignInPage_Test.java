@@ -24,5 +24,13 @@ public class NewstronSignInPage_Test extends TestInitialization {
 		_newstronSignInPage.enterLogInDetails()
 		   				   .clickTheSignInButton();
 	}
+	
+	@Test
+	public void verifyNewstronSignInPage_2() throws Exception {
+		NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
+		
+		_newstronSignInPage.enterLogInDetails()
+		   				   .clickTheSignInButton();
+	}
 
 }

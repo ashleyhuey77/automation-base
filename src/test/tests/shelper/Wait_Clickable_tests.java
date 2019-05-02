@@ -125,5 +125,11 @@ public class Wait_Clickable_tests {
 	public void afterScenario() {
 		
 	}
+	
+	@AfterMethod
+	public void cleanUp() throws TestException {
+		SHelper.get().browser().navigateTo("www.facebook.com");
+		System.out.println("Clean up was successful.");
+	}
 
 }

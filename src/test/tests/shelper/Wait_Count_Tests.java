@@ -38,8 +38,8 @@ public class Wait_Count_Tests {
 	
 	@Test
 	public void verifyWaitOnElementCount() throws Exception {
-		Locator locator2 = new Locator("img[id='hplogo']");
-		By by2 = new By(How.CSS);
+		Locator locator2 = new Locator("About");
+		By by2 = new By(How.LINK_TEXT);
 		TestElement element2 = new TestElement(locator2, by2);
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(5)).on(element2);
 	}
@@ -95,8 +95,8 @@ public class Wait_Count_Tests {
 	
 	@Test(expectedExceptions=UnsupportedOperationException.class)
 	public void verifyWaitForCountPredefinedWebElement_ExceptionThrown() throws Exception {
-		Locator locator2 = new Locator("img[id='hplogo']");
-		By by2 = new By(How.CSS);
+		Locator locator2 = new Locator("About");
+		By by2 = new By(How.LINK_TEXT);
 		WebElement element2 = SHelper.get().element().get(new TestElement(locator2, by2));
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
 				.forAMaxTimeOf(2)

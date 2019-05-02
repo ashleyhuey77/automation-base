@@ -14,6 +14,7 @@ import log.Log;
 public class WebDriverListener implements IInvokedMethodListener {
 
 	public static int testNumber = 0;
+	public static Boolean hasBeforeScenarioAlreadyBeenExecuted = false;
 
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
@@ -21,30 +22,33 @@ public class WebDriverListener implements IInvokedMethodListener {
 			Log.set();
 			LocalTest.initializeSettings();
 			if (method.toString().toLowerCase().contains("beforescenario")) {
-				WebDriver driver = null;
-				driver = HelperFacade
-						.getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
-				LocalDriver.setDriver(driver);
-				testNumber++;
-				Log.get().log(Level.INFO, "Now executing test number: {0}", testNumber);
+				if (!hasBeforeScenarioAlreadyBeenExecuted) {
+					WebDriver driver = null;
+					driver = HelperFacade
+							.getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
+					LocalDriver.setDriver(driver);
+					testNumber++;
+					Log.get().log(Level.INFO, "Now executing test number: {0}", testNumber);
+					hasBeforeScenarioAlreadyBeenExecuted = true;
+				}
 			}
-		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			} catch (Exception e) {
+
 		}
 	}
 
 	@Override
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		WebDriver driver = LocalDriver.getDriver();
 		if (method.toString().toLowerCase().contains("afterscenario")) {
-			try {
-				driver.quit();
-			} catch (Exception e) {
-				driver.quit();
-				throw e;
-			} finally {
-				driver.quit();
-			}
+			WebDriver driver = LocalDriver.getDriver();
+				try {
+					hasBeforeScenarioAlreadyBeenExecuted = false;
+					driver.quit();
+				} catch (Exception e) {
+					if (driver != null) {
+						driver.quit();
+					}
+				}
 		}
 	}
 }

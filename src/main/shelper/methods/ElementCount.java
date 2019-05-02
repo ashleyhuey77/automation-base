@@ -49,7 +49,7 @@ public class ElementCount extends Commands implements IWait {
 					result = true;
 				}
 			} catch (Exception e) {
-				Log.get().log(Level.WARNING, e.getMessage(), e);
+				//Log.get().log(Level.WARNING, e.getMessage(), e);
 			}
 			return result;
 		});
