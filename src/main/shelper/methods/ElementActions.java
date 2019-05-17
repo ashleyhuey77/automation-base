@@ -94,6 +94,7 @@ public class ElementActions extends Commands implements IActions {
 		WebElement dropElement1 = null;
 
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragElement);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		List<WebElement> locate = SHelper.get().element().getListOf(dragElement);
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(dragElement);
 		dragElement1 = locate.get(0);
@@ -101,12 +102,17 @@ public class ElementActions extends Commands implements IActions {
 		List<WebElement> locateDroppable = SHelper.get().element().getListOf(dropElement);
 		Actions act = new Actions(LocalDriver.getDriver());
 		dropElement1 = locateDroppable.get(0);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.clickAndHold(dragElement1).build().perform();
 		Thread.sleep(5000);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.moveToElement(dropElement1).build().perform();
 		Thread.sleep(5000);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.release();
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.release(dragElement1).build().perform();
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		Thread.sleep(5000);
 	}
 
@@ -303,12 +309,17 @@ public class ElementActions extends Commands implements IActions {
 				.on(elementToBeDragged);
 		Actions act = new Actions(LocalDriver.getDriver());
 		dropElement = elementToBeDropped;
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.clickAndHold(dragElement).build().perform();
 		Thread.sleep(5000);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.moveToElement(dropElement).build().perform();
 		Thread.sleep(5000);
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.release();
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		act.release(dragElement).build().perform();
+		checkCookiesAndAddRequiredOnesIfNecessary();
 		Thread.sleep(5000);
 	}
 

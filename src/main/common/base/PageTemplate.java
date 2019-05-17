@@ -89,8 +89,8 @@ public abstract class PageTemplate extends PageHelper implements PageControl {
 		WebDriver browser = LocalDriver.getDriver();
 		SHelper.set(new SeleniumHelper());
 		PageFactory.initElements(browser, this);
+		//clearAllNotificationsAndRefreshPage();
 		WaitForPageLoad();
-		clearAllNotificationsAndRefreshPage();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public abstract class PageTemplate extends PageHelper implements PageControl {
 	 */
 	private void clearAllNotificationsAndRefreshPage() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(BaseGeneric.NOTIFICATIONS_BUTTON.element(), 1)) {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.NOTIFICATIONS_BUTTON.element(), 3)) {
 				if (SHelper.get().element().isClickable(BaseGeneric.NOTIFICATIONS_BUTTON.element())) {
 					new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.NOTIFICATIONS_BUTTON.name()))
 							.clickOn(BaseGeneric.NOTIFICATIONS_BUTTON.element()));
@@ -128,7 +128,7 @@ public abstract class PageTemplate extends PageHelper implements PageControl {
 
 	private void clickTheNewsAppsToggle() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 1)) {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 3)) {
 				if (SHelper.get().element().isClickable(BaseGeneric.CORE_APPS_TOGGLE.element())) {
 					SHelper.get().click(Via.SELENIUM).on(BaseGeneric.CORE_APPS_TOGGLE.element());
 				}

@@ -28,9 +28,6 @@ public class TestInitialization {
 	@BeforeMethod(alwaysRun = true)
 	public void BeforeScenario(Method method) throws Exception {
 		try {
-			// System.setProperty("webdriver.chrome.driver",
-			// TestUtils.getRelativePath() +
-			// "/ExternalLibraries/chromedriver");
 			String name = method.getName();
 			LocalTest.setTestName(name);
 			new NewsAppsApplication();

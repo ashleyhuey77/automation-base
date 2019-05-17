@@ -2,7 +2,9 @@ package shelper.abstracts;
 
 import java.util.List;
 import org.openqa.selenium.WebElement;
+import common.utils.helpers.CookieHelper;
 import common.utils.managers.LocalDriver;
+import log.TestException;
 import shelper.vobjects.TestElement;
 
 public class Commands {
@@ -92,6 +94,10 @@ public class Commands {
 	 */
 	public List<WebElement> getElements(TestElement element) {
 		return LocalDriver.getDriver().findElements(getByValueBasedOnUserInput(element));
+	}
+	
+	protected void checkCookiesAndAddRequiredOnesIfNecessary() throws TestException {
+		CookieHelper.newHelper().getCookies().setCookies().build();
 	}
 
 }

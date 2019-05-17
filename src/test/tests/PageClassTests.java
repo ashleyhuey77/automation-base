@@ -254,7 +254,7 @@ public class PageClassTests extends TestInitialization {
 			Assert.fail("Test expected to throw exception" + actualValue);
 		} catch (Exception ex) {
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("ErrorMessage : null"));
+			Assert.assertTrue(m.trim().contains("ErrorMessage : NullPointerException was thrown. Please check for null values."));
 		}
 	}
 

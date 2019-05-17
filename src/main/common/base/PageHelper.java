@@ -2,6 +2,7 @@ package common.base;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import common.base.helpers.ClickHelper;
@@ -12,7 +13,9 @@ import common.base.interfaces.DatePicker;
 import common.base.methods.PresentDate;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
+import common.utils.helpers.CookieHelper;
 import common.utils.managers.*;
+import log.Log;
 import log.TestException;
 import shelper.builders.WaitBuilder;
 import shelper.enums.*;
@@ -640,24 +643,35 @@ public abstract class PageHelper {
 	 *            necessary for the webelement to be
 	 *            found
 	 */
-	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				SHelper.get().page().refresh();
-				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
-				if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 10)) {
-					result = true;
-				} else {
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					if (LocalTest.getEnvironment().isHeadlessEnabled()) {
+						SHelper.get().element().isDisplayed(BaseGeneric.LOG_IN_BOX.element(), 2);
+						checkCookiesAndAddRequiredOnesIfNecessary(true);
+						SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(7))
+								.on(BaseGeneric.LOG_IN_BOX.element());
+					} else {
+						SHelper.get().page().refresh();
+					}
+					SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
+					if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 1)) {
+						result = true;
+					} else {
+						result = false;
+					}
+				} catch (Exception e) {
 					result = false;
 				}
-			} catch (Exception e) {
-				result = false;
-			}
-			return result;
-		});
+				return result;
+			});
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
 	}
 
 	/**
@@ -757,9 +771,24 @@ public abstract class PageHelper {
 				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
 						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));
 				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(10)).on(BaseGeneric.EA_SIGNIN_BOX.element());
+				CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
 			}
 		} catch (Exception e) {
 			throw LocalReport.getReport().reportException(e);
+		}
+	}
+	
+	protected void checkCookiesAndAddRequiredOnesIfNecessary(Boolean refreshPageAfter) throws TestException {
+		try {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 3)) {
+			}
+			CookieHelper.newHelper().getCookies().setCookies().build();
+			if (refreshPageAfter) {
+				SHelper.get().page().refresh();
+			}
+		} catch (Exception e) {
+			Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
 		}
 	}
 

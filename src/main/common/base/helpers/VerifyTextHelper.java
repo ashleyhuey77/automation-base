@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
 import common.utils.Validator;
+import common.utils.helpers.CookieHelper;
 import common.utils.managers.LocalReport;
 import common.utils.managers.LocalValidation;
 import common.utils.managers.SHelper;
@@ -82,6 +83,7 @@ public class VerifyTextHelper {
 						builder.info.elementTitle() + " does not contain the correct text. Expected text: "
 								+ builder.expectedText + ". Actual text: " + actualText);
 			}
+			CookieHelper.newHelper().getCookies().setCookies().build();
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);
 		}
@@ -105,6 +107,7 @@ public class VerifyTextHelper {
 						builder.info.elementTitle() + " does not contain the correct text. Expected text: "
 								+ builder.expectedText + ". Actual text: " + actualText);
 			}
+			CookieHelper.newHelper().getCookies().setCookies().build();
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);
 		}
@@ -136,6 +139,7 @@ public class VerifyTextHelper {
 								+ " but is retaining an incorrect value instead. The value being retained is "
 								+ actualValueInTextBox);
 			}
+			CookieHelper.newHelper().getCookies().setCookies().build();
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);
 		}

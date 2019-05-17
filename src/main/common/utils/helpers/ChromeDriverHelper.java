@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import common.utils.TestUtils;
 import common.utils.contexts.HeadlessContext;
@@ -24,7 +25,8 @@ public class ChromeDriverHelper {
 	public ChromeDriverHelper() throws TestException {
 		HelperFacade.setDriverLocalPathBasedOnOS(OS.valueOf(LocalTest.getEnvironment().getOS().toUpperCase()));
 		System.setProperty("java.awt.headless", Boolean.toString(LocalTest.getEnvironment().isHeadlessEnabled()));
-		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		//System.setProperty("webdriver.chrome.verboseLogging", "true");
+		DesiredCapabilities caps = new DesiredCapabilities();
 		caps.setJavascriptEnabled(true);
 		caps.setCapability("takesScreenshot", true);
 		LocalChromeOptions.set(new ChromeOptions());
@@ -43,7 +45,7 @@ public class ChromeDriverHelper {
 						new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx"));
 			}
 		}
-		// LocalChromeOptions.get().addArguments("disable-extensions");
+		LocalChromeOptions.get().merge(caps);
 		caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 
 		driver = new InheritableThreadLocal<WebDriver>() {

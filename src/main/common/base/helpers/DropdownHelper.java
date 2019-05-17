@@ -74,7 +74,7 @@ public class DropdownHelper {
                 Thread.sleep(900);
                 new OptionSelector(new OptionSelectorBuilder()
                 		.findOption(builder.option)
-                		.thatIs(Condition.EQUAL)
+                		.thatIs(Condition.CONTAIN)
                 		.in(new TestElement(builder.optionsElement.locator(), builder.optionsElement.by())));
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not available. Unable to select the " 
@@ -100,7 +100,7 @@ public class DropdownHelper {
                 Thread.sleep(900);
                 new OptionSelector(new OptionSelectorBuilder()
                 		.findOption(builder.option)
-                		.thatIs(Condition.EQUAL)
+                		.thatIs(Condition.CONTAIN)
                 		.in(new TestElement(builder.optionsElement.locator(), builder.optionsElement.by())));
             } else {
                 throw LocalValidation.getValidations().assertionFailed("Element is not availale. Unable to select the " 

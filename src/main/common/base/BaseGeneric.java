@@ -9,7 +9,7 @@ import org.openqa.selenium.support.How;
 public enum BaseGeneric implements Type {
 	
 	USER_NAME_TEXT_FIELD(new Locator("#credentials-username"), new By(How.CSS)),
-	LOG_IN_BOX(new Locator("div[class='qrk-topbar modal fade in']"), new By(How.CSS)),
+	LOG_IN_BOX(new Locator("#topbarLoggedoutBox[class='qrk-topbar modal fade in']"), new By(How.CSS)),
 	PWD_TEXT_FIELD(new Locator("#credentials-password"), new By(How.CSS)),
 	ANYWHERE_PWD_TEXT_FIELD(new Locator("#anywhere-credentials-password"), new By(How.CSS)),
 	ANYWHERE_SIGN_IN_BTN(new Locator("#anywhere-credentials-signInButton"), new By(How.CSS)),
@@ -23,7 +23,11 @@ public enum BaseGeneric implements Type {
 	NEWS_APPS_TOGGLE(new Locator("div[class='btn menu-toggle NewsApps']"), new By(How.CSS)),
 	CORE_APPS_TOGGLE(new Locator("div[class='btn menu-toggle CoreApps']"), new By(How.CSS)),
 	TOP_NAV_BAR(new Locator("#topbar-appList"), new By(How.CSS)),
-	NOTIFICATION_CONTENT(new Locator("notificationContent"), new By(How.ID));
+	NOTIFICATION_CONTENT(new Locator("notificationContent"), new By(How.ID)),
+	DISMISS_BUTTON(new Locator("modalActionDismiss"), new By(How.ID)),
+	MODAL_BOX(new Locator("modalBox"), new By(How.ID)),
+	MODAL_TITLE(new Locator("modalTitle"), new By(How.ID)),
+	MODAL_MESSAGE(new Locator("modalMessage"), new By(How.ID));
 	
 	private final Locator locator;
 	private final By by;
