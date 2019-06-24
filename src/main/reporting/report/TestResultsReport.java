@@ -66,7 +66,7 @@ public class TestResultsReport implements ReportContent {
 			createNewRowInTable(tr, "justified", testStep.name());
 			createNewRowInTable(tr, "description", testStep.description());
 			createStatusRow(tr, testStep.status().toString().toLowerCase(), testStep.screenshotName());
-			createNewRowInTable(tr, null, picker.getDate("HH:mm:ss"));
+			createNewRowInTable(tr, null, picker.getDate("hh:mm:ss"));
 			streamWriter.write(document.get().toString());
 			streamWriter.close();
 		} catch (Exception e) {

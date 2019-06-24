@@ -59,14 +59,14 @@ public class TestPage extends PageTemplate {
 	
 	public void enums()
 	{
-		System.out.println(Entity.CrashRecords);
-		System.out.println(Entity.valueOf(Entity.CrashRecords.toString()));
+		System.out.println(Entity.CRASH_RECORDS);
+		System.out.println(Entity.valueOf(Entity.CRASH_RECORDS.toString()));
 		System.out.println(Entity.MS2);
 		System.out.println(Entity.valueOf(Entity.MS2.toString()));
-		System.out.println(Entity.Requests);
-		System.out.println(Entity.valueOf(Entity.Requests.toString()));
-		System.out.println(Entity.Scheduler);
-		System.out.println(Entity.valueOf(Entity.Scheduler.toString()));
+		System.out.println(Entity.REQUESTS);
+		System.out.println(Entity.valueOf(Entity.REQUESTS.toString()));
+		System.out.println(Entity.SCHEDULER);
+		System.out.println(Entity.valueOf(Entity.SCHEDULER.toString()));
 		
 		System.out.println(Timezones.Central);
 		System.out.println(Timezones.valueOf(Timezones.Central.toString()));

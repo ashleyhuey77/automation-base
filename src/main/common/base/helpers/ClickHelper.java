@@ -14,12 +14,10 @@ import shelper.vobjects.TestElement;
 public class ClickHelper {
 
 	/**
-	 * <p>
-	 * This s a shared generic method to click an
+	 * <p> This is a shared generic helper used to click on an
 	 * element on the page.
 	 * </p>
-	 * <p>
-	 * The method will catch any exceptions thrown and
+	 * <p> This helper will catch any exceptions thrown and
 	 * try to execute/exhaust every method of clicking
 	 * possible (e.g via selenium, javascript, jquery,
 	 * etc.) before throwing the exception and failing
@@ -27,42 +25,16 @@ public class ClickHelper {
 	 * failures that have been proven to happen
 	 * infrequently in the NewsApps application.
 	 * </p>
-	 * <p>
-	 * This method will wait for the click element to
+	 * <p> This helper will wait for the click element to
 	 * display on the page before attempting to click
 	 * it. If the element is not found the test is
 	 * failed.
 	 * </p>
-	 * <p>
-	 * </p>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param via
-	 *            - the method by which to click a web
-	 *            element (e.g click via selenium's
-	 *            built in click functionality,
-	 *            javascript, jquery, etc.)
-	 * @param locator
-	 *            - the webelement locator string for
-	 *            the field that the text will be
-	 *            entered into
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.)
-	 * @param elementBeingTested
-	 *            - the name of the element being
-	 *            tested. This is used for reporting
-	 *            so that when it is called the report
-	 *            will reflect an element that is
-	 *            unique to the method
-	 * @param index
-	 *            - this is an optional parameter and
-	 *            should be specified when it is
-	 *            necessary to click on a web element
-	 *            that is stored in a list of
-	 *            webelements.
+     * <pre>
+     * Ex: 
+     * {@code new ClickHelper(new ClickBuilder("Element 1")
+     * 	.clickOn(Generic.BUTTON.element()));}
+     * </pre>
 	 * @throws TestException
 	 */
 	public ClickHelper(ClickBuilder builder) throws TestException {
@@ -135,6 +107,18 @@ public class ClickHelper {
 		private Via via;
 		private int index;
 
+		/**
+		 * <p> This creates an instance of ClickBuilder which utilizes
+		 * a builder pattern to assign values to important variables used in
+		 * the ClickHelper class.
+		 * </p>
+		 * <pre>
+		 * Ex: 
+		 * {@code new ClickHelper(new ClickBuilder("Element 1")
+		 * 	.clickOn(Generic.BUTTON.element()));}
+		 * </pre>
+		 * @param info - the text that will be written to the test results report
+		 */
 		public ClickBuilder(ReportInfo info) {
 			this.info = info;
 			if (this.via == null) {
@@ -142,21 +126,85 @@ public class ClickHelper {
 			}
 		}
 
+		/**
+		 * <p> Tells the ClickHelper which TestElement needs to be
+		 * clicked.
+		 * </p>
+		 * <p> This is a required method. If a TestElement or a WebElement is not 
+		 * given, then ClickHelper will throw an error and request for the 
+		 * clickOn() method to be added.
+		 * </p>
+		 * <pre>
+		 * Ex: 
+		 * {@code new ClickHelper(new ClickBuilder("Element 1")
+		 * 	.clickOn(Generic.BUTTON.element()));}
+		 * </pre>
+		 * @param element - the TestElement to be clicked
+		 */
 		public ClickBuilder clickOn(TestElement element) {
 			this.element = element;
 			return this;
 		}
 
+		/**
+		 * <p> Tells the ClickHelper which WebElement needs to be
+		 * clicked.
+		 * </p>
+		 * <p> This is a required method. If a TestElement or a WebElement is not 
+		 * given, then ClickHelper will throw an error and request for the 
+		 * clickOn() method to be added.
+		 * </p>
+		 * <pre>
+		 * Ex: 
+		 * {@code WebElement someElement = SHelper.get().element().get(Generic.BUTTON.element());
+		 * new ClickHelper(new ClickBuilder("Element 1")
+		 * 	.clickOn(someElement)); }
+		 * </pre>
+		 * @param element - the WebElement to be clicked
+		 */
 		public ClickBuilder clickOn(WebElement element) {
 			this.webElement = element;
 			return this;
 		}
 
-		public ClickBuilder via(Via via) {
+		/**
+		 * <p> Tells the ClickHelper how the element should be clicked
+		 * via a Selenium, Javascript, Jquery, or alternative(right) click.
+		 * </p>
+		 * <p> This is not a required method. Unless an element should be clicked
+		 * via a method that is not Selenium. The default is set to click
+		 * via Selenium.
+		 * </p>
+		 * <pre>
+		 * Ex: 
+		 * {@code new ClickHelper(new ClickBuilder("Element 1")
+		 * 	.clickOn(Generic.ELEMENT.element())
+		 * 	.via(Via.JAVASCRIPT)); }
+		 * </pre>
+		 * @param via - the Via by which the element should be clicked
+		 */
+		public ClickBuilder how(Via via) {
 			this.via = via;
 			return this;
 		}
 
+		/**
+		 * <p> Tells the ClickHelper the index of the element that needs to
+		 * be clicked if the element is in a list of elements.
+		 * </p>
+		 * <p> This is not a required method. Unless an element is being clicked
+		 * via Javascript or Jquery and is in a list of similarly
+		 * identified elements.
+		 * </p>
+		 * <pre>
+		 * Ex: 
+		 * {@code new ClickHelper(new ClickBuilder("Element 1")
+		 * 	.clickOn(Generic.ELEMENT.element())
+		 * 	.via(Via.JAVASCRIPT)
+		 * 	.withAnIndexOf(0)); }
+		 * </pre>
+		 * @param value - the index of the element to be clicked
+		 */
 		public ClickBuilder withAnIndexOf(int value) {
 			this.index = value;
 			return this;

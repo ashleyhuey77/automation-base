@@ -1,6 +1,5 @@
 package tests.shelper;
 
-import java.util.ArrayList;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -113,13 +112,6 @@ public class Wait_NonPresentElement_Tests {
 				.forAMaxTimeOf(1)
 				.withACountOf(2))
 				.on(element);
-	}
-	
-	@Test(expectedExceptions=UnsupportedOperationException.class)
-	public void verifyWaitForElementNotToBePresentList_ExceptionThrown() throws Exception {
-		SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder()
-				.forAMaxTimeOf(2))
-				.on(new ArrayList<WebElement>());
 	}
 
 	@AfterMethod

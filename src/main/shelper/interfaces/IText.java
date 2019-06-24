@@ -12,18 +12,16 @@ public interface IText {
 	 * <p>Note: the attribute param is not necessary when getting text from an element,
 	 * however it is required when getting text from an attribute.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
+	 * shapes which methods are executed.</p>
 	 * <p>Examples of the different types of sentences that can be formed are
 	 * as follows: </p>
-	 * {@code String someValue = SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).getFrom("someSelectorString", xpath, "style");}</br>
-	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).getFrom("someSelectorString", id);} </br>
-	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT).getFrom("someSelectorString", cssSelector);} </br>
-	 * </p>
-	 * @param element TODO
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @return String
+	 * <pre>
+	 * {@code String someValue = SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).getFrom(Generic.ELEMENT.element(), "style");
+	 * 		- OR -
+	 * String someValue = SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).getFrom(Generic.ELEMENT.element());
+	 * 		- OR -
+	 * String someValue = SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT).getFrom(Generic.ELEMENT.element());}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public String getFrom(TestElement element, String...attribute) throws TestException;
@@ -34,18 +32,17 @@ public interface IText {
 	 * <p>Note: the attribute param is not necessary when getting text from an element,
 	 * however it is required when getting text from an attribute.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
+	 * shapes which methods are executed.</p>
 	 * <p>Examples of the different types of sentences that can be formed are
 	 * as follows: </p>
-	 * {@code WebElement element = SHelper.get().element().get("someSelectorString", id);}</br>
-	 * {@code String someValue = SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).getFrom(element, "class");}</br>
-	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).getFrom(element);} </br>
-	 * {@code String someValue = SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT).getFrom(element);} </br>
-	 * </p>
-	 * @param element - a webelement that is defined and found in the calling method
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @return String
+	 * <pre>
+	 * {@code WebElement element = SHelper.get().element().get(Generic.ELEMENT.element());
+	 * String someValue = SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).getFrom(element, "class");
+	 * 		- OR -
+	 * String someValue = SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).getFrom(element);
+	 * 		- OR -
+	 * String someValue = SHelper.get().text(Variable.ELEMENT, VIA.JAVASCRIPT).getFrom(element);}
+	 * </pre>
 	 * @throws TestException
 	 */
 	public String getFrom(WebElement element, String...attribute) throws TestException;
@@ -58,22 +55,18 @@ public interface IText {
 	 * <p>Note: the attribute param is not necessary when getting text from an element,
 	 * however it is required when getting text from an attribute.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
+	 * shapes which methods are executed.</p>
 	 * <p>Examples of the different types of sentences that can be formed are
 	 * as follows: </p>
-	 * {@code if (SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).isDisplayed(
-	 * "someSelectorString", xpath, "display: none;", "style")) {
-	 * </br> doSomething();}</br>
-	 * {@code if (SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).isDisplayed(
-	 * "someSelectorString", xpath, "Some Text")) {
-	 * </br> doSomething();} </br>
-	 * </p>
-	 * @param selectorString - the webelement selector string necessary for the webelement to be found
-	 * @param element TODO
-	 * @param expectedText - the text that is expected to appear in the element or attribute.
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @return Boolean
+	 * <pre>
+	 * {@code if (SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).isDisplayed(Generic.ELEMENT.element(), "display: none;", "style")) {
+	 * 	doSomething();
+	 * }
+	 * 		- OR -
+	 * if (SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).isDisplayed(Generic.ELEMENT.element(), "Some Text")) {
+	 * 	doSomething();
+	 * }
+	 * </pre>
 	 * @throws TestException
 	 */
 	public Boolean isDisplayed(TestElement element, String expectedText, String...attribute) throws TestException;
@@ -86,22 +79,19 @@ public interface IText {
 	 * <p>Note: the attribute param is not necessary when getting text from an element,
 	 * however it is required when getting text from an attribute.</p>
 	 * <p>Overall, the methods linked together should form a sentence that
-	 * shapes which methods are executed.<p>
+	 * shapes which methods are executed.</p>
 	 * <p>Examples of the different types of sentences that can be formed are
 	 * as follows: </p>
-	 * {@code WebElement element = SHelper.get().element().get("someSelectorString", id);} </br>
-	 * {@code if (SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).isDisplayed(
-	 * element, "display: none;", "style")) {
-	 * </br> doSomething();}</br>
-	 * {@code if (SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).isDisplayed(
-	 * element, "Some Text")) {
-	 * </br> doSomething();} </br>
-	 * </p>
-	 * @param element - a webelement that is defined and found in the calling method
-	 * @param attribute - the attribute the method should be validating the presence of.
-	 * (i.e style, class, id, etc.)
-	 * @param expectedText - the text that is expected to appear in the element or attribute.
-	 * @return Boolean
+	 * <pre>
+	 * {@code WebElement element = SHelper.get().element().get("someSelectorString", id);
+	 * if (SHelper.get().text(Variable.ATTRIBUTE, VIA.SELENIUM).isDisplayed(element, "display: none;", "style")) {
+	 * 	doSomething();
+	 * }
+	 * 		- OR -
+	 * if (SHelper.get().text(Variable.ELEMENT, VIA.SELENIUM).isDisplayed(element, "Some Text")) {
+	 * 	doSomething();
+	 * }
+	 * </pre>
 	 * @throws TestException
 	 */
 	public Boolean isDisplayed(WebElement element, String expectedText, String...attribute) throws TestException;

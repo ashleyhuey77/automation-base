@@ -135,7 +135,7 @@ public class DropdownHelper_Tests extends TestInitialization {
 		String inputString = getByteStreamMessage(baos.get(), old);
 
 		Assert.assertTrue(
-				inputString.trim().contains("clickSomeWebElement has passed. Test 3 option clicked successfully."));
+				inputString.trim().contains("clickSomeTestElement has passed. Test 3 option clicked successfully."));
 
 		closeByteStream(ps.get(), baos.get());
 	}

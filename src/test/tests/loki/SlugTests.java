@@ -33,6 +33,13 @@ public class SlugTests {
 	}
 	
 	@Test
+	public void verifyCountryAbbr() {
+		String value = loki.slug().countryAbbr();
+		Assert.assertNotNull(value);
+		Assert.assertTrue(value.matches("(\\w+ ?){1}"));
+	}
+	
+	@Test
 	public void verifyCounty() {
 		String value = loki.slug().county();
 		Assert.assertNotNull(value);
@@ -86,6 +93,13 @@ public class SlugTests {
 		String value = loki.slug().state();
 		Assert.assertNotNull(value);
 		Assert.assertTrue(value.matches("(\\w+ ?){1,2}"));
+	}
+	
+	@Test
+	public void verifyStateAbbr() {
+		String value = loki.slug().stateAbbr();
+		Assert.assertNotNull(value);
+		Assert.assertTrue(value.matches("(\\w+ ?){1}"));
 	}
 	
 	@Test

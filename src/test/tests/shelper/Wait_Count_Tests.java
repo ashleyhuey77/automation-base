@@ -1,6 +1,5 @@
 package tests.shelper;
 
-import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -39,20 +38,9 @@ public class Wait_Count_Tests {
 	
 	@Test
 	public void verifyWaitOnElementCount() throws Exception {
-		Locator locator2 = new Locator("img[id='hplogo']");
-		By by2 = new By(How.CSS);
+		Locator locator2 = new Locator("About");
+		By by2 = new By(How.LINK_TEXT);
 		TestElement element2 = new TestElement(locator2, by2);
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(5)).on(element2);
-	}
-
-	
-	@Test
-	public void verifyWaitOnElementCount_PredefinedElementList() throws Exception {
-		Locator locator2 = new Locator("img[id='hplogo']");
-		By by2 = new By(How.CSS);
-		TestElement element3 = new TestElement(locator2, by2);
-		List<WebElement> element2 = SHelper.get().element().getListOf(element3);
-		
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(5)).on(element2);
 	}
 	
@@ -63,16 +51,6 @@ public class Wait_Count_Tests {
 		Thread.sleep(300);
 		
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(1)).on(element);
-	}
-	
-	@Test(expectedExceptions=WebDriverException.class)
-	public void verifyWaitOnElementCount_PredefinedElementList_ThrowsException() throws Exception {
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
-		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
-		Thread.sleep(300);
-		List<WebElement> element2 = SHelper.get().element().getListOf(element);
-		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(1)).on(element2);
 	}
 	
 	@Test(expectedExceptions=TestException.class)
@@ -117,8 +95,8 @@ public class Wait_Count_Tests {
 	
 	@Test(expectedExceptions=UnsupportedOperationException.class)
 	public void verifyWaitForCountPredefinedWebElement_ExceptionThrown() throws Exception {
-		Locator locator2 = new Locator("img[id='hplogo']");
-		By by2 = new By(How.CSS);
+		Locator locator2 = new Locator("About");
+		By by2 = new By(How.LINK_TEXT);
 		WebElement element2 = SHelper.get().element().get(new TestElement(locator2, by2));
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
 				.forAMaxTimeOf(2)

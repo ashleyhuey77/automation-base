@@ -3,6 +3,7 @@ package common.utils.helpers;
 
 import java.io.IOException;
 import common.utils.TestReport;
+import log.ConsoleHelper;
 import log.TestException;
 
 public class ReportHelper {
@@ -52,8 +53,15 @@ public class ReportHelper {
      */
     public TestException reportException(Exception webDriverException) throws TestException {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        testReport.reportFailEvent(stepName, webDriverException.getMessage());
-        String message = "StepName: " + stepName + "\n ErrorMessage : " + webDriverException.getMessage();
+        String errorMessage = null;
+        if (webDriverException instanceof NullPointerException) {
+        	errorMessage = "NullPointerException was thrown. Please check for null values.";
+        } else {
+        	errorMessage = webDriverException.getMessage();
+        }
+        testReport.reportFailEvent(stepName, errorMessage);
+        String message = "StepName: " + stepName + "\n ErrorMessage : " + errorMessage;
+        ConsoleHelper.analyzeLog();
         return new TestException(message);
     }
 

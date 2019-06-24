@@ -2,12 +2,20 @@ package common.base;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import common.base.helpers.ClickHelper;
+import common.base.helpers.EnterTextHelper;
+import common.base.helpers.ClickHelper.ClickBuilder;
+import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.interfaces.DatePicker;
 import common.base.methods.PresentDate;
+import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
+import common.utils.helpers.CookieHelper;
 import common.utils.managers.*;
+import log.Log;
 import log.TestException;
 import shelper.builders.WaitBuilder;
 import shelper.enums.*;
@@ -626,7 +634,6 @@ public abstract class PageHelper {
 	 * and will continue executing the next method in
 	 * the chain.
 	 * </p>
-	 * @param element TODO
 	 * @param i
 	 *            - the total amount of time the test
 	 *            should wait for the element to be
@@ -636,24 +643,35 @@ public abstract class PageHelper {
 	 *            necessary for the webelement to be
 	 *            found
 	 */
-	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				SHelper.get().page().refresh();
-				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
-				if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 10)) {
-					result = true;
-				} else {
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					if (LocalTest.getEnvironment().isHeadlessEnabled()) {
+						SHelper.get().element().isDisplayed(BaseGeneric.LOG_IN_BOX.element(), 2);
+						checkCookiesAndAddRequiredOnesIfNecessary(true);
+						SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(7))
+								.on(BaseGeneric.LOG_IN_BOX.element());
+					} else {
+						SHelper.get().page().refresh();
+					}
+					SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
+					if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 1)) {
+						result = true;
+					} else {
+						result = false;
+					}
+				} catch (Exception e) {
 					result = false;
 				}
-			} catch (Exception e) {
-				result = false;
-			}
-			return result;
-		});
+				return result;
+			});
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
 	}
 
 	/**
@@ -709,7 +727,6 @@ public abstract class PageHelper {
 	 * <p>
 	 * Method to extract digits from strings
 	 * </p>
-	 * @param element TODO
 	 * 
 	 * @return String
 	 * @throws TestException 
@@ -741,6 +758,37 @@ public abstract class PageHelper {
 			return z.replaceAll("[^0-9]", "");
 		} catch (Exception ex) {
 			throw LocalReport.getReport().reportException(ex);
+		}
+	}
+	
+	protected void handleSignInModal() throws TestException {
+		try {
+			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
+				String pwd = LocalTest.getCredentials().getNewstronPWord();
+				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(pwd)
+						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));
+				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
+						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));
+				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(10)).on(BaseGeneric.EA_SIGNIN_BOX.element());
+				CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
+			}
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
+	}
+	
+	protected void checkCookiesAndAddRequiredOnesIfNecessary(Boolean refreshPageAfter) throws TestException {
+		try {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 3)) {
+			}
+			CookieHelper.newHelper().getCookies().setCookies().build();
+			if (refreshPageAfter) {
+				SHelper.get().page().refresh();
+			}
+		} catch (Exception e) {
+			Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
 		}
 	}
 

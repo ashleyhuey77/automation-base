@@ -254,7 +254,7 @@ public class PageClassTests extends TestInitialization {
 			Assert.fail("Test expected to throw exception" + actualValue);
 		} catch (Exception ex) {
 			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("ErrorMessage : null"));
+			Assert.assertTrue(m.trim().contains("ErrorMessage : NullPointerException was thrown. Please check for null values."));
 		}
 	}
 
@@ -750,14 +750,14 @@ public class PageClassTests extends TestInitialization {
 			System.out.println(DaysOfTheWeek.ALL);
 			System.out.println(DaysOfTheWeek.WEEKDAYS);
 			System.out.println(DaysOfTheWeek.WEEKENDS);
-			System.out.println(Entity.CrashRecords);
-			System.out.println(Entity.Drafts);
-			System.out.println(Entity.Encoders);
+			System.out.println(Entity.CRASH_RECORDS);
+			System.out.println(Entity.DRAFTS);
+			System.out.println(Entity.ENCODERS);
 			System.out.println(Entity.MS2);
-			System.out.println(Entity.MS2Metadata);
-			System.out.println(Entity.Recurrences);
-			System.out.println(Entity.Requests);
-			System.out.println(Entity.Scheduler);
+			System.out.println(Entity.MS2_METADATA);
+			System.out.println(Entity.RECURRENCES);
+			System.out.println(Entity.REQUESTS);
+			System.out.println(Entity.SCHEDULER);
 			System.out.println(Timezones.Central);
 			System.out.println(Timezones.Dubai);
 			System.out.println(Timezones.Eastern);

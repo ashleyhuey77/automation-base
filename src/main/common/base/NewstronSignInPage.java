@@ -140,14 +140,14 @@ public class NewstronSignInPage<T> extends PageTemplate {
         try {
         		new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
         				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
-        				.via(Via.JAVASCRIPT));
-            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 7)) {
+        				.how(Via.JAVASCRIPT));
+            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 3)) {
             		Thread.sleep(3000);
                 String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                 if (!TestUtils.isNullOrBlank(errorText)) {
                     	new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
                 				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
-                				.via(Via.JAVASCRIPT));
+                				.how(Via.JAVASCRIPT));
                 		Thread.sleep(3000);
                     String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                     if (!TestUtils.isNullOrBlank(errorText2)) {
@@ -155,6 +155,7 @@ public class NewstronSignInPage<T> extends PageTemplate {
                     } 
                 } 
             }
+            CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }

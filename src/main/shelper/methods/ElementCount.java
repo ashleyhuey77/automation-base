@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import org.openqa.selenium.WebDriver;
@@ -34,7 +33,13 @@ public class ElementCount extends Commands implements IWait {
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
 			try {
-				SHelper.get().page().refresh();
+				/** refresh can't live in this method. If refresh
+			 	is necessary, then a new loop will need to be
+			 	created that contains the refresh
+			 	The list of web elements needs to be refreshed
+			 	every time the page is refreshed or this method
+			 	will not work correctly.
+			 	SHelper.get().page().refresh(); **/
 				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 						new WaitBuilder()
 						.forAMaxTimeOf(3))
@@ -44,7 +49,7 @@ public class ElementCount extends Commands implements IWait {
 					result = true;
 				}
 			} catch (Exception e) {
-				Log.get().log(Level.WARNING, e.getMessage(), e);
+				//Log.get().log(Level.WARNING, e.getMessage(), e);
 			}
 			return result;
 		});
@@ -53,26 +58,6 @@ public class ElementCount extends Commands implements IWait {
 	@Override
 	public void on(WebElement element) throws TestException {
 		throw new UnsupportedOperationException("The on(WebElement element) method has not been implemented for wait on element count.");
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			/** refresh can't live in this method. If refresh
-			 	is necessary, then a new loop will need to be
-			 	created that contains the refresh
-			 	The list of web elements needs to be refreshed
-			 	every time the page is refreshed or this method
-			 	will not work correctly.
-			 	SHelper.get().page().refresh(); **/
-			int actualElementCount = element.size();
-			if (actualElementCount == expectedTotalCount) {
-				result = true;
-			}
-			return result;
-		});
 	}
 
 	public static class LocalWaitBuilder extends Commands {

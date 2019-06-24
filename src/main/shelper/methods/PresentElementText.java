@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,12 +18,14 @@ public class PresentElementText extends Commands implements IWait {
 	protected int time = 0;
 	protected Condition condition;
 	protected String value;
+	protected String indexOf;
 
 	public PresentElementText(WaitBuilder base) throws TestException {
 		LocalWaitBuilder builder = new LocalWaitBuilder(base);
 		this.time = builder.time;
 		this.condition = builder.condition;
 		this.value = builder.value;
+		this.indexOf = builder.indexOf;
 	}
 
 	@Override
@@ -76,10 +77,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
-			String actualText = elementToBeTested.getText();
-			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = getElement(element);
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -104,10 +109,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
-			String actualText = elementToBeTested.getText();
-			if (actualText.equalsIgnoreCase(expectedText.trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = getElement(element);
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.equalsIgnoreCase(expectedText.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -140,10 +149,14 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = element;
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
@@ -176,29 +189,30 @@ public class PresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (actualText.equalsIgnoreCase(expectedText.trim())) {
-				result = true;
+			try {
+    			WebElement elementToBeTested = element;
+    			String actualText = elementToBeTested.getText();
+    			if (actualText.equalsIgnoreCase(expectedText.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
 			}
 			return result;
 		});
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException();
 	}
 
 	public static class LocalWaitBuilder extends Commands {
 		private int time;
 		private Condition condition;
 		private String value;
+		private String indexOf;
 
 		public LocalWaitBuilder(WaitBuilder base) throws TestException {
 			this.time = base.baseTime;
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
+			this.indexOf = base.indexOf;
 			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
 										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();

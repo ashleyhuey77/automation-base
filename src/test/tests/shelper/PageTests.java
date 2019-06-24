@@ -44,7 +44,7 @@ public class PageTests {
 		Locator locator3 = new Locator("table[id='nav']");
 		By by3 = new By("css");
 		TestElement element3 = new TestElement(locator3, by3);
-		SHelper.get().enter().textInto(element, "Test");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, "Test");
 		Thread.sleep(400);
 		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
@@ -114,7 +114,7 @@ public class PageTests {
 		Locator locator3 = new Locator("table[id='nav']");
 		By by3 = new By("css");
 		TestElement element3 = new TestElement(locator3, by3);
-		SHelper.get().enter().textInto(element, "Test");
+		SHelper.get().enter(Via.SELENIUM).textInto(element, "Test");
 		Thread.sleep(400);
 		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,

@@ -68,7 +68,7 @@ public class ClickHelper_Tests extends TestInitialization {
 
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test"))
 				.clickOn(new TestElement(locator, by))
-				.via(Via.JAVASCRIPT));
+				.how(Via.JAVASCRIPT));
 
 		String inputString = getByteStreamMessage(baos.get(), old);
 

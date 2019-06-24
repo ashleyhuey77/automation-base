@@ -1,12 +1,14 @@
 package common.base.enums;
 
 public enum Entity {
-	Drafts,
-    Scheduler,
+	DRAFTS,
+    SCHEDULER,
     MS2,
-    CrashRecords,
-    Requests,
-    Encoders,
-    Recurrences,
-    MS2Metadata
+    CRASH_RECORDS,
+    REQUESTS,
+    ENCODERS,
+    RECURRENCES,
+    MS2_METADATA,
+    EA,
+    EDIT_SERVICE_JOBS
 }

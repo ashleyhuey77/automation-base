@@ -12,7 +12,7 @@ import common.utils.WebDriverListener;
 import common.utils.managers.LocalDriver;
 import common.utils.managers.SHelper;
 import shelper.SeleniumHelper;
-import shelper.enums.SelectType;
+import shelper.enums.SelectBy;
 import shelper.vobjects.By;
 import shelper.vobjects.Locator;
 import shelper.vobjects.TestElement;
@@ -151,7 +151,7 @@ public class ActionsTests {
 		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
-		SHelper.get().actions().selectFromDropDown(test, "2", SelectType.byValue);
+		SHelper.get().actions().selectFromDropDown(test, "2", SelectBy.VALUE);
 	}
 	
 	@Test
@@ -171,7 +171,7 @@ public class ActionsTests {
 		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
-		SHelper.get().actions().selectFromDropDown(test, "Saab", SelectType.byVisibleText);
+		SHelper.get().actions().selectFromDropDown(test, "Saab", SelectBy.VISIBLE_TEXT);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -191,7 +191,7 @@ public class ActionsTests {
 		WebElement test = SHelper.get().element().get(element);
 		Thread.sleep(500);
 		
-		SHelper.get().actions().selectFromDropDown(test, "Test", SelectType.byVisibleText);
+		SHelper.get().actions().selectFromDropDown(test, "Test", SelectBy.VISIBLE_TEXT);
 	}
 	
 	@Test
@@ -251,7 +251,7 @@ public class ActionsTests {
 		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectType.byIndex);
+		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectBy.INDEX);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -263,7 +263,7 @@ public class ActionsTests {
 		TestElement element = new TestElement(locator, by);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectType.byIndex);
+		SHelper.get().actions().selectFromDropDown(element, "Test2", SelectBy.INDEX);
 	}
 	
 	@Test

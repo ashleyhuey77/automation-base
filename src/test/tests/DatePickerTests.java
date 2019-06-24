@@ -16,20 +16,20 @@ public class DatePickerTests {
 	@Test
 	public void verifyGetFutureDate() throws TestException {
 		DatePicker picker = new FutureDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
-        String date = formatDate.format(now).toString();
+        String date = formatDate.format(now);
 		
-		String timeStamp = picker.getDate("dd-MM-YYYY", 1);
+		String timeStamp = picker.getDate("dd-MM-yyyy", 1);
 		
-		Assert.assertNotEquals(timeStamp, date);;
+		Assert.assertNotEquals(timeStamp, date);
 	}
 	
 	@SuppressWarnings("unused")
 	@Test(expectedExceptions=Exception.class)
 	public void verifyGetFutureDate_ThrowsException() throws TestException {
 		DatePicker picker = new FutureDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
@@ -40,7 +40,7 @@ public class DatePickerTests {
 	@Test(expectedExceptions=Exception.class)
 	public void verifyGetFutureDate_NoNumOfDaysProvided() throws TestException {
 		DatePicker picker = new FutureDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
@@ -50,11 +50,11 @@ public class DatePickerTests {
 	@Test
 	public void verifyGetPastDate() throws TestException {
 		DatePicker picker = new PastDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
-		String timeStamp = picker.getDate("dd-MM-YYYY", 1);
+		String timeStamp = picker.getDate("dd-MM-yyyy", 1);
 		
 		Assert.assertNotEquals(timeStamp, date);;
 	}
@@ -63,7 +63,7 @@ public class DatePickerTests {
 	@Test(expectedExceptions=Exception.class)
 	public void verifyGetPastDate_ThrowsException() throws TestException {
 		DatePicker picker = new PastDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
@@ -74,7 +74,7 @@ public class DatePickerTests {
 	@Test(expectedExceptions=Exception.class)
 	public void verifyGetPastDate_NumOfDaysNotProvided() throws TestException {
 		DatePicker picker = new PastDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
@@ -84,11 +84,11 @@ public class DatePickerTests {
 	@Test
 	public void verifyGetPresentDate() throws TestException {
 		DatePicker picker = new PresentDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		
-		String timeStamp = picker.getDate("dd-MM-YYYY");
+		String timeStamp = picker.getDate("dd-MM-yyyy");
 		
 		Assert.assertEquals(timeStamp, date);;
 	}
@@ -97,7 +97,7 @@ public class DatePickerTests {
 	@Test(expectedExceptions=Exception.class)
 	public void verifyGetPresentDate_ThrowsException() throws TestException {
 		DatePicker picker = new PresentDate();
-		DateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
+		DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         String date = formatDate.format(now).toString();
 		

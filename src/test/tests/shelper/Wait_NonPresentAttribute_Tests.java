@@ -1,6 +1,5 @@
 package tests.shelper;
 
-import java.util.ArrayList;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -69,15 +68,6 @@ public class Wait_NonPresentAttribute_Tests {
 				.to(Condition.CONTAIN)
 				.forAMaxTimeOf(2))
 				.on(element);
-	}
-	
-	@Test(expectedExceptions=UnsupportedOperationException.class)
-	public void verifyWaitForNonPresentAttributeList_ExceptionThrown() throws Exception
-	{
-		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
-				.forAttribute("class")
-				.forAMaxTimeOf(2))
-				.on(new ArrayList<WebElement>());
 	}
 	
 	@Test(expectedExceptions=TestException.class)

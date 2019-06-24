@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -57,11 +56,6 @@ public class PresentAttributeText extends Commands implements IWait {
 				throw new TestException(
 						"Please select a valid condition. Unable to execute because condition is not valid.");
 		}
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException();
 	}
 
 	/**

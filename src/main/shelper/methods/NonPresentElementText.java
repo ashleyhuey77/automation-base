@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import common.utils.Validator;
 import common.utils.managers.LocalDriver;
+import common.utils.managers.SHelper;
 import log.TestException;
 import shelper.abstracts.Commands;
 import shelper.builders.WaitBuilder;
@@ -19,22 +20,32 @@ public class NonPresentElementText extends Commands implements IWait {
 	protected int time = 0;
 	protected Condition condition;
 	protected String value;
+	protected String indexOf;
 
 	public NonPresentElementText(WaitBuilder build) throws TestException {
 		LocalWaitBuilder builder = new LocalWaitBuilder(build);
 		this.time = builder.time;
 		this.condition = builder.condition;
 		this.value = builder.value;
+		this.indexOf = builder.indexOf;
 	}
 
 	@Override
 	public void on(TestElement element) throws TestException {
 		switch (condition) {
 			case EQUAL:
-				waitForElementToNoLongerEqualText(element, value, time);
+				if (this.indexOf != null) {
+					waitForListElementToNoLongerEqualText(element);
+				} else {
+					waitForElementToNoLongerEqualText(element, value, time);
+				}
 				break;
 			case CONTAIN:
-				waitForElementToNoLongerContainText(element, value, time);
+				if (this.indexOf != null) {
+					waitForListElementToNoLongerContainText(element);
+				} else {
+					waitForElementToNoLongerContainText(element, value, time);
+				}
 				break;
 			default:
 				throw new TestException(
@@ -56,10 +67,45 @@ public class NonPresentElementText extends Commands implements IWait {
 						"Please select a valid condition. Unable to execute because condition is not valid.");
 		}
 	}
+	
+	private void waitForListElementToNoLongerEqualText(TestElement element) throws TestException {
+		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
 
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException("The on(List<WebElement> element) method has not been implemented for wait on non present element text.");
+		wait.until((WebDriver driver) -> {
+			Boolean result = false;
+			try {
+				List<WebElement> elementList = SHelper.get().element().getListOf(element);
+				int intIndex = Integer.parseInt(this.indexOf);
+    			WebElement elementToBeTested = elementList.get(intIndex);
+    			String actualText = elementToBeTested.getText();
+    			if (!actualText.equalsIgnoreCase(this.value.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
+			}
+			return result;
+		});
+	}
+	
+	private void waitForListElementToNoLongerContainText(TestElement element) throws TestException {
+		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
+
+		wait.until((WebDriver driver) -> {
+			Boolean result = false;
+			try {
+				List<WebElement> elementList = SHelper.get().element().getListOf(element);
+				int intIndex = Integer.parseInt(this.indexOf);
+    			WebElement elementToBeTested = elementList.get(intIndex);
+    			String actualText = elementToBeTested.getText();
+    			if (!actualText.contains(this.value.trim())) {
+    				result = true;
+    			}
+			} catch (Exception e) {
+				return result;
+			}
+			return result;
+		});
 	}
 
 	/**
@@ -194,11 +240,13 @@ public class NonPresentElementText extends Commands implements IWait {
 		private int time;
 		private Condition condition;
 		private String value;
+		private String indexOf;
 
 		public LocalWaitBuilder(WaitBuilder base) throws TestException {
 			this.time = base.baseTime;
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
+			this.indexOf = base.indexOf;
 			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
 										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();

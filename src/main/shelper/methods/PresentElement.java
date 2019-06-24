@@ -1,6 +1,5 @@
 package shelper.methods;
 
-import java.util.List;
 import java.util.Objects;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -46,11 +45,6 @@ public class PresentElement extends Commands implements IWait {
 			}
 			return result;
 		});
-	}
-
-	@Override
-	public void on(List<WebElement> element) throws TestException {
-		throw new UnsupportedOperationException();
 	}
 
 	public static class LocalWaitBuilder extends Commands {
