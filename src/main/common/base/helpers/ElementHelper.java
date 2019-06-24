@@ -22,9 +22,10 @@ public class ElementHelper {
 				webElement = builder.elementList.stream().filter(d -> d.getText().equalsIgnoreCase(builder.elementText)).findFirst()
 						.orElse(null);
 			}
+			
 		} else if (builder.element != null) {
 			webElement = SHelper.get().element().get(builder.element);
-		} else {
+		} else { 
 			throw LocalValidation.getValidations().assertionFailed("Please provide either an element or a list of elements.");
 		}
 	}
