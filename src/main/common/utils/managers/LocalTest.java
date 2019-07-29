@@ -16,6 +16,7 @@ public class LocalTest {
 	}
 
     private static ThreadLocal < String > testName = new ThreadLocal <> ();
+    private static ThreadLocal<Boolean> isLoggingEnabled = new ThreadLocal<>();
     private static ThreadLocal<Environment> environment = new ThreadLocal<>();
     private static ThreadLocal < Credentials > credentials = new ThreadLocal <> ();
     private static ThreadLocal< Credentials > emailCreds = new ThreadLocal<>();
@@ -26,6 +27,14 @@ public class LocalTest {
 
     public static void setTestName(String name) {
         testName.set(name);
+    }
+    
+    public static Boolean getIsLoggingEnabled() {
+    	return isLoggingEnabled.get();
+    }
+    
+    public static void setIsLoggingEnabled(Boolean value) {
+    	isLoggingEnabled.set(value);
     }
 
     public static Environment getEnvironment() {
@@ -61,6 +70,7 @@ public class LocalTest {
             props.load(inputStream);
 
             String appUrl = setValueIfSystemPropIsNull(props, "ApplicationUrl", "appUrl");
+            Boolean isLoggingEnabled = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsLoggingEnabled", "isLoggingEnabled"));
             String newstronUN = setValueIfSystemPropIsNull(props, "NewstronEncryptedUserName", "");
             String newstronPWD = setValueIfSystemPropIsNull(props, "NewstronEncryptedPassword", "");
             String env = setValueIfSystemPropIsNull(props, "Environment", "env");
@@ -75,6 +85,7 @@ public class LocalTest {
             Credentials credentials = new Credentials(miraUserName, miraPassword, newstronUN, newstronPWD);
             setCredentials(credentials);
             setEnvironment(environment);
+            setIsLoggingEnabled(isLoggingEnabled);
     	} catch (Exception e) {
     		
     	}

@@ -29,6 +29,14 @@ public class Credentials {
         return newstronEncryptedPassword;
     }
     
+    public void setNewstronUN(String value) {
+       newstronEncryptedUserName = value;
+    }
+
+    public void setNewstronPWord(String value) {
+        newstronEncryptedPassword = value;
+    }
+    
     public String getEmailServerUN() {
     	return emailServerUN;
     }

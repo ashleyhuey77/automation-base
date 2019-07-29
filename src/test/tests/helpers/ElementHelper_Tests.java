@@ -34,6 +34,7 @@ public class ElementHelper_Tests extends TestInitialization {
 		WebElement element = new ElementHelper(new ElementBuilder(elements).text("Correct")).get();
 
 		Assert.assertNotNull(element);
+		Assert.assertTrue(element.getText().equals("Correct"));
 	}
 	
 	@Test(groups= {"element"}, alwaysRun=true)
@@ -62,6 +63,7 @@ public class ElementHelper_Tests extends TestInitialization {
 		WebElement element = new ElementHelper(new ElementBuilder(elements).that(Condition.EQUAL).text("Correct")).get();
 
 		Assert.assertNotNull(element);
+		Assert.assertTrue(element.getText().equals("Correct"));
 	}
 	
 	@Test(groups= {"element"}, alwaysRun=true)
@@ -76,6 +78,7 @@ public class ElementHelper_Tests extends TestInitialization {
 		WebElement element = new ElementHelper(new ElementBuilder(elements).that(Condition.CONTAIN).text("corr")).get();
 
 		Assert.assertNotNull(element);
+		Assert.assertTrue(element.getText().equals("Correct"));
 	}
 	
 	@Test(groups= {"element"}, alwaysRun=true)
