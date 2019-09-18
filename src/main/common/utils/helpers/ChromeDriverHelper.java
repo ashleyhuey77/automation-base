@@ -2,6 +2,8 @@ package common.utils.helpers;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.openqa.selenium.WebDriver;
@@ -50,10 +52,11 @@ public class ChromeDriverHelper {
 		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
 		LocalChromeOptions.get().addArguments("--no-sandbox");
 		LocalChromeOptions.get().addArguments("--disable-gpu");
-		LocalChromeOptions.get().addArguments("enable-automation");
-/*		LocalChromeOptions.get().setProxy(null);
-		LocalChromeOptions.get().addArguments("--proxy-server='direct://'");
-		LocalChromeOptions.get().addArguments("--proxy-bypass-list=*");*/
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("credentials_enable_service", false);
+		prefs.put("profile.password_manager_enabled", false);
+		LocalChromeOptions.get().setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+		LocalChromeOptions.get().setExperimentalOption("prefs", prefs);
 		LocalChromeOptions.get().merge(caps);
 		caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 

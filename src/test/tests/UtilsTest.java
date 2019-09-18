@@ -3,7 +3,6 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import common.utils.TestUtils;
-import common.utils.helpers.SecurityHelper;
 
 //@Listeners(WebDriverListener.class)
 public class UtilsTest {
@@ -20,7 +19,7 @@ public class UtilsTest {
 		Assert.assertTrue(!TestUtils.isNullOrBlank(timeStamp));
 	}*/
 	
-	@Test
+/*	@Test
 	public void verifyEncryptAndDecrypt() throws Exception
 	{
 		SecurityHelper s = new SecurityHelper();
@@ -36,7 +35,7 @@ public class UtilsTest {
 		
 		Assert.assertTrue(!TestUtils.isNullOrBlank(result2));
 		Assert.assertEquals(result2, "Testing123456");
-	}
+	}*/
 	
 	
 

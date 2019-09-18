@@ -2,7 +2,7 @@ package common.utils.builders;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import common.utils.helpers.SecurityHelper;
+import com.app.SecurityHelper;
 
 public class Credentials {
 
@@ -53,10 +53,8 @@ public class Credentials {
             Credentials.miraEncryptedPassword = decryptedMPword;
         }
         if (nUser.length() > 3) {
-            String decryptedNUN = SecurityHelper.decrypt(nUser);
-            String decryptedNPword = SecurityHelper.decrypt(nPword);
-            Credentials.newstronEncryptedUserName = decryptedNUN;
-            Credentials.newstronEncryptedPassword = decryptedNPword;
+            Credentials.newstronEncryptedUserName = nUser;
+            Credentials.newstronEncryptedPassword = nPword;
         }
     }
     
