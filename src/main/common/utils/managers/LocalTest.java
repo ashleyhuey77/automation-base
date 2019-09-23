@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
+import com.app.Decrypter;
+import com.app.data.DataMapper;
+import com.utils.Constants;
 import common.utils.TestUtils;
 import common.utils.builders.Credentials;
 import common.utils.builders.Environment;
@@ -16,6 +19,7 @@ public class LocalTest {
 	}
 
     private static ThreadLocal < String > testName = new ThreadLocal <> ();
+    private static ThreadLocal<Boolean> isLoggingEnabled = new ThreadLocal<>();
     private static ThreadLocal<Environment> environment = new ThreadLocal<>();
     private static ThreadLocal < Credentials > credentials = new ThreadLocal <> ();
     private static ThreadLocal< Credentials > emailCreds = new ThreadLocal<>();
@@ -26,6 +30,14 @@ public class LocalTest {
 
     public static void setTestName(String name) {
         testName.set(name);
+    }
+    
+    public static Boolean getIsLoggingEnabled() {
+    	return isLoggingEnabled.get();
+    }
+    
+    public static void setIsLoggingEnabled(Boolean value) {
+    	isLoggingEnabled.set(value);
     }
 
     public static Environment getEnvironment() {
@@ -59,10 +71,14 @@ public class LocalTest {
             Properties props = new Properties();
 
             props.load(inputStream);
+            if (DataMapper.getCredentials() == null) {
+            	decryptCredentials();
+            }
 
             String appUrl = setValueIfSystemPropIsNull(props, "ApplicationUrl", "appUrl");
-            String newstronUN = setValueIfSystemPropIsNull(props, "NewstronEncryptedUserName", "");
-            String newstronPWD = setValueIfSystemPropIsNull(props, "NewstronEncryptedPassword", "");
+            Boolean isLoggingEnabled = Boolean.parseBoolean(setValueIfSystemPropIsNull(props, "IsLoggingEnabled", "isLoggingEnabled"));
+            String newstronUN = DataMapper.getCredentials().name;
+            String newstronPWD = DataMapper.getCredentials().password;
             String env = setValueIfSystemPropIsNull(props, "Environment", "env");
             String bureau = setValueIfSystemPropIsNull(props, "Bureau", "bureau");
             String browser = setValueIfSystemPropIsNull(props, "Browser", "browser");
@@ -75,9 +91,18 @@ public class LocalTest {
             Credentials credentials = new Credentials(miraUserName, miraPassword, newstronUN, newstronPWD);
             setCredentials(credentials);
             setEnvironment(environment);
+            setIsLoggingEnabled(isLoggingEnabled);
     	} catch (Exception e) {
     		
     	}
+    }
+    
+    private static void decryptCredentials() throws Exception {
+    	try {
+    		Decrypter.decrypt(Constants.ENCRYPTED_CREDENTIALS_FILE_IMPORT_PATH);
+		} catch (Exception e) {
+			throw e;
+		}
     }
 
     private static String setValueIfSystemPropIsNull(Properties props, String prop, String systemProp) {

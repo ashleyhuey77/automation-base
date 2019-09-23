@@ -7,6 +7,7 @@ import common.base.helpers.ClickHelper.ClickBuilder;
 import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
+import common.utils.builders.Credentials;
 import common.utils.managers.*;
 import log.TestException;
 import shelper.builders.WaitBuilder;
@@ -114,6 +115,35 @@ public class NewstronSignInPage<T> extends PageTemplate {
             Thread.sleep(2000);
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
             		.enterText(pwd.trim())
+            		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
+            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            Thread.sleep(2000);
+        } catch (Exception ex) {
+            throw LocalReport.getReport().reportException(ex);
+        }
+        return this;
+    }
+    
+    /**
+     * <p>Enters the log in details (both username and password) for the Newstron Application.</p>
+     * <p>Does not include the functionality to click the sign in button. There is a separate method 
+     * within the NewstronSignInPage class that clicks the sign in button that has to be called in the
+     * test in order for sign in to be complete.</p>
+     * @return NewstronSignInPage
+     * @throws TestException 
+     */
+    public NewstronSignInPage<T> enterLogInDetails(Credentials creds) throws TestException {
+        try {
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
+            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
+            new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
+            		.enterText(creds.getNewstronUN().trim())
+            		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
+            Thread.sleep(2000);
+            new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
+            		.enterText(creds.getNewstronPWord().trim())
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);

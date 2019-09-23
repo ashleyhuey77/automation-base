@@ -2,11 +2,12 @@ package common.utils.helpers;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import common.utils.TestUtils;
 import common.utils.contexts.HeadlessContext;
@@ -25,7 +26,10 @@ public class ChromeDriverHelper {
 	public ChromeDriverHelper() throws TestException {
 		HelperFacade.setDriverLocalPathBasedOnOS(OS.valueOf(LocalTest.getEnvironment().getOS().toUpperCase()));
 		System.setProperty("java.awt.headless", Boolean.toString(LocalTest.getEnvironment().isHeadlessEnabled()));
-		//System.setProperty("webdriver.chrome.verboseLogging", "true");
+		if (LocalTest.getIsLoggingEnabled() != null
+				&& LocalTest.getIsLoggingEnabled()) {
+			System.setProperty("webdriver.chrome.verboseLogging", "true");
+		}
 		DesiredCapabilities caps = new DesiredCapabilities();
 		caps.setJavascriptEnabled(true);
 		caps.setCapability("takesScreenshot", true);
@@ -45,6 +49,14 @@ public class ChromeDriverHelper {
 						new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx"));
 			}
 		}
+		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
+		LocalChromeOptions.get().addArguments("--no-sandbox");
+		LocalChromeOptions.get().addArguments("--disable-gpu");
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("credentials_enable_service", false);
+		prefs.put("profile.password_manager_enabled", false);
+		LocalChromeOptions.get().setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+		LocalChromeOptions.get().setExperimentalOption("prefs", prefs);
 		LocalChromeOptions.get().merge(caps);
 		caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 

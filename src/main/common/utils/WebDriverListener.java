@@ -53,6 +53,10 @@ public class WebDriverListener implements IInvokedMethodListener {
 					if (driver != null) {
 						driver.quit();
 					}
+				} finally {
+					if (driver != null) {
+						driver.quit();
+					}
 				}
 		}
 	}

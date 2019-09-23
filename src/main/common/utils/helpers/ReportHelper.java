@@ -61,7 +61,7 @@ public class ReportHelper {
         }
         testReport.reportFailEvent(stepName, errorMessage);
         String message = "StepName: " + stepName + "\n ErrorMessage : " + errorMessage;
-        ConsoleHelper.analyzeLog();
+        //ConsoleHelper.analyzeLog();
         return new TestException(message);
     }
 

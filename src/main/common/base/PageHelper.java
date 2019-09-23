@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import common.base.helpers.ClickHelper;
 import common.base.helpers.EnterTextHelper;
@@ -781,15 +782,29 @@ public abstract class PageHelper {
 	
 	protected void checkCookiesAndAddRequiredOnesIfNecessary(Boolean refreshPageAfter) throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 3)) {
+			if (LocalTest.getEnvironment().isHeadlessEnabled()) {
+    			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 1)) {
+    			}
+    			CookieHelper.newHelper().getCookies().setCookies().build();
 			}
-			CookieHelper.newHelper().getCookies().setCookies().build();
 			if (refreshPageAfter) {
 				SHelper.get().page().refresh();
 			}
 		} catch (Exception e) {
 			Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
 		}
+	}
+	
+	protected Boolean isAlertPresent(int waitTime) throws TestException {
+		Boolean foundAlert = false;
+		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), waitTime);
+		try {
+			wait.until(ExpectedConditions.alertIsPresent());
+			foundAlert = true;
+		} catch (Exception e) {
+			foundAlert = false;
+		}
+		return foundAlert;
 	}
 
 }
