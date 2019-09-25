@@ -6,7 +6,6 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage.RecipientType;
 import common.utils.enums.Protocol;
-import common.utils.managers.LocalTest;
 import log.Log;
 
 public class SMTPHelper {
@@ -24,8 +23,8 @@ public class SMTPHelper {
 		Session sess = Session.getInstance(properties2, new javax.mail.Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(LocalTest.getEmailCredentials().getEmailServerUN(),
-						LocalTest.getEmailCredentials().getEmailServerPWD());
+				return new PasswordAuthentication("",
+						"");
 			}
 		});
 		Log.get().log(Level.INFO, "SMTP session started... ");
@@ -35,8 +34,8 @@ public class SMTPHelper {
 	public static void sendEmailMessage() {
 		try {
 			Transport t = session.get().getTransport("smtps");
-			String uN = LocalTest.getEmailCredentials().getEmailServerUN();
-			String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
+			String uN = "";
+			String pwd = "";
 			t.connect("smtp.mail.yahoo.com", uN, pwd);
 			t.sendMessage(replyMessage.get(), replyMessage.get().getRecipients(RecipientType.TO));
 			t.close();

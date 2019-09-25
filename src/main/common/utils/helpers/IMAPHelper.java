@@ -31,8 +31,8 @@ public class IMAPHelper {
 	public static void setUpIMAPServer() {
 		EmailReceiver e = new EmailReceiver(Protocol.imap, "imap.mail.yahoo.com", "993", true);
 		Properties properties = e.property.get();
-		String un = LocalTest.getEmailCredentials().getEmailServerUN();
-		String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
+		String un = "";
+		String pwd = "";
 		Session sess = Session.getInstance(properties, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -47,8 +47,8 @@ public class IMAPHelper {
 		try {
 			Store st = session.get().getStore("imap");
 			store.set(st);
-			String un = LocalTest.getEmailCredentials().getEmailServerUN();
-			String pwd = LocalTest.getEmailCredentials().getEmailServerPWD();
+			String un = "";
+			String pwd = "";
 			store.get().connect("imap.mail.yahoo.com", un, pwd);
 			Log.get().log(Level.INFO, "Store opened... ");
 			Folder f = store.get().getFolder(folderPath);

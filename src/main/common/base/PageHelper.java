@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.app.creds.CredentialsType;
 import common.base.helpers.ClickHelper;
 import common.base.helpers.EnterTextHelper;
 import common.base.helpers.ClickHelper.ClickBuilder;
@@ -14,6 +15,7 @@ import common.base.interfaces.DatePicker;
 import common.base.methods.PresentDate;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
+import common.utils.creds.SignInHelper;
 import common.utils.helpers.CookieHelper;
 import common.utils.managers.*;
 import log.Log;
@@ -766,8 +768,7 @@ public abstract class PageHelper {
 		try {
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
-				String pwd = LocalTest.getCredentials().getNewstronPWord();
-				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(pwd)
+				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getPassword()))
 						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));
 				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
 						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));

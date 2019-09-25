@@ -1,13 +1,14 @@
 package common.base;
 
 import org.openqa.selenium.WebDriverException;
+import com.app.creds.CredentialsType;
 import common.base.helpers.ClickHelper;
 import common.base.helpers.EnterTextHelper;
 import common.base.helpers.ClickHelper.ClickBuilder;
 import common.base.helpers.EnterTextHelper.EnterTextBuilder;
 import common.base.vobjects.ReportInfo;
 import common.utils.TestUtils;
-import common.utils.builders.Credentials;
+import common.utils.creds.SignInHelper;
 import common.utils.managers.*;
 import log.TestException;
 import shelper.builders.WaitBuilder;
@@ -103,18 +104,16 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public NewstronSignInPage<T> enterLogInDetails() throws TestException {
         try {
-            String pwd = LocalTest.getCredentials().getNewstronPWord();
-            String usrnm = LocalTest.getCredentials().getNewstronUN();
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
-            		.enterText(usrnm.trim())
+            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getName()).trim())
             		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
             Thread.sleep(2000);
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
-            		.enterText(pwd.trim())
+            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getPassword()).trim())
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
@@ -132,18 +131,18 @@ public class NewstronSignInPage<T> extends PageTemplate {
      * @return NewstronSignInPage
      * @throws TestException 
      */
-    public NewstronSignInPage<T> enterLogInDetails(Credentials creds) throws TestException {
+    public NewstronSignInPage<T> enterLogInDetails(CredentialsType type) throws TestException {
         try {
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
-            		.enterText(creds.getNewstronUN().trim())
+            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getName()).trim())
             		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
             Thread.sleep(2000);
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
-            		.enterText(creds.getNewstronPWord().trim())
+            		.enterText(new String(SignInHelper.getUser(type).getPassword()).trim())
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
