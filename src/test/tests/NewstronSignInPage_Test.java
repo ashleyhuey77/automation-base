@@ -3,6 +3,7 @@ package tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import com.app.creds.CredentialsType;
 import common.base.NewstronSignInPage;
 import common.utils.WebDriverListener;
 import common.utils.managers.LocalDriver;
@@ -29,7 +30,7 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	public void verifyNewstronSignInPage_2() throws Exception {
 		NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
 		
-		_newstronSignInPage.enterLogInDetails()
+		_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
 		   				   .clickTheSignInButton();
 	}
 

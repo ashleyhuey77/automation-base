@@ -768,7 +768,7 @@ public abstract class PageHelper {
 		try {
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
-				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getPassword()))
+				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(new String(SignInHelper.getPassword(CredentialsType.BASE)))
 						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));
 				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
 						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));

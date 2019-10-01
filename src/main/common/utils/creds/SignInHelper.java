@@ -1,15 +1,19 @@
 package common.utils.creds;
 
+import com.app.Decrypter;
 import com.app.creds.CredentialsType;
+import com.app.data.DataMapper;
 
 public class SignInHelper {
-	
-	public static User getUser(CredentialsType type) {
-		UserFactory factory = UserFactory.factory(builder -> {
-			builder.add(CredentialsType.BASE, NewsApps::new);
-			builder.add(CredentialsType.MIRA, Mira::new);
-		});
-		return factory.create(type);
+
+	public static byte[] getName(CredentialsType type) throws Exception {
+		Decrypter.decrypt(type);
+		return DataMapper.getCredentials().name.getBytes();
+	}
+
+	public static byte[] getPassword(CredentialsType type) throws Exception {
+		Decrypter.decrypt(type);
+		return DataMapper.getCredentials().password.getBytes();
 	}
 
 }

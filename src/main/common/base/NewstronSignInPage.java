@@ -107,13 +107,13 @@ public class NewstronSignInPage<T> extends PageTemplate {
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
-            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getName()).trim())
+            		.enterText(new String(SignInHelper.getName(CredentialsType.BASE)).trim())
             		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
             Thread.sleep(2000);
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
-            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getPassword()).trim())
+            		.enterText(new String(SignInHelper.getPassword(CredentialsType.BASE)).trim())
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
@@ -136,13 +136,13 @@ public class NewstronSignInPage<T> extends PageTemplate {
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.USER_NAME_TEXT_FIELD.name()))
-            		.enterText(new String(SignInHelper.getUser(CredentialsType.BASE).getName()).trim())
+            		.enterText(new String(SignInHelper.getName(type)).trim())
             		.into(BaseGeneric.USER_NAME_TEXT_FIELD.element()));
             SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
             		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
             Thread.sleep(2000);
             new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.PWD_TEXT_FIELD.name()))
-            		.enterText(new String(SignInHelper.getUser(type).getPassword()).trim())
+            		.enterText(new String(SignInHelper.getPassword(type)).trim())
             		.into(BaseGeneric.PWD_TEXT_FIELD.element()));
             LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
             Thread.sleep(2000);
