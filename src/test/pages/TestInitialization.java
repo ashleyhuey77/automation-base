@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import common.utils.managers.LocalTest;
+import com.warnermedia.config.settings.LocalTest;
 
 public class TestInitialization {
 

@@ -3,9 +3,9 @@ package tests.loki;
 import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import data.loki.obj.Loki;
-import data.loki.service.Environments;
-import data.loki.service.TestEnvironment;
+import com.warnermedia.data.loki.Environments;
+import com.warnermedia.data.loki.Loki;
+import com.warnermedia.data.loki.TestEnvironment;
 
 public class OtherLokiTests {
 	

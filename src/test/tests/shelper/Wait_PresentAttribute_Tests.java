@@ -8,18 +8,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.utils.TestUtils;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
-import log.TestException;
-import shelper.SeleniumHelper;
-import shelper.builders.WaitBuilder;
-import shelper.enums.Condition;
-import shelper.enums.Wait;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.TestException;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.SeleniumHelper;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.selenium.wait.Condition;
+import com.warnermedia.selenium.wait.Wait;
+import com.warnermedia.selenium.wait.WaitBuilder;
+import com.warnermedia.utils.TestUtils;
 
 @Listeners(WebDriverListener.class)
 public class Wait_PresentAttribute_Tests {

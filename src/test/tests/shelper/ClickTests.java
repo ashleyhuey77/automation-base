@@ -7,14 +7,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
-import shelper.SeleniumHelper;
-import shelper.enums.Via;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.SeleniumHelper;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.selenium.shared.Via;
 
 @Listeners(WebDriverListener.class)
 public class ClickTests {

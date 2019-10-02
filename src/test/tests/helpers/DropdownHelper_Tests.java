@@ -10,17 +10,17 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.base.helpers.DropdownHelper;
-import common.base.helpers.DropdownHelper.DropdownBuilder;
-import common.base.vobjects.ReportInfo;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
-import log.TestException;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.TestException;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.page.utils.DropdownHelper;
+import com.warnermedia.page.utils.ReportInfo;
+import com.warnermedia.page.utils.DropdownHelper.DropdownBuilder;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.TestElement;
 import pages.TestInitialization;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class DropdownHelper_Tests extends TestInitialization {
@@ -135,7 +135,7 @@ public class DropdownHelper_Tests extends TestInitialization {
 		String inputString = getByteStreamMessage(baos.get(), old);
 
 		Assert.assertTrue(
-				inputString.trim().contains("clickSomeTestElement has passed. Test 3 option clicked successfully."));
+				inputString.trim().contains("findOptionThatIsEqualToOptionInAList has passed. Test 3 has been selected successfully."));
 
 		closeByteStream(ps.get(), baos.get());
 	}

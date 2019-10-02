@@ -2,9 +2,9 @@ package tests.utils;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import common.utils.builders.Environment;
-import common.utils.builders.TestSettings;
-import common.utils.managers.LocalReport;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.Environment;
+import com.warnermedia.config.settings.TestSettings;
 
 public class ManagersTests {
 	

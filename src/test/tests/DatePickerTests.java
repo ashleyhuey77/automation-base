@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import common.base.interfaces.DatePicker;
-import common.base.methods.FutureDate;
-import common.base.methods.PastDate;
-import common.base.methods.PresentDate;
-import log.TestException;
+import com.warnermedia.config.TestException;
+import com.warnermedia.page.utils.date.DatePicker;
+import com.warnermedia.page.utils.date.FutureDate;
+import com.warnermedia.page.utils.date.PastDate;
+import com.warnermedia.page.utils.date.PresentDate;
 
 public class DatePickerTests {
 	

@@ -3,17 +3,18 @@ package tests;
 import org.apache.commons.lang3.NotImplementedException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import common.utils.contexts.EnvironmentContext;
-import common.utils.contexts.HeadlessContext;
-import common.utils.contexts.OSContext;
-import common.utils.enums.Drivers;
-import common.utils.enums.OS;
-import common.utils.facades.HelperFacade;
-import common.utils.interfaces.State;
-import common.utils.states.HeadlessStop;
-import common.utils.states.Linux;
-import common.utils.states.Windows;
-import log.Log;
+import com.warnermedia.config.State;
+import com.warnermedia.config.app.EnvironmentContext;
+import com.warnermedia.config.driver.DriverFacade;
+import com.warnermedia.config.driver.Drivers;
+import com.warnermedia.config.driver.HeadlessContext;
+import com.warnermedia.config.driver.HeadlessStop;
+import com.warnermedia.config.os.Linux;
+import com.warnermedia.config.os.OS;
+import com.warnermedia.config.os.OSContext;
+import com.warnermedia.config.os.OSFacade;
+import com.warnermedia.config.os.Windows;
+import com.warnermedia.utils.Log;
 
 public class StateTests {
 	
@@ -54,18 +55,18 @@ public class StateTests {
 	
 	@Test
 	public void verifyHelperFacade() throws Exception {
-		HelperFacade.setDriverLocalPathBasedOnOS(OS.LINUX);
-		HelperFacade.setDriverLocalPathBasedOnOS(OS.WINDOWS);
+		OSFacade.setDriverLocalPathBasedOnOS(OS.LINUX);
+		OSFacade.setDriverLocalPathBasedOnOS(OS.WINDOWS);
 	}
 	
 	@Test(expectedExceptions=NotImplementedException.class)
 	public void verifyGetDriver_FF() throws Exception {
-		HelperFacade.getDriver(Drivers.FIREFOX);
+		DriverFacade.getDriver(Drivers.FIREFOX);
 	}
 	
 	@Test(expectedExceptions=NotImplementedException.class)
 	public void verifyGetDriver_Safari() throws Exception {
-		HelperFacade.getDriver(Drivers.SAFARI);
+		DriverFacade.getDriver(Drivers.SAFARI);
 	}
 	
 	@Test

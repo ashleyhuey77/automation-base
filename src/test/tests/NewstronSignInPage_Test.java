@@ -4,9 +4,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.app.creds.CredentialsType;
-import common.base.NewstronSignInPage;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.page.core.NewstronSignInPage;
 import pages.TestInitialization;
 import pages.TestPage;
 

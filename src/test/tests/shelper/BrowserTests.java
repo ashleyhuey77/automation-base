@@ -6,15 +6,15 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.selenium.browser.BrowserObject;
+import com.warnermedia.selenium.shared.Via;
 import pages.TestInitialization;
-import shelper.enums.BrowserObject;
-import shelper.enums.Via;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class BrowserTests extends TestInitialization {

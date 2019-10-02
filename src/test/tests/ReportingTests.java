@@ -1,15 +1,15 @@
 package tests;
 
 import org.testng.annotations.Test;
-import common.utils.TestReport;
-import common.utils.builders.Environment;
-import common.utils.enums.ReportType;
-import common.utils.facades.HelperFacade;
-import common.utils.helpers.TestReportHelper;
-import common.utils.managers.LocalReport;
-import common.utils.managers.LocalTest;
-import common.utils.managers.LocalValidation;
-import log.Log;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.report.LocalValidation;
+import com.warnermedia.config.report.ReportFacade;
+import com.warnermedia.config.report.ReportType;
+import com.warnermedia.config.report.TestReport;
+import com.warnermedia.config.report.TestReportHelper;
+import com.warnermedia.config.settings.Environment;
+import com.warnermedia.config.settings.LocalTest;
+import com.warnermedia.utils.Log;
 
 public class ReportingTests {
 
@@ -21,8 +21,8 @@ public class ReportingTests {
 		System.out.println("Bureau is " + LocalTest.getEnvironment().getBureau());
 		TestReportHelper helper = new TestReportHelper();
 		TestReport report = helper.initialize(LocalReport.getHtmlReport(), "UnitTest1", "Chrome");
-		HelperFacade.initializeReportType(ReportType.REPORT, report);
-		HelperFacade.initializeReportType(ReportType.VALIDATIONS, report);
+		ReportFacade.initializeReportType(ReportType.REPORT, report);
+		ReportFacade.initializeReportType(ReportType.VALIDATIONS, report);
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.");
 		LocalValidation.getValidations().assertionPass("Test Pass");
@@ -36,8 +36,8 @@ public class ReportingTests {
 		LocalTest.setEnvironment(environment);
 		TestReportHelper helper = new TestReportHelper();
 		TestReport report = helper.initialize(LocalReport.getHtmlReport(), "UnitTest1", "Chrome");
-		HelperFacade.initializeReportType(ReportType.REPORT, report);
-		HelperFacade.initializeReportType(ReportType.VALIDATIONS, report);
+		ReportFacade.initializeReportType(ReportType.REPORT, report);
+		ReportFacade.initializeReportType(ReportType.VALIDATIONS, report);
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.");
 		LocalValidation.getValidations().assertionPass("Test Pass");
@@ -50,8 +50,8 @@ public class ReportingTests {
 		LocalTest.setEnvironment(environment);
 		TestReportHelper helper = new TestReportHelper();
 		TestReport report = helper.initialize(LocalReport.getHtmlReport(), "UnitTest1", "Chrome");
-		HelperFacade.initializeReportType(ReportType.REPORT, report);
-		HelperFacade.initializeReportType(ReportType.VALIDATIONS, report);
+		ReportFacade.initializeReportType(ReportType.REPORT, report);
+		ReportFacade.initializeReportType(ReportType.VALIDATIONS, report);
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.2");
 		LocalValidation.getValidations().assertionPass("Test Pass 2");
@@ -64,8 +64,8 @@ public class ReportingTests {
 		LocalTest.setEnvironment(environment);
 		TestReportHelper helper = new TestReportHelper();
 		TestReport report = helper.initialize(LocalReport.getHtmlReport(), "UnitTest1", "Chrome");
-		HelperFacade.initializeReportType(ReportType.REPORT, report);
-		HelperFacade.initializeReportType(ReportType.VALIDATIONS, report);
+		ReportFacade.initializeReportType(ReportType.REPORT, report);
+		ReportFacade.initializeReportType(ReportType.VALIDATIONS, report);
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.3");
 		LocalValidation.getValidations().assertionPass("Test Pass 3");
@@ -78,8 +78,8 @@ public class ReportingTests {
 		LocalTest.setEnvironment(environment);
 		TestReportHelper helper = new TestReportHelper();
 		TestReport report = helper.initialize(LocalReport.getHtmlReport(), "UnitTest1", "Chrome");
-		HelperFacade.initializeReportType(ReportType.REPORT, report);
-		HelperFacade.initializeReportType(ReportType.VALIDATIONS, report);
+		ReportFacade.initializeReportType(ReportType.REPORT, report);
+		ReportFacade.initializeReportType(ReportType.VALIDATIONS, report);
 
 		LocalReport.getReport().reportDoneEvent("Test Done Event.4");
 		LocalValidation.getValidations().assertionPass("Test Pass 4");

@@ -1,7 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
-import data.mongo.MongoContext;
+import com.warnermedia.data.mongo.MongoContext;
 
 public class Mongo_Tests {
 	

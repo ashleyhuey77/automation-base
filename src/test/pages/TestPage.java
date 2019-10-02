@@ -1,17 +1,17 @@
 package pages;
 
 import org.openqa.selenium.WebElement;
-import common.base.PageTemplate;
-import common.base.enums.DaysOfTheWeek;
-import common.base.enums.Entity;
-import common.base.enums.Timezones;
-import common.base.helpers.VerifyTextHelper;
-import common.base.helpers.VerifyTextHelper.VerifyTextBuilder;
-import common.base.vobjects.ReportInfo;
-import log.TestException;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
+import com.warnermedia.config.TestException;
+import com.warnermedia.page.core.DaysOfTheWeek;
+import com.warnermedia.page.core.Entity;
+import com.warnermedia.page.core.PageTemplate;
+import com.warnermedia.page.core.Timezones;
+import com.warnermedia.page.utils.ReportInfo;
+import com.warnermedia.page.utils.VerifyTextHelper;
+import com.warnermedia.page.utils.VerifyTextHelper.VerifyTextBuilder;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.TestElement;
 
 
 public class TestPage extends PageTemplate {

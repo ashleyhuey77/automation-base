@@ -10,20 +10,20 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.base.helpers.EnterTextHelper;
-import common.base.helpers.EnterTextHelper.EnterTextBuilder;
-import common.base.helpers.VerifyTextHelper;
-import common.base.helpers.VerifyTextHelper.VerifyTextBuilder;
-import common.base.vobjects.ReportInfo;
-import common.utils.WebDriverListener;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
-import log.TestException;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.TestException;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.page.utils.EnterTextHelper;
+import com.warnermedia.page.utils.ReportInfo;
+import com.warnermedia.page.utils.VerifyTextHelper;
+import com.warnermedia.page.utils.EnterTextHelper.EnterTextBuilder;
+import com.warnermedia.page.utils.VerifyTextHelper.VerifyTextBuilder;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.selenium.shared.Via;
 import pages.TestInitialization;
-import shelper.enums.Via;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class VerifyTextHelper_Tests extends TestInitialization {

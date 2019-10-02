@@ -10,18 +10,19 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import common.base.enums.Date;
-import common.base.enums.DaysOfTheWeek;
-import common.base.enums.Entity;
-import common.base.enums.Timezones;
-import common.utils.*;
-import common.utils.managers.LocalDriver;
-import common.utils.managers.SHelper;
+import com.warnermedia.config.SHelper;
+import com.warnermedia.config.driver.LocalDriver;
+import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.page.core.DaysOfTheWeek;
+import com.warnermedia.page.core.Entity;
+import com.warnermedia.page.core.Timezones;
+import com.warnermedia.page.utils.date.Date;
+import com.warnermedia.selenium.By;
+import com.warnermedia.selenium.Locator;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.utils.TestUtils;
 import pages.TestInitialization;
 import pages.TestPage;
-import shelper.vobjects.By;
-import shelper.vobjects.Locator;
-import shelper.vobjects.TestElement;
 
 @Listeners(WebDriverListener.class)
 public class PageClassTests extends TestInitialization {

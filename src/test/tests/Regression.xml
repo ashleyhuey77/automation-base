@@ -2,8 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="10" parallel="methods" group-by-instances="false" configfailurepolicy="continue">
 <listeners>
-	<listener class-name="common.utils.AnnotationTransformer"/>
-	<listener class-name="common.utils.TestListener"/>
+	<listener class-name="com.warnermedia.config.testng.AnnotationTransformer"/>
+	<listener class-name="com.warnermedia.config.testng.TestListener"/>
 </listeners> 
   <test name="Regression">
     <groups>
@@ -40,7 +40,7 @@
   	    <class name="tests.utils.ManagersTests"/>
   		<class name="tests.DatePickerTests"/>
   		<class name="tests.StateTests"/>
-  		<class name="tests.UtilsTest"/>
+  		<!-- <class name="tests.UtilsTest"/> -->
   		<class name="tests.loki.PersonTests"/>
   		<class name="tests.loki.SlugTests"/>
   		<class name="tests.loki.VideoTests"/>
