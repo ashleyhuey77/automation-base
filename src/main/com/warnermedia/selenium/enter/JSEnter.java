@@ -46,7 +46,7 @@ public class JSEnter extends Commands implements IEnter {
 
 	@Override
 	public void textInto(WebElement element, String text) throws TestException {
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].value = " + text + ";", element);
+		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].value = \"" + text + "\";", element);
 	}
 
 	@Override

@@ -1,19 +1,19 @@
 package tests.helpers;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.ClickHelper;
 import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.ClickHelper.ClickBuilder;
@@ -26,101 +26,92 @@ import pages.TestInitialization;
 @Listeners(WebDriverListener.class)
 public class ClickHelper_Tests extends TestInitialization {
 	
-	ThreadLocal<ByteArrayOutputStream> baos = new ThreadLocal<>();
-	ThreadLocal<PrintStream> ps = new ThreadLocal<>();
-	
-	@BeforeMethod
-	public void initializeStream() {
-		baos.set(new ByteArrayOutputStream());
-		ps.set(new PrintStream(baos.get()));
-	}
-	
 	@Test(groups= {"click"}, alwaysRun=true)
 	public void verifyClickSomeElement_ElementFound() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test"))
 				.clickOn(new TestElement(locator, by)));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(
-				inputString);
-
-		closeByteStream(ps.get(), baos.get());
+				newIS);
 	}
 	
 	@Test(groups= {"click"}, alwaysRun=true)
 	public void verifyClickSomeElement_WithVia() throws InterruptedException, Exception, IOException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test"))
 				.clickOn(new TestElement(locator, by))
 				.how(Via.JAVASCRIPT));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertTrue(
-				inputString.trim().contains("Step: clickSomeTestElement has passed. Test clicked successfully."));
-
-		closeByteStream(ps.get(), baos.get());
+				newIS.contains("clickSomeTestElement Test clicked successfully. DONE"));
 	}
 	
 	@Test(groups= {"click"}, alwaysRun=true)
 	public void verifyClickSomeElement_WithIndex() throws InterruptedException, Exception, IOException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test"))
 				.clickOn(new TestElement(locator, by))
 				.withAnIndexOf(1));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(
-				inputString);
-
-		closeByteStream(ps.get(), baos.get());
+				newIS);
 	}
 	
 	@Test(groups= {"click"}, alwaysRun=true)
-	public void verifyClickSomeElement_ElementFound_PredefinedElement() throws InterruptedException, Exception, IOException {
+	public void verifyClickSomeElement_ElementFound_PredefinedElement() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("input[id='Test']");
 		By by = new By("css");
 		WebElement element = SHelper.get().element().get(new TestElement(locator, by));
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test"))
 				.clickOn(element));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertTrue(
-				inputString.trim().contains("Step: clickSomeWebElement has passed. Test clicked successfully."));
-
-		closeByteStream(ps.get(), baos.get());
+				newIS.contains("clickSomeWebElement Test clicked successfully. DONE"));
 	}
 
 	@Test(groups= {"click"}, alwaysRun=true)
@@ -183,23 +174,6 @@ public class ClickHelper_Tests extends TestInitialization {
 	@Test(groups= {"click"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoElementProvided_ExceptionThrown() throws Exception {
 		new ClickHelper(new ClickBuilder(new ReportInfo("Test")));
-	}
-	
-	@AfterMethod
-	public void closeStream() throws IOException {
-		closeByteStream(ps.get(), baos.get());
-	}
-
-	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old) {
-/*		System.out.flush();
-		System.setOut(old);*/
-		String inputString = baos.toString();
-		return inputString;
-	}
-
-	private void closeByteStream(PrintStream ps, ByteArrayOutputStream baos) throws IOException {
-		ps.close();
-		baos.close();
 	}
 
 }

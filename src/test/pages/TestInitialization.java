@@ -1,6 +1,9 @@
 package pages;
 
+import java.io.BufferedReader;
+import java.io.Reader;
 import java.lang.reflect.Method;
+import org.jsoup.Jsoup;
 import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -35,6 +38,17 @@ public class TestInitialization {
 			throw ex;
 		}
 	}
+	
+    protected static String extractText(Reader reader) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(reader);
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        String textOnly = Jsoup.parse(sb.toString()).text();
+        return textOnly;
+    }
 
 	@AfterMethod(alwaysRun = true)
 	public void AfterScenario() {

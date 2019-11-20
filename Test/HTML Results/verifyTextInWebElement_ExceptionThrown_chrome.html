@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+ <head>   
+  <style type="text/css">
+    	@font-face {
+  			font-family: 'CNNSans Condensed';
+  			src:  url('../../../resources/reportContent/CNNSans-Condensed.ttf') format('truetype');
+	}
+	
+    @font-face {
+            font-family: 'CNNSans Condensed Bold';
+  			src:  url('../../../resources/reportContent/CNNSans-CondensedBold.ttf') format('truetype');
+    }
+    
+    @font-face {
+  			font-family: 'CNNSans Display Light';
+  			src:  url('../../../resources/reportContent/CNNSansDisplay-Light.ttf') format('truetype');
+    }
+    
+        @font-face {
+  			font-family: 'CNNSans Display Bold';
+  			src:  url('../../../resources/reportContent/CNNSansDisplay-Medium.ttf') format('truetype');
+    }
+        
+			 body { 
+				 background: url('../../../resources/reportContent/Pattern_2.jpg');; 
+				 font-family: CNNSans Condensed Bold; 
+				 text-align: center; 
+			 	width: 97%
+			 } 
+
+			 small { 
+				 font-size: 0.7em; 
+			 } 
+
+			 table { 
+				 border: 2px solid  rgb(70, 70, 70); 
+				 border-collapse: collapse; 
+				 border-spacing: 0px; 
+				 width: 1200px; 
+				 margin-left: auto; 
+				 margin-right: auto; 
+			 }
+    
+    			#testHeading {
+                font-family: CNNSans Display Bold;
+                font-size: 1.9em;
+    			}
+
+			 tr.heading { 
+				 background-color: #0ccdff;
+                 font-family: CNNSans Condensed;
+				 color: #FFFFFF; 
+				 font-size: 1.7em; 
+				 font-weight: bold;
+                 text-shadow: 0px 0px 6.5px #464646;
+			 } 
+
+			 tr.subheading { 
+				 background-color: #FFFFFF;
+				 font-weight: bold;
+                 font-family: CNNSans Display Bold;
+				 font-size: 1.2em; 
+				 text-align: left;
+                 color: #282828;
+                 text-shadow: 0px 0px 5.5px #464646;
+			 }
+			 
+			 th.title {
+                text-align: center;
+             } 
+
+			 tr.section { 
+				 background-color: #D6D8D8; 
+				 color: #000000; 
+				 cursor: pointer; 
+				 font-weight: bold; 
+				 font-size: 0.9em; 
+				 text-align: justify; 
+			 } 
+
+			 tr.subsection { 
+				 cursor: pointer; 
+			 } 
+
+			 tr.content { 
+				 background-color: #FFFFFF; 
+				 color: #000000;
+                 font-family: CNNSans Display Light;
+				 font-size: 1.0em; 
+				 display: table-row; 
+			 } 
+
+			 td, th { 
+				 padding: 8px; 
+				 text-align: inherit\0/; 
+			 } 
+
+			 td.justified { 
+				 text-align: justify; 
+			 } 
+			 
+			td.description { 
+				 text-align: justify;
+				 max-width: 20px;
+				 overflow-wrap: break-word;
+  				 word-wrap: break-word;
+			 } 
+
+			 td.pass a { 
+				 font-family: CNNSans Display Bold; 
+				 color: #6DF304; 
+			 } 
+
+			 td.fail a { 
+				 font-family: CNNSans Display Bold; 
+				 color: #FF0606; 
+			 } 
+
+			 td.done, td.screenshot { 
+				 font-family: CNNSans Display Bold; 
+				 color: black; 
+			 } 
+
+			 td.debug { 
+				 font-family: CNNSans Display Bold; 
+				 color: blue; 
+			 } 
+
+			 td.warning { 
+				 font-family: CNNSans Display Bold;
+				 color: #FEB900; 
+			 }
+			 
+			 img.turnerLogo {
+          		display: block;
+          		margin: 0 auto;
+        			padding-bottom: 5px;
+    			}
+    
+		    #glass {
+		    		visibility: visible;
+		        length: 16px;
+		        width: 16px;
+		        padding-right: 5px;
+			}    
+</style>   
+  <title>verifyTextInWebElement_ExceptionThrown_chrome – Automation Execution Results</title>
+ </head> 
+ <body> 
+  <img class="turnerLogo" src="../../../resources/reportContent/TURNER_Logo_RGB_OverDarkBG.png" alt="HTML5 Icon" style="“width:700px;height:110px;”" /> 
+  <table id="header"> 
+   <colgroup> 
+    <col style="width: 25%" /> 
+    <col style="width: 25%" /> 
+    <col style="width: 25%" /> 
+    <col style="width: 25%" /> 
+   </colgroup> 
+   <thead> 
+    <tr class="heading"> 
+     <th id="testHeading" colspan="4">verifyTextInWebElement_ExceptionThrown</th> 
+    </tr> 
+    <tr class="subheading"> 
+     <th class="title">&nbsp;Browser:</th> 
+     <th id="browser">chrome</th> 
+     <th class="title">&nbsp;URL:</th> 
+     <th id="url">url</th> 
+    </tr> 
+   </thead> 
+  </table> 
+  <table id="main"> 
+   <colgroup> 
+    <col style="width: 8%" /> 
+    <col style="width: 12%" /> 
+    <col style="width: 62%" /> 
+    <col style="width: 8%" /> 
+    <col style="width: 10%" /> 
+   </colgroup> 
+   <thead> 
+    <tr class="heading"> 
+     <th>Step_No</th> 
+     <th>Step_Name</th> 
+     <th>Description</th> 
+     <th>Status</th> 
+     <th>Step_Time</th> 
+    </tr> 
+   </thead> 
+   <tbody> 
+    <tr class="section"> 
+     <td colspan="5" onclick="toggleMenu('&lt;/tbody&gt;')">+ Detailed Steps</td> 
+    </tr> 
+   </tbody> 
+   <tbody id="testStepsTable" style="display:table-row-group"> 
+    <tr class=" content" id="1">
+     <td>1</td>
+     <td class="justified">verifySomeWebElementContainsTheExpectedText</td>
+     <td class="description">stale element reference: element is not attached to the page document (Session info: headless chrome=78.0.3904.97) For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html Build info: version: '3.9.1', revision: '63f7b50', time: '2018-02-07T22:25:02.294Z' System info: host: 'ashleys-mbp.turner.com', ip: '10.188.33.98', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.1', java.version: '1.8.0_101' Driver info: org.openqa.selenium.chrome.ChromeDriver Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 78.0.3904.97, chrome: {chromedriverVersion: 78.0.3904.70 (edb9c9f3de024..., userDataDir: /var/folders/bz/wgk5xb716j7...}, goog:chromeOptions: {debuggerAddress: localhost:62222}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify} Session ID: f3990a564cfc9b1dffd80061a0ba0a7c</td>
+     <td class="fail"><img id="glass" align="justify" src="../../../resources/reportContent/64x64_ICONS_Navigation_Alert.jpg" /><a href="..\Screenshots\verifyTextInWebElement_ExceptionThrown_chrome_14-11-19_10-05-57.png">FAIL</a></td>
+     <td>10:05:58</td>
+    </tr>
+    <tr class=" content" id="2">
+     <td>2</td>
+     <td class="justified">&lt;init&gt;</td>
+     <td class="description">StepName: verifySomeWebElementContainsTheExpectedText ErrorMessage : stale element reference: element is not attached to the page document (Session info: headless chrome=78.0.3904.97) For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html Build info: version: '3.9.1', revision: '63f7b50', time: '2018-02-07T22:25:02.294Z' System info: host: 'ashleys-mbp.turner.com', ip: '10.188.33.98', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.1', java.version: '1.8.0_101' Driver info: org.openqa.selenium.chrome.ChromeDriver Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 78.0.3904.97, chrome: {chromedriverVersion: 78.0.3904.70 (edb9c9f3de024..., userDataDir: /var/folders/bz/wgk5xb716j7...}, goog:chromeOptions: {debuggerAddress: localhost:62222}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify} Session ID: f3990a564cfc9b1dffd80061a0ba0a7c</td>
+     <td class="fail"><img id="glass" align="justify" src="../../../resources/reportContent/64x64_ICONS_Navigation_Alert.jpg" /><a href="..\Screenshots\verifyTextInWebElement_ExceptionThrown_chrome_14-11-19_10-05-58.png">FAIL</a></td>
+     <td>10:05:59</td>
+    </tr>
+   </tbody> 
+  </table>  
+ </body>
+</html>

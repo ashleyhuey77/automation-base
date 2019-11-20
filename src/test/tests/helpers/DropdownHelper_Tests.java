@@ -1,19 +1,18 @@
 package tests.helpers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.File;
+import java.io.FileReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.DropdownHelper;
 import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.DropdownHelper.DropdownBuilder;
@@ -25,17 +24,12 @@ import pages.TestInitialization;
 @Listeners(WebDriverListener.class)
 public class DropdownHelper_Tests extends TestInitialization {
 	
-	ThreadLocal<ByteArrayOutputStream> baos = new ThreadLocal<>();
-	ThreadLocal<PrintStream> ps = new ThreadLocal<>();
-	
-	@BeforeMethod
-	public void initializeStream() {
-		baos.set(new ByteArrayOutputStream());
-		ps.set(new PrintStream(baos.get()));
-	}
-	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
 	public void verifySelectSomeOptionFromDropdown_TestElement_OptionFound() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test ></input></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 2</a></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 3</a></br>');");
@@ -43,9 +37,6 @@ public class DropdownHelper_Tests extends TestInitialization {
 		Thread.sleep(500);
 		TestElement click = new TestElement(new Locator("input[id='Test']"), new By("css"));
 		TestElement options = new TestElement(new Locator("a[id='Test2']"), new By("css"));
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new DropdownHelper(new DropdownBuilder(new ReportInfo("Test"))
 				.clickMenuToOpen(click)
@@ -53,16 +44,19 @@ public class DropdownHelper_Tests extends TestInitialization {
 				.selectOption("Test 3")
 				.fromOptionList(options));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(
-				inputString);
-
-		closeByteStream(ps.get(), baos.get());
+				newIS);
 	}
 	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
 	public void verifySelectSomeOptionFromDropdown_TestElement_NoSearch_OptionFound() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test ></input></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 2</a></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 3</a></br>');");
@@ -71,20 +65,16 @@ public class DropdownHelper_Tests extends TestInitialization {
 		TestElement click = new TestElement(new Locator("input[id='Test']"), new By("css"));
 		TestElement options = new TestElement(new Locator("a[id='Test2']"), new By("css"));
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		new DropdownHelper(new DropdownBuilder(new ReportInfo("Test"))
 				.clickMenuToOpen(click)
 				.selectOption("Test 3")
 				.fromOptionList(options));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(
-				inputString);
-
-		closeByteStream(ps.get(), baos.get());
+				newIS);
 	}
 	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
@@ -114,6 +104,10 @@ public class DropdownHelper_Tests extends TestInitialization {
 	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
 	public void verifySelectSomeOptionFromDropdown_WebElement_OptionFound() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test ></input></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 2</a></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 3</a></br>');");
@@ -121,10 +115,6 @@ public class DropdownHelper_Tests extends TestInitialization {
 		Thread.sleep(500);
 		WebElement click = SHelper.get().element().get(new TestElement(new Locator("input[id='Test']"), new By("css")));
 		TestElement options = new TestElement(new Locator("a[id='Test2']"), new By("css"));
-		
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new DropdownHelper(new DropdownBuilder(new ReportInfo("Test"))
 				.clickMenuToOpen(click)
@@ -132,16 +122,20 @@ public class DropdownHelper_Tests extends TestInitialization {
 				.selectOption("Test 3")
 				.fromOptionList(options));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertTrue(
-				inputString.trim().contains("findOptionThatIsEqualToOptionInAList has passed. Test 3 has been selected successfully."));
+				newIS.contains("findOptionThatIsEqualToOptionInAList Test 3 has been selected successfully. DONE"));
 
-		closeByteStream(ps.get(), baos.get());
 	}
 	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
 	public void verifySelectSomeOptionFromDropdown_WebElement_NoSearch_OptionFound() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test ></input></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 2</a></br>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a href=www.google.com id=Test2 >Test 3</a></br>');");
@@ -150,20 +144,16 @@ public class DropdownHelper_Tests extends TestInitialization {
 		WebElement click = SHelper.get().element().get(new TestElement(new Locator("input[id='Test']"), new By("css")));
 		TestElement options = new TestElement(new Locator("a[id='Test2']"), new By("css"));
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		new DropdownHelper(new DropdownBuilder(new ReportInfo("Test"))
 				.clickMenuToOpen(click)
 				.selectOption("Test 3")
 				.fromOptionList(options));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(
-				inputString);
-
-		closeByteStream(ps.get(), baos.get());
+				newIS);
 	}
 	
 	@Test(groups= {"dropdown"}, alwaysRun=true)
@@ -212,23 +202,6 @@ public class DropdownHelper_Tests extends TestInitialization {
 		TestElement click = new TestElement(new Locator("input[id='Test']"), new By("css"));
 		TestElement options = new TestElement(new Locator("a[id='Test2']"), new By("css"));
 		new DropdownHelper(new DropdownBuilder(new ReportInfo("Test")).clickMenuToOpen(click).fromOptionList(options));
-	}
-	
-	@AfterMethod
-	public void closeStream() throws IOException {
-		closeByteStream(ps.get(), baos.get());
-	}
-
-	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old) {
-/*		System.out.flush();
-		System.setOut(old);*/
-		String inputString = baos.toString();
-		return inputString;
-	}
-
-	private void closeByteStream(PrintStream ps, ByteArrayOutputStream baos) throws IOException {
-		ps.close();
-		baos.close();
 	}
 
 }

@@ -7,6 +7,7 @@ import com.app.creds.CredentialsType;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
 import com.warnermedia.page.core.NewstronSignInPage;
+import com.warnermedia.utils.CookieHelper;
 import pages.TestInitialization;
 import pages.TestPage;
 
@@ -22,8 +23,10 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	public void verifyNewstronSignInPage() throws Exception {
 		NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
 		
-		_newstronSignInPage.enterLogInDetails()
-		   				   .clickTheSignInButton();
+		_newstronSignInPage.enterLogInDetails();
+		CookieHelper.newHelper().getCookies().setCookies().build();
+		   				_newstronSignInPage.clickTheSignInButton();
+		CookieHelper.newHelper().getCookies().setCookies().build();
 	}
 	
 	@Test

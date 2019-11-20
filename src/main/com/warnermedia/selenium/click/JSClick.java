@@ -54,28 +54,28 @@ public class JSClick extends Commands implements IClick {
 	@Override
 	public void on(TestElement element) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, "0");
 	}
 
 	@Override
 	public void on(WebElement element) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
 	}
 
 	@Override
 	public void on(TestElement element, String index) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, index);
 	}
 
 	@Override
 	public void on(TestElement element, int index) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, Integer.toString(index));
 	}
 

@@ -5,9 +5,10 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 
-public class TestListener implements ITestListener {
-
+public class TestListener extends TestListenerAdapter implements ITestListener {
+	
 	@Override
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
@@ -16,12 +17,12 @@ public class TestListener implements ITestListener {
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		
+		super.onTestSuccess(result);
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		
+		super.onTestFailure(result);
 	}
 
 	@Override

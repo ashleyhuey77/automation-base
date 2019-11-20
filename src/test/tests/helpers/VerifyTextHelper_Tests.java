@@ -1,19 +1,18 @@
 package tests.helpers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.File;
+import java.io.FileReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.EnterTextHelper;
 import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.VerifyTextHelper;
@@ -27,64 +26,63 @@ import pages.TestInitialization;
 
 @Listeners(WebDriverListener.class)
 public class VerifyTextHelper_Tests extends TestInitialization {
-
-	ThreadLocal<ByteArrayOutputStream> baos = new ThreadLocal<>();
-	ThreadLocal<PrintStream> ps = new ThreadLocal<>();
-
-	@BeforeMethod
-	public void initializeStream() {
-		baos.set(new ByteArrayOutputStream());
-		ps.set(new PrintStream(baos.get()));
-	}
-
+	
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextInTextField_ContainsInvalidChar_RemoveAllSpacesFalse_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<textarea id=Test value=></textarea>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("textarea[id='Test']");
-		By by = new By("css");
-
-		new EnterTextHelper(
-				new EnterTextBuilder(new ReportInfo("Test")).enterText("Test\n123").into(new TestElement(locator, by)));
-		Thread.sleep(500);
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
-				.verify(new TestElement(locator, by))
-				.contains("Test 123")
-				.how(Via.JAVASCRIPT));
-
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertTrue(
-				newIS.trim().contains("Step:verifyTextInTextFieldhaspassed.TestElementcontainsTest123asexpected."));
-
-		closeByteStream(ps.get(), baos.get());
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<textarea id=Test value=></textarea>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("textarea[id='Test']");
+    		By by = new By("css");
+    
+    		new EnterTextHelper(
+    				new EnterTextBuilder(new ReportInfo("Test")).enterText("Test 123").into(new TestElement(locator, by)));
+    		Thread.sleep(500);
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
+    				.verify(new TestElement(locator, by))
+    				.contains("Test 123")
+    				.how(Via.JAVASCRIPT));
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    		Assert.assertTrue(
+    				newIS.contains("Element contains Test 123 as expected. PASS"));
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextInTextField_DoesntContainInvalidChar_RemoveAllSpacesTrue_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
-				.contains("Test 123").removeAllSpaces(true).how(Via.JAVASCRIPT));
-
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertNotNull(newIS);
-
-		closeByteStream(ps.get(), baos.get());
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<input id=\"Test\" value=\"Test 123\"></input>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("#Test");
+    		By by = new By("css");
+    
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
+    				.contains("Test 123").removeAllSpaces(true).how(Via.JAVASCRIPT));
+    
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    
+    		Assert.assertNotNull(newIS);
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
@@ -110,25 +108,31 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 	
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextWebElement_RemoveAllSpacesFalse_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<div id=Test >Testing123</div>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
-		WebElement element = SHelper.get().element().get(new TestElement(locator, by));
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(element)
-				.contains("Testing123"));
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertTrue(newIS.trim().contains(
-				"Step:verifySomeWebElementContainsTheExpectedTexthaspassed.TestElementcontainsthecorrecttext:Testing123"));
-
-		closeByteStream(ps.get(), baos.get());
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<div id=Test >Testing123</div>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("#Test");
+    		By by = new By("css");
+    		WebElement element = SHelper.get().element().get(new TestElement(locator, by));
+    
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(element)
+    				.contains("Testing123"));
+    		
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    
+    		Assert.assertTrue(newIS.trim().contains(
+    				"Test Element contains the correct text: Testing123 PASS"));
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
@@ -175,45 +179,56 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextInWebElement_RemoveAllSpacesTrue_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<div id=Test >Testing123</div>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
-		WebElement element = SHelper.get().element().get(new TestElement(locator, by));
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<div id=Test >Testing123</div>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("#Test");
+    		By by = new By("css");
+    		WebElement element = SHelper.get().element().get(new TestElement(locator, by));
+    
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(element)
+    				.contains("Testing123").removeAllSpaces(true));
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(element)
-				.contains("Testing123").removeAllSpaces(true));
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertNotNull(newIS);
-
-		closeByteStream(ps.get(), baos.get());
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    
+    		Assert.assertNotNull(newIS);
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextInTestElement_RemoveAllSpacesFalse_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<div id=Test >Testing123</div>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
-				.contains("Testing123"));
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertNotNull(newIS);
-
-		closeByteStream(ps.get(), baos.get());
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<div id=Test >Testing123</div>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("#Test");
+    		By by = new By("css");
+    
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
+    				.contains("Testing123"));
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    
+    		Assert.assertNotNull(newIS);
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
@@ -256,27 +271,32 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
 	public void verifyTextInTestElement_RemoveAllSpacesTrue_TextIsPresent() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<div id=Test >Testing123</div>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
-				.contains("Testing123").removeAllSpaces(true));
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertNotNull(newIS);
-
-		closeByteStream(ps.get(), baos.get());
+		try {
+			String filePath = LocalReport.getFilePath() + 
+					File.separator + "HTML Results" + 
+					File.separator + LocalTest.getTestName()  + 
+					"_" + LocalTest.getEnvironment().getBrowser() + ".html";
+    		((JavascriptExecutor) LocalDriver.getDriver())
+    				.executeScript("document.write('<div id=Test >Testing123</div>');");
+    		Thread.sleep(500);
+    		Locator locator = new Locator("#Test");
+    		By by = new By("css");
+    
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).verify(new TestElement(locator, by))
+    				.contains("Testing123").removeAllSpaces(true));
+    		FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
+    
+    		Assert.assertNotNull(newIS);
+    
+    		
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Test(groups= {"vtext"}, alwaysRun=true)
-	public void verifyTextInTextField_ExceptionThrown() throws InterruptedException {
+	public void verifyTextInTextField_ExceptionThrown() throws Exception {
 		try {
 			((JavascriptExecutor) LocalDriver.getDriver())
 					.executeScript("document.write('<input id=Test value=Testing 123 ></input>');");
@@ -295,31 +315,13 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 	
 	@Test(groups= {"vtext"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoElementProvided_ExceptionThrown() throws Exception {
-		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
-				.contains("Testing123"));
+    		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
+    				.contains("Testing123"));
 	}
 	
 	@Test(groups= {"vtext"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoExpectedValueProvided_ExceptionThrown() throws Exception {
 		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element")).removeAllSpaces(true));
-	}
-
-	@AfterMethod
-	public void closeStream() throws IOException {
-		closeByteStream(ps.get(), baos.get());
-	}
-
-	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old) {
-		/*
-		 * System.out.flush(); System.setOut(old);
-		 */
-		String inputString = baos.toString();
-		return inputString;
-	}
-
-	private void closeByteStream(PrintStream ps, ByteArrayOutputStream baos) throws IOException {
-		ps.close();
-		baos.close();
 	}
 
 }

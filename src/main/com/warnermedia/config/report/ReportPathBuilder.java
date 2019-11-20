@@ -9,8 +9,8 @@ import com.warnermedia.utils.TestUtils;
 public class ReportPathBuilder {
 
 	public static final String RESULT_FOLDER = "Results";
-	private static String reportPath;
 	private static ReportPathBuilder instance = null;
+	private static String reportPath;
 
 	protected ReportPathBuilder() throws TestException {
 		try {
@@ -18,7 +18,9 @@ public class ReportPathBuilder {
 			if (!directory.exists()) {
 				directory.mkdir();
 			}
-			reportPath = getLocalReportPath();
+			if (LocalReport.getFilePath() == null) {
+				reportPath = getLocalReportPath();
+			}
 			File _file = new File(reportPath);
 			_file.mkdir();
 			_file.createNewFile();
@@ -27,7 +29,7 @@ public class ReportPathBuilder {
 		}
 
 	}
-
+	
 	private String getLocalReportPath() throws TestException {
 		DatePicker picker = new PresentDate();
 		String rPath = TestUtils.getRelativePath() + "/" + RESULT_FOLDER + "/" + "Result_"
@@ -35,7 +37,7 @@ public class ReportPathBuilder {
 		LocalReport.setFilePath(rPath);
 		return rPath;
 	}
-
+	
 	public String getReportPath() {
 		return reportPath;
 	}

@@ -104,6 +104,74 @@ public class EnterTests {
 	}
 	
 	@Test
+	public void verifyEnterText_viaJavascript_ID() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_viaJavascript_CSS() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Locator locator = new Locator("#Test");
+		By by = new By("css");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_viaJavascript_ClassName() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input class=value id=Test value=Testing></input>');");
+		Locator locator = new Locator("value");
+		By by = new By("class_name");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_viaJavascript_Name() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input name=Test value=Testing></input>');");
+		Locator locator = new Locator("Test");
+		By by = new By("name");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_viaJavascript_TagName() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input name=Test value=Testing></input>');");
+		Locator locator = new Locator("input");
+		By by = new By("tag_name");
+		TestElement element = new TestElement(locator, by);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(element, "SomeText");
+	}
+	
+	@Test
+	public void verifyEnterText_Javascript_ElementPreDefined() throws Exception
+	{
+		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");
+		Locator locator = new Locator("Test");
+		By by = new By("id");
+		TestElement element = new TestElement(locator, by);
+		Thread.sleep(500);
+		WebElement test = SHelper.get().element().get(element);
+		
+		SHelper.get().enter(Via.JAVASCRIPT).textInto(test, "SomeText");
+	}
+	
+	@Test
 	public void verifyEnterText_ElementPreDefined() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test value=Testing></input>');");

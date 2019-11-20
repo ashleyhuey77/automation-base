@@ -89,11 +89,6 @@ public class TestPage extends PageTemplate {
 		System.out.println(DaysOfTheWeek.valueOf(DaysOfTheWeek.WEEKENDS.toString()));
 	}
 	
-	public String[] testGetCurrentSplitDate() throws Exception
-	{
-		return getCurrentSplitDate();
-	}
-	
 	public int testGetFutureDate(int daysOutFromCurrentDay) throws Exception
 	{
 		return getFutureDate(daysOutFromCurrentDay);
@@ -120,8 +115,29 @@ public class TestPage extends PageTemplate {
 	
 	public void testVerifySomeElementIsPresent(Locator locator, By by, String elementBeingTested) throws Exception
 	{
-		TestElement element = new TestElement(locator, by);
+		TestElement element = new TestElement(locator(locator.value()), by(by.value()));
 		verifySomeElementIsPresent(element, elementBeingTested);
+	}
+	
+	public void testCookiesThing() throws Exception {
+		checkCookiesAndAddRequiredOnesIfNecessary(true);
+		checkCookiesAndAddRequiredOnesIfNecessary(false);
+	}
+	
+	public void testRefreshPageAndWaitForElementToDisplay(TestElement element, int i) throws Exception {
+		refreshPageAndWaitForElementToDisplay(element, i);
+	}
+	
+	public void testRefreshPageAndWaitForElementToDisplay(WebElement element, int i) throws Exception {
+		refreshPageAndWaitForElementToDisplay(element, i);
+	}
+	
+	public String testGetNumbersFromString(TestElement element) throws Exception {
+		return getNumbersFromString(element);
+	}
+	
+	public String testGetNumbersFromString(WebElement element) throws Exception {
+		return getNumbersFromString(element);
 	}
 	
 	 public static void superficialEnumCodeCoverage(Class<? extends Enum<?>> enumClass) {

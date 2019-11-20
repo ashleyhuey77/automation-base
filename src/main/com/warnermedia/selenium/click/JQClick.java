@@ -17,14 +17,14 @@ public class JQClick extends Commands implements IClick {
 		String webElement = element.locator().value();
 		try {
 			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-			checkCookiesAndAddRequiredOnesIfNecessary();
+			//checkCookiesAndAddRequiredOnesIfNecessary();
 			((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
 		} catch (Exception ex) {
 			try {
 				if (element.locator().value().contains("'")) {
 					webElement = element.locator().value().replace("'", "");
 				}
-				checkCookiesAndAddRequiredOnesIfNecessary();
+				//checkCookiesAndAddRequiredOnesIfNecessary();
 				((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
 			} catch (Exception e) {
 				throw ex;
@@ -35,14 +35,14 @@ public class JQClick extends Commands implements IClick {
 	@Override
 	public void on(WebElement element) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
 	}
 
 	@Override
 	public void on(TestElement element, String index) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		String webElement = null;
 		if (element.locator().value().contains("'")) {
 			webElement = element.locator().value().replace("'", "");
@@ -55,7 +55,7 @@ public class JQClick extends Commands implements IClick {
 	@Override
 	public void on(TestElement element, int index) throws TestException {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		String webElement = element.locator().value();
 		if (element.locator().value().contains("'")) {
 			webElement = element.locator().value().replace("'", "");

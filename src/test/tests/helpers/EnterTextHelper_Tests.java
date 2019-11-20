@@ -1,19 +1,19 @@
 package tests.helpers;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.EnterTextHelper;
 import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.EnterTextHelper.EnterTextBuilder;
@@ -25,59 +25,48 @@ import pages.TestInitialization;
 @Listeners(WebDriverListener.class)
 public class EnterTextHelper_Tests extends TestInitialization {
 	
-	ThreadLocal<ByteArrayOutputStream> baos = new ThreadLocal<>();
-	ThreadLocal<PrintStream> ps = new ThreadLocal<>();
-	
-	@BeforeMethod
-	public void initializeStream() {
-		baos.set(new ByteArrayOutputStream());
-		ps.set(new PrintStream(baos.get()));
-	}
-	
 	@Test(groups= {"etext"}, alwaysRun=true)
 	public void verifyEnterAValueIntoATextField() throws Exception, IOException, InterruptedException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		Thread.sleep(800);
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
 				.enterText("Test123")
 				.into(new TestElement(locator, by)));
-		;
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
-		Assert.assertNotNull(inputString);
-
-		closeByteStream(ps.get(), baos.get());
+		Assert.assertNotNull(newIS);
 	}
 	
 	@Test(groups= {"etext"}, alwaysRun=true)
 	public void verifyEnterAValueIntoATextField_NullValue() throws Exception, IOException, InterruptedException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		Thread.sleep(800);
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
 		Locator locator = new Locator("#Test");
 		By by = new By("css");
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
 				.enterText(null)
 				.into(new TestElement(locator, by)));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
-		String newIS = inputString.replaceAll(" ", "");
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
 		Assert.assertNotNull(newIS);
-
-		closeByteStream(ps.get(), baos.get());
 	}
 	
 	@Test(groups= {"etext"}, alwaysRun=true)
@@ -99,6 +88,10 @@ public class EnterTextHelper_Tests extends TestInitialization {
 	
 	@Test(groups= {"etext"}, alwaysRun=true)
 	public void verifyEnterAValueIntoATextField_ElementDefined() throws Exception, IOException, InterruptedException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		Thread.sleep(800);
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<input id=Test > </input>');");
 		Thread.sleep(500);
@@ -106,20 +99,18 @@ public class EnterTextHelper_Tests extends TestInitialization {
 		By by = new By("id");
 		TestElement element = new TestElement(locator, by);
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 		WebElement el = SHelper.get().element().get(element);
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
 				.enterText("Test123")
 				.into(el));
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
-		Assert.assertTrue(inputString.trim()
-				.contains("enterTextIntoWebElement has passed. Test Element has been entered successfully"));
+		Assert.assertTrue(newIS
+				.contains("Test Element has been entered successfully DONE"));
 
-		closeByteStream(ps.get(), baos.get());
 	}
 	
 	@Test(groups= {"etext"}, alwaysRun=true)
@@ -150,23 +141,6 @@ public class EnterTextHelper_Tests extends TestInitialization {
 	public void verifyNoElementProvided_ExceptionThrown() throws Exception {
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
 				.enterText("Value"));;
-	}
-	
-	@AfterMethod
-	public void closeStream() throws IOException {
-		closeByteStream(ps.get(), baos.get());
-	}
-
-	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old) {
-/*		System.out.flush();
-		System.setOut(old);*/
-		String inputString = baos.toString();
-		return inputString;
-	}
-
-	private void closeByteStream(PrintStream ps, ByteArrayOutputStream baos) throws IOException {
-		ps.close();
-		baos.close();
 	}
 
 }

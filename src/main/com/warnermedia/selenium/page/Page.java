@@ -36,7 +36,7 @@ public class Page extends Commands implements IPage {
 	@Override
 	public void refresh() throws TestException {
 		//LocalDriver.getDriver().navigate().refresh();
-		checkCookiesAndAddRequiredOnesIfNecessary();
+		//checkCookiesAndAddRequiredOnesIfNecessary();
 		JavascriptExecutor js = ((JavascriptExecutor) LocalDriver.getDriver());
 		js.executeScript("location.reload(true)");
 	}

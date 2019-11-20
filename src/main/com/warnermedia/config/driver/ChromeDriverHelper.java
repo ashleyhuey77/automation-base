@@ -1,6 +1,5 @@
 package com.warnermedia.config.driver;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,6 @@ import com.warnermedia.config.TestException;
 import com.warnermedia.config.os.OS;
 import com.warnermedia.config.os.OSFacade;
 import com.warnermedia.config.settings.LocalTest;
-import com.warnermedia.utils.TestUtils;
 
 public class ChromeDriverHelper {
 
@@ -41,11 +39,6 @@ public class ChromeDriverHelper {
 			State headlessStopState = new HeadlessStop();
 			context.setState(headlessStopState);
 			context.doAction();
-			File file = new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx");
-			if (file.exists()) {
-				LocalChromeOptions.get().addExtensions(
-						new File(TestUtils.getRelativePath() + "/externalLibraries/Native-Message-Sender_v1.1.crx"));
-			}
 		}
 		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
 		LocalChromeOptions.get().addArguments("--no-sandbox");
@@ -61,10 +54,16 @@ public class ChromeDriverHelper {
 		driver = new InheritableThreadLocal<WebDriver>() {
 			@Override
 			protected ChromeDriver initialValue() {
-				@SuppressWarnings("deprecation")
-				ChromeDriver chromeDriver = new ChromeDriver(caps);
-				drivers.add(chromeDriver);
-				return chromeDriver;
+				ChromeDriver driver = null;
+				try {
+    				@SuppressWarnings("deprecation")
+    				ChromeDriver chromeDriver = new ChromeDriver(caps);
+    				drivers.add(chromeDriver);
+    				driver = chromeDriver;
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				return driver;
 			}
 		};
 	}

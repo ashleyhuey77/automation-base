@@ -33,14 +33,11 @@ public class TestResultsReport implements ReportContent {
 	@Override
 	public void addBaseReportContent(TestContent report) throws TestException {
 		InputStream htmlstream = Util.class.getResourceAsStream("views/HTMLReport.html");
-		InputStream cssstream = Util.class.getResourceAsStream("views/reportCss.html");
 		try (FileWriter file = new FileWriter(this.resultSummaryPath, false)) {
 			try (BufferedWriter streamWriter = new BufferedWriter(file)) {
 				document.set(Jsoup.parse(htmlstream, "utf-8", "/src/main/com/warnermedia/report/views/HTMLReport.html"));
 				Document newDoc = document.get();
-				Document css = Jsoup.parse(cssstream, "utf-8", "/src/main/com/warnermedia/report/views/reportCss.html");
 				Element head = newDoc.head();
-				head.append(css.html());
 				changeBaseReportPageText(head, newDoc, report);
 				String objArray = newDoc.outerHtml();
 				streamWriter.write(objArray);
@@ -108,13 +105,21 @@ public class TestResultsReport implements ReportContent {
 			case "pass":
 				statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src",
 						"../../../resources/reportContent/64x64_ICONS_Navigation_Checkmark.jpg");
-				link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+				if (resultSummaryPath.contains(File.separator + "ws" + File.separator)) {
+					link = statusRow.appendElement("a").attr("href", "..\\..\\Screenshots\\" + screenShotName);
+				} else {
+					link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+				}
 				link.text(status.toUpperCase());
 				break;
 			case "fail":
 				statusRow.appendElement("img").attr("id", "glass").attr("align", "justify").attr("src",
 						"../../../resources/reportContent/64x64_ICONS_Navigation_Alert.jpg");
-				link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+				if (resultSummaryPath.contains(File.separator + "ws" + File.separator)) {
+					link = statusRow.appendElement("a").attr("href", "..\\..\\Screenshots\\" + screenShotName);
+				} else {
+					link = statusRow.appendElement("a").attr("href", "..\\Screenshots\\" + screenShotName);
+				}
 				link.text(status.toUpperCase());
 				break;
 			case "done":

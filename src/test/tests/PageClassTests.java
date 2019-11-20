@@ -1,18 +1,20 @@
 package tests;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.How;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.warnermedia.config.SHelper;
+import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
+import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.core.DaysOfTheWeek;
 import com.warnermedia.page.core.Entity;
 import com.warnermedia.page.core.Timezones;
@@ -20,65 +22,40 @@ import com.warnermedia.page.utils.date.Date;
 import com.warnermedia.selenium.By;
 import com.warnermedia.selenium.Locator;
 import com.warnermedia.selenium.TestElement;
+import com.warnermedia.utils.ConsoleHelper;
 import com.warnermedia.utils.TestUtils;
 import pages.TestInitialization;
 import pages.TestPage;
 
 @Listeners(WebDriverListener.class)
 public class PageClassTests extends TestInitialization {
-
-	ThreadLocal<ByteArrayOutputStream> baos = new ThreadLocal<>();
-	ThreadLocal<PrintStream> ps = new ThreadLocal<>();
-	
-	@BeforeMethod
-	public void initializeStream() {
-		baos.set(new ByteArrayOutputStream());
-		ps.set(new PrintStream(baos.get()));
-	}
 	
 	@Test
 	public void verifyTheExpectedValueContainsTheActualValue() throws Exception {
 		TestPage page = new TestPage();
 
-/*		PrintStream old = System.out;
-		System.setOut(ps.get());*/
-
 		page.testActualVersusExpected("Test", "Test", "Test");
-/*
-		System.out.flush();
-		System.setOut(old);
-		baos.get().toString();
-
-		// Assert.assertTrue(inputString.trim().contains("Step:
-		// verifyTheActualValueContainsTheExpectedValue
-		// has passed. Test is set correctly in Test"));
-		ps.get().close();
-		baos.get().close();*/
 	}
 
-	@SuppressWarnings("unused")
 	@Test
 	public void verifyTheExpectedValueNull_contains() throws Exception {
-		PrintStream old = System.out;
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		try {
 			TestPage page = new TestPage();
-
-			System.setOut(ps.get());
 
 			page.testActualVersusExpected("Test", "Test", "Test");
 
 			page.testActualVersusExpected(null, "Test", "Test");
 			Assert.fail("Expected an AssertionFailedError to be thrown");
 		} catch (Exception ex) {
-			//System.out.flush();
-			//System.setOut(old);
-			String inputString = baos.get().toString();
-			String newInputString = inputString.replaceAll(" ", "");
+			FileReader reader = new FileReader(filePath);
+    		String newIS = extractText(reader);
 
-			Assert.assertTrue(newInputString.trim()
-					.contains("verifyTheActualValueContainsTheExpectedValuehaspassed.TestissetcorrectlyinTest"));
-			ps.get().close();
-			baos.get().close();
+			Assert.assertTrue(newIS.trim()
+					.contains("Test returned null. Variable was not expected to return null. FAIL"));
 
 			ex.toString();
 		}
@@ -166,20 +143,7 @@ public class PageClassTests extends TestInitialization {
 	public void verifyTheExpectedValueMatchesTheActualValue() throws Exception, IOException {
 		TestPage page = new TestPage();
 
-/*		PrintStream old = System.out;
-		System.setOut(ps.get());*/
-
 		page.testActualVersusExpectedExact("Test", "Test", "Test");
-
-/*		System.out.flush();
-		System.setOut(old);
-		baos.get().toString();
-
-		// Assert.assertTrue(inputString.trim().contains("Step:
-		// verifyTheActualValueMatchesTheExpectedValue has
-		// passed. Test is set correctly in Test"));
-		ps.get().close();
-		baos.get().close();*/
 	}
 
 	@Test
@@ -273,193 +237,27 @@ public class PageClassTests extends TestInitialization {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	@Test
 	public void failTestIfVariableIsNull_notNullVariable() throws Exception, IOException {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		TestPage page = new TestPage();
-
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
+		
 		page.testFailIfNull("var", "Passed", "Failed");
 
-		//System.out.flush();
-		//System.setOut(old);
-		String inputString = baos.get().toString();
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
-		Assert.assertTrue(inputString.trim().contains("Step: failTestIfVariableIsNull has passed. Passed"));
-		ps.get().close();
-		baos.get().close();
+		Assert.assertTrue(newIS.contains("failTestIfVariableIsNull Passed PASS"));
 
 	}
-	/*
-	 * @Test public void verifySetActualStartTime()
-	 * throws Exception { TestPage page = new
-	 * TestPage(); page.testSetActualStartTime(true);
-	 * Assert.
-	 * assertEquals("The two times do not match",
-	 * TestUtils.GetCurrentDateTime("HH:mm"),
-	 * Generic.startTime);
-	 * page.testSetActualStartTime(false);
-	 * Assert.assertTrue("Start time contains a value"
-	 * , ExtensionMethods.isNullOrBlank(Generic.
-	 * startTime)); }
-	 */
-
-	/*
-	 * @Test public void
-	 * verifyGetDateInformationAndSetScheduledRecordingDate_DateHasZero
-	 * () { }
-	 * @Test public void
-	 * verifyGetDateInformationAndSetScheduledRecordingDate_DateDoesntHaveZero
-	 * () { }
-	 */
-
-	/*
-	 * @Test public void verifyGetActualStartTime()
-	 * throws Exception { TestPage page = new
-	 * TestPage(); String value =
-	 * page.testGetActualStartTime("Test", true);
-	 * Assert.assertTrue("Start time contains a value"
-	 * , ExtensionMethods.isNullOrBlank(value)); value
-	 * = page.testGetActualStartTime("Test", false);
-	 * Assert.
-	 * assertEquals("The two times do not match",
-	 * "Test", value); }
-	 */
-
-	/*
-	 * @Test public void verifyGetCurrentSplitDate()
-	 * throws Exception { TestPage page = new
-	 * TestPage(); String[] value =
-	 * page.testGetCurrentSplitDate();
-	 * Assert.assertTrue(TestUtils.GetCurrentDateTime(
-	 * "dd-MM-yyyy").contains(value[0]));
-	 * Assert.assertTrue(TestUtils.GetCurrentDateTime(
-	 * "dd-MM-yyyy").contains(value[1]));
-	 * Assert.assertTrue(TestUtils.GetCurrentDateTime(
-	 * "dd-MM-yyyy").contains(value[2])); }
-	 */
-
-	/*
-	 * @Test public void
-	 * verifyActualSlug_ContainsValue() throws
-	 * Exception { TestPage page = new TestPage();
-	 * String value = page.testActualSlug("Test");
-	 * Assert.
-	 * assertEquals("The two slug names do not match",
-	 * "Test", value); value =
-	 * page.testActualSlug(null);
-	 * Assert.assertTrue("Start time contains a value"
-	 * ,
-	 * ExtensionMethods.isNullOrBlank(Generic.cnnId));
-	 * }
-	 * @Test public void
-	 * verifySetScheduledRecordingDate_IsStartDateRegularFormat
-	 * () throws Exception { TestPage page = new
-	 * TestPage(); String time =
-	 * TestUtils.getTimeStamp();
-	 * page.testSetScheduledRecordingDate(time, true,
-	 * false); Assert.
-	 * assertEquals("The two dates do not match",
-	 * time, Generic.scheduledRecordingStartDate); }
-	 * @Test public void
-	 * verifySetScheduledRecordingDate_IsStartDateAltFormat
-	 * () throws Exception { TestPage page = new
-	 * TestPage(); String time =
-	 * TestUtils.getTimeStamp();
-	 * page.testSetScheduledRecordingDate(time, true,
-	 * true); Assert.
-	 * assertEquals("The two dates do not match",
-	 * time, Generic.scheduledRecordingStartDateAlt);
-	 * }
-	 * @Test public void
-	 * verifySetScheduledRecordingDate_IsNotStartDateAltFormat
-	 * () throws Exception { TestPage page = new
-	 * TestPage(); String time =
-	 * TestUtils.getTimeStamp();
-	 * page.testSetScheduledRecordingDate(time, false,
-	 * true); Assert.
-	 * assertEquals("The two dates do not match",
-	 * time, Generic.scheduledRecordingEndDateAlt); }
-	 * @Test public void
-	 * verifySetScheduledRecordingDate_IsNotStartDateRegularFormat
-	 * () throws Exception { TestPage page = new
-	 * TestPage(); String time =
-	 * TestUtils.getTimeStamp();
-	 * page.testSetScheduledRecordingDate(time, false,
-	 * false); Assert.
-	 * assertEquals("The two dates do not match",
-	 * time, Generic.scheduledRecordingEndDate); }
-	 */
-	/*
-	 * @Test public void verifyGetFutureDate() throws
-	 * Exception { TestPage page = new TestPage();
-	 * String day =
-	 * TestUtils.GetCurrentDateTime("dd"); int value =
-	 * page.testGetFutureDate(1);
-	 * Assert.assertEquals(value,
-	 * Integer.parseInt(day) + 1); }
-	 */
-
-	/*
-	 * @Test public void
-	 * verifyNavigateViaNewsAppsToggle() throws
-	 * Exception, IOException { TestPage page = new
-	 * TestPage(); ((JavascriptExecutor)browser).
-	 * executeScript("document.write('<input id=Test > </input>');"
-	 * ); Generic.newsAppsToggle = "input[id='Test']";
-	 * ByteArrayOutputStream baos = new
-	 * ByteArrayOutputStream(); PrintStream ps = new
-	 * PrintStream(baos); PrintStream old =
-	 * System.out; System.setOut(ps);
-	 * page.testNavigateViaNewsappsToggle(locator, by,
-	 * "TestElement"); System.out.flush();
-	 * System.setOut(old); String inputString =
-	 * baos.toString(); Assert.
-	 * assertTrue("Console messages do not match",
-	 * inputString.trim().
-	 * contains("Step: clickSomeElement has passed. NewsApps Toggle clicked successfully."
-	 * )); Assert.
-	 * assertTrue("Console messages do not match",
-	 * inputString.trim().
-	 * contains("Step: clickSomeElement has passed. TestElement clicked successfully."
-	 * )); ps.close(); baos.close(); }
-	 */
-
-	/*
-	 * @Test public void
-	 * verifyNavigateViaNewsAppsToggle_cantFindElement
-	 * () throws Exception, IOException { try {
-	 * TestPage page = new TestPage();
-	 * ((JavascriptExecutor)browser).
-	 * executeScript("document.write('<input id=Test > </input>');"
-	 * ); Generic.newsAppsToggle = "input[id='Test']";
-	 * page.testNavigateViaNewsappsToggle(
-	 * "OneTwoThree", "id", "TestElement");
-	 * fail("Error expected to be thrown"); } catch
-	 * (AssertionError ex) { String m = ex.toString();
-	 * Assert.
-	 * assertTrue("Error Message does not contain the correct value."
-	 * , m.trim().
-	 * contains("junit.framework.AssertionFailedError: StepName: navigateViaTheNewsAppsToggle"
-	 * )); } }
-	 */
-
-	/*
-	 * @Test public void getTotalDaysInMonth() throws
-	 * Exception { TestPage page = new TestPage(); int
-	 * totalDays = page.testGetTotalDaysInMonth();
-	 * String month =
-	 * TestUtils.GetCurrentDateTime("MMM"); int
-	 * expectedTotal = getTotalExpectedMonths(month);
-	 * Assert.assertEquals(expectedTotal, totalDays);
-	 * }
-	 */
 
 	@Test
 	public void verifySomeElementContainsTheExpectedText_PredefinedWebElement_RemoveAllSpacesFalse()
 			throws Exception, InterruptedException, IOException {
+		ConsoleHelper.analyzeLog();
 		TestPage page = new TestPage();
 		((JavascriptExecutor) LocalDriver.getDriver())
 				.executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -469,18 +267,8 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(500);
 		WebElement textEl = SHelper.get().element().get(element);
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "Testing 123", "Test Element", false);
 
-		getByteStreamMessage(baos.get(), old);
-
-		// Assert.assertTrue(inputString.trim().contains("Step:
-		// verifySomeElementContainsTheExpectedText has
-		// passed. Test Element contains the correct text:
-		// Testing 123"));
-
-		closeByteStream(ps.get(), baos.get());
 	}
 
 	@Test
@@ -495,19 +283,7 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(500);
 		WebElement textEl = SHelper.get().element().get(element);
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		page.testVerifySomeElementContainsTheExpectedText(textEl, "Testing 123", "Test Element", true);
-
-		getByteStreamMessage(baos.get(), old);
-
-		// Assert.assertTrue(inputString.trim().contains("Step:
-		// verifySomeElementContainsTheExpectedText has
-		// passed. Test Element contains the correct text:
-		// Testing123"));
-
-		closeByteStream(ps.get(), baos.get());
 	}
 
 	@Test
@@ -563,18 +339,9 @@ public class PageClassTests extends TestInitialization {
 		Thread.sleep(500);
 		Locator locator = new Locator("NotHere");
 		By by = new By("id");
-		PrintStream old = System.out;
-		System.setOut(ps.get());
 
 		page.testverifySomeElementIsNotPresent(locator, by, "Test Element");
 
-		getByteStreamMessage(baos.get(), old);
-
-		// Assert.assertTrue(inputString.trim().contains("Step:
-		// verifySomeElementIsNotPresent has passed. Test
-		// Element does not display in the page."));
-
-		closeByteStream(ps.get(), baos.get());
 	}
 
 	@Test
@@ -618,6 +385,10 @@ public class PageClassTests extends TestInitialization {
 
 	@Test
 	public void verifySomeElementIsPresent_ElementPresent() throws Exception {
+		String filePath = LocalReport.getFilePath() + 
+				File.separator + "HTML Results" + 
+				File.separator + LocalTest.getTestName()  + 
+				"_" + LocalTest.getEnvironment().getBrowser() + ".html";
 		TestPage page = new TestPage();
 		((JavascriptExecutor) LocalDriver.getDriver())
 				.executeScript("document.write('<div id=Test >Testing 123</div>');");
@@ -625,17 +396,13 @@ public class PageClassTests extends TestInitialization {
 		Locator locator = new Locator("Test");
 		By by = new By("id");
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
 		page.testVerifySomeElementIsPresent(locator, by, "Test Element");
 
-		String inputString = getByteStreamMessage(baos.get(), old);
+		FileReader reader = new FileReader(filePath);
+		String newIS = extractText(reader);
 
-		Assert.assertTrue(inputString.trim().contains(
-				"Step: verifySomeElementIsPresent has passed. Test Element displays in the page as expected."));
-
-		closeByteStream(ps.get(), baos.get());
+		Assert.assertTrue(newIS.contains(
+				"Test Element displays in the page as expected. PASS"));
 	}
 
 	@Test
@@ -646,7 +413,7 @@ public class PageClassTests extends TestInitialization {
 					.executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
 			Locator locator = new Locator("NotHere");
-			By by = new By("id");
+			By by = new By(How.ID);
 
 			page.testVerifySomeElementIsPresent(locator, by, "Test Element");
 			Assert.fail("Assertion failed error was supposed to have been thrown.");
@@ -676,71 +443,124 @@ public class PageClassTests extends TestInitialization {
 			Assert.assertTrue(m.trim().contains("StepName: verifySomeElementIsPresent"));
 		}
 	}
+	
+	@Test
+	public void verifyCheckCookiesMethod() throws Exception {
+		try {
+			TestPage page = new TestPage();
+			page.testCookiesThing();
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	@Test
+	public void verifyGetFutureDate() throws Exception {
+		try {
+			TestPage page = new TestPage();
+			int date = page.testGetFutureDate(1);
+			Assert.assertNotNull(date);
+			Assert.assertTrue(date > 0);
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	@Test
+	public void verifyGetTotalDaysInMonth() throws Exception {
+		try {
+			TestPage page = new TestPage();
+			int date = page.testGetTotalDaysInMonth();
+			Assert.assertNotNull(date);
+			Assert.assertTrue(date > 27);
+			Assert.assertTrue(date < 32);
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	@Test(expectedExceptions=TestException.class)
+	public void verifyRefreshPageAndWaitForElementToDisplay_ExceptionThrown() throws Exception {
+			TestPage page = new TestPage();
+			Locator locator = new Locator("nope");
+			By by = new By("id");
 
-/*	@Test
-	public void verifyTextFieldIsBlank_TextFieldIsBlank() throws Exception {
-		TestPage page = new TestPage();
-		((JavascriptExecutor) LocalDriver.getDriver())
-				.executeScript("document.write('<input id=Test value= ></input>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("#Test");
-		By by = new By("css");
+			page.refreshPageAndWaitForElementToDisplay(new TestElement(locator, by), 1);
+	}
+	
+	@Test(expectedExceptions=TestException.class)
+	public void verifyRefreshPageAndWaitForElementToDisplay_PredefinedWebelement_ExceptionThrown() throws Exception {
+			TestPage page = new TestPage();
+			((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<div id=Test >Testing123</div>');");
+			Locator locator = new Locator("Test");
+			By by = new By("id");
 
-		PrintStream old = System.out;
-		System.setOut(ps.get());
-
-		page.testVerifyTextFieldIsBlank(locator, by, false, null, "Test Element");
-
-		String inputString = getByteStreamMessage(baos.get(), old);
-
-		String newIS = inputString.replaceAll(" ", "");
-
-		Assert.assertTrue(newIS.trim().contains("Step:verifyTextFieldIsBlankhaspassed.TestElementisblankasexpected."));
-
-		closeByteStream(ps.get(), baos.get());
-	}*/
-
-/*	@Test
-	public void verifyTextFieldIsBlank_TextFieldIsNotBlank() throws Exception {
+			page.refreshPageAndWaitForElementToDisplay(new TestElement(locator, by), 1);
+	}
+	
+	@Test
+	public void verifyGetNumbersFromString() throws Exception {
 		try {
 			TestPage page = new TestPage();
 			((JavascriptExecutor) LocalDriver.getDriver())
-					.executeScript("document.write('<input id=Test value=Testing123 ></input>');");
+					.executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			Locator locator = new Locator("#Test");
-			By by = new By("css");
+			Locator locator = new Locator("Test");
+			By by = new By(How.ID);
 
-			page.testEnterAValueIntoATextField("Test123", locator, by, "Test Element");
-			Thread.sleep(500);
-
-			page.testVerifyTextFieldIsBlank(locator, by, false, null, "Test Element");
-			Assert.fail("Assertion failed error was supposed to have been thrown.");
+			String result = page.testGetNumbersFromString(new TestElement(locator, by));
+			Assert.assertNotNull(result);
+			Assert.assertTrue(result.equals("123"));
 		} catch (Exception ex) {
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifyTextFieldIsBlank"));
-			Assert.assertTrue(m.trim().contains(
-					"ErrorMessage: Test Element should be blank but is retaining a value instead. The value being retained is Test123"));
-
+			throw ex;
 		}
-	}*/
+	}
+	
+	@Test(expectedExceptions=TestException.class)
+	public void verifyGetNumbersFromString_throwsException() throws Exception {
+			TestPage page = new TestPage();
+			((JavascriptExecutor) LocalDriver.getDriver())
+					.executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			Locator locator = new Locator("Nope");
+			By by = new By(How.ID);
 
-/*	@Test
-	public void verifyTextFieldIsBlank_ThrowsException() throws Exception {
+			page.testGetNumbersFromString(new TestElement(locator, by));
+	}
+	
+	@Test
+	public void verifyGetNumbersFromString_PredefinedWebElement() throws Exception {
 		try {
 			TestPage page = new TestPage();
 			((JavascriptExecutor) LocalDriver.getDriver())
-					.executeScript("document.write('<input id=Test value=></input>');");
+					.executeScript("document.write('<div id=Test >Testing 123</div>');");
 			Thread.sleep(500);
-			Locator locator = new Locator("#Test");
-			By by = new By("css");
+			Locator locator = new Locator("Test");
+			By by = new By(How.ID);
+			WebElement element = SHelper.get().element().get(new TestElement(locator, by));
 
-			page.testVerifyTextFieldIsBlank(locator, by, true, "1", "Test Element");
-			Assert.fail("Assertion failed error was supposed to have been thrown.");
+			String result = page.testGetNumbersFromString(element);
+			Assert.assertNotNull(result);
+			Assert.assertTrue(result.equals("123"));
 		} catch (Exception ex) {
-			String m = ex.toString();
-			Assert.assertTrue(m.trim().contains("StepName: verifyTextFieldIsBlank"));
+			throw ex;
 		}
-	}*/
+	}
+	
+	@Test(expectedExceptions=TestException.class)
+	public void verifyGetNumbersFromString__PredefinedWebElement_throwsException() throws Exception {
+			TestPage page = new TestPage();
+			((JavascriptExecutor) LocalDriver.getDriver())
+					.executeScript("document.write('<div id=Test >Testing 123</div>');");
+			Thread.sleep(500);
+			Locator locator = new Locator("Test");
+			By by = new By(How.ID);
+			WebElement element = SHelper.get().element().get(new TestElement(locator, by));
+			SHelper.get().page().refresh();
+
+			page.testGetNumbersFromString(element);
+	}
 
 	@Test
 	public void verifyPageEnums() throws Exception {
@@ -790,46 +610,6 @@ public class PageClassTests extends TestInitialization {
 		} catch (Exception ex) {
 			throw ex;
 		}
-	}
-
-	/*
-	 * private void
-	 * verifyCharactersNotInString(String[]
-	 * characters, String value) throws Exception {
-	 * try { for(int i = 0; i < characters.length;
-	 * i++) {
-	 * Assert.assertFalse(value.toLowerCase().trim().
-	 * contains(characters[i].toLowerCase().trim()));
-	 * } } catch (Exception ex) { throw ex; } }
-	 * private int getTotalExpectedMonths(String
-	 * month) { int totalDays = 0;
-	 * switch(month.toUpperCase()) { case "JAN":
-	 * totalDays = 31; break; case "FEB": totalDays =
-	 * 28; break; case "MAR": totalDays = 31; break;
-	 * case "APR": totalDays = 30; break; case "MAY":
-	 * totalDays = 31; break; case "JUN": totalDays =
-	 * 30; break; case "JUL": totalDays = 31; break;
-	 * case "AUG": totalDays = 31; break; case "SEP":
-	 * totalDays = 30; break; case "OCT": totalDays =
-	 * 31; break; case "NOV": totalDays = 30; break;
-	 * case "DEC": totalDays = 31; break; } return
-	 * totalDays; }
-	 */
-	@AfterMethod
-	public void closeStream() throws IOException {
-		closeByteStream(ps.get(), baos.get());
-	}
-
-	private String getByteStreamMessage(ByteArrayOutputStream baos, PrintStream old) {
-/*		System.out.flush();
-		System.setOut(old);*/
-		String inputString = baos.toString();
-		return inputString;
-	}
-
-	private void closeByteStream(PrintStream ps, ByteArrayOutputStream baos) throws IOException {
-		ps.close();
-		baos.close();
 	}
 
 }
