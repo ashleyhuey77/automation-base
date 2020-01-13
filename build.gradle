@@ -29,6 +29,8 @@ buildscript {
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
+sourceCompatibility = targetCompatibility = '1.8'
+
 sourceSets {
     main {
     	java {
@@ -76,6 +78,7 @@ dependencies {
    	compile group: 'org.yaml', name: 'snakeyaml', version: '1.17'
    	compile group: 'org.mongodb', name: 'mongodb-driver', version: '3.10.2'
    	compile 'org.mongodb:mongodb-driver-reactivestreams:1.11.0'
+   	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
    	compile fileTree(dir: 'externalLibraries', include: 'automation.security.jar')
 }
 
@@ -87,7 +90,7 @@ dependencies {
 			systemProperties project.properties.subMap(["AppUrl", "Env", "Browser", "IsHeadless", "OS"])
 	}
 
-version='5.18.37'
+version='5.19.38'
 
 task updateVersion {
 	doLast {

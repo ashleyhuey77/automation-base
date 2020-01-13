@@ -10,6 +10,7 @@ import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.shared.Commands;
+import com.warnermedia.utils.StateManager;
 import com.warnermedia.utils.Validator;
 
 public class PresentElement extends Commands implements IWait {
@@ -23,6 +24,9 @@ public class PresentElement extends Commands implements IWait {
 
 	@Override
 	public void on(TestElement element) throws TestException {
+		if (StateManager.getState() != null) {
+			StateManager.getState().checkState();
+		}
 		new WebDriverWait(LocalDriver.getDriver(), time)
 				.until(ExpectedConditions.visibilityOfElementLocated(getByValueBasedOnUserInput(element)));
 	}

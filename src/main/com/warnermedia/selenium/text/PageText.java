@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import com.warnermedia.config.TestException;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.shared.Commands;
+import com.warnermedia.utils.StateManager;
 
 public class PageText extends Commands implements IText {
 	@Override
