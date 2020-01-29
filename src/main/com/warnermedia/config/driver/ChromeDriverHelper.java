@@ -45,6 +45,7 @@ public class ChromeDriverHelper {
 		LocalChromeOptions.get().addArguments("--disable-gpu");
 		Map<String, Object> prefs = new HashMap<String, Object>();
 		prefs.put("credentials_enable_service", false);
+		prefs.put("safebrowsing.enabled", "true");
 		prefs.put("profile.password_manager_enabled", false);
 		LocalChromeOptions.get().setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 		LocalChromeOptions.get().setExperimentalOption("prefs", prefs);
