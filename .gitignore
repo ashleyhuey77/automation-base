@@ -16,3 +16,5 @@ gradlew.bat
 settings.gradle
 gradle/
 .settings/
+.idea/
+.pmd
