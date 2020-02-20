@@ -17,4 +17,8 @@ settings.gradle
 gradle/
 .settings/
 .idea/
+.idea/**
+/.idea/**
+**/.idea/**
 .pmd
+/.pmd
