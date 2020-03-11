@@ -7,7 +7,7 @@ import com.warnermedia.data.loki.Loki;
 import com.warnermedia.data.loki.TestEnvironment;
 
 public class PersonTests {
-	
+
 	@Test
 	public void verifyName() {
 		Loki loki = new Loki(new TestEnvironment(Environments.REF), new Random());

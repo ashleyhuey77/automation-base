@@ -7,7 +7,7 @@ ref:
       role_suffix: ["Master", "Lord", "of the Dark Brotherhood", "of the Thieves Guild", "of the Blades", "of the Dawnguard", "of Solstheim", "of the Nine Divines", "of sixteen Daedric Princes", "Expert", "Hunter", "of the Thu'um", "Chaser", "Chief", "of Potatoes", "Scientist", "of the Unicorn Division", "of Mayhem", "Warrior", "Overlord", "Trouble Maker"]
       group_prefix: ["Fire Breathing", "Cereal", "Bad", "The Salty", "Purple", "Walmart", "Straight Trash", "Sweet Sassy", "Dumbledore's", "Ninja", "Jalapeno", "Team", "Furious", "That's so", "Llama", "The Brainy", "Cubicle", "Lord of the", "Harry Potter and the", "Digital", "Java", "Javascript", "Tech"]
       group_suffix: ["Rubber Duckies", "Intentions", "Pretzels", "Cobras", "Greeters", "Koalas", "Army", "Nomads", "Operators", "Marshmallows", "Flamingos", "Team", "Friends", "Pandas", "Ravenclaw", "Llama", "Developers", "Techies", "Geeks", "Nerds", "Technokrats", "Pirates", "Buddies"]
-      permission: ["Jason.test.allow", "mc.test.allow", "rundowns.test.globant", "test realm.testperm.allow", "test.test.allow"]
+      permission: ["topbar.apps.support.allow", "topbar.apps.quarkplayer.subclip.allow", "topbar.apps.videoingest.allow", "mslegacy.assetFonts.edit", "mslegacy.assetEdits.edit", "mslegacy.com.cnn.mscore.model.asset.delete", "mslegacy.holds.manage", "mslegacy.releaselocks.asset", "permservice.write", "productions.manage.allow", "supporttools.msadmin.bpstools.allow", "webingest.requests.create.allow", "workorder.admin.visible"]
       role: "#{role_prefix} #{role_suffix}"
       group_name: "#{group_prefix} #{group_suffix}"
     slug:

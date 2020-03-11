@@ -27,7 +27,9 @@ public enum BaseGeneric implements Type {
 	DISMISS_BUTTON(new Locator("modalActionDismiss"), new By(How.ID)),
 	MODAL_BOX(new Locator("modalBox"), new By(How.ID)),
 	MODAL_TITLE(new Locator("modalTitle"), new By(How.ID)),
-	MODAL_MESSAGE(new Locator("modalMessage"), new By(How.ID));
+	MODAL_MESSAGE(new Locator("modalMessage"), new By(How.ID)),
+	SEQUENCE_CATEGORY(new Locator("td.category"), new By(How.CSS)),
+	TOP_CONTAINER_VALUES(new Locator("div[class='top-container'] div[class='video-details-view'] div[class='bottom-info-value']"), new By(How.CSS));
 	
 	private final Locator locator;
 	private final By by;

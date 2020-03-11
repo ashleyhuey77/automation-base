@@ -36,6 +36,10 @@ sourceSets {
     	java {
 			srcDir 'src/main'
 		}
+		resources {
+			srcDir 'resources'
+			include 'HTMLReport.html'
+		}
     }
     test {
     	java {
@@ -82,12 +86,15 @@ dependencies {
    	compile fileTree(dir: 'externalLibraries', include: 'automation.security.jar')
 }
 
-	task runSomeTests(type: Test) {
+	task runUnitTests(type: Test) {
+		systemProperties project.properties.subMap(["appUrl", "env", "browser", "isHeadless", "oS"])
 		useTestNG() {
 			// runlist to executed. path is relative to current folder
-			suites 'src/test/tests/Test.xml'
+			suites 'src/test/tests/Regression.xml'
+			useDefaultListeners = true
 		}
-			systemProperties project.properties.subMap(["AppUrl", "Env", "Browser", "IsHeadless", "OS"])
+		reports.html.destination = file("${reporting.baseDir}")
+		ignoreFailures = true
 	}
 
 version='5.19.38'

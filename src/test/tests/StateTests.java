@@ -28,7 +28,7 @@ public class StateTests {
         State state = context.getState();
         Assert.assertNotNull(state);
 	}
-	
+
 	@Test
 	public void verifyLinuxState() throws Exception {
 		OSContext context = new OSContext();

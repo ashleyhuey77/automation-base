@@ -6,7 +6,7 @@
 	<listener class-name="com.warnermedia.config.testng.TestListener"/>
 </listeners> 
   <test name="Regression">
-    <!-- <groups>
+    <!--<groups>
     	<dependencies>
 	      <group name="dropdown" depends-on="click" />
 	      <group name="element" depends-on="dropdown" />
@@ -16,7 +16,7 @@
     	</dependencies>
   	</groups> -->
   	<classes>
-  		<!-- <class name="tests.ReportingTests"/>
+  		<class name="tests.ReportingTests"/>
 		<class name="tests.shelper.BrowserTests"/>
   		<class name="tests.shelper.ClickTests"/>
   		<class name="tests.helpers.VerifyTextHelper_Tests"/>
@@ -49,7 +49,7 @@
   		<class name="tests.helpers.EnterTextHelper_Tests"/>
   		<class name="tests.helpers.DropdownHelper_Tests"/>
   		<class name="tests.helpers.OptionSelector_Tests"/>
-  		<class name="tests.helpers.ElementHelper_Tests"/> -->
+  		<class name="tests.helpers.ElementHelper_Tests"/>
   		<class name="tests.NewstronSignInPage_Test"/>
   		<!-- <class name="tests.TestNGListeners_Tests"/> -->
   	</classes>

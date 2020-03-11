@@ -1,11 +1,11 @@
 package com.warnermedia.report.controllers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.logging.Level;
+
+import com.warnermedia.utils.observers.app.Application;
+import com.warnermedia.utils.observers.app.ApplicationState;
+import com.warnermedia.utils.observers.app.IssueType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,11 +18,13 @@ import com.warnermedia.report.models.TestContent;
 import com.warnermedia.report.models.TestStepContent;
 import com.warnermedia.utils.Log;
 import com.warnermedia.utils.TestUtils;
+import org.jsoup.select.Elements;
 
-public class TestResultsReport implements ReportContent {
+public class TestResultsReport implements ReportContent, Application  {
 
 	private String resultSummaryPath;
 	private ThreadLocal<Document> document = new ThreadLocal<>();
+	private static ThreadLocal<IssueType> issueType = new ThreadLocal<>();
 
 	public TestResultsReport(ReportSettings reportSettings) {
 		String reportPath = reportSettings.getReportPath() + Util.getFileSeparator() + "HTML Results"
@@ -32,8 +34,12 @@ public class TestResultsReport implements ReportContent {
 
 	@Override
 	public void addBaseReportContent(TestContent report) throws TestException {
-		InputStream htmlstream = Util.class.getResourceAsStream("views/HTMLReport.html");
+		InputStream htmlstream = null;
 		try (FileWriter file = new FileWriter(this.resultSummaryPath, false)) {
+			htmlstream = Util.class.getResourceAsStream("views/HTMLReport.html");
+			if (htmlstream == null) {
+				htmlstream = new FileInputStream(new File("src/main/com/warnermedia/report/views/HTMLReport.html"));
+			}
 			try (BufferedWriter streamWriter = new BufferedWriter(file)) {
 				document.set(Jsoup.parse(htmlstream, "utf-8", "/src/main/com/warnermedia/report/views/HTMLReport.html"));
 				Document newDoc = document.get();
@@ -42,7 +48,7 @@ public class TestResultsReport implements ReportContent {
 				String objArray = newDoc.outerHtml();
 				streamWriter.write(objArray);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -67,6 +73,53 @@ public class TestResultsReport implements ReportContent {
 			streamWriter.close();
 		} catch (Exception e) {
 
+		}
+	}
+
+	@Override
+	public void addFailDetailsContent(TestStepContent content) throws TestException {
+		try {
+			File test = new File(this.resultSummaryPath);
+			BufferedWriter streamWriter = new BufferedWriter(new FileWriter(test, false));
+			if (content.status().equals(Status.FAIL)) {
+				Document doc = document.get();
+				Element body = doc.body();
+				if (!issueType.get().equals(IssueType.NONE)) {
+					body.appendElement("div").attr("id", "env").attr("class", "info");
+					Element env = body.getElementById("env");
+					env.appendElement("div").attr("class", "message");
+					Elements message = env.getElementsByClass("message");
+					message.get(0).appendElement("p").attr("class", "bold");
+					Elements messageTitle = message.get(0).getElementsByClass("bold");
+					messageTitle.get(0).text("ENVIRONMENT");
+					message.get(0).appendElement("p").attr("class", "messageContent");
+					Elements messageContent = message.get(0).getElementsByClass("messageContent");
+					messageContent.get(0).text("The following failure was likely due to an environment issue" +
+							" with code ");
+					Element link = messageContent.get(0).appendElement("a").attr("href", "http://atomwiki.turner.com/display/MSNS/Environment+Issue+Status+Codes");
+					link.text(issueType.get().name());
+					messageContent.get(0).appendText(". Please check the environment and assure it is working properly.");
+				} else {
+					body.appendElement("div").attr("id", "bug").attr("class", "info");
+					Element env = body.getElementById("bug");
+					env.appendElement("div").attr("class", "message");
+					Elements message = env.getElementsByClass("message");
+					message.get(0).appendElement("p").attr("class", "bold");
+					Elements messageTitle = message.get(0).getElementsByClass("bold");
+					messageTitle.get(0).text("BUG");
+					message.get(0).appendElement("p").attr("class", "messageContent");
+					Elements messageContent = message.get(0).getElementsByClass("messageContent");
+					messageContent.get(0).text("The following failure was not found in the current list of common environmental issues." +
+							" Manually retest the scenario to confirm whether or not there is a bug in the application. " +
+							" If there is a bug in the application, please report it to the appropriate channels. " +
+							"If the issue is not reproducible manually, then it is likely a bug in the test scripts." +
+							" At that point, further debugging of the test would be required.");
+				}
+			}
+			streamWriter.write(document.get().toString());
+			streamWriter.close();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 
@@ -160,4 +213,8 @@ public class TestResultsReport implements ReportContent {
 		url.text(report.url());
 	}
 
+	@Override
+	public void update(ApplicationState subject, IssueType argument) throws TestException {
+		issueType.set(argument);
+	}
 }

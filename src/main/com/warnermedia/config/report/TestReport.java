@@ -1,6 +1,9 @@
 package com.warnermedia.config.report;
 
 import java.io.File;
+
+import com.warnermedia.report.controllers.TestResultsReport;
+import com.warnermedia.utils.observers.app.ApplicationState;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -57,6 +60,10 @@ public class TestReport extends ReportTemplate {
         try {
 			TestStepContent testStepContent = new TestStepContent(stepName, description, Status.FAIL);
             super.addResultContent(testStepContent);
+            ApplicationState state = new ApplicationState();
+            state.addObserver(new TestResultsReport(reportSettings));
+            state.checkState();
+            super.addFailDetailsContent(testStepContent);
         } catch (Exception invalidOperationException) {
         	    TestStepContent testStepContent = new TestStepContent(stepName, description, Status.WARNING);
             super.addResultContent(testStepContent);

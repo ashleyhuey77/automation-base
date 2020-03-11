@@ -26,7 +26,7 @@ import pages.TestInitialization;
 @Listeners(WebDriverListener.class)
 public class ClickHelper_Tests extends TestInitialization {
 	
-	@Test(groups= {"click"}, alwaysRun=true)
+	@Test(alwaysRun=true)
 	public void verifyClickSomeElement_ElementFound() throws Exception {
 		String filePath = LocalReport.getFilePath() + 
 				File.separator + "HTML Results" + 

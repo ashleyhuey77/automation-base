@@ -3,14 +3,14 @@ package com.warnermedia.data.loki;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -34,7 +34,7 @@ public class MockValuesService {
      *          <li>/en.yml</li>
      *      </ol>
      *      The search is case-insensitive, so the following will all resolve correctly.  Also, either a hyphen or
-     *      an underscore can be used when constructing a {@link Locale} instance.  This is legacy behavior and not
+     *      an underscore can be used when constructing a instance.  This is legacy behavior and not
      *      condoned, but it will work.
      * @param randomService
      */
@@ -71,10 +71,18 @@ public class MockValuesService {
     }
 
     private InputStream findStream(String filename) {
-        String filenameWithExtension =  "resources/" + filename + ".yml";
-        InputStream streamOnClass = getClass().getResourceAsStream(filenameWithExtension);
-        if (streamOnClass != null) {
-            return streamOnClass;
+        InputStream streamOnClass = null;
+        String filenameWithExtension = "resources/" + filename + ".yml";
+        try {
+            streamOnClass = getClass().getResourceAsStream(filenameWithExtension);
+            if (streamOnClass == null) {
+                streamOnClass = new FileInputStream(new File("src/main/com/warnermedia/data/loki/" + filenameWithExtension));
+            }
+            if (streamOnClass != null) {
+                return streamOnClass;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return getClass().getClassLoader().getResourceAsStream(filenameWithExtension);
     }
@@ -196,10 +204,10 @@ public class MockValuesService {
 
     /**
      * <p>processes a expression in the style #{X.y} using the current objects as the 'current' location
-     * within the yml file (or the {@link Faker} object hierarchy as it were).
+     * within the yml file (or the object hierarchy as it were).
      * </p>
      * <p>
-     *     #{Address.streetName} would get resolved to {@link Faker#address()}'s {@link Address#streetName()}
+     *     #{Address.streetName} would get resolved to
      * </p>
      * <p>
      *     #{address.street} would get resolved to the YAML > locale: faker: address: street:
@@ -209,7 +217,7 @@ public class MockValuesService {
      * </p>
      * <p>
      *     Recursive templates are supported.  if "#{x}" resolves to "#{Address.streetName}" then "#{x}" resolves to
-     *     {@link Faker#address()}'s {@link Address#streetName()}.
+     *     .
      * </p>
      */
     protected String resolveExpression(String expression, Object current, Loki root) {
@@ -294,7 +302,7 @@ public class MockValuesService {
 
     /**
      * Given a directive like 'firstName', attempts to resolve it to a method.  For example if obj is an instance of
-     * {@link Name} then this method would return {@link Name#firstName()}.  Returns null if the directive is nested
+     *then this method would return.  Returns null if the directive is nested
      * (i.e. has a '.') or the method doesn't exist on the <em>obj</em> object.
      */
     private String resolveFromMethodOn(Object obj, String directive, List<String> args) {

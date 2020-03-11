@@ -10,6 +10,8 @@ public interface ReportContent {
 	
 	public void addBaseReportContent(TestContent report) throws TestException;
 	
-	public void addResultContent(TestStepContent testStep) throws TestException; 
+	public void addResultContent(TestStepContent testStep) throws TestException;
+
+	public void addFailDetailsContent(TestStepContent content) throws TestException;
 
 }

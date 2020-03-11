@@ -1,5 +1,8 @@
 package tests;
 
+import com.warnermedia.config.TestException;
+import com.warnermedia.config.report.LocalReport;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -8,6 +11,7 @@ import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
 import com.warnermedia.page.core.NewstronSignInPage;
 import com.warnermedia.utils.CookieHelper;
+import pages.AllAppsDashboard;
 import pages.TestInitialization;
 import pages.TestPage;
 
@@ -31,10 +35,15 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	
 	@Test
 	public void verifyNewstronSignInPage_2() throws Exception {
-		NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
-		
-		_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
-		   				   .clickTheSignInButton();
+		try {
+			NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
+
+			_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
+					.clickTheSignInButton();
+			new AllAppsDashboard().reportThatPageLoadedSuccessfully();
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
 	}
 
 }

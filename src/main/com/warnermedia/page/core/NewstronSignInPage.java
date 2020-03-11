@@ -20,6 +20,7 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.CookieManager;
 import com.warnermedia.utils.TestUtils;
+import org.testng.Assert;
 
 /**
  * <p>NewstronSignInPage</p>
@@ -178,7 +179,6 @@ public class NewstronSignInPage<T> extends PageTemplate {
         				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
         				.how(Via.JAVASCRIPT));
             if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 3)) {
-            		Thread.sleep(3000);
                 String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                 if (!TestUtils.isNullOrBlank(errorText)) {
                     	new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
@@ -188,7 +188,7 @@ public class NewstronSignInPage<T> extends PageTemplate {
                     String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
                     if (!TestUtils.isNullOrBlank(errorText2)) {
                     		throw LocalValidation.getValidations().assertionFailed(errorText2);
-                    } 
+                    }
                 } 
             }
             CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());

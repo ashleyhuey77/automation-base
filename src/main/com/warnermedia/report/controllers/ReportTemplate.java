@@ -11,7 +11,7 @@ import com.warnermedia.report.models.TestStepContent;
 
 public class ReportTemplate implements ReportContent {
 
-	private ReportSettings reportSettings;
+	protected ReportSettings reportSettings;
 
 	private ReportContent content;
 
@@ -93,6 +93,13 @@ public class ReportTemplate implements ReportContent {
 		}
 		int sNumber = Integer.parseInt(this.stepNumber) + 1;
 		this.stepNumber = Integer.toString(sNumber);
+	}
+
+	@Override
+	public void addFailDetailsContent(TestStepContent content) throws TestException {
+		for (int i = 0; i < this.reportTypes.size(); i++) {
+			this.content.addFailDetailsContent(content);
+		}
 	}
 
 	protected void takeScreenshot(String screenshotPath) throws TestException {
