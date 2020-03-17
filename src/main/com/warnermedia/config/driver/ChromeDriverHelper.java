@@ -50,15 +50,14 @@ public class ChromeDriverHelper {
 		LocalChromeOptions.get().setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 		LocalChromeOptions.get().setExperimentalOption("prefs", prefs);
 		LocalChromeOptions.get().merge(caps);
-		caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
+		//caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 
 		driver = new InheritableThreadLocal<WebDriver>() {
 			@Override
 			protected ChromeDriver initialValue() {
 				ChromeDriver driver = null;
 				try {
-    				@SuppressWarnings("deprecation")
-    				ChromeDriver chromeDriver = new ChromeDriver(caps);
+    				ChromeDriver chromeDriver = new ChromeDriver(LocalChromeOptions.get());
     				drivers.add(chromeDriver);
     				driver = chromeDriver;
 				} catch (Exception e) {

@@ -4,7 +4,7 @@ import com.warnermedia.config.TestException;
 import com.warnermedia.utils.observers.Observable;
 
 public class ApplicationState extends Observable<ApplicationState, Application, IssueType> {
-    private IssueType currentState;
+    private static ThreadLocal<IssueType> currentState = new ThreadLocal<>();
 
     public ApplicationState() {
 
@@ -15,7 +15,15 @@ public class ApplicationState extends Observable<ApplicationState, Application, 
      *
      */
     public void checkState() throws TestException {
-        currentState = new AppObserverHelper(currentState).issueType;
-        notifyObservers(currentState);
+        try {
+            if (currentState.get() == null) {
+                currentState.set(IssueType.NONE);
+            }
+            IssueType result = new AppObserverHelper(currentState.get()).issueType.get();
+            currentState.set(result);
+            notifyObservers(currentState.get());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

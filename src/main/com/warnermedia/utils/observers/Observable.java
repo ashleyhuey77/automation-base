@@ -27,8 +27,12 @@ public abstract class Observable<S extends Observable<S, O, A>, O extends Observ
 	 */
 	@SuppressWarnings("unchecked")
 	public void notifyObservers(A argument) throws TestException {
-		for (O observer : observers) {
-			observer.update((S) this, argument);
+		try {
+			for (O observer : observers) {
+				observer.update((S) this, argument);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 

@@ -2,16 +2,11 @@ package com.warnermedia.utils.observers.app;
 
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
-import com.warnermedia.config.report.LocalValidation;
 import com.warnermedia.page.core.web.BaseGeneric;
-import com.warnermedia.page.utils.ClickHelper;
 import com.warnermedia.page.utils.ElementHelper;
-import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.selenium.text.Variable;
 import com.warnermedia.selenium.wait.Condition;
-import com.warnermedia.selenium.wait.Wait;
-import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 import org.openqa.selenium.WebElement;
 
@@ -19,7 +14,7 @@ import java.util.List;
 
 public class AppObserverHelper {
 
-    public IssueType issueType;
+    public static ThreadLocal<IssueType> issueType = new ThreadLocal<>();
 
     public AppObserverHelper(IssueType currentState) throws TestException {
         IssueType actualIssueType;
@@ -30,11 +25,11 @@ public class AppObserverHelper {
         }
         actualIssueType = checkAuthServicesIssue();
 
-        issueType = actualIssueType;
+        issueType.set(actualIssueType);
     }
 
     private IssueType checkAuthServicesIssue() throws TestException {
-        IssueType result = null;
+        IssueType result = IssueType.NONE;
         if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 1)) {
             String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
             if (!TestUtils.isNullOrBlank(errorText)) {
@@ -47,7 +42,7 @@ public class AppObserverHelper {
     }
 
     private IssueType checkAssetStatusNotChangingIssue() throws TestException {
-        IssueType result = null;
+        IssueType result = IssueType.NONE;
         if (SHelper.get().element().isDisplayed(BaseGeneric.SEQUENCE_CATEGORY.element(), 1)) {
             String actualCategory = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM)
                     .getFrom(BaseGeneric.SEQUENCE_CATEGORY.element());
