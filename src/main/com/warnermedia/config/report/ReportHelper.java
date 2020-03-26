@@ -3,6 +3,7 @@ package com.warnermedia.config.report;
 
 import java.io.IOException;
 import com.warnermedia.config.TestException;
+import com.warnermedia.utils.ConsoleHelper;
 
 public class ReportHelper {
 	
@@ -58,6 +59,7 @@ public class ReportHelper {
         	errorMessage = webDriverException.getMessage();
         }
         testReport.reportFailEvent(stepName, errorMessage);
+        ConsoleHelper.analyzeLog();
         String message = "StepName: " + stepName + "\n ErrorMessage : " + errorMessage;
         //ConsoleHelper.analyzeLog();
         return new TestException(message);

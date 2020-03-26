@@ -3,6 +3,7 @@ package com.warnermedia.config.report;
 import java.io.IOException;
 import java.util.logging.Level;
 import com.warnermedia.config.TestException;
+import com.warnermedia.utils.ConsoleHelper;
 import com.warnermedia.utils.Log;
 import junit.framework.AssertionFailedError;
 
@@ -92,6 +93,7 @@ public class ValidationsHelper {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
 		testReport.reportFailEvent(stepName, message);
+		ConsoleHelper.analyzeLog();
 		Log.get().log(Level.SEVERE, assertionFailedError.toString());
 		return reportAssertionFailed(assertionFailedError);
 	}

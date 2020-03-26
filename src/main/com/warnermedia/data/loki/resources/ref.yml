@@ -13,7 +13,7 @@ ref:
     slug:
       source: ["CNN", "HLN", "CNNi", "CNNe", "BBC", "MSNBC", "CNBC", "Politico", "NYT", "WaPo", "Buzzfeed", "Huffington Post", "NPR", "Time", "ABC News"]
       type: ["Aircheck", "Animation", "Audio Track", "Beeper", "Butted Sot Vo", "Butted Sots", "Clean Air", "Clip", "Clip-Video", "Comrex", "Cutin-Taped", "Dirty Air", "Documentary", "Donut", "Game", "Graphic", "Interview", "Liveshot", "Look Live", "Not For Air", "Pkg", "Podcast", "Program", "Raw", "Raw Donut", "Replay", "Show Edit", "SOT", "SOT Raw", "SOT/VO", "VO/NAT", "VO/SIL", "VO/STILL"]
-      for_program: ["CNN 5a Early Start", "CNN 9a CNN NEWSROOM", "CNN 10a CNN NEWSROOM", "CNN 12n Newsroom", "CNN 1p Wolf", "CNN 5p The Situation Room", "CNN 6p John King USA", "CNN 9p Piers Morgan Live", "CNN 8p Anderson Cooper 360", "CNN 10p Anderson Cooper 360", "CNN 10a CNN Newsroom Saturday", "CNN 9a CNN State of the Union", "CNN News Special", "CNN Your Money", "CNN Fareed Zakaria GPS", "CNN Heroes", "CNNI CNN News Now Mon-Fri", "CNNI 1230p Open Court", "CNNI Backstory", "CNNI CNN News Now Sat-Sun", "CNNI Other CNNI", "HLN 6a Morning Express", "HLN 7a Morning Express", "HLN 5p Evening Express", "HLN 7a Weekend Express", "HLN Clark Howard", "HLN 11p Showbiz Tonight", "HLN other HLN", "In Session TOT", "In Session 9a", "In Session 2p", "Turner Private Network", "Media Producer", "Run of Net", "Breaking News", "CNN.com", "International Newsource", "Newsource", "Special Events", "CNN Espanol", "CNN Program Development", "TV Everywhere", "CNNMoney", "CNN 7p Erin Burnett OutFront", "CNNE Showbiz", "CNN The Next List", "CNN Radio", "CNNI Make, Create, Innovate", "CNNI CNNGo", "CNNE Cafe 6A", "CNN 7a New Day", "CNN 4a Early Start", "I+S Projects", "HLN Entertainment Unit", "CNNE Docufilms", "CNN Training/Testing", "CNN 10", "CNN The Van Jones Show", "CNN 9P CUOMO PRIME TIME"]
+      for_program: ["CNN 5a Early Start", "CNN 9a CNN NEWSROOM", "CNN 10a CNN NEWSROOM", "CNN 12n Newsroom", "CNN 1p Wolf", "CNN 5p The Situation Room", "CNN 6p John King USA", "CNN 9p Piers Morgan Live", "CNN 8p Anderson Cooper 360", "CNN 10p Anderson Cooper 360", "CNN 10a CNN Newsroom Saturday", "CNN 9a CNN State of the Union", "CNN News Special", "CNN Your Money", "CNN Fareed Zakaria GPS", "CNN Heroes", "CNNI CNN News Now Mon-Fri", "CNNI 1230p Open Court", "CNNI Backstory", "CNNI CNN News Now Sat-Sun", "CNNI Other CNNI", "HLN 6a Morning Express", "HLN 7a Morning Express", "HLN 5p Evening Express", "HLN 7a Weekend Express", "HLN Clark Howard", "HLN 11p Showbiz Tonight", "HLN other HLN", "In Session 9a", "In Session 2p", "Turner Private Network", "Media Producer", "Run of Net", "Breaking News", "CNN.com", "International Newsource", "Newsource", "Special Events", "CNN Espanol", "CNN Program Development", "TV Everywhere", "CNNMoney", "CNN 7p Erin Burnett OutFront", "CNNE Showbiz", "CNN The Next List", "CNN Radio", "CNNI Make, Create, Innovate", "CNNI CNNGo", "CNNE Cafe 6A", "CNN 7a New Day", "CNN 4a Early Start", "I+S Projects", "HLN Entertainment Unit", "CNNE Docufilms", "CNN Training/Testing", "CNN 10", "CNN The Van Jones Show", "CNN 9P CUOMO PRIME TIME"]
       native_aspect_ratio: ["HD 16:9", "SD 4:3", "SD 16:9 Upconverted Full Screen", "SD 16:9 Squished with Pillars", "Mixed", "Other"]
       reporter: ["AZUZ, CARL", "HENDRICKS, SUSAN", "PAUL, CHRISTI", "BALDWIN, BROOKE", "CAREY, ANDREW", "HARLOW, POPPY", "MEADE, ROBIN", "BITTERMANN, JIM", "BLITZER, WOLF", "CHANCE, MATTHEW", "COOPER, ANDERSON", "GUPTA, SANJAY", "KING, JOHN", "LEMON, DON", "PATON WALSH, NICK", "MYERS, CHAD", "HILL, ERICA", "BANFIELD, ASHLEIGH", "CUOMO, CHRIS", "TAPPER, JAKE", "WESTHOVEN, JENNIFER", "WIRE, COY", "ZELENY, JEFF", "WEIR, BILL", "MATTINGLY, PHIL", "O'BERG FIGUEROA, MICHELLE", "ACOSTA, JIM", "SCHNEIDER, JESSICA", "JONES, VAN", "MENDOZA, MICHELLE", "MOODY, CHRIS", "BERG, REBECCA", "COLLINS, KAITLAN"]
       restrictions: ["Never operate your speakerphone while driving.",
@@ -81,30 +81,36 @@ ref:
       county: ["Butts", "Orange", "Cook", "Baker", "Washington", "Jefferson", "Franklin", "Jackson", "Wayne", "Lincoln", "Madison", "Carroll", "Cobb", "Fulton", "Adams", "Clark", "Warren", "Douglas", "Monroe", "Polk", "Lee", "Calhoun", "Crawford", "Scott", "Henry", "Knox", "Putnam", "Boone", "Hancock", "Pike", "Cherokee", "Jasper", "DeKalb", "Hardin", "Mason", "Newton", "Macon", "Lewis", "Taylor", "Howard", "Carter", "Camden", "Hall", "Moore", "Meade", "McIntosh", "Morris", "Potter", "Pope", "Rock", "Stark", "Williamson", "Clearwater", "Turner"]
     video:
       url: ["https://youtu.be/WLYHu0AG8GI",
-                  "https://youtu.be/RKOZgQy8qrw",
                   "https://youtu.be/t6G1PMk7PXE",
                   "https://youtu.be/_Z-Nu351j58",
                   "https://youtu.be/UWWLwtMLWCI", 
                   "https://youtu.be/PUjvaMWKeBI",
-                  "https://youtu.be/5Krz-dyD-UQ",
                   "https://youtu.be/zRajF5eRVUc",
                   "https://youtu.be/bE4C8a48o1E",
                   "https://youtu.be/ohJtvuCAsp4",
-                  "https://youtu.be/LQVJosFysEM",
+                  "https://youtu.be/yKhmA-Jfqw8",
                   "https://youtu.be/E2t4MBhGAg8",
-                  "https://youtu.be/AJzds6fRfjM",
                   "https://youtu.be/JNsKvZo6MDs",
                   "https://youtu.be/hNHQZTxo78I",
                   "https://youtu.be/Tx1XIm6q4r4",
                   "https://youtu.be/y0Z5_wipT2o",
-                  "https://youtu.be/vTIIMJ9tUc8",
                   "https://youtu.be/g6cIYDvFS-U",
                   "https://youtu.be/6rW9nEA_Bq0",
                   "https://youtu.be/VF9-sEbqDvU",
                   "https://youtu.be/bYm1GQBgHNk",
                   "https://youtu.be/MahTKZDHXaA",
                   "https://youtu.be/QIhY9F2J_EM",
-                  "https://youtu.be/TnZhi5gaX8g"
+                  "https://youtu.be/TnZhi5gaX8g",
+                  "https://youtu.be/8KLSg1h0e-M",
+                  "https://youtu.be/Lpj3dy9ALQ0",
+                  "https://youtu.be/dbbque0Y4FU",
+                  "https://youtu.be/pStKTYnDvac",
+                  "https://youtu.be/9mCYhzbtCwc",
+                  "https://youtu.be/vqgSO8_cRio",
+                  "https://www.youtube.com/",
+                  "https://youtu.be/LA4CTzhrLu8",
+                  "https://youtu.be/g0cosKhRdbA",
+                  "https://youtu.be/3gxPgU2-ih4"
             ]
       file_path: ["/testFiles/test_Video.mp4"]
     work_order:
