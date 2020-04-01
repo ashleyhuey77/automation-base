@@ -80,8 +80,7 @@ ref:
       city: ["Screamer", "Unalaska", "Why", "No Name", "Hazardville", "Sandwich", "Bugtussle", "Uneedus", "Boring", "Belchertown", "Zigzag", "Ketchuptown", "Bosstown", "Chicken", "Dogtown", "Experiment", "Frankenstein", "Hippo", "Imalone", "Mock City", "Mosquitoville", "Nothing", "Oatmeal", "Okay", "Searchlight", "Toast", "Twig", "Uncertain", "War", "Waterproof", "What Cheer", "Whynot", "Zap", "Gotham", "Sunnydale", "Derry", "Neptune", "Pawnee", "Arkham", "Rivendell", "El Dorado", "Greendale", "Isengard"]
       county: ["Butts", "Orange", "Cook", "Baker", "Washington", "Jefferson", "Franklin", "Jackson", "Wayne", "Lincoln", "Madison", "Carroll", "Cobb", "Fulton", "Adams", "Clark", "Warren", "Douglas", "Monroe", "Polk", "Lee", "Calhoun", "Crawford", "Scott", "Henry", "Knox", "Putnam", "Boone", "Hancock", "Pike", "Cherokee", "Jasper", "DeKalb", "Hardin", "Mason", "Newton", "Macon", "Lewis", "Taylor", "Howard", "Carter", "Camden", "Hall", "Moore", "Meade", "McIntosh", "Morris", "Potter", "Pope", "Rock", "Stark", "Williamson", "Clearwater", "Turner"]
     video:
-      url: ["https://youtu.be/WLYHu0AG8GI",
-                  "https://youtu.be/t6G1PMk7PXE",
+      url: ["https://youtu.be/t6G1PMk7PXE",
                   "https://youtu.be/_Z-Nu351j58",
                   "https://youtu.be/UWWLwtMLWCI", 
                   "https://youtu.be/PUjvaMWKeBI",
@@ -107,7 +106,6 @@ ref:
                   "https://youtu.be/pStKTYnDvac",
                   "https://youtu.be/9mCYhzbtCwc",
                   "https://youtu.be/vqgSO8_cRio",
-                  "https://www.youtube.com/",
                   "https://youtu.be/LA4CTzhrLu8",
                   "https://youtu.be/g0cosKhRdbA",
                   "https://youtu.be/3gxPgU2-ih4"
