@@ -88,8 +88,8 @@ public class SignInPage extends PageTemplate {
        				.how(Via.JAVASCRIPT));
            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 3)) {
            		Thread.sleep(3000);
-               String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
-               if (!TestUtils.isNullOrBlank(errorText)) {
+			   String errorText = getErrorText();
+			   if (!TestUtils.isNullOrBlank(errorText)) {
                    	new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.SIGN_IN_BTN.name()))
                				.clickOn(BaseGeneric.SIGN_IN_BTN.element())
                				.how(Via.JAVASCRIPT));
@@ -106,7 +106,15 @@ public class SignInPage extends PageTemplate {
        }
 	   return this;
 	}
-	
-	
+
+	private String getErrorText() {
+		String result = null;
+		try {
+			result = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
+		} catch (Exception e) {
+			result = null;
+		}
+		return result;
+	}
 
 }

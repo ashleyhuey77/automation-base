@@ -33,10 +33,10 @@ public class ElementHelper {
 		if (builder.elementList != null
 				&& !builder.elementList.isEmpty()) {
 			if (builder.condition == Condition.CONTAIN) {
-				webElement = builder.elementList.stream().filter(d -> d.getText().toLowerCase().contains(builder.elementText.toLowerCase())).findAny()
+				webElement = builder.elementList.stream().filter(d -> d.getText().toLowerCase().contains(builder.elementText.toLowerCase())).findFirst()
 						.orElse(null);
 			} else if (builder.condition == Condition.EQUAL) {
-				webElement = builder.elementList.stream().filter(d -> d.getText().equalsIgnoreCase(builder.elementText)).findAny()
+				webElement = builder.elementList.stream().filter(d -> d.getText().equalsIgnoreCase(builder.elementText)).findFirst()
 						.orElse(null);
 			}
 			

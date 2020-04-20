@@ -24,7 +24,6 @@ public class ReportHelper {
      * the last step that was executed in the stack trace.</p>
      * @param description - a description of the step that was executed. The text
      * one wishes to display on the html report for the executed step.
-     * @throws FrameworkException
      * @throws IOException
      */
     public void reportDoneEvent(String description) throws TestException {
@@ -47,7 +46,6 @@ public class ReportHelper {
      * the last step that was executed in the stack trace.</p>
      * @param webDriverException - the exception that was thrown during execution of the method.
      * @return FrameworkException
-     * @throws FrameworkException
      * @throws IOException
      */
     public TestException reportException(Exception webDriverException) throws TestException {

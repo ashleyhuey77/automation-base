@@ -3,6 +3,11 @@ package tests;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.warnermedia.config.SHelper;
+import com.warnermedia.selenium.shared.Via;
+import com.warnermedia.selenium.text.Variable;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.warnermedia.config.TestException;
@@ -21,6 +26,7 @@ public class DatePickerTests {
         String date = formatDate.format(now);
 		
 		String timeStamp = picker.getDate("dd-MM-yyyy", 1);
+		new PastDate().getDate("MMddyyyy", 1);
 		
 		Assert.assertNotEquals(timeStamp, date);
 	}
