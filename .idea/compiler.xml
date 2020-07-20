@@ -15,5 +15,6 @@
       <entry name="*.yml" />
       <entry name="*.html" />
     </wildcardResourcePatterns>
+    <bytecodeTargetLevel target="1.8" />
   </component>
 </project>

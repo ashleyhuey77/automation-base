@@ -6,6 +6,7 @@ public enum Entity {
     MS2,
     CRASH_RECORDS,
     REQUESTS,
+    ENCODER,
     ENCODERS,
     RECURRENCES,
     MS2_METADATA,

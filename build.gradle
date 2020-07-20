@@ -99,7 +99,7 @@ dependencies {
 		ignoreFailures = true
 	}
 
-version='5.22.38'
+version='5.22.39'
 
 task updateVersion {
 	doLast {

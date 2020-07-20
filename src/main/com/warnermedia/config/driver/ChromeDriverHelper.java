@@ -43,6 +43,7 @@ public class ChromeDriverHelper {
 		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
 		LocalChromeOptions.get().addArguments("--no-sandbox");
 		LocalChromeOptions.get().addArguments("--disable-gpu");
+		LocalChromeOptions.get().addArguments("--disable-popup-blocking");
 		Map<String, Object> prefs = new HashMap<String, Object>();
 		prefs.put("credentials_enable_service", false);
 		prefs.put("safebrowsing.enabled", "true");
