@@ -14,8 +14,13 @@ public class LocalTest {
 	}
 
     private static ThreadLocal < String > testName = new ThreadLocal <> ();
+	private static ThreadLocal< Integer > testThreadCount = new ThreadLocal<>();
     private static ThreadLocal<Boolean> isLoggingEnabled = new ThreadLocal<>();
     private static ThreadLocal<Environment> environment = new ThreadLocal<>();
+
+    public static Integer getTestThreadCount() { return testThreadCount.get(); }
+
+    public static void setTestThreadCount(Integer value) { testThreadCount.set(value); }
 
     public static String getTestName() {
         return testName.get();

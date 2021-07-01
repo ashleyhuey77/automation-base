@@ -1,14 +1,19 @@
 package tests;
 
+import com.warnermedia.data.mongo.config.MongoConfig;
+import com.warnermedia.data.mongo.config.DataMapper;
 import org.testng.annotations.Test;
-import com.warnermedia.data.mongo.MongoContext;
 
 public class Mongo_Tests {
-	
+
 	@Test
 	public void connectToMongodB() throws Exception {
-		String result = MongoContext.get().connectDb("tests_news_global").findByKey("api", "type", "MS");
-		System.out.println(result);
+        MongoConfig.createClient()
+                    .initializeDB()
+                    .setCollection()
+                    .build();
+
+        System.out.println(DataMapper.person().name());
 	}
 
 }

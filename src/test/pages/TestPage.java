@@ -1,33 +1,22 @@
 package pages;
 
-import org.openqa.selenium.WebElement;
-import com.warnermedia.config.TestException;
-import com.warnermedia.page.core.DaysOfTheWeek;
-import com.warnermedia.page.core.Entity;
-import com.warnermedia.page.core.PageTemplate;
-import com.warnermedia.page.core.Timezones;
-import com.warnermedia.page.utils.ReportInfo;
-import com.warnermedia.page.utils.VerifyTextHelper;
-import com.warnermedia.page.utils.VerifyTextHelper.VerifyTextBuilder;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.TestElement;
+//import com.warnermedia.page.core.PageTemplate;
 
 
-public class TestPage extends PageTemplate {
+public class TestPage /*extends PageTemplate*/ {
 
 	public TestPage() throws Exception {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
+	/*@Override
 	public void WaitForPageLoad() throws TestException {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 	
-	public void testActualVersusExpected(String expectedValue, String actualValue, String variableBeingTested) throws Exception
+	/*public void testActualVersusExpected(String expectedValue, String actualValue, String variableBeingTested) throws Exception
 	{
 		verifyTheActualValueContainsTheExpectedValue(expectedValue, actualValue, variableBeingTested);
 	}
@@ -149,6 +138,6 @@ public class TestPage extends PageTemplate {
 		    catch (Throwable e) {
 		      throw new RuntimeException(e);
 		    }
-	 }
+	 }*/
 
 }

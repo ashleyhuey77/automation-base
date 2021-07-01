@@ -1,6 +1,8 @@
 package com.warnermedia.selenium.shared;
 
 import java.util.List;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -14,15 +16,6 @@ public class Commands {
 	 * user input </summary>
 	 * 
 	 * @return By
-	 * @param selectorString
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
 	 */
 	public org.openqa.selenium.By getByValue(TestElement element) {
 		switch (element.by().value()) {
@@ -53,10 +46,6 @@ public class Commands {
 	 * statement and return the correct by value based
 	 * on user input </summary>
 	 * @param element TODO
-	 * @param selectorString
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
 	 * 
 	 * @return By
 	 */
@@ -70,30 +59,32 @@ public class Commands {
 	 * that indicates which type of element is being
 	 * defined </summary>
 	 * @param element TODO
-	 * @param selectorString
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
 	 * 
 	 * @return WebElement
 	 */
-	public WebElement getElement(TestElement element) {
-		return LocalDriver.getDriver().findElement(getByValueBasedOnUserInput(element));
+	public WebElement getElement(TestElement element) throws TestException {
+		try {
+			WebDriver driver = LocalDriver.getDriver();
+			WebElement el = driver.findElement(getByValueBasedOnUserInput(element));
+			return el;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	/**
 	 * <summary> method to return a list of
 	 * webElements </summary>
 	 * @param element TODO
-	 * @param selectorString
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
 	 * 
 	 * @return List<\WebElement>
 	 */
-	public List<WebElement> getElements(TestElement element) {
-		return LocalDriver.getDriver().findElements(getByValueBasedOnUserInput(element));
+	public List<WebElement> getElements(TestElement element) throws TestException {
+		try {
+			return LocalDriver.getDriver().findElements(getByValueBasedOnUserInput(element));
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	protected void checkCookiesAndAddRequiredOnesIfNecessary() throws TestException {

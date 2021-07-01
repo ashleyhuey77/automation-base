@@ -1,3 +1,4 @@
+/*
 package tests.helpers;
 
 import java.io.File;
@@ -15,7 +16,6 @@ import com.warnermedia.config.driver.WebDriverListener;
 import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.EnterTextHelper;
-import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.EnterTextHelper.EnterTextBuilder;
 import com.warnermedia.selenium.By;
 import com.warnermedia.selenium.Locator;
@@ -38,7 +38,7 @@ public class EnterTextHelper_Tests extends TestInitialization {
 		By by = new By("css");
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
-				.enterText("Test123")
+				.text("Test123")
 				.into(new TestElement(locator, by)));
 
 		FileReader reader = new FileReader(filePath);
@@ -60,7 +60,7 @@ public class EnterTextHelper_Tests extends TestInitialization {
 		By by = new By("css");
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
-				.enterText(null)
+				.text(null)
 				.into(new TestElement(locator, by)));
 
 		FileReader reader = new FileReader(filePath);
@@ -76,7 +76,7 @@ public class EnterTextHelper_Tests extends TestInitialization {
 			By by = new By("css");
 
 			new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
-					.enterText("Test123")
+					.text("Test123")
 					.into(new TestElement(locator, by)));
 			Assert.fail("Error expected to be thrown");
 		} catch (Exception ex) {
@@ -102,7 +102,7 @@ public class EnterTextHelper_Tests extends TestInitialization {
 		WebElement el = SHelper.get().element().get(element);
 
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
-				.enterText("Test123")
+				.text("Test123")
 				.into(el));
 
 		FileReader reader = new FileReader(filePath);
@@ -128,7 +128,7 @@ public class EnterTextHelper_Tests extends TestInitialization {
 			Thread.sleep(500);
 
 			new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test"))
-					.enterText("Test123")
+					.text("Test123")
 					.into(test));
 			Assert.fail("Error expected to be thrown");
 		} catch (Exception ex) {
@@ -140,7 +140,8 @@ public class EnterTextHelper_Tests extends TestInitialization {
 	@Test(groups= {"etext"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoElementProvided_ExceptionThrown() throws Exception {
 		new EnterTextHelper(new EnterTextBuilder(new ReportInfo("Test Element"))
-				.enterText("Value"));;
+				.text("Value"));;
 	}
 
 }
+*/

@@ -1,10 +1,18 @@
 package com.warnermedia.config.app;
 
+import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
+import com.warnermedia.config.data.TestDataSetter;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.report.ReportFacade;
 import com.warnermedia.config.report.ReportType;
 import com.warnermedia.config.settings.LocalTest;
+import com.warnermedia.data.mongo.config.MongoConfig;
+import com.warnermedia.selenium.SeleniumHelper;
+import com.warnermedia.utils.Log;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 /**
  * <h2>ApplicationTemplate</h2>
@@ -132,7 +140,7 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 	 */
 	public ApplicationTemplate() throws Exception {
 		super();
-
+		SHelper.set(new SeleniumHelper());
 		initializeBrowserName();
 		initializeEnvironment();
 		initializeTestData();
@@ -142,16 +150,16 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 	}
 
 	public void initializeBrowser() throws TestException {
-		if (!browserName.trim().equalsIgnoreCase("safari")
-				&& !"chrome".equalsIgnoreCase(browserName.trim().toLowerCase())) {
-			LocalDriver.getDriver().manage().window().maximize();
-		} else if (browserName.toLowerCase().trim().equals("chrome")
-				&& !LocalTest.getEnvironment().isHeadlessEnabled()) {
-			LocalTest.getEnvironment();
-			if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
-				maximizeScreen();
+			if (!browserName.trim().equalsIgnoreCase("safari")
+					&& !"chrome".equalsIgnoreCase(browserName.trim().toLowerCase())) {
+				LocalDriver.getDriver().manage().window().maximize();
+			} else if (browserName.toLowerCase().trim().equals("chrome")
+					&& !LocalTest.getEnvironment().isHeadlessEnabled()) {
+				if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
+					maximizeScreen();
+				}
 			}
-		}
+			LocalDriver.getDriver().manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 	}
 
 	public void initializeBrowserName() throws TestException {
@@ -167,9 +175,15 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 		ReportFacade.initializeReportType(ReportType.VALIDATIONS, getHtmlReport(LocalTest.getTestName()));
 	}
 
-	@Override
 	public void initializeTestData() throws TestException {
-
+		try {
+			MongoConfig.createClient()
+					.initializeDB()
+					.setCollection()
+					.build();
+		} catch (Exception e) {
+			Log.get().log(Level.SEVERE, e.getMessage(), e);
+		}
 	}
 
 	@Override

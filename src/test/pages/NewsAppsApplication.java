@@ -1,5 +1,6 @@
 package pages;
 
+import com.warnermedia.config.settings.LocalTest;
 import org.openqa.selenium.WebDriverException;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.app.ApplicationTemplate;
@@ -14,18 +15,10 @@ public class NewsAppsApplication extends ApplicationTemplate {
 	}
 
 	@Override
-	public void initializeTestData() throws TestException {
-		
-	}
-
-	@Override
 	public TestPage openApplication() throws TestException, Exception {
-        try
-        {
-        	 LocalDriver.getDriver().get("http://www.google.com");
-        }
-        catch (WebDriverException ex)
-        {
+        try{
+				LocalDriver.getDriver().get("http://www.google.com");
+        } catch (WebDriverException ex) {
         	throw LocalReport.getReport().reportException(ex);
         }
         return new TestPage();

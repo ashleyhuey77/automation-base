@@ -73,12 +73,17 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToNoLongerContainACertainValue(TestElement element, String attribute, String expectedValue,
-			int i) {
+			int i) throws TestException {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			still means the attribute does not contain the
@@ -153,12 +158,17 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToNoLongerEqualACertainValue(TestElement element, String attribute, String expectedValue,
-			int i) {
+			int i) throws TestException {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			   still means the attribute does not contain the

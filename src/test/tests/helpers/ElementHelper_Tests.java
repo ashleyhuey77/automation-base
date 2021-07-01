@@ -2,6 +2,9 @@ package tests.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.warnermedia.page.core.web.Fetch;
+import com.warnermedia.selenium.TestElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -11,13 +14,9 @@ import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.page.utils.ElementHelper;
-import com.warnermedia.page.utils.ElementHelper.ElementBuilder;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.Condition;
 import pages.TestInitialization;
+import utils.Variables;
 
 @Listeners(WebDriverListener.class)
 public class ElementHelper_Tests extends TestInitialization {
@@ -27,11 +26,10 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Incorrect</div>');");
 		Thread.sleep(500);
-		Locator locator = new Locator("div[id='Test']");
-		By by = new By("css");
-		List<WebElement> elements = SHelper.get().element().getListOf(new TestElement(locator, by));
+		TestElement el = Variables.DIV_ID_TEST.element();
+		List<WebElement> elements = SHelper.get().element().getListOf(el);
 
-		WebElement element = new ElementHelper(new ElementBuilder(elements).text("Correct")).get();
+		WebElement element = find(elements).text("Correct").get();
 
 		Assert.assertNotNull(element);
 		Assert.assertTrue(element.getText().equals("Correct"));
@@ -42,11 +40,9 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Incorrect</div>');");
 		Thread.sleep(500);
-		Locator locator = new Locator("div[id='Test']");
-		By by = new By("css");
-		List<WebElement> elements = SHelper.get().element().getListOf(new TestElement(locator, by));
+		List<WebElement> elements = SHelper.get().element().getListOf(Variables.INPUT_ID_TEST.element());
 
-		WebElement element = new ElementHelper(new ElementBuilder(elements).text("Noncorrect")).get();
+		WebElement element = find(elements).text("NonCorrect").get();
 
 		Assert.assertNull(element);
 	}
@@ -56,11 +52,9 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Incorrect</div>');");
 		Thread.sleep(500);
-		Locator locator = new Locator("div[id='Test']");
-		By by = new By("css");
-		List<WebElement> elements = SHelper.get().element().getListOf(new TestElement(locator, by));
+		List<WebElement> elements = SHelper.get().element().getListOf(Variables.INPUT_ID_TEST.element());
 
-		WebElement element = new ElementHelper(new ElementBuilder(elements).that(Condition.EQUAL).text("Correct")).get();
+		WebElement element = find(elements).that(Condition.EQUAL).text("Correct").get();
 
 		Assert.assertNotNull(element);
 		Assert.assertTrue(element.getText().equals("Correct"));
@@ -71,40 +65,26 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Wrong</div>');");
 		Thread.sleep(500);
-		Locator locator = new Locator("div[id='Test']");
-		By by = new By("css");
-		List<WebElement> elements = SHelper.get().element().getListOf(new TestElement(locator, by));
+		List<WebElement> elements = SHelper.get().element().getListOf(Variables.DIV_ID_TEST.element());
 
-		WebElement element = new ElementHelper(new ElementBuilder(elements).that(Condition.CONTAIN).text("corr")).get();
+		WebElement element = find(elements).that(Condition.CONTAIN).text("corr").get();
 
 		Assert.assertNotNull(element);
 		Assert.assertTrue(element.getText().equals("Correct"));
-	}
-	
-	@Test(groups= {"element"}, alwaysRun=true)
-	public void verifyElementHelper_SingleElement_ElementFound() throws Exception {
-		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
-		Thread.sleep(500);
-		Locator locator = new Locator("div[id='Test']");
-		By by = new By("css");
-
-		WebElement element = new ElementHelper(new ElementBuilder(new TestElement(locator, by))).get();
-
-		Assert.assertNotNull(element);
 	}
 	
 	@Test(groups= {"element"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyNoElementProvided_ExceptionThrown() throws Exception {
 		List<WebElement> list = null;
 		@SuppressWarnings("unused")
-		WebElement element = new ElementHelper(new ElementBuilder(list).text("Correct")).get();
+		WebElement element = find(list).text("Correct").get();
 	}
 	
 	@Test(groups= {"element"}, expectedExceptions=TestException.class, alwaysRun=true)
 	public void verifyEmptyList_ExceptionThrown() throws Exception {
 		List<WebElement> list = new ArrayList<>();
 		@SuppressWarnings("unused")
-		WebElement element = new ElementHelper(new ElementBuilder(list).text("Correct")).get();
+		WebElement element = find(list).text("Correct").get();
 	}
 
 }

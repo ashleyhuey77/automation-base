@@ -3,13 +3,15 @@ package pages;
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+
+import com.warnermedia.page.core.PageUtils;
 import org.jsoup.Jsoup;
 import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import com.warnermedia.config.settings.LocalTest;
 
-public class TestInitialization {
+public class TestInitialization extends PageUtils {
 
 	protected static String browserName;
 	protected static String environment;

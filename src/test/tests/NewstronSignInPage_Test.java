@@ -2,6 +2,7 @@ package tests;
 
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.report.LocalReport;
+import com.warnermedia.data.mongo.config.DataMapper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -41,6 +42,15 @@ public class NewstronSignInPage_Test extends TestInitialization {
 			_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
 					.clickTheSignInButton();
 			new AllAppsDashboard().reportThatPageLoadedSuccessfully();
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
+	}
+
+	@Test
+	public void verifyLocalTestData() throws Exception {
+		try {
+			System.out.println(DataMapper.local().fsBaseUrl());
 		} catch (Exception e) {
 			throw LocalReport.getReport().reportException(e);
 		}

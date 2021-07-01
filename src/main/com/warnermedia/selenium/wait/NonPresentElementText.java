@@ -124,7 +124,12 @@ public class NonPresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String actualText = elementToBeTested.getText();
 			if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				result = true;
@@ -152,7 +157,12 @@ public class NonPresentElementText extends Commands implements IWait {
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String actualText = elementToBeTested.getText();
 			if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
 				result = true;

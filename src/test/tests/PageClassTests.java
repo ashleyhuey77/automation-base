@@ -1,3 +1,4 @@
+/*
 package tests;
 
 import java.io.File;
@@ -613,3 +614,4 @@ public class PageClassTests extends TestInitialization {
 	}
 
 }
+*/

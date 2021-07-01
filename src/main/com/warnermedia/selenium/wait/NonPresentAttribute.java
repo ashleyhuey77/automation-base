@@ -26,7 +26,12 @@ public class NonPresentAttribute extends Commands implements IWait {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String value = elementToBeTested.getAttribute(attribute);
 			if (value == null || value.equals("")) {
 				result = true;

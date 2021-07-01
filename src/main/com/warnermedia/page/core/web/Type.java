@@ -6,10 +6,6 @@ import com.warnermedia.selenium.TestElement;
 
 public interface Type {
 	
-	public Locator locator();
-	
-	public By by();
-	
 	public TestElement element();
 
 }

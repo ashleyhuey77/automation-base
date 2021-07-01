@@ -1,6 +1,9 @@
 package com.warnermedia.config.app;
 
 import java.awt.Toolkit;
+import java.util.logging.Level;
+
+import com.warnermedia.utils.Log;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import com.warnermedia.config.TestException;
@@ -59,6 +62,9 @@ public abstract class ApplicationHelper {
 	protected void maximizeScreen() {
 		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Point position = new Point(0, 0);
+		if (LocalDriver.getDriver() == null) {
+			Log.get().log(Level.SEVERE, "The chromedriver object was null in the maximizeScreen method for this test.");
+		}
 		LocalDriver.getDriver().manage().window().setPosition(position);
 		Dimension maximizedScreenSize = new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight());
 		LocalDriver.getDriver().manage().window().setSize(maximizedScreenSize);

@@ -2,6 +2,7 @@ package com.warnermedia.utils.observers.app;
 
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
+import com.warnermedia.page.core.PageUtils;
 import com.warnermedia.page.core.web.BaseGeneric;
 import com.warnermedia.page.utils.ElementHelper;
 import com.warnermedia.selenium.shared.Via;
@@ -12,7 +13,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class AppObserverHelper {
+public class AppObserverHelper extends PageUtils {
 
     public static ThreadLocal<IssueType> issueType = new ThreadLocal<>();
 
@@ -53,8 +54,8 @@ public class AppObserverHelper {
         }
         if (SHelper.get().element().isDisplayed(BaseGeneric.TOP_CONTAINER_VALUES.element(), 1)) {
             List<WebElement> values = SHelper.get().element().getListOf(BaseGeneric.TOP_CONTAINER_VALUES.element());
-            WebElement preraw = new ElementHelper(new ElementHelper.ElementBuilder(values).that(Condition.EQUAL).text("pre-raw")).get();
-            WebElement precut = new ElementHelper(new ElementHelper.ElementBuilder(values).that(Condition.EQUAL).text("pre-cut")).get();
+            WebElement preraw = find(values).that(Condition.EQUAL).text("pre-raw").get();
+            WebElement precut = find(values).that(Condition.EQUAL).text("pre-cut").get();
             if (preraw != null
                     || precut != null) {
                 result = IssueType.ASSET_STATUS_IS_NOT_CHANGING;

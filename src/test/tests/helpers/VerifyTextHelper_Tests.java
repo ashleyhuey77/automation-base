@@ -1,3 +1,4 @@
+/*
 package tests.helpers;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import com.warnermedia.config.driver.WebDriverListener;
 import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.page.utils.EnterTextHelper;
-import com.warnermedia.page.utils.ReportInfo;
 import com.warnermedia.page.utils.VerifyTextHelper;
 import com.warnermedia.page.utils.EnterTextHelper.EnterTextBuilder;
 import com.warnermedia.page.utils.VerifyTextHelper.VerifyTextBuilder;
@@ -41,7 +41,7 @@ public class VerifyTextHelper_Tests extends TestInitialization {
     		By by = new By("css");
     
     		new EnterTextHelper(
-    				new EnterTextBuilder(new ReportInfo("Test")).enterText("Test 123").into(new TestElement(locator, by)));
+    				new EnterTextBuilder(new ReportInfo("Test")).text("Test 123").into(new TestElement(locator, by)));
     		Thread.sleep(500);
     		new VerifyTextHelper(new VerifyTextBuilder(new ReportInfo("Test Element"))
     				.verify(new TestElement(locator, by))
@@ -325,3 +325,4 @@ public class VerifyTextHelper_Tests extends TestInitialization {
 	}
 
 }
+*/

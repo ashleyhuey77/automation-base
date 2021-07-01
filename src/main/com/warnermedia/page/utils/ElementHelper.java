@@ -10,7 +10,14 @@ import com.warnermedia.selenium.wait.Condition;
 
 public class ElementHelper {
 
-	private WebElement webElement;
+	//required
+	private List<WebElement> elementList;
+	private TestElement element;
+	WebElement webElement;
+
+	//optional
+	private String elementText;
+	private Condition condition;
 	
 	/**
 	 * <p> A shared generic helper used to select an
@@ -23,129 +30,93 @@ public class ElementHelper {
 	 * <pre>
 	 * Ex:
 	 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
-	 * {@code new ElementHelper(new ElementBuilder(elements)
+	 * {@code new ElementHelper(new ElementHelper(elements)
 	 * 	.text("Yes")
 	 * 	.that(Condition.CONTAIN);}
 	 * </pre>
 	 * @throws TestException
 	 */
-	public ElementHelper(ElementBuilder builder) throws TestException {
-		if (builder.elementList != null
-				&& !builder.elementList.isEmpty()) {
-			if (builder.condition == Condition.CONTAIN) {
-				webElement = builder.elementList.stream().filter(d -> d.getText().toLowerCase().contains(builder.elementText.toLowerCase())).findFirst()
-						.orElse(null);
-			} else if (builder.condition == Condition.EQUAL) {
-				webElement = builder.elementList.stream().filter(d -> d.getText().equalsIgnoreCase(builder.elementText)).findFirst()
-						.orElse(null);
-			}
-			
-		} else if (builder.element != null) {
-			webElement = SHelper.get().element().get(builder.element);
-		} else { 
-			throw LocalValidation.getValidations().assertionFailed("Please provide either an element or a list of elements.");
+	public ElementHelper(List<WebElement> elementList) throws TestException {
+		this.elementList = elementList;
+		if (condition == null) {
+			condition = Condition.EQUAL;
 		}
 	}
 
 	/**
-	 * <p> This method is required in order to return the element
-	 * that was found when the ElementHelper was executed.
+	 * <p> This creates an instance of ElementHelper which utilizes
+	 * a builder pattern to assign values to important variables used in
+	 * the ElementHelper class.
 	 * </p>
-	 * @return the WebElement
+	 * <pre>
+	 * Ex:
+	 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
+	 * {@code new ElementHelper(new ElementHelper(elements)
+	 * 	.text("Yes")
+	 * 	.that(Condition.CONTAIN);}
+	 * </pre>
 	 */
-	public WebElement get() {
-		return webElement;
+	public ElementHelper(TestElement element) {
+		this.element = element;
 	}
-	
-	public static class ElementBuilder {
-		
-		//required
-		private List<WebElement> elementList;
-		private TestElement element;
-		
-		//optional
-		private String elementText;
-		private Condition condition;
-		
-		/**
-		 * <p> This creates an instance of ElementBuilder which utilizes
-		 * a builder pattern to assign values to important variables used in
-		 * the ElementHelper class.
-		 * </p>
-		 * <pre>
-		 * Ex:
-		 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
-		 * {@code new ElementHelper(new ElementBuilder(elements)
-		 * 	.text("Yes")
-		 * 	.that(Condition.CONTAIN);}
-		 * </pre>
-		 * @param elementList - the list of elements that will be filtered through
-		 */
-		public ElementBuilder(List<WebElement> elementList) {
-			this.elementList = elementList;
-			if (condition == null) {
-				condition = Condition.EQUAL;
+
+	/**
+	 * <p> Tells the ElementHelper which text value needs to be
+	 * used to find a particular element in a list of elements.
+	 * </p>
+	 * <p> This is not a required method. If a value is not 
+	 * given, then ElementHelper will use the standard SHelper get().element() method.
+	 * </p>
+	 * <pre>
+	 * Ex:
+	 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
+	 * {@code new ElementHelper(new ElementHelper(elements)
+	 * 	.text("Yes"));}
+	 * </pre>
+	 * @param text - the text value to be found in the list of elements
+	 */
+	public ElementHelper text(String text) {
+		this.elementText = text;
+		return this;
+	}
+
+	/**
+	 * <p> Tells the ElementHelper which condition to use
+	 * in order to find a particular text in a list of elements.
+	 * </p>
+	 * <p> This is not a required method. The default value is set to 
+	 * Condition.EQUAL if a condition is not provided. Though it
+	 * is nice to specify which condition is to be used for readability purposes.
+	 * </p>
+	 * <pre>
+	 * Ex:
+	 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
+	 * {@code new ElementHelper(new ElementHelper(elements)
+	 * 	.text("Yes")
+	 * 	.that(Condition.CONTAIN);}
+	 * </pre>
+	 */
+	public ElementHelper that(Condition condition) {
+		this.condition = condition;
+		return this;
+	}
+
+	public WebElement get() throws TestException {
+		if (elementList != null
+				&& !elementList.isEmpty()) {
+			if (condition == Condition.CONTAIN) {
+				webElement = elementList.stream().filter(d -> d.getText().toLowerCase().contains(elementText.toLowerCase())).findFirst()
+						.orElse(null);
+			} else if (condition == Condition.EQUAL) {
+				webElement = elementList.stream().filter(d -> d.getText().equalsIgnoreCase(elementText)).findFirst()
+						.orElse(null);
 			}
+
+		} else if (element != null) {
+			webElement = SHelper.get().element().get(element);
+		} else {
+			throw LocalValidation.getValidations().assertionFailed("Please provide either an element or a list of elements.");
 		}
-		
-		/**
-		 * <p> This creates an instance of ElementBuilder which utilizes
-		 * a builder pattern to assign values to important variables used in
-		 * the ElementHelper class.
-		 * </p>
-		 * <pre>
-		 * Ex:
-		 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
-		 * {@code new ElementHelper(new ElementBuilder(elements)
-		 * 	.text("Yes")
-		 * 	.that(Condition.CONTAIN);}
-		 * </pre>
-		 * @param elementList - the list of elements that will be filtered through
-		 */
-		public ElementBuilder(TestElement element) {
-			this.element = element;
-		}
-		
-		/**
-		 * <p> Tells the ElementHelper which text value needs to be
-		 * used to find a particular element in a list of elements.
-		 * </p>
-		 * <p> This is not a required method. If a value is not 
-		 * given, then ElementHelper will use the standard SHelper get().element() method.
-		 * </p>
-		 * <pre>
-		 * Ex:
-		 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
-		 * {@code new ElementHelper(new ElementBuilder(elements)
-		 * 	.text("Yes"));}
-		 * </pre>
-		 * @param text - the text value to be found in the list of elements
-		 */
-		public ElementBuilder text(String text) {
-			this.elementText = text;
-			return this;
-		}
-		
-		/**
-		 * <p> Tells the ElementHelper which condition to use
-		 * in order to find a particular text in a list of elements.
-		 * </p>
-		 * <p> This is not a required method. The default value is set to 
-		 * Condition.EQUAL if a condition is not provided. Though it
-		 * is nice to specify which condition is to be used for readability purposes.
-		 * </p>
-		 * <pre>
-		 * Ex:
-		 * List<WebElement> elements = SHelper.get().element().getListOf(Generic.ELEMENT.element()); 
-		 * {@code new ElementHelper(new ElementBuilder(elements)
-		 * 	.text("Yes")
-		 * 	.that(Condition.CONTAIN);}
-		 * </pre>
-		 * @param text - the text value to be found in the list of elements
-		 */
-		public ElementBuilder that(Condition condition) {
-			this.condition = condition;
-			return this;
-		}
+		return webElement;
 	}
 }

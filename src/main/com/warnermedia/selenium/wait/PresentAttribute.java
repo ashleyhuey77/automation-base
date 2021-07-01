@@ -26,7 +26,12 @@ public class PresentAttribute extends Commands implements IWait {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
+			WebElement elementToBeTested = null;
+			try {
+				elementToBeTested = getElement(element);
+			} catch (TestException e) {
+				return false;
+			}
 			String attr = elementToBeTested.getAttribute(attribute);
 			if (attr != null && !attr.equals("")) {
 				result = true;

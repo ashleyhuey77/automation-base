@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Eclipse" />
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/src/main/com/warnermedia/page/core/PageHelper.java" />
+      <file url="file://$PROJECT_DIR$/src/main/com/warnermedia/page/core/SignInPage.java" />
+      <file url="file://$PROJECT_DIR$/src/main/com/warnermedia/page/core/NewstronSignInPage.java" />
+      <file url="file://$PROJECT_DIR$/src/main/com/warnermedia/page/utils/DropdownHelper.java" />
+      <file url="file://$PROJECT_DIR$/src/main/com/warnermedia/page/core/PageTemplate.java" />
+      <file url="file://$PROJECT_DIR$/src/test/pages/AllAppsDashboard.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/DatePickerTests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/Mongo_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/NewstronSignInPage_Test.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/PageClassTests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/ReportingTests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/StateTests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/TestNGListeners_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/helpers/DropdownHelper_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/helpers/ElementHelper_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/helpers/EnterTextHelper_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/helpers/OptionSelector_Tests.java" />
+      <file url="file://$PROJECT_DIR$/src/test/tests/helpers/VerifyTextHelper_Tests.java" />
+    </excludeFromCompile>
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
       <entry name="!?*.form" />
@@ -16,5 +37,10 @@
       <entry name="*.html" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel target="1.8" />
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="automation.base" options="" />
+    </option>
   </component>
 </project>

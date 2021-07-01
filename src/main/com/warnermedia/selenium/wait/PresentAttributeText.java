@@ -145,33 +145,33 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, int i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, int i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = getElement(element);
-			String actualValue = elementToBeTested.getAttribute(attribute);
-			if (actualValue != null && actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(element);
+				} catch (TestException e) {
+					return false;
+				}
+				String actualValue = elementToBeTested.getAttribute(attribute);
+				if (actualValue != null && actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	/**
 	 * <summary> method to wait for an attribute to
 	 * equal a certain value </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 *
 	 * @param attribute
 	 *            the html attribute whose value is to
 	 *            be evaluated and obtained

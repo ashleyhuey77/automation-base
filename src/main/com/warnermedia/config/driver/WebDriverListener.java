@@ -1,6 +1,9 @@
 package com.warnermedia.config.driver;
 
 import java.util.logging.Level;
+
+import com.warnermedia.utils.TestUtils;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebDriver;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -19,16 +22,20 @@ public class WebDriverListener implements IInvokedMethodListener {
 		try {
 			Log.set();
 			LocalTest.initializeSettings();
+			LocalTest.setTestThreadCount(method.getTestMethod().getTestClass().getXmlTest().getThreadCount());
     			if (method.toString().toLowerCase().contains("beforescenario")) {
     				if (hasBeforeScenarioAlreadyBeenExecuted.get() == null) {
     					hasBeforeScenarioAlreadyBeenExecuted.set(false);
     				}
     				if (!hasBeforeScenarioAlreadyBeenExecuted.get()) {
-    					WebDriver driver = null;
-    					driver = DriverFacade
-    							.getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
-    					LocalDriver.setDriver(driver);
+							WebDriver driver = null;
+							driver = DriverFacade
+									.getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
+							LocalDriver.setDriver(driver);
     					testNumber++;
+    					if (LocalDriver.getDriver() == null) {
+							Log.get().log(Level.SEVERE, "The chromedriver object was null in the beforeInvocation method for this test.");
+						}
     					Log.get().log(Level.INFO, "Now executing test number: {0}", testNumber);
     					hasBeforeScenarioAlreadyBeenExecuted.set(true);
     				}

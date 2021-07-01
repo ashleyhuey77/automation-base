@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -17,11 +19,9 @@ import com.warnermedia.config.settings.LocalTest;
 public class ChromeDriverHelper {
 
 	public InheritableThreadLocal<WebDriver> driver;
-	private static final Set<WebDriver> drivers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	public ChromeDriverHelper() throws TestException {
 		OSFacade.setDriverLocalPathBasedOnOS(OS.valueOf(LocalTest.getEnvironment().getOS().toUpperCase()));
-		System.setProperty("java.awt.headless", Boolean.toString(LocalTest.getEnvironment().isHeadlessEnabled()));
 		if (LocalTest.getIsLoggingEnabled() != null
 				&& LocalTest.getIsLoggingEnabled()) {
 			System.setProperty("webdriver.chrome.verboseLogging", "true");
@@ -40,18 +40,15 @@ public class ChromeDriverHelper {
 			context.setState(headlessStopState);
 			context.doAction();
 		}
-		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
+		LocalChromeOptions.get().setPageLoadStrategy(PageLoadStrategy.NONE);
+		LocalChromeOptions.get().addArguments("start-maximized");
+		LocalChromeOptions.get().addArguments("enable-automation");
 		LocalChromeOptions.get().addArguments("--no-sandbox");
+		LocalChromeOptions.get().addArguments("--disable-infobars");
+		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
+		LocalChromeOptions.get().addArguments("--disable-browser-side-navigation");
 		LocalChromeOptions.get().addArguments("--disable-gpu");
-		LocalChromeOptions.get().addArguments("--disable-popup-blocking");
-		Map<String, Object> prefs = new HashMap<String, Object>();
-		prefs.put("credentials_enable_service", false);
-		prefs.put("safebrowsing.enabled", "true");
-		prefs.put("profile.password_manager_enabled", false);
-		LocalChromeOptions.get().setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-		LocalChromeOptions.get().setExperimentalOption("prefs", prefs);
 		LocalChromeOptions.get().merge(caps);
-		//caps.setCapability(ChromeOptions.CAPABILITY, LocalChromeOptions.get());
 
 		driver = new InheritableThreadLocal<WebDriver>() {
 			@Override
@@ -59,7 +56,6 @@ public class ChromeDriverHelper {
 				ChromeDriver driver = null;
 				try {
     				ChromeDriver chromeDriver = new ChromeDriver(LocalChromeOptions.get());
-    				drivers.add(chromeDriver);
     				driver = chromeDriver;
 				} catch (Exception e) {
 					System.out.println(e);

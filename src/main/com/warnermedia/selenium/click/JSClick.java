@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.click;
 
+import com.warnermedia.utils.JSWaiter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
@@ -60,6 +61,8 @@ public class JSClick extends Commands implements IClick {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, "0");
+		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
+		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -70,6 +73,8 @@ public class JSClick extends Commands implements IClick {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
+		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
+		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -80,6 +85,8 @@ public class JSClick extends Commands implements IClick {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, index);
+		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
+		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -90,6 +97,8 @@ public class JSClick extends Commands implements IClick {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, Integer.toString(index));
+		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
+		waiter.waitForAllRequests();
 	}
 
 }

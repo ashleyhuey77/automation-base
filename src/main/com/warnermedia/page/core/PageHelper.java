@@ -15,11 +15,7 @@ import com.warnermedia.config.report.LocalValidation;
 import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.config.settings.SignInHelper;
 import com.warnermedia.page.core.web.BaseGeneric;
-import com.warnermedia.page.utils.ClickHelper;
 import com.warnermedia.page.utils.EnterTextHelper;
-import com.warnermedia.page.utils.ReportInfo;
-import com.warnermedia.page.utils.ClickHelper.ClickBuilder;
-import com.warnermedia.page.utils.EnterTextHelper.EnterTextBuilder;
 import com.warnermedia.page.utils.date.DatePicker;
 import com.warnermedia.page.utils.date.PresentDate;
 import com.warnermedia.selenium.By;
@@ -60,7 +56,7 @@ import org.openqa.selenium.support.How;
  * 
  * @author ashleyhuey
  */
-public abstract class PageHelper {
+public abstract class PageHelper extends PageUtils {
 
 	protected Locator locator(String locator) {
 		return new Locator(locator);
@@ -649,10 +645,6 @@ public abstract class PageHelper {
 	 *            - the total amount of time the test
 	 *            should wait for the element to be
 	 *            found.
-	 * @param locatorString
-	 *            - the webelement locator string
-	 *            necessary for the webelement to be
-	 *            found
 	 */
 	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) throws TestException {
 		try {
@@ -699,16 +691,6 @@ public abstract class PageHelper {
 	 * and will continue executing the next method in
 	 * the chain.
 	 * </p>
-	 * 
-	 * @param locatorString
-	 *            - the webelement locator string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            - the type of locator being used
-	 *            (i.e id, name, csslocator, xpath,
-	 *            etc.). Necessary for the WebElement
-	 *            to be found
 	 * @param i
 	 *            - the total amount of time the test
 	 *            should wait for the element to be
@@ -776,10 +758,8 @@ public abstract class PageHelper {
 		try {
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
-				new EnterTextHelper(new EnterTextBuilder(new ReportInfo(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.name())).enterText(new String(SignInHelper.getPassword(CredentialsType.BASE)))
-						.into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD.element()));
-				new ClickHelper(new ClickBuilder(new ReportInfo(BaseGeneric.ANYWHERE_SIGN_IN_BTN.name()))
-						.clickOn(BaseGeneric.ANYWHERE_SIGN_IN_BTN.element()));
+				enter().text(new String(SignInHelper.getPassword(CredentialsType.BASE))).into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD).start();
+				click().on(BaseGeneric.ANYWHERE_SIGN_IN_BTN).start();
 				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(10)).on(BaseGeneric.EA_SIGNIN_BOX.element());
 				CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());

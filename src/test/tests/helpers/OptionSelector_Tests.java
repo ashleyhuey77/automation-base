@@ -1,3 +1,4 @@
+/*
 package tests.helpers;
 
 import java.io.File;
@@ -186,3 +187,4 @@ public class OptionSelector_Tests extends TestInitialization {
 	}
 
 }
+*/
