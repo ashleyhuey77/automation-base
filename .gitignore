@@ -22,3 +22,7 @@ gradle/
 **/.idea/**
 .pmd
 /.pmd
+/out/**
+out/**
+/.idea/**
+.idea/**
