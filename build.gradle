@@ -9,40 +9,52 @@
 
 buildscript {
 
-	repositories {
-    	maven { url "https://plugins.gradle.org/m2/" }
-		mavenCentral()
-  	}
+    repositories {
+        maven {
+            url "https://atom-git.turner.com/dev/automation.base/-/tree/master"
+            name "GitLab"
+            credentials(HttpHeaderCredentials) {
+                name = 'automationBase'
+                value = gitLabPrivateToken
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+        maven{url "https://plugins.gradle.org/m2/"}
+        mavenCentral()
+    }
 
-  	dependencies {
-    	classpath "com.sun.mail:javax.mail:1.6.0"
-  	}
+    dependencies {
+        classpath "com.sun.mail:javax.mail:1.6.0"
+    }
 
- }
-
-plugins {
-	id 'java-library'
 }
 
-  configurations {
-   jaxDoclet
- }
+plugins {
+    id 'java-library'
+    id("maven-publish")
+}
+
+configurations {
+    jaxDoclet
+}
 
 sourceCompatibility = targetCompatibility = '1.8'
 
 sourceSets {
     main {
-    	java {
-			srcDir 'src/main'
-		}
-		resources {
-			srcDir 'resources'
-			include 'HTMLReport.html'
-		}
+        java {
+            srcDir 'src/main'
+        }
+        resources {
+            srcDir 'resources'
+            include 'HTMLReport.html'
+        }
     }
     test {
-    	java {
-        	srcDir 'src/test'
+        java {
+            srcDir 'src/test'
         }
     }
 }
@@ -63,73 +75,73 @@ dependencies {
     // TestNG is also supported by the Gradle Test task. Just change the
     // testimplementation dependency to testimplementation 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
-	implementation 'junit:junit:4.12'
-	implementation "org.testng:testng:6.7"
-	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-	implementation 'org.seleniumhq.selenium:selenium-api:3.141.59'
-	implementation 'org.seleniumhq.selenium:selenium-support:3.9.1'
-	implementation 'org.seleniumhq.selenium:selenium-chrome-driver:3.141.59'
-	implementation 'org.apache.httpcomponents:httpclient:4.5'
-	implementation 'com.google.code.gson:gson:2.8.0'
-	implementation 'commons-collections:commons-collections:3.2'
-	implementation 'org.apache.commons:commons-lang3:3.6'
-	implementation 'commons-io:commons-io:2.0.1'
-	implementation 'com.google.guava:guava:23.0'
-	implementation 'com.sun.mail:javax.mail:1.6.0'
-	implementation 'javax.activation:activation:1.1.1'
-	implementation 'org.jsoup:jsoup:1.7.2'
-	implementation 'org.yaml:snakeyaml:1.17'
-	implementation 'org.mongodb:mongodb-driver:3.12.7'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
-	implementation 'io.appium:java-client:7.3.0'
-	implementation 'org.mongodb:mongo-java-driver:3.12.7'
-	implementation 'org.json:json:20201115'
-	implementation fileTree(dir: 'externalLibraries', include: 'automation.security.jar')
+    implementation 'junit:junit:4.12'
+    implementation "org.testng:testng:6.7"
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.seleniumhq.selenium:selenium-api:3.141.59'
+    implementation 'org.seleniumhq.selenium:selenium-support:3.9.1'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:3.141.59'
+    implementation 'org.apache.httpcomponents:httpclient:4.5'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'commons-collections:commons-collections:3.2'
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'commons-io:commons-io:2.0.1'
+    implementation 'com.google.guava:guava:23.0'
+    implementation 'com.sun.mail:javax.mail:1.6.0'
+    implementation 'javax.activation:activation:1.1.1'
+    implementation 'org.jsoup:jsoup:1.7.2'
+    implementation 'org.yaml:snakeyaml:1.17'
+    implementation 'org.mongodb:mongodb-driver:3.12.7'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
+    implementation 'io.appium:java-client:7.3.0'
+    implementation 'org.mongodb:mongo-java-driver:3.12.7'
+    implementation 'org.json:json:20201115'
+    implementation fileTree(dir: 'externalLibraries', include: 'automation.security.jar')
 }
 
-	task runUnitTests(type: Test) {
-		systemProperties project.properties.subMap(["appUrl", "env", "browser", "isHeadless", "oS"])
-		useTestNG() {
-			// runlist to executed. path is relative to current folder
-			suites 'src/test/tests/Regression.xml'
-			useDefaultListeners = true
-		}
-		reports.html.destination = file("${reporting.baseDir}")
-		ignoreFailures = true
-	}
+task runUnitTests(type: Test) {
+    systemProperties project.properties.subMap(["appUrl", "env", "browser", "isHeadless", "oS"])
+    useTestNG() {
+        // runlist to executed. path is relative to current folder
+        suites 'src/test/tests/Regression.xml'
+        useDefaultListeners = true
+    }
+    reports.html.destination = file("${reporting.baseDir}")
+    ignoreFailures = true
+}
 
-version='7.27.45'
+version = '7.27.45'
 
 task updateVersion {
-	doLast {
-		def ver = version
-	 	def (a, b, c) = ver.tokenize('.')
-	 	int major = a.toInteger()
-	 	int minor = b.toInteger()
-	 	int patch = c.toInteger()
-	 	if (project.hasProperty('v')) {
-	 		if(v.toLowerCase() == "major") {
-	 			major = major+1
-	 		} else if (v.toLowerCase() == "minor") {
-	 			minor = minor+1
-	 		} else {
-	 			patch = patch+1
-	 		}
-	 	} else {
-	 		patch = patch+1
-	 	}
-	    String newVersion=buildFile.getText().replaceFirst("version='$version'","version='"+major+ "." +minor+"." +patch+"'")
-	    buildFile.setText(newVersion)
-		println 'Verison is ' + newVersion
-	}
+    doLast {
+        def ver = version
+        def (a, b, c) = ver.tokenize('.')
+        int major = a.toInteger()
+        int minor = b.toInteger()
+        int patch = c.toInteger()
+        if (project.hasProperty('v')) {
+            if (v.toLowerCase() == "major") {
+                major = major + 1
+            } else if (v.toLowerCase() == "minor") {
+                minor = minor + 1
+            } else {
+                patch = patch + 1
+            }
+        } else {
+            patch = patch + 1
+        }
+        String newVersion = buildFile.getText().replaceFirst("version='$version'", "version='" + major + "." + minor + "." + patch + "'")
+        buildFile.setText(newVersion)
+        println 'Verison is ' + newVersion
+    }
 }
 
- jar {
- 	from sourceSets.main.allSource
-	archiveBaseName = 'automation.base'
-	manifest {
+jar {
+    from sourceSets.main.allSource
+    archiveBaseName = 'automation.base'
+    manifest {
         attributes 'Class-Path': configurations.compileClasspath.collect { it.absolutePath }.join(" ")
     }
- }
+}
  
  
