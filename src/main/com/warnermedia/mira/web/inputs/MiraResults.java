@@ -17,19 +17,19 @@ public enum MiraResults implements Type {
     RECORD_CHECKBOX {
         @Override
         public TestElement element() {
-            return new TestElement(new Locator("input[name*='checkbox']"), new By(How.CSS));
+            return new TestElement(new Locator("input[type='checkbox']"), new By(How.CSS));
         }
     },
     SEND_ITEMS_TO_DROPDOWN {
         @Override
         public TestElement element() {
-            return new TestElement(new Locator("input[name*='checkbox']"), new By(How.CSS));
+            return new TestElement(new Locator("select[name*='selectOpt']"), new By(How.CSS));
         }
     },
     SELECT_ITEMS_DROPDOWN {
         @Override
         public TestElement element() {
-            return new TestElement(new Locator("input[name*='checkbox']"), new By(How.CSS));
+            return new TestElement(new Locator("select[name*='which_item_option']"), new By(How.CSS));
         }
     },
     SUBMIT_BUTTON {

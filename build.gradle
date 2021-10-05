@@ -98,7 +98,7 @@ dependencies {
 		ignoreFailures = true
 	}
 
-version='7.27.44'
+version='7.27.45'
 
 task updateVersion {
 	doLast {

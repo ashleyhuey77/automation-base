@@ -11,7 +11,13 @@ public enum MiraGlobalNav implements Type {
     SRVR_FULFILLMENT_TAB {
         @Override
         public TestElement element() {
-            return new TestElement(new Locator("a[onclick*='ServerFulFillment')]"), new By(How.CSS));
+            return new TestElement(new Locator("ButTab_SrvrFulfill"), new By(How.NAME));
+        }
+    },
+    PARENT {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("./.."), new By(How.XPATH));
         }
     },
 }

@@ -9,6 +9,8 @@ import com.warnermedia.selenium.browser.BrowserObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+
 public abstract class AbstractMiraPage extends PageUtils {
 
     public void switchToMiraAppWindow() throws TestException {
@@ -21,13 +23,13 @@ public abstract class AbstractMiraPage extends PageUtils {
 
     protected void switchToMiraWindow(String title) throws TestException {
         try {
-            String currentWindow = LocalDriver.getDriver().getWindowHandle();  //will keep current window to switch back
-            for(String winHandle : LocalDriver.getDriver().getWindowHandles()){
-                if (LocalDriver.getDriver().switchTo().window(winHandle).getTitle().contains(title)) {
-                    //This is the one you're looking for
+            Thread.sleep(2000);
+            ArrayList<String> tabs = new ArrayList<>(LocalDriver.getDriver().getWindowHandles());
+
+            for (String i : tabs) {
+                String windTitle = LocalDriver.getDriver().switchTo().window(i).getTitle();
+                if (windTitle.contains(title)) {
                     break;
-                } else {
-                    LocalDriver.getDriver().switchTo().window(currentWindow);
                 }
             }
         } catch (Exception e) {
@@ -48,7 +50,7 @@ public abstract class AbstractMiraPage extends PageUtils {
         try {
             SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
             waitForFrameToBePresent("TaskArea");
-            SHelper.get().browser().switchTo(BrowserObject.FRAME, "SrvrFulfillTaskArea");
+            waitForFrameToBePresent("SrvrFulfillTaskArea");
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }
@@ -58,7 +60,7 @@ public abstract class AbstractMiraPage extends PageUtils {
         try {
             SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
             waitForFrameToBePresent("TaskArea");
-            SHelper.get().browser().switchTo(BrowserObject.FRAME, "TaskBar");
+            waitForFrameToBePresent("TaskBar");
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }
@@ -66,8 +68,9 @@ public abstract class AbstractMiraPage extends PageUtils {
 
     protected void switchToMediaTaskArea() throws TestException {
         try {
+            SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
             waitForFrameToBePresent("TaskArea");
-            SHelper.get().browser().switchTo(BrowserObject.FRAME, "SrvrFulfillTaskArea");
+            waitForFrameToBePresent("SrvrFulfillTaskArea");
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }
@@ -76,9 +79,21 @@ public abstract class AbstractMiraPage extends PageUtils {
     protected void switchToSearchMainFrame() throws TestException {
         try {
             SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
+            waitForFrameToBePresent("TaskArea");
             waitForFrameToBePresent("WorkArea");
-            SHelper.get().browser().switchTo(BrowserObject.FRAME, "WorkArea");
             waitForFrameToBePresent("SearchMain");
+        } catch (Exception e) {
+            throw LocalReport.getReport().reportException(e);
+        }
+    }
+
+    protected void switchToResultMainFrame() throws TestException {
+        try {
+            SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
+            waitForFrameToBePresent("TaskArea");
+            waitForFrameToBePresent("WorkArea");
+            waitForFrameToBePresent("SearchMain");
+            waitForFrameToBePresent("Result_Main");
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }
@@ -88,7 +103,7 @@ public abstract class AbstractMiraPage extends PageUtils {
         try {
             SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
             waitForFrameToBePresent("TaskArea");
-            SHelper.get().browser().switchTo(BrowserObject.FRAME, "workarea");
+            waitForFrameToBePresent("WorkArea");
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }

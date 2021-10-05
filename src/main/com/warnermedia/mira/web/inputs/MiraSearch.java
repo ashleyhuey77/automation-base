@@ -26,4 +26,16 @@ public enum MiraSearch implements Type {
             return new TestElement(new Locator("input[name='submit_basicsearch']"), new By(How.CSS));
         }
     },
+    NEW_SEARCH_BUTTON {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("img[src='images/New_Search.gif']"), new By(How.CSS));
+        }
+    },
+    REFINE_BUTTON {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("img[src='images/Refine.gif']"), new By(How.CSS));
+        }
+    },
 }

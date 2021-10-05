@@ -20,7 +20,18 @@ public class MiraResultsComp extends AbstractMiraPage {
             Select select = new Select(
                     LocalDriver.getDriver().findElement(By.cssSelector(
                             MiraResults.SELECT_ITEMS_DROPDOWN.element().locator().value())));
-            select.selectByVisibleText("Select All Items");
+            select.selectByVisibleText("Select Current Page");
+        } catch (Exception e) {
+            throw LocalReport.getReport().reportException(e);
+        }
+        return this;
+    }
+
+    public MiraResultsComp selectItems() throws TestException {
+        try {
+            switchToResultMainFrame();
+            click().on(MiraResults.RECORD_CHECKBOX).start();
+            Thread.sleep(800);
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }
