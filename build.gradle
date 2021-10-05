@@ -10,17 +10,6 @@
 buildscript {
 
     repositories {
-        maven {
-            url "https://gitlab.example.com/api/v4/projects/814/packages/maven"
-            name "GitLab"
-            credentials(HttpHeaderCredentials) {
-                name = 'automationBase'
-                value = gitLabPrivateToken
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
-        }
         maven{url "https://plugins.gradle.org/m2/"}
         mavenCentral()
     }
@@ -40,14 +29,17 @@ publishing {
     publications {
         library(MavenPublication) {
             from components.java
+            groupId         "dev"
+            /*artifactId      "automation.base"
+            version         project.version*/
         }
     }
     repositories {
         maven {
-            url "https://gitlab.example.com/api/v4/projects/814/packages/maven"
+            url "https://atom-git.turner.com/api/v4/projects/814/packages/maven"
             credentials(HttpHeaderCredentials) {
-                name = "automationBase"
-                value = gitLabPrivateToken // the variable resides in ~/.gradle/gradle.properties
+                name = "Deploy-Token"
+                value = "7gsgHkzxzMhm_EMvmSJc"
             }
             authentication {
                 header(HttpHeaderAuthentication)
@@ -86,6 +78,17 @@ repositories {
     mavenCentral()
     mavenLocal()
     jcenter()
+    maven {
+        url "https://atom-git.turner.com/api/v4/projects/1702/packages/maven"
+        name "GitLab"
+        credentials(HttpHeaderCredentials) {
+            name = 'Private-Token'
+            value = 'rxcrU5fJyyT2xHphHRQz'
+        }
+        authentication {
+            header(HttpHeaderAuthentication)
+        }
+    }
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -116,7 +119,7 @@ dependencies {
     implementation 'io.appium:java-client:7.3.0'
     implementation 'org.mongodb:mongo-java-driver:3.12.7'
     implementation 'org.json:json:20201115'
-    implementation fileTree(dir: 'externalLibraries', include: 'automation.security.jar')
+    implementation 'ahuey:automation.security:1.1.1'
 }
 
 task runUnitTests(type: Test) {
