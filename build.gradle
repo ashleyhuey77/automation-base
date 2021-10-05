@@ -11,7 +11,7 @@ buildscript {
 
     repositories {
         maven {
-            url "https://atom-git.turner.com/dev/automation.base/-/tree/master"
+            url "https://gitlab.example.com/api/v4/projects/814/packages/maven"
             name "GitLab"
             credentials(HttpHeaderCredentials) {
                 name = 'automationBase'
@@ -34,6 +34,26 @@ buildscript {
 plugins {
     id 'java-library'
     id("maven-publish")
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "https://gitlab.example.com/api/v4/projects/814/packages/maven"
+            credentials(HttpHeaderCredentials) {
+                name = "automationBase"
+                value = gitLabPrivateToken // the variable resides in ~/.gradle/gradle.properties
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
 }
 
 configurations {
