@@ -1,0 +1,225 @@
+
+    @font-face {
+  		font-family: 'Turner Reg';
+  		src:  url('../../resources/reportContent/TurnerRegular.woff') format('woff');
+	}
+	
+    @font-face {
+        font-family: 'Turner Bold';
+  		src:  url('../../resources/reportContent/TurnerBold.woff') format('woff');
+    }
+    
+    @font-face {
+  		font-family: 'Turner Light';
+  		src:  url('../../resources/reportContent/TurnerLight.woff') format('woff');
+    }
+        
+	body { 
+		background: url('../../resources/reportContent/Pattern_2.jpg');
+		font-family: Turner Bold; 
+		text-align: center; 
+		width: auto;
+	} 
+
+			 small { 
+				 font-size: 0.7em; 
+			 } 
+
+			 table { 
+				 border: 2px solid  rgb(70, 70, 70); 
+				 border-collapse: collapse; 
+				 border-spacing: 0px; 
+				 width: 1200px; 
+				 margin-left: auto; 
+				 margin-right: auto; 
+			 }
+    
+    		#testHeading {
+                font-family: Turner Bold;
+                font-size: 1.4em;
+                text-align: center;
+    		}
+
+			 tr.heading { 
+				 background-color: #0ccdff;
+                 font-family: Turner Reg;
+				 color: #FFFFFF; 
+				 font-size: 1.4em; 
+				 font-weight: bold;
+                 text-shadow: 0px 0px 6.5px #464646;
+                 width: auto;
+                 text-align: center;
+			 } 
+
+			 tr.subheading { 
+				 background-color: #FFFFFF;
+				 font-weight: bold;
+                 font-family:Turner Bold;
+				 font-size: 1.2em; 
+				 text-align: left;
+                 color: #282828;
+                 text-shadow: 0px 0px 5.5px #464646;
+			 }
+			 
+			 th.title {
+                text-align: center;
+             } 
+
+			 tr.section { 
+				 background-color: #D6D8D8; 
+				 color: #000000; 
+				 cursor: pointer; 
+				 font-weight: bold; 
+				 font-size: 0.9em; 
+				 text-align: justify; 
+			 } 
+
+			 tr.subsection { 
+				 cursor: pointer; 
+			 } 
+
+			 tr.content { 
+				 background-color: #FFFFFF; 
+				 color: #000000;
+                 font-family: Turner Light;
+				 font-size: 1.1em; 
+				 display: table-row; 
+			 } 
+
+			 td, th { 
+				 padding: 8px; 
+				 text-align: inherit; 
+			 } 
+
+			 td.justified { 
+				 text-align: center;
+				 overflow-wrap: break-word;
+  				 word-wrap: break-word;
+			 } 
+			 
+			td.description { 
+				 text-align: center;
+				 max-width: 20px;
+				 overflow-wrap: break-word;
+  				 word-wrap: break-word;
+			 } 
+
+			 td.pass a { 
+				 font-family: Turner Bold; 
+				 color: #6DF304; 
+			 } 
+
+			 td.fail a { 
+				 font-family: Turner Bold; 
+				 color: #FF0606; 
+			 } 
+
+			 td.done, td.screenshot { 
+				 font-family: Turner Bold; 
+				 color: black; 
+			 } 
+
+			 td.debug { 
+				 font-family: Turner Bold; 
+				 color: blue; 
+			 } 
+
+			 td.warning { 
+				 font-family: Turner Bold;
+				 color: #FEB900; 
+			 }
+			 
+			 img.turnerLogo {
+          		display: block;
+          		margin: 0 auto;
+        		padding-bottom: 5px;
+        		width: 700px;
+        		height: 110px;
+    		}
+    
+		    #glass {
+		    		visibility: visible;
+		        length: 16px;
+		        width: 16px;
+		        padding-right: 5px;
+			}
+
+			col.colGroup {
+				width: auto;
+			}
+			
+			col.colGroup1 {
+				width: 5%;
+			}
+
+			col.colGroup2 {
+				width: 30%;
+			}
+
+			col.colGroup3 {
+				width: 30%;
+			}
+
+			col.colGroup4 {
+				width: 10%;
+			}
+
+			col.colGroup5 {
+				width: 5%;
+			}
+			
+			#testStepsTable {
+				display:table-row-group;
+			}
+			
+			#browser {
+				text-align: center;
+			}
+
+            .info {
+                width: 1194px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+			.messageContent {
+                margin-inline-end: 25px;
+                margin-block-start: 0;
+                margin-block-end: 25px;
+                font-family: Turner Light;
+                text-align: left;
+                padding-left: 10px;
+            }
+
+            p.bold {
+                color: #000000;
+                font-family: Turner Bold;
+                font-size: 1.3em;
+                padding-right: 5px;
+                margin-inline-end: 0;
+                margin-block-start: 0;
+                text-align: left;
+                margin-block-end: 10px;
+                padding-left: 10px;
+                padding-top: 10px;
+            }
+
+            .message {
+                color: #000000;
+                font-family: Turner Light;
+                font-size: 1.1em;
+            }
+
+            #bug {
+                background-color: #ffdddd;
+                border-left: 6px solid #f44336;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+
+            #env {
+                background-color: #ffedcc;
+                border-left: 6px solid #ffbe06;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }

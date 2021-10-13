@@ -40,4 +40,18 @@ public class MiraGlobalNavComp extends AbstractMiraPage {
         }
         return this;
     }
+
+    public MiraGlobalNavComp goToTheAdminComp() throws TestException {
+        try {
+            switchToCommandBar();
+            WebElement parent = SHelper.get().element().find(MiraGlobalNav.ADMIN_TAB.element(), MiraGlobalNav.PARENT.element());
+            click().on(MiraGlobalNav.ADMIN_TAB).using(parent).start();
+            Thread.sleep(2000);
+            SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
+            waitForFrameToBePresent("TaskArea");
+        } catch (Exception e) {
+            throw LocalReport.getReport().reportException(e);
+        }
+        return this;
+    }
 }

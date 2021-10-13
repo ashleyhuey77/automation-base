@@ -133,7 +133,7 @@ task runUnitTests(type: Test) {
     ignoreFailures = true
 }
 
-version = '7.27.45'
+version = '7.27.50'
 
 task updateVersion {
     doLast {

@@ -56,7 +56,7 @@ public class MiraSearchComp extends AbstractMiraPage {
                 click().on(MiraSearch.SEARCH_BUTTON).start();
             }
 
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 900);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 1300);
 
             wait.until((WebDriver driver) -> {
                 Boolean result = false;

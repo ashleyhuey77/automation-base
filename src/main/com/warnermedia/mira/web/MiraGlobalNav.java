@@ -14,6 +14,12 @@ public enum MiraGlobalNav implements Type {
             return new TestElement(new Locator("ButTab_SrvrFulfill"), new By(How.NAME));
         }
     },
+    ADMIN_TAB {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("ButTab_Admin"), new By(How.NAME));
+        }
+    },
     PARENT {
         @Override
         public TestElement element() {
