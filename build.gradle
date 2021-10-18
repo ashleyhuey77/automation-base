@@ -55,7 +55,8 @@ configurations {
     jaxDoclet
 }
 
-sourceCompatibility = targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 sourceSets {
     main {
@@ -121,7 +122,7 @@ dependencies {
     implementation 'io.appium:java-client:7.3.0'
     implementation 'org.mongodb:mongo-java-driver:3.12.7'
     implementation 'org.json:json:20201115'
-    implementation 'ahuey:automation.security:1.1.1'
+    implementation 'ahuey:automation.security:1.1.2'
 }
 
 task runUnitTests(type: Test) {
@@ -135,7 +136,7 @@ task runUnitTests(type: Test) {
     ignoreFailures = true
 }
 
-version = '7.27.55'
+version = '7.27.56'
 
 task updateVersion {
     doLast {
