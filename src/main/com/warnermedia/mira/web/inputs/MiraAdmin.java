@@ -6,12 +6,18 @@ import com.warnermedia.selenium.Locator;
 import com.warnermedia.selenium.TestElement;
 import org.openqa.selenium.support.How;
 
-public enum Admin implements Type {
+public enum MiraAdmin implements Type {
 
     RESUBMIT_BTN {
         @Override
         public TestElement element() {
             return new TestElement(new Locator("a[href='ArchiveAdmin.jsp']"), new By(How.CSS));
+        }
+    },
+    DAM_ADMIN_DROPDOWN {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("a[href*='Admin_TBar_DAMA.js'] img"), new By(How.CSS));
         }
     },
     REQUEST_QUEUE_BTN {
@@ -36,6 +42,12 @@ public enum Admin implements Type {
         @Override
         public TestElement element() {
             return new TestElement(new Locator("forceATLBtn"), new By(How.ID));
+        }
+    },
+    SUCCESS_MSG {
+        @Override
+        public TestElement element() {
+            return new TestElement(new Locator("span[class='component3']"), new By(How.CSS));
         }
     },
 }
