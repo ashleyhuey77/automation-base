@@ -1,5 +1,6 @@
 package com.warnermedia.page.core;
 
+import com.warnermedia.config.data.UserHelper;
 import com.warnermedia.selenium.wait.Condition;
 import org.openqa.selenium.WebDriverException;
 import com.utils.CredentialsType;
@@ -8,7 +9,6 @@ import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.report.LocalValidation;
-import com.warnermedia.config.settings.SignInHelper;
 import com.warnermedia.page.core.web.BaseGeneric;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.selenium.text.Variable;
@@ -125,13 +125,13 @@ public class SignInPage extends PageTemplate {
 			SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 					new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
 			enter()
-					.text(new String(SignInHelper.getName(CredentialsType.BASE)).trim())
+					.text(new String(UserHelper.getName(CredentialsType.BASE)).trim())
 					.into(BaseGeneric.USER_NAME_TEXT_FIELD)
 					.start();
 			SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 					new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.PWD_TEXT_FIELD.element());
 			enter()
-					.text(new String(SignInHelper.getPassword(type)).trim())
+					.text(new String(UserHelper.getPassword(CredentialsType.BASE)).trim())
 					.into(BaseGeneric.PWD_TEXT_FIELD)
 					.start();
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
@@ -149,7 +149,7 @@ public class SignInPage extends PageTemplate {
 			SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 					new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.PWD_TEXT_FIELD2.element());
 			enter()
-					.text(new String(SignInHelper.getPassword(type)).trim())
+					.text(new String(UserHelper.getPassword(CredentialsType.BASE)).trim())
 					.into(BaseGeneric.PWD_TEXT_FIELD2)
 					.start();
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");

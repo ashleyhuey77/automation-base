@@ -1,6 +1,7 @@
 package com.warnermedia.data.mongo.config;
 
-import com.utils.CredentialsType;
+import com.app.SecurityHelper;
+import com.app.file.*;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -8,9 +9,10 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.warnermedia.config.settings.SignInHelper;
+import com.utils.CredentialsType;
+import com.warnermedia.config.data.UserHelper;
+
 import com.warnermedia.data.mongo.repos.*;
-import com.warnermedia.wdm.utils.WebDriverManagerException;
 
 public class MongoConfig {
 
@@ -49,9 +51,7 @@ public class MongoConfig {
         @Override
         public InitializeDBStep initializeDB() throws Exception {
             try {
-                ConnectionString connectionString = new ConnectionString("mongodb+srv://" + new String(SignInHelper.getName(CredentialsType.DEFAULT)) +
-                        ":" + new String(SignInHelper.getPassword(CredentialsType.DEFAULT)) +
-                        "@automation-qa-cluster.obla017.mongodb.net/?retryWrites=true&w=majority");
+                ConnectionString connectionString = getEncryptedConnectionString();
                 MongoClientSettings settings = MongoClientSettings.builder()
                         .applyConnectionString(connectionString)
                         .serverApi(ServerApi.builder()
@@ -63,6 +63,18 @@ public class MongoConfig {
                 return this;
             } catch (Exception e) {
                 throw new Exception(e.getMessage() + " " + e.getStackTrace());
+            }
+        }
+
+        private ConnectionString getEncryptedConnectionString() throws Exception {
+            ConnectionString result = null;
+            try {
+                FileEncrypterDecrypter fed = new FileEncrypterDecrypter();
+                String fileName = CredentialsHelper.get(FileCredentialsType.DATABASE, Extension.ENC);
+                FileCredentials credentials = FileCredentials.get(fed.decrypt(fileName, FileCredentialsType.DATABASE));
+                return new ConnectionString("mongodb+srv://" + SecurityHelper.decrypt(credentials.name) + ":" + SecurityHelper.decrypt(credentials.password) + "@" + SecurityHelper.decrypt(credentials.uri));
+            } catch (Exception e) {
+                throw e;
             }
         }
 

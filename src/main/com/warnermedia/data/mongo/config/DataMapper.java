@@ -4,58 +4,58 @@ import com.warnermedia.data.mongo.models.*;
 
 public class DataMapper {
 
-    private static ThreadLocal<Person> person = new ThreadLocal<>();
-    private static ThreadLocal<Video> video = new ThreadLocal<>();
-    private static ThreadLocal<Asset> asset = new ThreadLocal<>();
-    private static ThreadLocal<Global> global = new ThreadLocal<>();
-    private static ThreadLocal<Local> local = new ThreadLocal<>();
-    private static ThreadLocal<Data> data = new ThreadLocal<>();
+    private static Person person;
+    private static Video video;
+    private static Asset asset;
+    private static Global global;
+    private static Local local;
+    private static Data data;
 
     public static void setPerson(final Person value) {
-        person.set(value);
+        person = value;
     }
 
     public static Person person() {
-        return person.get();
+        return person;
     }
 
     public static void setVideo(final Video value) {
-        video.set(value);
+        video = value;
     }
 
     public static Video video() {
-        return video.get();
+        return video;
     }
 
     public static void setAsset(final Asset value) {
-        asset.set(value);
+        asset = value;
     }
 
     public static Asset asset() {
-        return asset.get();
+        return asset;
     }
 
     public static void setGlobal(final Global value) {
-        global.set(value);
+        global = value;
     }
 
     public static Global global() {
-        return global.get();
+        return global;
     }
 
     public static void setLocal(final Local value) {
-        local.set(value);
+        local = value;
     }
 
     public static Local local() {
-        return local.get();
+        return local;
     }
 
     public static void setData(final Data value) {
-        data.set(value);
+        data = value;
     }
 
     public static Data data() {
-        return data.get();
+        return data;
     }
 }

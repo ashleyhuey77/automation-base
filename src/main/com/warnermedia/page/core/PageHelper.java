@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.logging.Level;
+
+import com.warnermedia.config.data.UserHelper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,9 +16,8 @@ import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.report.LocalValidation;
 import com.warnermedia.config.settings.LocalTest;
-import com.warnermedia.config.settings.SignInHelper;
+
 import com.warnermedia.page.core.web.BaseGeneric;
-import com.warnermedia.page.utils.EnterTextHelper;
 import com.warnermedia.page.utils.date.DatePicker;
 import com.warnermedia.page.utils.date.PresentDate;
 import com.warnermedia.selenium.By;
@@ -759,7 +760,7 @@ public abstract class PageHelper extends PageUtils {
 		try {
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(),Duration.ofSeconds(10))) {
-				enter().text(new String(SignInHelper.getPassword(CredentialsType.BASE))).into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD).start();
+				enter().text(new String(UserHelper.getPassword(CredentialsType.BASE))).into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD).start();
 				click().on(BaseGeneric.ANYWHERE_SIGN_IN_BTN).start();
 				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
 				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(10))).on(BaseGeneric.EA_SIGNIN_BOX.element());

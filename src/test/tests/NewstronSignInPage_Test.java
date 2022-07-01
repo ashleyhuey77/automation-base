@@ -1,6 +1,7 @@
 package tests;
 
 import com.warnermedia.config.TestException;
+import com.warnermedia.config.data.UserHelper;
 import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.testng.TestListener;
 import com.warnermedia.data.mongo.config.DataMapper;
@@ -29,6 +30,11 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	
 	@Test
 	public void verifyNewstronSignInPage() throws Exception {
+		System.out.println(new String(UserHelper.getName(CredentialsType.BASE)));
+		System.out.println(new String(UserHelper.getPassword(CredentialsType.BASE)));
+		System.out.println(new String(UserHelper.getName(CredentialsType.MIRA)));
+		System.out.println(new String(UserHelper.getPassword(CredentialsType.MIRA)));
+
 		SignInPage _newstronSignInPage = new SignInPage();
 		
 		_newstronSignInPage.enterLoginDetails();

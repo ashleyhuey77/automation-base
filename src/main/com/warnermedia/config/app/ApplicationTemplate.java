@@ -1,7 +1,11 @@
 package com.warnermedia.config.app;
 
+import com.app.Decrypter;
+import com.app.data.DataMapper;
+import com.utils.CredentialsType;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
+import com.warnermedia.config.data.UserHelper;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.report.ReportFacade;
 import com.warnermedia.config.report.ReportType;
@@ -140,12 +144,27 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 	public ApplicationTemplate() throws Exception {
 		super();
 		SHelper.set(new SeleniumHelper());
+		initializeTestUsers();
 		initializeBrowserName();
 		initializeEnvironment();
 		initializeTestData();
 		initializeBrowser();
 		initializeReporting();
 		openApplication();
+	}
+
+	public void initializeTestUsers() throws Exception {
+		if ((UserHelper.getName(CredentialsType.BASE) == null)) {
+			Decrypter.decryptFromDB(CredentialsType.BASE);
+			UserHelper.setName(CredentialsType.BASE, DataMapper.getCredentials().name);
+			UserHelper.setPassword(CredentialsType.BASE, DataMapper.getCredentials().password);
+		}
+
+		if ((UserHelper.getName(CredentialsType.MIRA) == null)) {
+			Decrypter.decryptFromDB(CredentialsType.MIRA);
+			UserHelper.setName(CredentialsType.MIRA, DataMapper.getCredentials().name);
+			UserHelper.setPassword(CredentialsType.MIRA, DataMapper.getCredentials().password);
+		}
 	}
 
 	public void initializeBrowser() throws TestException {
@@ -180,10 +199,7 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 
 	public void initializeTestData() throws TestException {
 		try {
-/*			MongoConfig.createClient()
-					.initializeDB()
-					.setCollection()
-					.build();*/
+
 		} catch (Exception e) {
 			Log.get().log(Level.SEVERE, e.getMessage(), e);
 		}
