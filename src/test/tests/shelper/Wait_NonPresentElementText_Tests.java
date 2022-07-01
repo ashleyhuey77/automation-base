@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_NonPresentElementText_Tests {
 
@@ -45,7 +47,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("Cool").indexOf("0").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().to(Condition.CONTAIN).value("Cool").indexOf("0").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 	
 	@Test
@@ -57,7 +59,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("Cool").indexOf("0").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().to(Condition.EQUAL).value("Cool").indexOf("0").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 	
 	@Test(expectedExceptions = Exception.class)
@@ -69,7 +71,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("Test").indexOf("0").forAMaxTimeOf(1)).on(element);
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").indexOf("0").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 	
 	@Test(expectedExceptions = Exception.class)
@@ -81,13 +83,13 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("Test").indexOf("0").forAMaxTimeOf(1)).on(element);
+				new WaitBuilder().to(Condition.EQUAL).value("Test").indexOf("0").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test(expectedExceptions = Exception.class)
 	public void verifyWaitForElementToNotHaveValueInvalidCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test(expectedExceptions = Exception.class)
@@ -99,12 +101,12 @@ public class Wait_NonPresentElementText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(2)).on(test);
+				new WaitBuilder().to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
 	@Test(expectedExceptions = Exception.class)
 	public void verifyWaitForElementToNotHaveValueNullCondition_ExceptionThrown() throws Exception {
-		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder().value("help").forAMaxTimeOf(2))
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder().value("help").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 
@@ -116,7 +118,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 		WebElement test = SHelper.get().element().get(element);
 
-		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder().value("help").forAMaxTimeOf(2))
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder().value("help").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 
@@ -127,7 +129,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("help").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().to(Condition.CONTAIN).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -137,7 +139,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(1)).on(element);
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test
@@ -147,7 +149,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("help").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().to(Condition.EQUAL).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -157,7 +159,7 @@ public class Wait_NonPresentElementText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(1)).on(element);
+				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test
@@ -168,7 +170,7 @@ public class Wait_NonPresentElementText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(2)).on(test);
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -179,7 +181,7 @@ public class Wait_NonPresentElementText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(1)).on(test);
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
 	@Test
@@ -190,7 +192,7 @@ public class Wait_NonPresentElementText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(2)).on(test);
+				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -201,7 +203,7 @@ public class Wait_NonPresentElementText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
-				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(1)).on(test);
+				new WaitBuilder().to(Condition.EQUAL).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 	
 	@Test(expectedExceptions=TestException.class)
@@ -216,7 +218,7 @@ public class Wait_NonPresentElementText_Tests {
 	public void verifyWaitForElementTextNotToBePresentNullValue_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.to(Condition.EQUAL)
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -225,7 +227,7 @@ public class Wait_NonPresentElementText_Tests {
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.value("")
 				.to(Condition.EQUAL)
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -235,7 +237,7 @@ public class Wait_NonPresentElementText_Tests {
 				.forAttribute("Something")
 				.to(Condition.EQUAL)
 				.value("someClassValue")
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -244,7 +246,7 @@ public class Wait_NonPresentElementText_Tests {
 		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.to(Condition.EQUAL)
 				.value("someClassValue")
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(2))
 				.on(element);
 	}

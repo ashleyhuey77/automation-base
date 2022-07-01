@@ -1,8 +1,10 @@
 package com.warnermedia.selenium.wait;
 
+import java.time.Duration;
+
 public class WaitBuilder {
 	
-	public int baseTime = 0;
+	public Duration baseTime = Duration.ofMinutes(0);
 	public Condition baseCondition;
 	public String baseValue;
 	public int baseExpectedTotalCount = 0;
@@ -36,7 +38,7 @@ public class WaitBuilder {
 	 * <p>This sets the max wait time. This variable should be
 	 * the total amount of time a condition should run before it fails.</p>
 	 */
-	public WaitBuilder forAMaxTimeOf(int value) {
+	public WaitBuilder forAMaxTimeOf(Duration value) {
 		this.baseTime = value;
 		return this;
 	}

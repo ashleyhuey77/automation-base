@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.wait;
 
+import java.time.Duration;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +13,7 @@ import com.warnermedia.utils.Validator;
 
 public class PresentElementText extends Commands implements IWait {
 
-	protected int time = 0;
+	protected Duration time = Duration.ofMinutes(0);
 	protected Condition condition;
 	protected String value;
 	protected String indexOf;
@@ -69,7 +70,7 @@ public class PresentElementText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForElementToContainText(TestElement element, String expectedText, int i) {
+	private void waitForElementToContainText(TestElement element, String expectedText, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -101,7 +102,7 @@ public class PresentElementText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForElementToEqualText(TestElement element, String expectedText, int i) {
+	private void waitForElementToEqualText(TestElement element, String expectedText, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -122,16 +123,7 @@ public class PresentElementText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
+	 *
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -141,7 +133,7 @@ public class PresentElementText extends Commands implements IWait {
 	 *            true
 	 * @return void
 	 */
-	private void waitForElementToContainText(WebElement element, String expectedText, int i) {
+	private void waitForElementToContainText(WebElement element, String expectedText, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -162,16 +154,6 @@ public class PresentElementText extends Commands implements IWait {
 	/**
 	 * <summary> method to wait for a particular text
 	 * to be present in a web element </summary>
-	 * 
-	 * @param locator
-	 *            the webelement selector string
-	 *            necessary for the webelement to be
-	 *            found
-	 * @param by
-	 *            the type of selector being used (i.e
-	 *            id, name, cssSelector, xpath, etc.).
-	 *            Necessary for the WebElement to be
-	 *            found
 	 * @param expectedText
 	 *            the text that is expected to be in
 	 *            the webelement
@@ -181,7 +163,7 @@ public class PresentElementText extends Commands implements IWait {
 	 *            true
 	 * @return void
 	 */
-	private void waitForElementToEqualText(WebElement element, String expectedText, int i) {
+	private void waitForElementToEqualText(WebElement element, String expectedText, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -200,7 +182,7 @@ public class PresentElementText extends Commands implements IWait {
 	}
 
 	public static class LocalWaitBuilder extends Commands {
-		private int time;
+		private Duration time;
 		private Condition condition;
 		private String value;
 		private String indexOf;
@@ -210,7 +192,7 @@ public class PresentElementText extends Commands implements IWait {
 			this.condition = base.baseCondition();
 			this.value = base.baseValue;
 			this.indexOf = base.indexOf;
-			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			//Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
 										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();
 			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();

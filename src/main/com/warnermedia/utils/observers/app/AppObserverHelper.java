@@ -11,6 +11,7 @@ import com.warnermedia.selenium.wait.Condition;
 import com.warnermedia.utils.TestUtils;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.util.List;
 
 public class AppObserverHelper extends PageUtils {
@@ -31,7 +32,7 @@ public class AppObserverHelper extends PageUtils {
 
     private IssueType checkAuthServicesIssue() throws TestException {
         IssueType result = IssueType.NONE;
-        if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 1)) {
+        if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), Duration.ofSeconds(1))) {
             String errorText = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
             if (!TestUtils.isNullOrBlank(errorText)) {
                 if (errorText.toLowerCase().trim().contains("entered is incorrect.")) {
@@ -44,7 +45,7 @@ public class AppObserverHelper extends PageUtils {
 
     private IssueType checkAssetStatusNotChangingIssue() throws TestException {
         IssueType result = IssueType.NONE;
-        if (SHelper.get().element().isDisplayed(BaseGeneric.SEQUENCE_CATEGORY.element(), 1)) {
+        if (SHelper.get().element().isDisplayed(BaseGeneric.SEQUENCE_CATEGORY.element(), Duration.ofSeconds(1))) {
             String actualCategory = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM)
                     .getFrom(BaseGeneric.SEQUENCE_CATEGORY.element());
             if (actualCategory.toUpperCase().trim().equals("PRE-RAW")
@@ -52,7 +53,7 @@ public class AppObserverHelper extends PageUtils {
                 result = IssueType.ASSET_STATUS_IS_NOT_CHANGING;
             }
         }
-        if (SHelper.get().element().isDisplayed(BaseGeneric.TOP_CONTAINER_VALUES.element(), 1)) {
+        if (SHelper.get().element().isDisplayed(BaseGeneric.TOP_CONTAINER_VALUES.element(), Duration.ofSeconds(1))) {
             List<WebElement> values = SHelper.get().element().getListOf(BaseGeneric.TOP_CONTAINER_VALUES.element());
             WebElement preraw = find(values).that(Condition.EQUAL).text("pre-raw").get();
             WebElement precut = find(values).that(Condition.EQUAL).text("pre-cut").get();

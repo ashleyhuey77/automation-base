@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.element;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -63,7 +64,7 @@ public interface IElement {
 	 * </pre>
 	 * @throws TestException
 	 */
-	public Boolean isDisplayed(TestElement element, int i) throws TestException;
+	public Boolean isDisplayed(TestElement element, Duration i) throws TestException;
 	
 	/**
 	 * <p>This method is used to wait for an element to display and then return
@@ -82,7 +83,7 @@ public interface IElement {
 	 * </pre>
 	 * @throws TestException
 	 */
-	public Boolean isDisplayed(WebElement element, int i) throws TestException;
+	public Boolean isDisplayed(WebElement element, Duration i) throws TestException;
 	
 	/**
 	 * <p>This method is used to find an element that is 

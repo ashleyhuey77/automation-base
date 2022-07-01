@@ -11,5 +11,6 @@ public enum Entity {
     RECURRENCES,
     MS2_METADATA,
     EA,
-    EDIT_SERVICE_JOBS
+    EDIT_SERVICE_JOBS,
+    ARCHIVE_CLEANER
 }

@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.wait;
 
+import java.time.Duration;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +13,7 @@ import com.warnermedia.utils.Validator;
 
 public class PresentAttributeText extends Commands implements IWait {
 
-	protected int time = 0;
+	protected Duration time;
 	protected Condition condition;
 	protected String value;
 	protected String attribute;
@@ -75,7 +76,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue,
-			int i) {
+			Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -110,7 +111,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToEqualACertainValue(TestElement element, String attribute, String expectedValue, int i) {
+	private void waitForAttributeToEqualACertainValue(TestElement element, String attribute, String expectedValue, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -145,7 +146,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, int i) throws TestException {
+	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, Duration i) throws TestException {
 		try {
 			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
@@ -185,7 +186,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue,
-			int i) {
+			Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
@@ -200,7 +201,7 @@ public class PresentAttributeText extends Commands implements IWait {
 	}
 
 	public static class LocalWaitBuilder extends Commands {
-		private int time;
+		private Duration time;
 		private Condition condition;
 		private String value;
 		private String attribute;
@@ -212,7 +213,7 @@ public class PresentAttributeText extends Commands implements IWait {
 			this.attribute = base.baseAttribute;
 			Validator.of(base.baseAttribute).validate(Objects::nonNull, result -> base.baseAttribute != null, "Attribute is null. Add the 'forAttribute' method.")
 											.validate(String::valueOf, result -> !result.isEmpty(), "Attribute is empty. Add a value to the 'forAttribute' method.").get();
-			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			//Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue != null, "Value is null. Add the 'value' method.")
 										.validate(String::valueOf, result -> !result.isEmpty(), "Value is empty. Add a value to the 'value' method.").get();
 			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();

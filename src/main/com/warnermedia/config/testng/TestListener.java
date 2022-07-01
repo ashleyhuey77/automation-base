@@ -1,6 +1,8 @@
 package com.warnermedia.config.testng;
 
+import java.util.Iterator;
 import java.util.Set;
+
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
@@ -38,8 +40,7 @@ public class TestListener extends TestListenerAdapter implements ITestListener {
 
 	@Override
 	public void onStart(ITestContext context) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -55,6 +56,15 @@ public class TestListener extends TestListenerAdapter implements ITestListener {
                 }
             }
         }
+		Iterator<ITestResult> skippedTestCases = context.getSkippedTests().getAllResults().iterator();
+		while (skippedTestCases.hasNext()) {
+			ITestResult skippedTestCase = skippedTestCases.next();
+			ITestNGMethod method = skippedTestCase.getMethod();
+			if (context.getSkippedTests().getResults(method).size() > 0) {
+				System.out.println("Removing:" + skippedTestCase.getTestClass().toString());
+				skippedTestCases.remove();
+			}
+		}
 	}
 
 }

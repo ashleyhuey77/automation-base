@@ -1,6 +1,5 @@
 package com.warnermedia.selenium.click;
 
-import com.warnermedia.utils.JSWaiter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
@@ -12,6 +11,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.StateManager;
 
+import java.time.Duration;
+
 public class JQClick extends Commands implements IClick {
 
 	@Override
@@ -21,11 +22,9 @@ public class JQClick extends Commands implements IClick {
 			if (StateManager.getState() != null) {
 				StateManager.getState().checkState();
 			}
-			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 			//checkCookiesAndAddRequiredOnesIfNecessary();
 			((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
-			JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-			waiter.waitForAllRequests();
 		} catch (Exception ex) {
 			try {
 				if (element.locator().value().contains("'")) {
@@ -33,8 +32,6 @@ public class JQClick extends Commands implements IClick {
 				}
 				//checkCookiesAndAddRequiredOnesIfNecessary();
 				((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "').click();");
-				JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-				waiter.waitForAllRequests();
 			} catch (Exception e) {
 				throw ex;
 			}
@@ -46,11 +43,9 @@ public class JQClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -58,7 +53,7 @@ public class JQClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		String webElement = null;
 		if (element.locator().value().contains("'")) {
@@ -67,8 +62,6 @@ public class JQClick extends Commands implements IClick {
 			webElement = element.locator().value();
 		}
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("$('" + webElement + "')[" + index + "].click();");
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -76,7 +69,7 @@ public class JQClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		String webElement = element.locator().value();
 		if (element.locator().value().contains("'")) {
@@ -85,8 +78,6 @@ public class JQClick extends Commands implements IClick {
 
 		((JavascriptExecutor) LocalDriver.getDriver())
 				.executeScript("$('" + webElement + "')[" + Integer.toString(index) + "].click();");
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 }

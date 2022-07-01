@@ -1,6 +1,5 @@
 package com.warnermedia.page.core;
 
-import com.warnermedia.utils.JSWaiter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import com.warnermedia.config.SHelper;
@@ -84,10 +83,6 @@ public abstract class PageTemplate extends PageHelper implements PageControl {
 		SHelper.set(new SeleniumHelper());
 		PageFactory.initElements(browser, this);
 		//clearAllNotificationsAndRefreshPage();
-		if (browser != null) {
-			JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-			waiter.waitForAllRequests();
-		}
 		WaitForPageLoad();
 	}
 

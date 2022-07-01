@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_Count_Tests {
 	
@@ -41,7 +43,7 @@ public class Wait_Count_Tests {
 		Locator locator2 = new Locator("About");
 		By by2 = new By(How.LINK_TEXT);
 		TestElement element2 = new TestElement(locator2, by2);
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(5)).on(element2);
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(Duration.ofSeconds(5))).on(element2);
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -50,7 +52,7 @@ public class Wait_Count_Tests {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 		
-		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(1)).on(element);
+		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder().withACountOf(1).forAMaxTimeOf(Duration.ofSeconds(1))).on(element);
 	}
 	
 	@Test(expectedExceptions=TestException.class)
@@ -62,14 +64,14 @@ public class Wait_Count_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForCountInvalidTotalCount_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(1)))
 				.on(element);
 	}
 	
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForCountNonNullValue_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(1))
 				.withACountOf(1)
 				.value("Test"))
 				.on(element);
@@ -78,7 +80,7 @@ public class Wait_Count_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForCountNonNullCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(1))
 				.withACountOf(1)
 				.to(Condition.CONTAIN))
 				.on(element);
@@ -87,7 +89,7 @@ public class Wait_Count_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForCountNonNullAttribute_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(1))
 				.withACountOf(1)
 				.forAttribute(""))
 				.on(element);
@@ -99,7 +101,7 @@ public class Wait_Count_Tests {
 		By by2 = new By(How.LINK_TEXT);
 		WebElement element2 = SHelper.get().element().get(new TestElement(locator2, by2));
 		SHelper.get().waitMethod(Wait.COUNT_OF_ELEMENTS, new WaitBuilder()
-				.forAMaxTimeOf(2)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(1))
 				.on(element2);
 	}

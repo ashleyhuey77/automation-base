@@ -10,8 +10,9 @@ import com.warnermedia.selenium.Locator;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
-import org.junit.Test;
 import org.openqa.selenium.support.How;
+
+import java.time.Duration;
 
 public class AllAppsDashboard extends PageTemplate {
 
@@ -22,7 +23,7 @@ public class AllAppsDashboard extends PageTemplate {
     @Override
     public void WaitForPageLoad() throws TestException {
         try {
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(new TestElement(new Locator("div[class='dashboard-app']"), new By(How.CSS)));
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(new TestElement(new Locator("div[class='dashboard-app']"), new By(How.CSS)));
         } catch (Exception e) {
             throw LocalReport.getReport().reportException(e);
         }

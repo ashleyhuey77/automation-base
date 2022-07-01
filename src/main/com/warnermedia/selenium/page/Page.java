@@ -1,6 +1,5 @@
 package com.warnermedia.selenium.page;
 
-import com.warnermedia.utils.JSWaiter;
 import org.openqa.selenium.JavascriptExecutor;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -40,8 +39,6 @@ public class Page extends Commands implements IPage {
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		JavascriptExecutor js = ((JavascriptExecutor) LocalDriver.getDriver());
 		js.executeScript("location.reload(true)");
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.warnermedia.page.utils;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import com.warnermedia.page.core.PageUtils;
@@ -54,7 +55,7 @@ public class EnterTextHelper extends PageUtils {
 
 	private void enterTextIntoWebElement() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(webElement, 5)) {
+			if (SHelper.get().element().isDisplayed(webElement, Duration.ofSeconds(5))) {
 				SHelper.get().click(Via.SELENIUM).on(webElement);
 				clearAllTextByBackspacing(webElement);
 
@@ -75,7 +76,7 @@ public class EnterTextHelper extends PageUtils {
 	
 	private void enterTextIntoTestElement() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(type.element(), 5)) {
+			if (SHelper.get().element().isDisplayed(type.element(), Duration.ofSeconds(5))) {
 				click().on(type).start();
 				clearAllTextByBackspacing(type.element());
 				if (!TestUtils.isNullOrBlank(value)) {

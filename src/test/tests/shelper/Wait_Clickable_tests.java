@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_Clickable_tests {
 
@@ -42,7 +44,7 @@ public class Wait_Clickable_tests {
 				.executeScript("document.write('<button id=Test>Button</button>');");
 		Thread.sleep(300);
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 
 	}
 
@@ -55,7 +57,7 @@ public class Wait_Clickable_tests {
 		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element2);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
 
 	}
 
@@ -66,7 +68,7 @@ public class Wait_Clickable_tests {
 		Thread.sleep(300);
 		WebElement button = SHelper.get().element().get(element);
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(button);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(button);
 
 	}
 
@@ -79,7 +81,7 @@ public class Wait_Clickable_tests {
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(button);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(button);
 
 	}
 	
@@ -92,7 +94,7 @@ public class Wait_Clickable_tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForClickableNonNullAttribute_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.forAttribute("Test"))
 				.on(element);
 	}
@@ -100,7 +102,7 @@ public class Wait_Clickable_tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForClickableNonNullValue_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.value("Test"))
 				.on(element);
 	}
@@ -108,7 +110,7 @@ public class Wait_Clickable_tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForClickableNonNullCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.to(Condition.CONTAIN))
 				.on(element);
 	}
@@ -116,7 +118,7 @@ public class Wait_Clickable_tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForClickableNonNullTotalCount_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(2))
 				.on(element);
 	}

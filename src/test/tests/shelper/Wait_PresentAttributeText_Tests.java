@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_PresentAttributeText_Tests {
 
@@ -39,7 +41,7 @@ public class Wait_PresentAttributeText_Tests {
 	@Test(expectedExceptions = Exception.class)
 	public void verifyWaitForAttributeToHaveValueInvalidCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 
@@ -52,14 +54,14 @@ public class Wait_PresentAttributeText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 
 	@Test(expectedExceptions = Exception.class)
 	public void verifyWaitForAttributeToHaveValueNullCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(null).value("help").forAMaxTimeOf(2)).on(element);
+				new WaitBuilder().forAttribute("class").to(null).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test(expectedExceptions = Exception.class)
@@ -70,7 +72,7 @@ public class Wait_PresentAttributeText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(null).value("help").forAMaxTimeOf(2)).on(test);
+				new WaitBuilder().forAttribute("class").to(null).value("help").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
 	@Test
@@ -80,7 +82,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 
@@ -94,7 +96,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(1))
+				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element2);
 	}
 
@@ -106,7 +108,7 @@ public class Wait_PresentAttributeText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 
@@ -120,7 +122,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(900);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(1))
+				new WaitBuilder().forAttribute("class").to(Condition.CONTAIN).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 
@@ -131,7 +133,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 
@@ -145,7 +147,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(1))
+				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element2);
 	}
 
@@ -157,7 +159,7 @@ public class Wait_PresentAttributeText_Tests {
 		WebElement test = SHelper.get().element().get(element);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(2))
+				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 
@@ -171,7 +173,7 @@ public class Wait_PresentAttributeText_Tests {
 		Thread.sleep(500);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
-				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(1))
+				new WaitBuilder().forAttribute("class").to(Condition.EQUAL).value("someClassValue").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 	
@@ -189,7 +191,7 @@ public class Wait_PresentAttributeText_Tests {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
 				.forAttribute("class")
 				.to(Condition.EQUAL)
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -199,7 +201,7 @@ public class Wait_PresentAttributeText_Tests {
 				.forAttribute("class")
 				.value("")
 				.to(Condition.EQUAL)
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -208,7 +210,7 @@ public class Wait_PresentAttributeText_Tests {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT, new WaitBuilder()
 				.to(Condition.EQUAL)
 				.value("someClassValue")
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -218,7 +220,7 @@ public class Wait_PresentAttributeText_Tests {
 				.forAttribute("")
 				.to(Condition.EQUAL)
 				.value("someClassValue")
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 

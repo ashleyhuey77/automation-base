@@ -1,6 +1,7 @@
 package com.warnermedia.config.email;
 
 import java.text.*;
+import java.time.Duration;
 import java.util.*;
 import java.util.logging.Level;
 import javax.mail.*;
@@ -71,7 +72,7 @@ public class IMAPHelper {
 	private static void waitForMessageToBeAvailable(String expectedBody, String expectedDate, String expectedSubject)
 			throws TestException {
 		try {
-			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 200);
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofMinutes(3));
 
 			wait.until((WebDriver driver) -> {
 				Boolean result = false;

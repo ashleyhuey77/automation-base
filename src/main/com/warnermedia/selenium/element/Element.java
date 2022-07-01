@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.element;
 
+import java.time.Duration;
 import java.util.List;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -27,7 +28,7 @@ public class Element extends Commands implements IElement {
 	}
 
 	@Override
-	public Boolean isDisplayed(TestElement element, int i) throws TestException {
+	public Boolean isDisplayed(TestElement element, Duration i) throws TestException {
 		try {
 			new WebDriverWait(LocalDriver.getDriver(), i)
 					.until(ExpectedConditions.presenceOfElementLocated(getByValueBasedOnUserInput(element)));
@@ -41,7 +42,7 @@ public class Element extends Commands implements IElement {
 
 	@Override
 	@DoNotCall
-	public Boolean isDisplayed(WebElement element, int i) throws TestException {
+	public Boolean isDisplayed(WebElement element, Duration i) throws TestException {
 		// waitForPresenceOfElementLocated(element, i);
 		return true;
 	}
@@ -120,7 +121,7 @@ public class Element extends Commands implements IElement {
 	public Boolean isClickable(TestElement element) throws TestException {
 		Boolean result = false;
 		try {
-			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element);
+			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(1))).on(element);
 			result = true;
 		} catch (Exception e) {
 			result = false;
@@ -132,7 +133,7 @@ public class Element extends Commands implements IElement {
 	public Boolean isClickable(WebElement element) throws TestException {
 		Boolean result = false;
 		try {
-			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element);
+			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(1))).on(element);
 			result = true;
 		} catch (Exception e) {
 			result = false;

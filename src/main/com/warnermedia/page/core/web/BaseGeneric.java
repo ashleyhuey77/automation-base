@@ -14,6 +14,12 @@ public enum BaseGeneric implements Type {
 			return new TestElement(new Locator("#credentials-username"), new By(How.CSS));
 		}
 	},
+	USER_NAME_TEXT_FIELD2 {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#MainContent_UserName"), new By(How.CSS));
+		}
+	},
 	LOG_IN_BOX {
 		@Override
 		public TestElement element() {
@@ -24,6 +30,12 @@ public enum BaseGeneric implements Type {
 		@Override
 		public TestElement element() {
 			return new TestElement(new Locator("#credentials-password"), new By(How.CSS));
+		}
+	},
+	PWD_TEXT_FIELD2 {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#MainContent_Password"), new By(How.CSS));
 		}
 	},
 	ANYWHERE_PWD_TEXT_FIELD {
@@ -42,6 +54,18 @@ public enum BaseGeneric implements Type {
 		@Override
 		public TestElement element() {
 			return new TestElement(new Locator("#signInBox button[class='btn qrk-btn-action']"), new By(How.CSS));
+		}
+	},
+	USER {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#topbar-user"), new By(How.CSS));
+		}
+	},
+	LOG_IN_BTN {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#MainContent_LoginButton"), new By(How.CSS));
 		}
 	},
 	ERROR_MSG {

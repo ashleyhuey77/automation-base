@@ -11,7 +11,7 @@ public enum MiraServerFulfillment implements Type {
     REQUEST_ROWS {
         @Override
         public TestElement element() {
-            return new TestElement(new Locator("table:not(#IngestActListMENU) tbody tr"), new By(How.CSS));
+            return new TestElement(new Locator("table tbody tr"), new By(How.CSS));
         }
     },
    REFRSH_BTN {

@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import com.warnermedia.config.TestException;
 import com.warnermedia.selenium.TestElement;
 
+import java.time.Duration;
+
 public interface IActions {
 	
 public void moveTo(TestElement element) throws TestException;
@@ -89,7 +91,7 @@ public void moveTo(TestElement element) throws TestException;
 	 * </pre>
 	 * @throws TestException
 	 */
-	public void dragAndDrop(TestElement dragElement, TestElement dropElement,  int timeTowait) throws TestException, InterruptedException;
+	public void dragAndDrop(TestElement dragElement, TestElement dropElement,  Duration timeTowait) throws TestException, InterruptedException;
 	
 	/**
 	 * <p>This method is meant to simulate the mouse dragging and dropping an element
@@ -106,7 +108,7 @@ public void moveTo(TestElement element) throws TestException;
 	 * </pre>
 	 * @throws TestException
 	 */
-	public void dragAndDrop(WebElement elementToBeDragged,  WebElement elementToBeDropped, int timeTowait) throws TestException, InterruptedException;
+	public void dragAndDrop(WebElement elementToBeDragged,  WebElement elementToBeDropped, Duration timeTowait) throws TestException, InterruptedException;
 	
 	/**
 	 * <p>This method is meant to simulate scrolling on the page to a specified

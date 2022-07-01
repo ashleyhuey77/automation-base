@@ -23,6 +23,9 @@ public class DriverFacade {
 				throw new TestException(
 						"You did not enter a correct driver. Please enter a usable/executable driver name and try again.");
 		}
+		if (driver == null) {
+			getDriver(driverType);
+		}
 		return driver;
 	}
 }

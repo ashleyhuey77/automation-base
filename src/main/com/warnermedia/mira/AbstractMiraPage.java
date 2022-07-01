@@ -9,6 +9,7 @@ import com.warnermedia.selenium.browser.BrowserObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public abstract class AbstractMiraPage extends PageUtils {
@@ -111,7 +112,7 @@ public abstract class AbstractMiraPage extends PageUtils {
 
     protected void waitForFrameToBePresent(String frameName) throws TestException {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 40);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofSeconds(40));
 
             wait.until((WebDriver driver) -> {
                 Boolean result = false;

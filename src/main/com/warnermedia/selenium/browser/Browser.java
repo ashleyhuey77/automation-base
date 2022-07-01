@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.browser;
 
+import java.time.Duration;
 import java.util.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
@@ -77,7 +78,7 @@ public class Browser extends Commands implements IBrowser {
 	}
 
 	@Override
-	public void waitForWindowCount(int i, int expectedCount) throws TestException {
+	public void waitForWindowCount(Duration i, int expectedCount) throws TestException {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {

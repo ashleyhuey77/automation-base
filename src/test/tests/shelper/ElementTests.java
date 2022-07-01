@@ -1,5 +1,6 @@
 package tests.shelper;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -391,7 +392,7 @@ public class ElementTests {
 		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(element, 2);
+		Boolean result = SHelper.get().element().isDisplayed(element, Duration.ofSeconds(2));
 		
 		Assert.assertTrue(result, "The boolean results do not match");
 	}
@@ -405,7 +406,7 @@ public class ElementTests {
 		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(element, 1);
+		Boolean result = SHelper.get().element().isDisplayed(element, Duration.ofSeconds(1));
 		
 		Assert.assertFalse(result, "The boolean results do not match");
 	}
@@ -420,7 +421,7 @@ public class ElementTests {
 		TestElement element = new TestElement(locator, by);
 		Thread.sleep(500);
 		
-		Boolean result = SHelper.get().element().isDisplayed(element, 2);
+		Boolean result = SHelper.get().element().isDisplayed(element,Duration.ofSeconds(2));
 	}
 	
 	@Test

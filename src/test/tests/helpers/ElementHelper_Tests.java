@@ -40,7 +40,7 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Incorrect</div>');");
 		Thread.sleep(500);
-		List<WebElement> elements = SHelper.get().element().getListOf(Variables.INPUT_ID_TEST.element());
+		List<WebElement> elements = SHelper.get().element().getListOf(Variables.DIV_ID_TEST.element());
 
 		WebElement element = find(elements).text("NonCorrect").get();
 
@@ -52,7 +52,7 @@ public class ElementHelper_Tests extends TestInitialization {
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Correct</div>');");
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<div id=Test >Incorrect</div>');");
 		Thread.sleep(500);
-		List<WebElement> elements = SHelper.get().element().getListOf(Variables.INPUT_ID_TEST.element());
+		List<WebElement> elements = SHelper.get().element().getListOf(Variables.DIV_ID_TEST.element());
 
 		WebElement element = find(elements).that(Condition.EQUAL).text("Correct").get();
 

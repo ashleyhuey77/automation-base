@@ -1,5 +1,6 @@
 package com.warnermedia.utils.observers.page;
 
+import java.time.Duration;
 import java.util.logging.Level;
 
 import com.warnermedia.config.SHelper;
@@ -23,7 +24,7 @@ public class PageState extends Observable<PageState, Page, StateType> {
 	 * 
 	 */
 	public void checkState() throws TestException {
-		if (SHelper.get().element().isDisplayed(BaseGeneric.DISMISS_BUTTON.element(), 1)) {
+		if (SHelper.get().element().isDisplayed(BaseGeneric.DISMISS_BUTTON.element(), Duration.ofSeconds(1))) {
 			String text = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.MODAL_MESSAGE.element());
 			if (text.toLowerCase().contains("after scheduled export event started")
 					|| text.toLowerCase().contains("unexpected stop event detected and ignored in record state")) {

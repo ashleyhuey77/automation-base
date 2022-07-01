@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_PresentElement_Tests {
 
@@ -39,7 +41,7 @@ public class Wait_PresentElement_Tests {
 	@Test(expectedExceptions = WebDriverException.class)
 	public void verifyWaitForElementToLoad_ExceptionThrown() throws Exception {
 		TestElement element2 = new TestElement(new Locator(""), new By("id"));
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
 	}
 
 	@Test
@@ -48,7 +50,7 @@ public class Wait_PresentElement_Tests {
 				.executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);
 
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(2)).on(element);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
 	}
 
 	@Test
@@ -58,7 +60,7 @@ public class Wait_PresentElement_Tests {
 		Thread.sleep(300);
 		WebElement element2 = SHelper.get().element().get(element);
 
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -70,7 +72,7 @@ public class Wait_PresentElement_Tests {
 		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
@@ -82,7 +84,7 @@ public class Wait_PresentElement_Tests {
 		SHelper.get().page().refresh();
 		Thread.sleep(900);
 
-		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(1)).on(element2);
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
 	}
 	
 	@Test(expectedExceptions=TestException.class)
@@ -94,7 +96,7 @@ public class Wait_PresentElement_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForElementToBePresentNonNullAttribute_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.forAttribute("Test"))
 				.on(element);
 	}
@@ -102,7 +104,7 @@ public class Wait_PresentElement_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForElementToBePresentNonNullValue_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.value("Test"))
 				.on(element);
 	}
@@ -110,7 +112,7 @@ public class Wait_PresentElement_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForElementToBePresentNonNullCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.to(Condition.CONTAIN))
 				.on(element);
 	}
@@ -118,7 +120,7 @@ public class Wait_PresentElement_Tests {
 	@Test(expectedExceptions=TestException.class)
 	public void verifyWaitForElementToBePresentNonNullTotalCount_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder()
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(2))
 				.on(element);
 	}

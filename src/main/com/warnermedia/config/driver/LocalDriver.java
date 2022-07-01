@@ -1,5 +1,7 @@
 package com.warnermedia.config.driver;
 
+import com.warnermedia.config.TestException;
+import com.warnermedia.config.settings.LocalTest;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -10,26 +12,43 @@ import org.openqa.selenium.WebDriver;
  *
  */
 public class LocalDriver {
-	
-	private LocalDriver() {
-	}
-	
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
- 
-    /**
-     * <p>Get the threadsafe instance of WebDriver.</p>
-     * @return WebDriver
-     */
+
+    private static ThreadLocal<WebDriver> THREAD_LOCAL = new ThreadLocal();
+    private static Object mutex = new Object();
+
     public static WebDriver getDriver() {
-    	return driver.get();
+        WebDriver localRef = THREAD_LOCAL.get();
+        try {
+            if (localRef == null) {
+                synchronized (mutex) {
+                    localRef = THREAD_LOCAL.get();
+                    if (localRef == null) {
+                        localRef = DriverFacade
+                                .getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
+                        THREAD_LOCAL.set(localRef);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (TestException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return localRef;
     }
-    
-    /**
-     * <p>Set the threadsafe instance of WebDriver </p>
-     * @param value - the WebDriver instance to set.
-     */
-    public static void setDriver(WebDriver value) {
-    	driver.set(value);
+
+    public static void quitDriver() {
+        WebDriver localRef = THREAD_LOCAL.get();
+        if (localRef != null) {
+            synchronized (mutex) {
+                localRef = THREAD_LOCAL.get();
+                if (localRef != null) {
+                    THREAD_LOCAL.get().quit();
+                    THREAD_LOCAL.remove();
+                }
+            }
+        }
     }
-  
 }

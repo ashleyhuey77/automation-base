@@ -17,6 +17,8 @@ import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.actions.SelectBy;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class ActionsTests {
 	
@@ -280,7 +282,7 @@ public class ActionsTests {
 		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(element, element2, 1);
+		SHelper.get().actions().dragAndDrop(element, element2, Duration.ofSeconds(2));
 	}
 	
 	@Test(expectedExceptions=WebDriverException.class)
@@ -297,7 +299,7 @@ public class ActionsTests {
 		TestElement element2 = new TestElement(locator2, by2);
 		Thread.sleep(300);
 		
-		SHelper.get().actions().dragAndDrop(element, element2, 1);
+		SHelper.get().actions().dragAndDrop(element, element2, Duration.ofSeconds(2));
 	}
 	
 	@Test(expectedExceptions=Exception.class)

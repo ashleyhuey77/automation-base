@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" thread-count="10" parallel="methods" group-by-instances="false" configfailurepolicy="continue">
+<suite name="Suite" thread-count="5" parallel="methods" group-by-instances="false" configfailurepolicy="continue">
 <listeners>
 	<listener class-name="com.warnermedia.config.testng.AnnotationTransformer"/>
 	<listener class-name="com.warnermedia.config.testng.TestListener"/>
 </listeners> 
-  <test name="Regression">
-    <groups>
-    	<dependencies>
-	      <group name="dropdown" depends-on="click" />
-	      <group name="element" depends-on="dropdown" />
-	      <group name="etext" depends-on="element" />
-	      <group name="option" depends-on="etext" />
-	      <group name="vtext" depends-on="option" />
-    	</dependencies>
-  	</groups>
+  <test name="Regression" parallel="methods">
   	<classes>
-  		<class name="tests.ReportingTests"/>
+  		<!--<class name="tests.ReportingTests"/>
 		<class name="tests.shelper.BrowserTests"/>
   		<class name="tests.shelper.ClickTests"/>
-  		<class name="tests.helpers.VerifyTextHelper_Tests"/>
 		<class name="tests.shelper.EnterTests"/>
   		<class name="tests.shelper.PageTests"/>
   		<class name="tests.shelper.TextTests"/>
@@ -35,7 +25,6 @@
   		<class name="tests.shelper.Wait_PresentAttributeText_Tests"/> 
   		<class name="tests.shelper.Wait_PresentElement_Tests"/> 
   		<class name="tests.shelper.Wait_PresentElementText_Tests"/>
-		<class name="tests.PageClassTests"/>
   	    <class name="tests.utils.RandomStringTests"/>
   	    <class name="tests.utils.ManagersTests"/>
   		<class name="tests.DatePickerTests"/>
@@ -45,13 +34,10 @@
   		<class name="tests.loki.VideoTests"/>
   		<class name="tests.loki.WorkOrderTests"/>
   		<class name="tests.loki.OtherLokiTests"/>
-  		<class name="tests.helpers.ClickHelper_Tests"/>
-  		<class name="tests.helpers.EnterTextHelper_Tests"/>
-  		<class name="tests.helpers.DropdownHelper_Tests"/>
-  		<class name="tests.helpers.OptionSelector_Tests"/>
-  		<class name="tests.helpers.ElementHelper_Tests"/>
+		<class name="tests.loki.OtherLokiTests"/>
+  		<class name="tests.helpers.ElementHelper_Tests"/>-->
   		<class name="tests.NewstronSignInPage_Test"/>
-  		<class name="tests.TestNGListeners_Tests"/>
+		<!--<class name="Testing"/> -->
   	</classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

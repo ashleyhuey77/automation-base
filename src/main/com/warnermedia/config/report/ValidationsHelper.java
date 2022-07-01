@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import com.warnermedia.config.TestException;
 import com.warnermedia.utils.ConsoleHelper;
 import com.warnermedia.utils.Log;
-import junit.framework.AssertionFailedError;
 
 public class ValidationsHelper {
 
@@ -45,7 +44,6 @@ public class ValidationsHelper {
 	 *            executed. The text one wishes to
 	 *            display on the html report for the
 	 *            executed step.
-	 * @throws FrameworkException
 	 * @throws IOException
 	 */
 	public void assertionPass(String message) throws TestException {
@@ -86,24 +84,23 @@ public class ValidationsHelper {
 	 *            executed. The text one wishes to
 	 *            display on the html report for the
 	 *            executed step.
-	 * @throws FrameworkException
 	 * @throws IOException
 	 */
 	public TestException assertionFailed(String message) throws TestException {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
-		AssertionFailedError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
+		AssertionError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
 		testReport.reportFailEvent(stepName, message);
 		ConsoleHelper.analyzeLog();
 		Log.get().log(Level.SEVERE, assertionFailedError.toString());
 		return reportAssertionFailed(assertionFailedError);
 	}
 
-	private AssertionFailedError getAssertionFailedErrorObject(String stepName, String errorMessage) {
+	private AssertionError getAssertionFailedErrorObject(String stepName, String errorMessage) {
 		String message = "StepName: " + stepName + "\n ErrorMessage: " + errorMessage;
-		return new AssertionFailedError(message);
+		return new AssertionError(message);
 	}
 
-	private TestException reportAssertionFailed(AssertionFailedError assertionFailedError) {
+	private TestException reportAssertionFailed(AssertionError assertionFailedError) {
 		TestException exception = new TestException(assertionFailedError.toString());
 		Log.get().log(Level.SEVERE, exception.getMessage(), exception);
 		return exception;

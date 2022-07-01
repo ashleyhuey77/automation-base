@@ -19,6 +19,8 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class MiraSearchComp extends AbstractMiraPage {
 
     public MiraSearchComp() {
@@ -47,7 +49,7 @@ public class MiraSearchComp extends AbstractMiraPage {
     private void waitForAssetToChangeStatus(String cnnId, String filter) throws TestException {
         try {
             switchToSearchMainFrame();
-            if (SHelper.get().element().isDisplayed(MiraSearch.SEARCH_FIELD.element(), 1)) {
+            if (SHelper.get().element().isDisplayed(MiraSearch.SEARCH_FIELD.element(), Duration.ofSeconds(1))) {
                 enter().text(cnnId).into(MiraSearch.SEARCH_FIELD).start();
                 Select select = new Select(
                         LocalDriver.getDriver().findElement(org.openqa.selenium.By.cssSelector(
@@ -56,13 +58,13 @@ public class MiraSearchComp extends AbstractMiraPage {
                 click().on(MiraSearch.SEARCH_BUTTON).start();
             }
 
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 1300);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofMinutes(10));
 
             wait.until((WebDriver driver) -> {
                 Boolean result = false;
                 try {
                     switchToResultMainFrame();
-                    SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(MiraResults.RECORD_CHECKBOX.element());
+                    SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(MiraResults.RECORD_CHECKBOX.element());
                     LocalValidation.getValidations().assertionPass("Asset has successfully processed.");
                     result = true;
                 } catch (Exception ex) {

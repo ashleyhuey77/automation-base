@@ -15,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class MiraServerFulfillmentComp extends AbstractMiraPage {
@@ -35,35 +36,31 @@ public class MiraServerFulfillmentComp extends AbstractMiraPage {
 
     private void waitForStatusToExist(String cnnId, String status) throws TestException {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), 300);
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofMinutes(5));
 
             wait.until((WebDriver driver) -> {
                 Boolean result = false;
                 try {
-                    SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(10)).on(MiraServerFulfillment.REQUEST_ROWS.element());
+                    Thread.sleep(5000);
                     List<WebElement> rows = SHelper.get().element().getListOf(MiraServerFulfillment.REQUEST_ROWS.element());
+                    if (rows.isEmpty()) {
+                        System.out.println("The list of rows was not found with the given selector.");
+                    }
                     WebElement row = find(rows).that(Condition.CONTAIN).text(cnnId).get();
+                    if (row == null) {
+                        System.out.println("The row was not found with cnnid " + cnnId + " and status " + status);
+                    }
                     if (row.getText().contains(status)) {
                         result = true;
                         LocalValidation.getValidations().assertionPass(status + " appears for the fulfillment as expected.");
                     } else {
                         result = false;
-                        SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
-                        switchToCommandBar();
-                        click().on(MiraGlobalNav.SRVR_FULFILLMENT_TAB).start();
-                        SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
-                        waitForFrameToBePresent("TaskArea");
-                        switchToServerTaskArea();
+                        click().on(MiraServerFulfillment.REFRSH_BTN).start();
                     }
                 } catch (Exception ex) {
                     try {
                         result = false;
-                        SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
-                        switchToCommandBar();
-                        click().on(MiraGlobalNav.SRVR_FULFILLMENT_TAB).start();
-                        SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
-                        waitForFrameToBePresent("TaskArea");
-                        switchToServerTaskArea();
+                        click().on(MiraServerFulfillment.REFRSH_BTN).start();
                     } catch (Exception e) {
                         System.out.println("Status is not as expected. Retrying...");
                     }

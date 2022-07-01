@@ -2,12 +2,11 @@ package com.warnermedia.config.app;
 
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
-import com.warnermedia.config.data.TestDataSetter;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.report.ReportFacade;
 import com.warnermedia.config.report.ReportType;
 import com.warnermedia.config.settings.LocalTest;
-import com.warnermedia.data.mongo.config.MongoConfig;
+//import com.warnermedia.data.mongo.config.MongoConfig;
 import com.warnermedia.selenium.SeleniumHelper;
 import com.warnermedia.utils.Log;
 
@@ -163,7 +162,11 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 	}
 
 	public void initializeBrowserName() throws TestException {
-		browserName = LocalTest.getEnvironment().getBrowser();
+			if (LocalTest.getEnvironment().getBrowser() != null) {
+				browserName = LocalTest.getEnvironment().getBrowser();
+			} else {
+				browserName = "Chrome";
+			}
 	}
 
 	public void initializeEnvironment() throws TestException {
@@ -177,10 +180,10 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 
 	public void initializeTestData() throws TestException {
 		try {
-			MongoConfig.createClient()
+/*			MongoConfig.createClient()
 					.initializeDB()
 					.setCollection()
-					.build();
+					.build();*/
 		} catch (Exception e) {
 			Log.get().log(Level.SEVERE, e.getMessage(), e);
 		}

@@ -1,5 +1,6 @@
 package com.warnermedia.page.utils;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import com.warnermedia.page.core.web.Fetch;
@@ -58,7 +59,7 @@ public class ClickHelper {
 
 	private void clickSomeTestElement() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(fetch.element(type), 5)) {
+			if (SHelper.get().element().isDisplayed(fetch.element(type), Duration.ofSeconds(5))) {
 				tryAllClicks(fetch.element(type), via);
 				LocalReport.getReport().reportDoneEvent(fetch.name(type) + " clicked successfully.");
 			} else {

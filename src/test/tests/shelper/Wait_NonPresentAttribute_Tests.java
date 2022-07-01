@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_NonPresentAttribute_Tests {
 	
@@ -39,7 +41,7 @@ public class Wait_NonPresentAttribute_Tests {
 	public void verifyWaitForNonPresenttAttributeToHaveNullBaseAttribute_ExceptionThrown() throws Exception
 	{
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -48,7 +50,7 @@ public class Wait_NonPresentAttribute_Tests {
 	{
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -66,7 +68,7 @@ public class Wait_NonPresentAttribute_Tests {
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("class")
 				.to(Condition.CONTAIN)
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -76,7 +78,7 @@ public class Wait_NonPresentAttribute_Tests {
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("class")
 				.value("Something")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -85,7 +87,7 @@ public class Wait_NonPresentAttribute_Tests {
 	{
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("class")
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(4))
 				.on(element);
 	}
@@ -98,7 +100,7 @@ public class Wait_NonPresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("value")
-        			.forAMaxTimeOf(1))
+        			.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -110,7 +112,7 @@ public class Wait_NonPresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("class")
-    				.forAMaxTimeOf(1))
+    				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -123,7 +125,7 @@ public class Wait_NonPresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("value")
-    				.forAMaxTimeOf(1))
+    				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 	
@@ -136,7 +138,7 @@ public class Wait_NonPresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.ATTRIBUTE_NOT_TO_BE_PRESENT, new WaitBuilder()
 				.forAttribute("class")
-    				.forAMaxTimeOf(1))
+    				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(test);
 	}
 	
@@ -149,7 +151,7 @@ public class Wait_NonPresentAttribute_Tests {
 				.forAttribute("class")
 				.to(Condition.CONTAIN)
 				.value("help")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -166,7 +168,7 @@ public class Wait_NonPresentAttribute_Tests {
 				.forAttribute("class")
 				.to(Condition.CONTAIN)
 				.value("someClassValue")
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element2);
 	}
 	
@@ -179,7 +181,7 @@ public class Wait_NonPresentAttribute_Tests {
 				.forAttribute("class")
 				.to(Condition.EQUAL)
 				.value("help")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -196,7 +198,7 @@ public class Wait_NonPresentAttribute_Tests {
 				.forAttribute("class")
 				.to(Condition.EQUAL)
 				.value("someClassValue")
-				.forAMaxTimeOf(1))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element2);
 	}
 	

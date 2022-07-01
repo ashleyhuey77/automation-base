@@ -1,12 +1,13 @@
 package com.warnermedia.page.core;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.*;
 import java.util.logging.Level;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.app.creds.CredentialsType;
+import com.utils.CredentialsType;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -288,7 +289,7 @@ public abstract class PageHelper extends PageUtils {
 	 */
 	protected void verifySomeElementIsPresent(TestElement element, String elementBeingTested) throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(element, 10)) {
+			if (SHelper.get().element().isDisplayed(element, Duration.ofSeconds(10))) {
 				LocalValidation.getValidations()
 						.assertionPass(elementBeingTested + " displays in the page as expected.");
 			} else {
@@ -321,7 +322,7 @@ public abstract class PageHelper extends PageUtils {
 	 */
 	protected void verifySomeElementIsNotPresent(TestElement element, String elementBeingTested) throws TestException {
 		try {
-			if (!SHelper.get().element().isDisplayed(element, 5)) {
+			if (!SHelper.get().element().isDisplayed(element, Duration.ofSeconds(5))) {
 				LocalValidation.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
 			} else {
 				throw LocalValidation.getValidations().assertionFailed(
@@ -646,7 +647,7 @@ public abstract class PageHelper extends PageUtils {
 	 *            should wait for the element to be
 	 *            found.
 	 */
-	public void refreshPageAndWaitForElementToDisplay(TestElement element, int i) throws TestException {
+	public void refreshPageAndWaitForElementToDisplay(TestElement element, Duration i) throws TestException {
 		try {
 			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
@@ -654,15 +655,15 @@ public abstract class PageHelper extends PageUtils {
 				Boolean result = false;
 				try {
 					if (LocalTest.getEnvironment().isHeadlessEnabled()) {
-						SHelper.get().element().isDisplayed(BaseGeneric.LOG_IN_BOX.element(), 2);
+						SHelper.get().element().isDisplayed(BaseGeneric.LOG_IN_BOX.element(), Duration.ofSeconds(2));
 						checkCookiesAndAddRequiredOnesIfNecessary(true);
-						SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(7))
+						SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(7)))
 								.on(BaseGeneric.LOG_IN_BOX.element());
 					} else {
 						SHelper.get().page().refresh();
 					}
-					SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
-					if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), 1)) {
+					SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(15))).on(element);
+					if (SHelper.get().element().isDisplayed(SHelper.get().element().get(element), Duration.ofSeconds(3))) {
 						result = true;
 					} else {
 						result = false;
@@ -696,15 +697,15 @@ public abstract class PageHelper extends PageUtils {
 	 *            should wait for the element to be
 	 *            found.
 	 */
-	public void refreshPageAndWaitForElementToDisplay(WebElement element, int i) {
+	public void refreshPageAndWaitForElementToDisplay(WebElement element, Duration i) {
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
 		wait.until((WebDriver driver) -> {
 			Boolean result = false;
 			try {
 				SHelper.get().page().refresh();
-				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(15)).on(element);
-				if (SHelper.get().element().isDisplayed(element, 10)) {
+				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(15))).on(element);
+				if (SHelper.get().element().isDisplayed(element, Duration.ofSeconds(10))) {
 					result = true;
 				} else {
 					result = false;
@@ -757,11 +758,11 @@ public abstract class PageHelper extends PageUtils {
 	protected void handleSignInModal() throws TestException {
 		try {
 			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
-			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(), 10)) {
+			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(),Duration.ofSeconds(10))) {
 				enter().text(new String(SignInHelper.getPassword(CredentialsType.BASE))).into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD).start();
 				click().on(BaseGeneric.ANYWHERE_SIGN_IN_BTN).start();
 				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
-				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(10)).on(BaseGeneric.EA_SIGNIN_BOX.element());
+				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(10))).on(BaseGeneric.EA_SIGNIN_BOX.element());
 				CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
 			}
 		} catch (Exception e) {
@@ -772,7 +773,7 @@ public abstract class PageHelper extends PageUtils {
 	protected void checkCookiesAndAddRequiredOnesIfNecessary(Boolean refreshPageAfter) throws TestException {
 		try {
 			if (LocalTest.getEnvironment().isHeadlessEnabled()) {
-    			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), 1)) {
+    			if (SHelper.get().element().isDisplayed(BaseGeneric.CORE_APPS_TOGGLE.element(), Duration.ofSeconds(1))) {
     			}
     			CookieHelper.newHelper().getCookies().setCookies().build();
 			}
@@ -784,7 +785,7 @@ public abstract class PageHelper extends PageUtils {
 		}
 	}
 	
-	protected Boolean isAlertPresent(int waitTime) throws TestException {
+	protected Boolean isAlertPresent(Duration waitTime) throws TestException {
 		Boolean foundAlert = false;
 		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), waitTime);
 		try {

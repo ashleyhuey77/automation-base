@@ -16,6 +16,8 @@ import com.warnermedia.selenium.browser.BrowserObject;
 import com.warnermedia.selenium.shared.Via;
 import pages.TestInitialization;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class BrowserTests extends TestInitialization {
 
@@ -158,7 +160,7 @@ public class BrowserTests extends TestInitialization {
 
 		SHelper.get().browser().switchTo(BrowserObject.DEFAULTCONTENT);
 		SHelper.get().browser().close();
-		SHelper.get().browser().waitForWindowCount(30, 1);
+		SHelper.get().browser().waitForWindowCount(Duration.ofSeconds(20), 1);
 		Assert.assertTrue(LocalDriver.getDriver().getWindowHandles().size() == 1);
 	}
 
@@ -189,13 +191,13 @@ public class BrowserTests extends TestInitialization {
 	@Test
 	public void verifyWaitForWindowCount() throws Exception {
 		goToGoogle();
-		SHelper.get().browser().waitForWindowCount(1, 1);
+		SHelper.get().browser().waitForWindowCount(Duration.ofSeconds(1), 1);
 	}
 
 	@Test(expectedExceptions = WebDriverException.class)
 	public void verifyWaitForWindowCount_ThrowsException() throws Exception {
 		goToGoogle();
-		SHelper.get().browser().waitForWindowCount(1, 2);
+		SHelper.get().browser().waitForWindowCount(Duration.ofSeconds(1), 2);
 	}
 
 	@Test

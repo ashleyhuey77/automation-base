@@ -1,14 +1,12 @@
 package com.warnermedia.config.driver;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.logging.Level;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import com.warnermedia.config.State;
 import com.warnermedia.config.TestException;
@@ -40,15 +38,15 @@ public class ChromeDriverHelper {
 			context.setState(headlessStopState);
 			context.doAction();
 		}
-		LocalChromeOptions.get().setPageLoadStrategy(PageLoadStrategy.NONE);
-		LocalChromeOptions.get().addArguments("start-maximized");
-		LocalChromeOptions.get().addArguments("enable-automation");
+		LocalChromeOptions.get().addArguments("--start-maximized");
+		LocalChromeOptions.get().addArguments("--enable-automation");
 		LocalChromeOptions.get().addArguments("--no-sandbox");
 		LocalChromeOptions.get().addArguments("--disable-infobars");
-		LocalChromeOptions.get().addArguments("--disable-dev-shm-usage");
-		LocalChromeOptions.get().addArguments("--disable-browser-side-navigation");
-		LocalChromeOptions.get().addArguments("--disable-gpu");
-		LocalChromeOptions.get().merge(caps);
+
+		/**LoggingPreferences logPrefs = new LoggingPreferences();
+		logPrefs.enable( LogType.BROWSER, Level.ALL );
+		LocalChromeOptions.get().setCapability( "goog:loggingPrefs", logPrefs );
+		LocalChromeOptions.get().merge(caps);**/
 
 		driver = new InheritableThreadLocal<WebDriver>() {
 			@Override
@@ -63,6 +61,19 @@ public class ChromeDriverHelper {
 				return driver;
 			}
 		};
+	}
+
+	private static ChromeOptions getCap() {
+		ChromeOptions caps = new ChromeOptions();
+		LoggingPreferences logPrefs = new LoggingPreferences();
+		logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
+		logPrefs.enable(LogType.PROFILER, Level.INFO);
+		logPrefs.enable(LogType.BROWSER, Level.INFO);
+		logPrefs.enable(LogType.CLIENT, Level.INFO);
+		logPrefs.enable(LogType.DRIVER, Level.INFO);
+		logPrefs.enable(LogType.SERVER, Level.INFO);
+		caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+		return caps;
 	}
 
 }

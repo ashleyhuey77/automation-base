@@ -1,7 +1,8 @@
 package com.warnermedia.page.core;
 
+import com.utils.CredentialsType;
 import org.openqa.selenium.WebDriverException;
-import com.app.creds.CredentialsType;
+
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -15,6 +16,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.CookieManager;
 import com.warnermedia.utils.TestUtils;
+
+import java.time.Duration;
 
 /**
  * <p>NewstronSignInPage</p>
@@ -84,8 +87,13 @@ public class NewstronSignInPage<T> extends PageTemplate {
     @Override
     public void WaitForPageLoad() throws TestException {
         try {
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(60))
-            		.on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
+            if (SHelper.get().element().isDisplayed(BaseGeneric.USER_NAME_TEXT_FIELD.element(), Duration.ofSeconds(15))) {
+                LocalReport.getReport().reportDoneEvent("The login page loaded as expected.");
+            } else if (SHelper.get().element().isDisplayed(BaseGeneric.USER_NAME_TEXT_FIELD2.element(), Duration.ofSeconds(15))) {
+                LocalReport.getReport().reportDoneEvent("The login page loaded as expected.");
+            } else {
+                throw LocalValidation.getValidations().assertionFailed("Login page isn't displaying as expected.");
+            }
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -101,19 +109,11 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public NewstronSignInPage<T> enterLogInDetails() throws TestException {
         try {
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
-            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
-            enter()
-                    .text(new String(SignInHelper.getName(CredentialsType.BASE)).trim())
-                    .into(BaseGeneric.USER_NAME_TEXT_FIELD)
-                    .start();
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
-            enter()
-                    .text(new String(SignInHelper.getPassword(CredentialsType.BASE)).trim())
-                    .into(BaseGeneric.PWD_TEXT_FIELD)
-                    .start();
-            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            if (SHelper.get().element().isDisplayed(BaseGeneric.USER_NAME_TEXT_FIELD.element(), Duration.ofSeconds(1))) {
+                enterOldCreds(CredentialsType.BASE);
+            } else {
+                enterNewCreds(CredentialsType.BASE);
+            }
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -130,19 +130,11 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public NewstronSignInPage<T> enterLogInDetails(CredentialsType type) throws TestException {
         try {
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, 
-            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
-            enter()
-                    .text(new String(SignInHelper.getName(type)).trim())
-                    .into(BaseGeneric.USER_NAME_TEXT_FIELD)
-                    .start();
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-            		new WaitBuilder().forAMaxTimeOf(30)).on(BaseGeneric.PWD_TEXT_FIELD.element());
-            enter()
-                    .text(new String(SignInHelper.getPassword(type)).trim())
-                    .into(BaseGeneric.PWD_TEXT_FIELD)
-                    .start();
-            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            if (SHelper.get().element().isDisplayed(BaseGeneric.USER_NAME_TEXT_FIELD.element(), Duration.ofSeconds(1))) {
+                enterOldCreds(type);
+            } else {
+                enterNewCreds(type);
+            }
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -164,18 +156,11 @@ public class NewstronSignInPage<T> extends PageTemplate {
      */
     public T clickTheSignInButton() throws TestException, InstantiationException, IllegalAccessException {
         try {
-            click().on(BaseGeneric.SIGN_IN_BTN).how(Via.JAVASCRIPT).start();
-            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), 3)) {
-                String errorText = getErrorText();
-                if (!TestUtils.isNullOrBlank(errorText)) {
-                    click().on(BaseGeneric.SIGN_IN_BTN).how(Via.JAVASCRIPT).start();
-                    String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
-                    if (!TestUtils.isNullOrBlank(errorText2)) {
-                    		throw LocalValidation.getValidations().assertionFailed(errorText2);
-                    }
-                } 
+            if (SHelper.get().element().isDisplayed(BaseGeneric.SIGN_IN_BTN.element(), Duration.ofSeconds(1))) {
+                selectOldLoginButton();
+            } else {
+                selectNewLoginButton();
             }
-            CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -190,6 +175,72 @@ public class NewstronSignInPage<T> extends PageTemplate {
             result = null;
         }
         return result;
+    }
+
+    private void enterOldCreds(CredentialsType type) throws TestException {
+        try {
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+                    new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.USER_NAME_TEXT_FIELD.element());
+            enter()
+                    .text(new String(SignInHelper.getName(CredentialsType.BASE)).trim())
+                    .into(BaseGeneric.USER_NAME_TEXT_FIELD)
+                    .start();
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+                    new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.PWD_TEXT_FIELD.element());
+            enter()
+                    .text(new String(SignInHelper.getPassword(type)).trim())
+                    .into(BaseGeneric.PWD_TEXT_FIELD)
+                    .start();
+            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+        } catch (Exception ex) {
+            throw LocalReport.getReport().reportException(ex);
+        }
+    }
+
+    private void enterNewCreds(CredentialsType type) throws TestException {
+        try {
+            enter()
+                    .text("Ashley.Huey@warnermedia.com")
+                    .into(BaseGeneric.USER_NAME_TEXT_FIELD2)
+                    .start();
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+                    new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.PWD_TEXT_FIELD2.element());
+            enter()
+                    .text(new String(SignInHelper.getPassword(type)).trim())
+                    .into(BaseGeneric.PWD_TEXT_FIELD2)
+                    .start();
+            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+        } catch (Exception ex) {
+            throw LocalReport.getReport().reportException(ex);
+        }
+    }
+
+    private void selectOldLoginButton() throws TestException {
+        try {
+            click().on(BaseGeneric.SIGN_IN_BTN).how(Via.JAVASCRIPT).start();
+            if (SHelper.get().element().isDisplayed(BaseGeneric.ERROR_MSG.element(), Duration.ofSeconds(3))) {
+                String errorText = getErrorText();
+                if (!TestUtils.isNullOrBlank(errorText)) {
+                    click().on(BaseGeneric.SIGN_IN_BTN).how(Via.JAVASCRIPT).start();
+                    String errorText2 = SHelper.get().text(Variable.ELEMENT, Via.SELENIUM).getFrom(BaseGeneric.ERROR_MSG.element());
+                    if (!TestUtils.isNullOrBlank(errorText2)) {
+                        throw LocalValidation.getValidations().assertionFailed(errorText2);
+                    }
+                }
+            }
+            CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
+        } catch (Exception ex) {
+            throw LocalReport.getReport().reportException(ex);
+        }
+    }
+
+    private void selectNewLoginButton() throws TestException {
+        try {
+            click().on(BaseGeneric.LOG_IN_BTN).start();
+            CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
+        } catch (Exception ex) {
+            throw LocalReport.getReport().reportException(ex);
+        }
     }
 
 }

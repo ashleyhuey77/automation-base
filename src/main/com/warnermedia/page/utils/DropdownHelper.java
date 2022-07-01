@@ -1,5 +1,6 @@
 package com.warnermedia.page.utils;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import com.warnermedia.page.core.PageUtils;
@@ -56,14 +57,14 @@ public class DropdownHelper extends PageUtils {
 	
     private void selectTestElementFromNonDropdown() throws TestException {
         try {
-        	if (SHelper.get().element().isDisplayed(clickElement.element(), 3)) {
+        	if (SHelper.get().element().isDisplayed(clickElement.element(), Duration.ofSeconds(10))) {
 				click().on(clickElement).start();
 				Thread.sleep(600);
                 if (searchElement != null) {
                 	enter().text(option).into(searchElement).start();
                 }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-                		new WaitBuilder().forAMaxTimeOf(30)).on(optionsElement.element());
+                		new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(optionsElement.element());
                 Thread.sleep(900);
                 selector()
 						.findOption(option)
@@ -80,7 +81,7 @@ public class DropdownHelper extends PageUtils {
 
     private void selectWebElementFromNonDropdown() throws TestException {
         try {
-        	if (SHelper.get().element().isDisplayed(clickWebElement, 10)) {
+        	if (SHelper.get().element().isDisplayed(clickWebElement, Duration.ofSeconds(10))) {
                 SHelper.get().click(Via.SELENIUM).on(clickWebElement);
                 Thread.sleep(600);
                 if (searchWebElement != null) {
@@ -90,7 +91,7 @@ public class DropdownHelper extends PageUtils {
 							.using(searchWebElement).start();
                 }
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-                		new WaitBuilder().forAMaxTimeOf(10)).on(optionsElement.element());
+                		new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(10))).on(optionsElement.element());
                 Thread.sleep(900);
                 selector()
 						.findOption(option)

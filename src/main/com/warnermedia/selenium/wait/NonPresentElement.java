@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.wait;
 
+import java.time.Duration;
 import java.util.Objects;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +15,7 @@ import com.warnermedia.utils.Validator;
 
 public class NonPresentElement extends Commands implements IWait {
 
-	protected int time = 0;
+	protected Duration time;
 
 	public NonPresentElement(WaitBuilder build) throws TestException {
 		LocalWaitBuilder builder = new LocalWaitBuilder(build);
@@ -45,11 +46,11 @@ public class NonPresentElement extends Commands implements IWait {
 	}
 
 	public static class LocalWaitBuilder extends Commands {
-		private int time;
+		private Duration time;
 
 		public LocalWaitBuilder(WaitBuilder base) throws TestException {
 			this.time = base.baseTime;
-			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			//Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue == null, "Value is not null. Remove the 'value' method.").get();
 			Validator.of(base.baseCondition).validate(Objects::isNull, result -> base.baseCondition == null, "Condition is not null. Remove the 'to' method.").get();
 			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> result.equals("0"), "Expected total count is not null. Remove the 'withACountOf' method.").get();

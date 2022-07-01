@@ -8,7 +8,7 @@ public class Windows implements State {
 	@Override
 	public void doAction() {
 		System.setProperty("webdriver.chrome.driver",
-				TestUtils.getRelativePath() + "/externalLibraries/browsers/mchromedriver.exe");
+				TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver.exe");
 	}
 
 }

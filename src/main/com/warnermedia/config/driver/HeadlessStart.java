@@ -8,8 +8,8 @@ public class HeadlessStart implements State {
 
 	@Override
 	public void doAction() {
-		LocalChromeOptions.get().addArguments("headless");
-		LocalChromeOptions.get().addArguments("window-size=1920,1080");
+		LocalChromeOptions.get().addArguments("--headless");
+		LocalChromeOptions.get().addArguments("--window-size=1920,1080");
 		LocalChromeOptions.get().addArguments("--force-device-scale-factor=1");
 		Log.get().log(Level.INFO, "Headless mode has been enabled. All tests will run in headless Chrome.");
 	}

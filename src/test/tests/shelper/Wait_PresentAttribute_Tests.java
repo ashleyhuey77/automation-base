@@ -21,6 +21,8 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class Wait_PresentAttribute_Tests {
 	
@@ -42,7 +44,7 @@ public class Wait_PresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 			.forAttribute("class")
-        		.forAMaxTimeOf(1))
+        		.forAMaxTimeOf(Duration.ofSeconds(2)))
 			.on(element);
 	}
 	
@@ -54,7 +56,7 @@ public class Wait_PresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 			.forAttribute("class")
-        		.forAMaxTimeOf(1))
+        		.forAMaxTimeOf(Duration.ofSeconds(2)))
 			.on(element2);
 	}
 	
@@ -65,7 +67,7 @@ public class Wait_PresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 			.forAttribute("style")
-        		.forAMaxTimeOf(1))
+        		.forAMaxTimeOf(Duration.ofSeconds(2)))
 			.on(element);
 	}
 	
@@ -77,7 +79,7 @@ public class Wait_PresentAttribute_Tests {
 		
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 			.forAttribute("style")
-        		.forAMaxTimeOf(1))
+        		.forAMaxTimeOf(Duration.ofSeconds(2)))
 			.on(element2);
 	}
 	
@@ -85,7 +87,7 @@ public class Wait_PresentAttribute_Tests {
 	public void verifyWaitForPresentAttributeToHaveNullBaseAttribute_ExceptionThrown() throws Exception
 	{
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -94,7 +96,7 @@ public class Wait_PresentAttribute_Tests {
 	{
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 				.forAttribute("")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -112,7 +114,7 @@ public class Wait_PresentAttribute_Tests {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 				.forAttribute("class")
 				.to(Condition.CONTAIN)
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -122,7 +124,7 @@ public class Wait_PresentAttribute_Tests {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 				.forAttribute("class")
 				.value("Something")
-				.forAMaxTimeOf(2))
+				.forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 	
@@ -131,7 +133,7 @@ public class Wait_PresentAttribute_Tests {
 	{
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE, new WaitBuilder()
 				.forAttribute("class")
-				.forAMaxTimeOf(1)
+				.forAMaxTimeOf(Duration.ofSeconds(2))
 				.withACountOf(4))
 				.on(element);
 	}

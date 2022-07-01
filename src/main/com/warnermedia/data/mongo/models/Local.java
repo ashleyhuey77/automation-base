@@ -6,6 +6,7 @@ import com.warnermedia.data.mongo.config.DataMapper;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Local {
 
     private static final String ATLANTA = "atlanta";
@@ -16,6 +17,12 @@ public class Local {
 
     @JsonProperty("encoders")
     private BureauList encoders;
+
+    @JsonProperty("archived_assets")
+    private BureauList archivedAssets;
+
+    @JsonProperty("native_assets")
+    private BureauList nativeAssets;
 
     @JsonProperty("routers")
     public BureauList routers;
@@ -31,6 +38,12 @@ public class Local {
 
     @JsonProperty("midas_location")
     public String midasLocation;
+
+    @JsonProperty("archive_cleaner_url")
+    public String archiveCleanerUrl;
+
+    @JsonProperty("sftp_endpoint")
+    public String sftpEndpoint;
 
     @JsonProperty("midas_mc_location")
     public String midasMCLocation;
@@ -82,19 +95,19 @@ public class Local {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Bureau {
 
-        @JsonProperty(ATLANTA)
+        @JsonProperty("atlanta")
         private String atlanta;
 
-        @JsonProperty(ATLANTA_EVERTZ)
+        @JsonProperty("atlanta - evertz")
         private String atlantaEvertz;
 
-        @JsonProperty(LOS_ANGELES)
+        @JsonProperty("los angeles")
         private String losAngeles;
 
         @JsonProperty("ny")
         private String ny;
 
-        @JsonProperty(SM1)
+        @JsonProperty("sm1")
         private String sm1;
     }
 
@@ -229,6 +242,64 @@ public class Local {
         String router = null;
         router = getRouter(DataMapper.local().midasMCLocation.toLowerCase(), indexToPickFromList);
         return router;
+    }
+
+    public String archivedAsset(final int indexToPickFromList) {
+        String router = null;
+        router = getArchivedAsset(DataMapper.local().eaLocation.toLowerCase(), indexToPickFromList);
+        return router;
+    }
+
+    public String nativeAsset(final int indexToPickFromList) {
+        String router = null;
+        router = getNativeAsset(DataMapper.local().eaLocation.toLowerCase(), indexToPickFromList);
+        return router;
+    }
+
+    private String getNativeAsset(final String location, final int indexToPickFromList) {
+        String native_asset = null;
+
+        switch(location) {
+            case NEW_YORK:
+                final List<String> nyAA = nativeAssets.ny;
+                native_asset = getValueFromArray(nyAA, indexToPickFromList);
+                break;
+            case ATLANTA:
+                final List<String> atlAA = nativeAssets.atlanta;
+                native_asset = getValueFromArray(atlAA, indexToPickFromList);
+                break;
+            case SM1:
+                final List<String> sm1AA = nativeAssets.sm1;
+                native_asset = getValueFromArray(sm1AA, indexToPickFromList);
+                break;
+            default:
+                native_asset = "";
+                break;
+        }
+        return native_asset;
+    }
+
+    private String getArchivedAsset(final String location, final int indexToPickFromList) {
+        String archived_asset = null;
+
+        switch(location) {
+            case NEW_YORK:
+                final List<String> nyAA = archivedAssets.ny;
+                archived_asset = getValueFromArray(nyAA, indexToPickFromList);
+                break;
+            case ATLANTA:
+                final List<String> atlAA = archivedAssets.atlanta;
+                archived_asset = getValueFromArray(atlAA, indexToPickFromList);
+                break;
+            case SM1:
+                final List<String> sm1AA = archivedAssets.sm1;
+                archived_asset = getValueFromArray(sm1AA, indexToPickFromList);
+                break;
+            default:
+                archived_asset = "";
+                break;
+        }
+        return archived_asset;
     }
 
     private String getRouter(final String location, final int indexToPickFromList) {
@@ -375,3 +446,4 @@ public class Local {
     }
 
 }
+

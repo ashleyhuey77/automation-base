@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.wait;
 
+import java.time.Duration;
 import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +14,7 @@ import com.warnermedia.utils.Validator;
 
 public class ElementCount extends Commands implements IWait {
 
-	protected int time = 0;
+	protected Duration time;
 	protected int expectedTotalCount = 0;
 
 	public ElementCount(WaitBuilder build) throws TestException {
@@ -37,7 +38,7 @@ public class ElementCount extends Commands implements IWait {
 			 	SHelper.get().page().refresh(); **/
 				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
 						new WaitBuilder()
-						.forAMaxTimeOf(3))
+						.forAMaxTimeOf(Duration.ofSeconds(3)))
 				.on(element);
 				int actualElementCount = getElements(element).size();
 				if (actualElementCount == expectedTotalCount) {
@@ -56,13 +57,13 @@ public class ElementCount extends Commands implements IWait {
 	}
 
 	public static class LocalWaitBuilder extends Commands {
-		private int time;
+		private Duration time;
 		private int expectedTotalCount;
 
 		public LocalWaitBuilder(WaitBuilder base) throws TestException {
 			this.time = base.baseTime;
 			this.expectedTotalCount = base.baseExpectedTotalCount;
-			Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
+			//Validator.of(base.baseTime).validate(String::valueOf, result -> !result.equals("0"), "Time is null. Add the 'forAMaxTimeOf' method.").get();
 			Validator.of(base.baseExpectedTotalCount).validate(String::valueOf, result -> !result.equals("0"), "Expected Total Count is null. Add the 'withACountOf' method.").get();
 			Validator.of(base.baseValue).validate(Objects::nonNull, result -> base.baseValue == null, "Value is not null. Remove the 'value' method.").get();
 			Validator.of(base.baseCondition).validate(Objects::isNull, result -> base.baseCondition == null, "Condition is not null. Remove the 'to' method.").get();

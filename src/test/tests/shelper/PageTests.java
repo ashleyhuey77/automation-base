@@ -20,6 +20,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 
+import java.time.Duration;
+
 @Listeners(WebDriverListener.class)
 public class PageTests {
 	
@@ -48,7 +50,7 @@ public class PageTests {
 		Thread.sleep(400);
 		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-				new WaitBuilder().forAMaxTimeOf(30)).on(element3);
+				new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element3);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
@@ -118,7 +120,7 @@ public class PageTests {
 		Thread.sleep(400);
 		SHelper.get().click(Via.SELENIUM).on(element2);
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-				new WaitBuilder().forAMaxTimeOf(30)).on(element3);
+				new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element3);
 		SHelper.get().page().scrollTo(Location.BOTTOM_OF_PAGE);
 		Thread.sleep(900);
 		String before = ((JavascriptExecutor)LocalDriver.getDriver()).executeScript("return window.pageYOffset").toString();

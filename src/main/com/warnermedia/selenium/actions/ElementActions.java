@@ -1,5 +1,6 @@
 package com.warnermedia.selenium.actions;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
@@ -85,18 +86,18 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void dragAndDrop(TestElement dragElement, TestElement dropElement, int timeTowait)
+	public void dragAndDrop(TestElement dragElement, TestElement dropElement, Duration timeTowait)
 			throws TestException, InterruptedException {
 
 		WebElement dragElement1 = null;
 		WebElement dropElement1 = null;
 
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragElement);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(dragElement);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		List<WebElement> locate = SHelper.get().element().getListOf(dragElement);
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait)).on(dragElement);
 		dragElement1 = locate.get(0);
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(dragElement);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(dragElement);
 		List<WebElement> locateDroppable = SHelper.get().element().getListOf(dropElement);
 		Actions act = new Actions(LocalDriver.getDriver());
 		dropElement1 = locateDroppable.get(0);
@@ -259,9 +260,6 @@ public class ElementActions extends Commands implements IActions {
 	 * @param selectType
 	 *            - the selection type eithe by value,
 	 *            by visible text or by index
-	 * 
-	 * @param locator-
-	 *            the DOM element from dropdown
 	 * @author OJ
 	 */
 	@Override
@@ -295,7 +293,7 @@ public class ElementActions extends Commands implements IActions {
 	}
 
 	@Override
-	public void dragAndDrop(WebElement elementToBeDragged, WebElement elementToBeDropped, int timeTowait)
+	public void dragAndDrop(WebElement elementToBeDragged, WebElement elementToBeDropped, Duration timeTowait)
 			throws TestException, InterruptedException {
 		WebElement dragElement = null;
 		WebElement dropElement = null;
@@ -303,7 +301,7 @@ public class ElementActions extends Commands implements IActions {
 		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(timeTowait))
 				.on(elementToBeDragged);
 		dragElement = elementToBeDragged;
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20))
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20)))
 				.on(elementToBeDragged);
 		Actions act = new Actions(LocalDriver.getDriver());
 		dropElement = elementToBeDropped;

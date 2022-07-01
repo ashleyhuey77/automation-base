@@ -8,6 +8,8 @@ import com.warnermedia.mira.web.inputs.MiraResults;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.Duration;
+
 public class MiraResultsComp extends AbstractMiraPage {
 
     public MiraResultsComp() {
@@ -56,10 +58,10 @@ public class MiraResultsComp extends AbstractMiraPage {
             switchToTaskBar();
             click().on(MiraResults.SUBMIT_BUTTON).start();
             switchToSearchMainFrame();
-            if (SHelper.get().element().isDisplayed(MiraResults.PROCESS_BUTTON.element(), 5)) {
+            if (SHelper.get().element().isDisplayed(MiraResults.PROCESS_BUTTON.element(), Duration.ofSeconds(5))) {
                 click().on(MiraResults.PROCESS_BUTTON).start();
             }
-            if (SHelper.get().element().isDisplayed(MiraResults.OK_BUTTON.element(), 5)) {
+            if (SHelper.get().element().isDisplayed(MiraResults.OK_BUTTON.element(), Duration.ofSeconds(5))) {
                 click().on(MiraResults.OK_BUTTON).start();
             }
         } catch (Exception e) {

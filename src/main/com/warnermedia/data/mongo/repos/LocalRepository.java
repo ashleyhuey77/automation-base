@@ -1,19 +1,19 @@
 package com.warnermedia.data.mongo.repos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoCollection;
+import com.mongodb.*;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.data.mongo.config.Serializer;
-import com.warnermedia.data.mongo.models.Data;
-import com.warnermedia.data.mongo.models.Global;
 import com.warnermedia.data.mongo.models.Local;
 import org.bson.Document;
 
 public class LocalRepository {
 
     MongoDatabase database;
+    private static ThreadLocal<MongoCursor<Document>> cursor = new ThreadLocal<>();
 
     public LocalRepository(MongoDatabase databaseMongo) {
         this.database = databaseMongo;
@@ -22,16 +22,42 @@ public class LocalRepository {
     public void set() {
         Local data = null;
         try {
-            MongoCollection<Document> collection = null;
+            Document doc = null;
+            cursor.set(database.getCollection("local").find().iterator());
             if (LocalTest.getEnvironment().getEnvironment().equalsIgnoreCase("ref")) {
-               collection = database.getCollection("local.ref");
+                while (cursor.get().hasNext()) {
+                    doc = cursor.get().next();
+                    if (doc.get("name").toString().equalsIgnoreCase("ref")) {
+                        break;
+                    }
+                }
             } else if (LocalTest.getEnvironment().getEnvironment().equalsIgnoreCase("dev")) {
-                collection = database.getCollection("local.dev");
+                while (cursor.get().hasNext()) {
+                    doc = cursor.get().next();
+                    if (doc.get("name").toString().equalsIgnoreCase("dev")) {
+                        break;
+                    }
+                }
+            } else {
+                while (cursor.get().hasNext()) {
+                    doc = cursor.get().next();
+                    if (doc.get("name").toString().equalsIgnoreCase("ref")) {
+                        break;
+                    }
+                }
             }
-            String obj = Serializer.serialize(collection);
+            String obj = Serializer.serialize(doc);
             final ObjectMapper mapper = new ObjectMapper();
             data = mapper.readValue(obj, Local.class);
             DataMapper.setLocal(data);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void close() {
+        try {
+            cursor.get().close();
         } catch (Exception e) {
             System.out.println(e);
         }

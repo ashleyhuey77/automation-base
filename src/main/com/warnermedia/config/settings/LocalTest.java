@@ -65,8 +65,9 @@ public class LocalTest {
             Environment environment = new Environment(appUrl, env, browser, os, bureau, isHeadless);
             setEnvironment(environment);
             setIsLoggingEnabled(isLoggingEnabled);
+            System.getProperties().setProperty("jdk.tls.client.protocols", "TLSv1.2");
     	} catch (Exception e) {
-    		
+    		System.out.println(e);
     	}
     }
 

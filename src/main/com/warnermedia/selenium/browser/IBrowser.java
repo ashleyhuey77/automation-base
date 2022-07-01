@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import com.warnermedia.config.TestException;
 import com.warnermedia.selenium.TestElement;
 
+import java.time.Duration;
+
 public interface IBrowser {
 	
 	/**
@@ -125,7 +127,7 @@ public interface IBrowser {
 	 * </pre>
 	 * @throws TestException
 	 */
-	public void waitForWindowCount(int i, int expectedCount) throws TestException;
+	public void waitForWindowCount(Duration i, int expectedCount) throws TestException;
 	
 	/**
 	 * <p>This method is meant to switch to a browser object. This method is primarily used

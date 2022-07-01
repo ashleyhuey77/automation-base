@@ -1,6 +1,5 @@
 package com.warnermedia.selenium.click;
 
-import com.warnermedia.utils.JSWaiter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
@@ -11,6 +10,8 @@ import com.warnermedia.selenium.shared.Commands;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.StateManager;
+
+import java.time.Duration;
 
 public class JSClick extends Commands implements IClick {
 
@@ -58,11 +59,9 @@ public class JSClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, "0");
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -70,11 +69,9 @@ public class JSClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].click();", element);
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -82,11 +79,9 @@ public class JSClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, index);
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 	@Override
@@ -94,11 +89,9 @@ public class JSClick extends Commands implements IClick {
 		if (StateManager.getState() != null) {
 			StateManager.getState().checkState();
 		}
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(element);
+		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 		//checkCookiesAndAddRequiredOnesIfNecessary();
 		clickViaJavascriptElementType(element, Integer.toString(index));
-		JSWaiter waiter = new JSWaiter(LocalDriver.getDriver());
-		waiter.waitForAllRequests();
 	}
 
 }
