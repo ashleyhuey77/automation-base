@@ -1,6 +1,6 @@
 package com.warnermedia.wdm.version;
 
-import com.warnermedia.wdm.utils.WebDriverManagerException;
+import com.warnermedia.utils.ex.WebDriverManagerException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,9 +1,14 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -23,36 +28,44 @@ public class NonPresentAttribute extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = null;
-			try {
-				elementToBeTested = getElement(element);
-			} catch (TestException e) {
-				return false;
-			}
-			String value = elementToBeTested.getAttribute(attribute);
-			if (value == null || value.equals("")) {
-				result = true;
-			}
-			return result;
-		});
+	public void on(TestElement... element) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(Arrays.stream(element).findFirst().get());
+				} catch (TestException e) {
+					return false;
+				}
+				String value = elementToBeTested.getAttribute(attribute);
+				if (value == null || value.equals("")) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + Arrays.stream(element).findFirst().get().locator().value() + " to no longer contain attribute " + attribute, ErrorCode.WAIT);
+		}
 	}
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String value = elementToBeTested.getAttribute(attribute);
-			if (value == null || value.equals("")) {
-				result = true;
-			}
-			return result;
-		});
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = element;
+				String value = elementToBeTested.getAttribute(attribute);
+				if (value == null || value.equals("")) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for the element to no longer contain attribute " + attribute, ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

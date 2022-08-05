@@ -1,5 +1,7 @@
 package com.warnermedia.wdm.download;
 
+import com.warnermedia.config.TestException;
+
 public class DownloadController implements Downloader {
 
     private final Downloader downloader;
@@ -8,12 +10,12 @@ public class DownloadController implements Downloader {
         this.downloader = downloader;
     }
     @Override
-    public void findUrl(String expectedVersion) throws Exception {
+    public void findUrl(String expectedVersion) throws TestException {
         downloader.findUrl(expectedVersion);
     }
 
     @Override
-    public void downloadFile() throws Exception {
+    public void downloadFile() throws TestException {
         downloader.downloadFile();
     }
 }

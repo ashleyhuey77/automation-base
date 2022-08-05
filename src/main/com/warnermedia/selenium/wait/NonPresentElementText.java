@@ -1,8 +1,12 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,20 +33,20 @@ public class NonPresentElementText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
+	public void on(TestElement... element) throws TestException {
 		switch (condition) {
 			case EQUAL:
 				if (this.indexOf != null) {
-					waitForListElementToNoLongerEqualText(element);
+					waitForListElementToNoLongerEqualText(Arrays.stream(element).findFirst().get());
 				} else {
-					waitForElementToNoLongerEqualText(element, value, time);
+					waitForElementToNoLongerEqualText(Arrays.stream(element).findFirst().get(), value, time);
 				}
 				break;
 			case CONTAIN:
 				if (this.indexOf != null) {
-					waitForListElementToNoLongerContainText(element);
+					waitForListElementToNoLongerContainText(Arrays.stream(element).findFirst().get());
 				} else {
-					waitForElementToNoLongerContainText(element, value, time);
+					waitForElementToNoLongerContainText(Arrays.stream(element).findFirst().get(), value, time);
 				}
 				break;
 			default:
@@ -67,43 +71,55 @@ public class NonPresentElementText extends Commands implements IWait {
 	}
 	
 	private void waitForListElementToNoLongerEqualText(TestElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				List<WebElement> elementList = SHelper.get().element().getListOf(element);
-				int intIndex = Integer.parseInt(this.indexOf);
-    			WebElement elementToBeTested = elementList.get(intIndex);
-    			String actualText = elementToBeTested.getText();
-    			if (!actualText.equalsIgnoreCase(this.value.trim())) {
-    				result = true;
-    			}
-			} catch (Exception e) {
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					List<WebElement> elementList = SHelper.get().element().getListOf(element);
+					int intIndex = Integer.parseInt(this.indexOf);
+					WebElement elementToBeTested = elementList.get(intIndex);
+					String actualText = elementToBeTested.getText();
+					if (!actualText.equalsIgnoreCase(this.value.trim())) {
+						result = true;
+					}
+				} catch (Exception e) {
+					return result;
+				}
 				return result;
-			}
-			return result;
-		});
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 	
 	private void waitForListElementToNoLongerContainText(TestElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), this.time);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				List<WebElement> elementList = SHelper.get().element().getListOf(element);
-				int intIndex = Integer.parseInt(this.indexOf);
-    			WebElement elementToBeTested = elementList.get(intIndex);
-    			String actualText = elementToBeTested.getText();
-    			if (!actualText.contains(this.value.trim())) {
-    				result = true;
-    			}
-			} catch (Exception e) {
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					List<WebElement> elementList = SHelper.get().element().getListOf(element);
+					int intIndex = Integer.parseInt(this.indexOf);
+					WebElement elementToBeTested = elementList.get(intIndex);
+					String actualText = elementToBeTested.getText();
+					if (!actualText.contains(this.value.trim())) {
+						result = true;
+					}
+				} catch (Exception e) {
+					return result;
+				}
 				return result;
-			}
-			return result;
-		});
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -120,23 +136,29 @@ public class NonPresentElementText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForElementToNoLongerContainText(TestElement element, String expectedText, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	private void waitForElementToNoLongerContainText(TestElement element, String expectedText, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = null;
-			try {
-				elementToBeTested = getElement(element);
-			} catch (TestException e) {
-				return false;
-			}
-			String actualText = elementToBeTested.getText();
-			if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(element);
+				} catch (TestException e) {
+					return false;
+				}
+				String actualText = elementToBeTested.getText();
+				if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -153,23 +175,29 @@ public class NonPresentElementText extends Commands implements IWait {
 	 * 
 	 * @return void
 	 */
-	private void waitForElementToNoLongerEqualText(TestElement element, String expectedText, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	private void waitForElementToNoLongerEqualText(TestElement element, String expectedText, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = null;
-			try {
-				elementToBeTested = getElement(element);
-			} catch (TestException e) {
-				return false;
-			}
-			String actualText = elementToBeTested.getText();
-			if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(element);
+				} catch (TestException e) {
+					return false;
+				}
+				String actualText = elementToBeTested.getText();
+				if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -185,18 +213,24 @@ public class NonPresentElementText extends Commands implements IWait {
 	 *            true
 	 * @return void
 	 */
-	private void waitForElementToNoLongerContainText(WebElement element, String expectedText, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	private void waitForElementToNoLongerContainText(WebElement element, String expectedText, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = element;
+				String actualText = elementToBeTested.getText();
+				if (!actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for the element" +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -212,18 +246,24 @@ public class NonPresentElementText extends Commands implements IWait {
 	 *            true
 	 * @return void
 	 */
-	private void waitForElementToNoLongerEqualText(WebElement element, String expectedText, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+	private void waitForElementToNoLongerEqualText(WebElement element, String expectedText, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualText = elementToBeTested.getText();
-			if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = element;
+				String actualText = elementToBeTested.getText();
+				if (!actualText.toLowerCase().trim().equals(expectedText.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + String.valueOf(time.getSeconds()) + " seconds for an element" +
+					" to no longer " + condition.name()
+					+ " " + value, ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

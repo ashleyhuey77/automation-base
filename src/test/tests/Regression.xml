@@ -9,8 +9,8 @@
   	<classes>
   		<!--<class name="tests.ReportingTests"/>
 		<class name="tests.shelper.BrowserTests"/>
-  		<class name="tests.shelper.ClickTests"/>
-		<class name="tests.shelper.EnterTests"/>
+  		<class name="tests.shelper.ClickTests"/> -->
+		<!--<class name="tests.shelper.EnterTests"/>
   		<class name="tests.shelper.PageTests"/>
   		<class name="tests.shelper.TextTests"/>
   		<class name="tests.shelper.ElementTests"/>
@@ -36,8 +36,8 @@
   		<class name="tests.loki.OtherLokiTests"/>
 		<class name="tests.loki.OtherLokiTests"/>
   		<class name="tests.helpers.ElementHelper_Tests"/>-->
-  		<class name="tests.NewstronSignInPage_Test"/>
-		<!--<class name="Testing"/> -->
+		<class name="tests.NewstronSignInPage_Test"/>
+      <!--<class name="Testing"/> -->
   	</classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

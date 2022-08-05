@@ -1,9 +1,14 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
@@ -27,13 +32,13 @@ public class PresentAttributeText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
+	public void on(TestElement... element) throws TestException {
 		switch (condition) {
 			case EQUAL:
-				waitForAttributeToEqualACertainValue(element, attribute, value, time);
+				waitForAttributeToEqualACertainValue(Arrays.stream(element).findFirst().get(), attribute, value);
 				break;
 			case CONTAIN:
-				waitForAttributeToContainACertainValue(element, attribute, value, time);
+				waitForAttributeToContainACertainValue(Arrays.stream(element).findFirst().get(), attribute, value);
 				break;
 			default:
 				throw new TestException(
@@ -45,10 +50,10 @@ public class PresentAttributeText extends Commands implements IWait {
 	public void on(WebElement element) throws TestException {
 		switch (condition) {
 			case EQUAL:
-				waitForAttributeToEqualACertainValue(element, attribute, value, time);
+				waitForAttributeToEqualACertainValue(element, attribute, value);
 				break;
 			case CONTAIN:
-				waitForAttributeToContainACertainValue(element, attribute, value, time);
+				waitForAttributeToContainACertainValue(element, attribute, value);
 				break;
 			default:
 				throw new TestException(
@@ -69,103 +74,67 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * @param expectedValue
 	 *            the expected value of the html
 	 *            attribute
-	 * @param i
-	 *            the total amount of time allotted to
-	 *            wait for the condition to return
-	 *            true
 	 * @return void
 	 */
-	private void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue,
-			Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				WebElement elementToBeTested = element;
-				String actualValue = elementToBeTested.getAttribute(attribute);
-				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
-					result = true;
-				}
-			} catch (Exception e) {
-				result = false;
-			}
-			return result;
-		});
-	}
-
-	/**
-	 * <summary> method to wait for an attribute to
-	 * equal a certain value </summary>
-	 * @param element
-	 * @param attribute
-	 *            the html attribute whose value is to
-	 *            be evaluated and obtained
-	 * @param expectedValue
-	 *            the expected value of the html
-	 *            attribute
-	 * @param i
-	 *            the total amount of time allotted to
-	 *            wait for the condition to return
-	 *            true
-	 * 
-	 * @return void
-	 */
-	private void waitForAttributeToEqualACertainValue(TestElement element, String attribute, String expectedValue, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				WebElement elementToBeTested = getElement(element);
-				String actualValue = elementToBeTested.getAttribute(attribute);
-				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
-					result = true;
-				}
-			} catch (Exception e) {
-				result = false;
-			}
-			return result;
-		});
-	}
-
-	/**
-	 * <summary> method to wait for an attribute to
-	 * equal a certain value </summary>
-	 * @param element
-	 * @param attribute
-	 *            the html attribute whose value is to
-	 *            be evaluated and obtained
-	 * @param expectedValue
-	 *            the expected value of the html
-	 *            attribute
-	 * @param i
-	 *            the total amount of time allotted to
-	 *            wait for the condition to return
-	 *            true
-	 * 
-	 * @return void
-	 */
-	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue, Duration i) throws TestException {
+	private void waitForAttributeToEqualACertainValue(WebElement element, String attribute, String expectedValue) throws TestException {
 		try {
-			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-			wait.until((WebDriver driver) -> {
-				Boolean result = false;
-				WebElement elementToBeTested = null;
-				try {
-					elementToBeTested = getElement(element);
-				} catch (TestException e) {
-					return false;
-				}
-				String actualValue = elementToBeTested.getAttribute(attribute);
-				if (actualValue != null && actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-					result = true;
-				}
-				return result;
-			});
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until(ExpectedConditions.attributeToBe(element, attribute, expectedValue));
 		} catch (Exception e) {
-			throw e;
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for the element" +
+					" to " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
+	}
+
+	/**
+	 * <summary> method to wait for an attribute to
+	 * equal a certain value </summary>
+	 * @param element
+	 * @param attribute
+	 *            the html attribute whose value is to
+	 *            be evaluated and obtained
+	 * @param expectedValue
+	 *            the expected value of the html
+	 *            attribute
+	 * 
+	 * @return void
+	 */
+	private void waitForAttributeToEqualACertainValue(TestElement element, String attribute, String expectedValue) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until(ExpectedConditions.attributeToBe(getByValueBasedOnUserInput(element), attribute, expectedValue));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + element.locator().value() +
+					" to " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
+	}
+
+	/**
+	 * <summary> method to wait for an attribute to
+	 * equal a certain value </summary>
+	 * @param element
+	 * @param attribute
+	 *            the html attribute whose value is to
+	 *            be evaluated and obtained
+	 * @param expectedValue
+	 *            the expected value of the html
+	 *            attribute
+	 * 
+	 * @return void
+	 */
+	private void waitForAttributeToContainACertainValue(TestElement element, String attribute, String expectedValue) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until(ExpectedConditions.attributeContains(getByValueBasedOnUserInput(element), attribute, expectedValue));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + element.locator().value() +
+					" to " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
 		}
 	}
 
@@ -179,25 +148,18 @@ public class PresentAttributeText extends Commands implements IWait {
 	 * @param expectedValue
 	 *            the expected value of the html
 	 *            attribute
-	 * @param i
-	 *            the total amount of time allotted to
-	 *            wait for the condition to return
-	 *            true
 	 * @return void
 	 */
-	private void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue,
-			Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
-
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualValue = elementToBeTested.getAttribute(attribute);
-			if (actualValue != null && actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+	private void waitForAttributeToContainACertainValue(WebElement element, String attribute, String expectedValue) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until(ExpectedConditions.attributeContains(element, attribute, expectedValue));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for the element" +
+					" to " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

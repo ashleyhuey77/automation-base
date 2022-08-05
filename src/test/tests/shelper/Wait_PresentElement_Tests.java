@@ -1,5 +1,6 @@
 package tests.shelper;
 
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -38,7 +39,7 @@ public class Wait_PresentElement_Tests {
 		LocalDriver.getDriver().get("http://www.google.com");
 	}
 
-	@Test(expectedExceptions = WebDriverException.class)
+	@Test(expectedExceptions = SeleniumException.class)
 	public void verifyWaitForElementToLoad_ExceptionThrown() throws Exception {
 		TestElement element2 = new TestElement(new Locator(""), new By("id"));
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2);
@@ -51,6 +52,33 @@ public class Wait_PresentElement_Tests {
 		Thread.sleep(300);
 
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
+	}
+
+	@Test
+	public void verifyElementIsPresent_MultipleElements() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClass>Button</button>');");
+		Thread.sleep(300);
+		Locator locator2 = new Locator("#nope");
+		By by2 = new By(How.CSS);
+		TestElement element2 = new TestElement(locator2, by2);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element, element2);
+	}
+
+	@Test(expectedExceptions = SeleniumException.class)
+	public void verifyElementIsPresent_MultipleElements_NoElementsFound() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=someClass>Button</button>');");
+		Thread.sleep(300);
+		Locator locator2 = new Locator("#nope");
+		By by2 = new By(How.CSS);
+		TestElement element2 = new TestElement(locator2, by2);
+		Locator locator3 = new Locator("#blah");
+		By by3 = new By(How.CSS);
+		TestElement element3 = new TestElement(locator3, by3);
+
+		SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(2))).on(element2, element3);
 	}
 
 	@Test

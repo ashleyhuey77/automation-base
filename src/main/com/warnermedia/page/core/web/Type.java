@@ -8,4 +8,6 @@ public interface Type {
 	
 	public TestElement element();
 
+	public String name();
+
 }

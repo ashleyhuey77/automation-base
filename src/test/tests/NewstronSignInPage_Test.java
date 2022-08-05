@@ -6,6 +6,8 @@ import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.config.testng.TestListener;
 import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.page.core.SignInPage;
+import com.warnermedia.utils.ex.SeleniumException;
+import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -25,15 +27,11 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	
 	@BeforeMethod
 	public void goToNewsapps() {
-		LocalDriver.getDriver().get("http://newstron-ref.turner.com/newstron/newstron.html");
+		LocalDriver.getDriver().get("http://newstron-dev.turner.com/");
 	}
 	
 	@Test
 	public void verifyNewstronSignInPage() throws Exception {
-		System.out.println(new String(UserHelper.getName(CredentialsType.BASE)));
-		System.out.println(new String(UserHelper.getPassword(CredentialsType.BASE)));
-		System.out.println(new String(UserHelper.getName(CredentialsType.MIRA)));
-		System.out.println(new String(UserHelper.getPassword(CredentialsType.MIRA)));
 
 		SignInPage _newstronSignInPage = new SignInPage();
 		
@@ -41,6 +39,15 @@ public class NewstronSignInPage_Test extends TestInitialization {
 		CookieHelper.newHelper().getCookies().setCookies().build();
 		   				_newstronSignInPage.clickTheSignInButton();
 		CookieHelper.newHelper().getCookies().setCookies().build();
+	}
+
+	@Test(expectedExceptions= TestException.class)
+	public void verifyNewstronSignInPage_3() throws Exception {
+
+		SignInPage _newstronSignInPage = new SignInPage();
+
+		_newstronSignInPage.testingError();
+		_newstronSignInPage.clickTheSignInButton();
 	}
 	
 	@Test
@@ -51,15 +58,6 @@ public class NewstronSignInPage_Test extends TestInitialization {
 			_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
 					.clickTheSignInButton();
 			new AllAppsDashboard().reportThatPageLoadedSuccessfully();
-		} catch (Exception e) {
-			throw LocalReport.getReport().reportException(e);
-		}
-	}
-
-	@Test
-	public void verifyLocalTestData() throws Exception {
-		try {
-			System.out.println(DataMapper.local().fsBaseUrl());
 		} catch (Exception e) {
 			throw LocalReport.getReport().reportException(e);
 		}

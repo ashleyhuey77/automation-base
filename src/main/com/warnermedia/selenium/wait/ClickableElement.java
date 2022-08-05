@@ -1,7 +1,11 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,14 +25,22 @@ public class ClickableElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
-		new WebDriverWait(LocalDriver.getDriver(), time)
-				.until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(element)));
+	public void on(TestElement... element) throws TestException {
+		try {
+			new WebDriverWait(LocalDriver.getDriver(), time)
+					.until(ExpectedConditions.elementToBeClickable(getByValueBasedOnUserInput(Arrays.stream(element).findFirst().get())));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + Arrays.stream(element).findFirst().get().locator().value() + " to be clickable.", ErrorCode.WAIT);
+		}
 	}
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.elementToBeClickable(element));
+		try {
+			new WebDriverWait(LocalDriver.getDriver(), time).until(ExpectedConditions.elementToBeClickable(element));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for the element to be clickable.", ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

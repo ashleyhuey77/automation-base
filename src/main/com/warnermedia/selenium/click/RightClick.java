@@ -1,5 +1,7 @@
 package com.warnermedia.selenium.click;
 
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import com.warnermedia.config.SHelper;
@@ -16,18 +18,22 @@ public class RightClick extends Commands implements IClick {
 
 	@Override
 	public void on(TestElement element) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
-
-		Actions action = new Actions(LocalDriver.getDriver());
-		action.contextClick(getElement(element)).build().perform();
+		try {
+			Actions action = new Actions(LocalDriver.getDriver());
+			action.contextClick(getElement(element)).build().perform();
+		} catch (Exception e) {
+			throw new SeleniumException("An error occurred when trying to right click on the element.", ErrorCode.CLICK);
+		}
 	}
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
-
-		Actions action = new Actions(LocalDriver.getDriver());
-		action.contextClick(element).build().perform();
+		try {
+			Actions action = new Actions(LocalDriver.getDriver());
+			action.contextClick(element).build().perform();
+		} catch (Exception e) {
+			throw new SeleniumException("An error occurred when trying to right click on the element.", ErrorCode.CLICK);
+		}
 	}
 
 	@Override

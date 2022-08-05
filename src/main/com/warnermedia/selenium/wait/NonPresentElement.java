@@ -1,7 +1,11 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,26 +27,36 @@ public class NonPresentElement extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
-		new WebDriverWait(LocalDriver.getDriver(), time)
-				.until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(element)));
+	public void on(TestElement... element) throws TestException {
+		try {
+			new WebDriverWait(LocalDriver.getDriver(), time)
+					.until(ExpectedConditions.invisibilityOfElementLocated(getByValueBasedOnUserInput(Arrays.stream(element).findFirst().get())));
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + Arrays.stream(element).findFirst().get().locator().value() +
+					" to no longer appear on the page.", ErrorCode.WAIT);
+		}
 	}
 
 	@Override
 	public void on(WebElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				if (!element.isDisplayed()) {
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					if (!element.isDisplayed()) {
+						result = true;
+					}
+				} catch (StaleElementReferenceException ex) {
 					result = true;
 				}
-			} catch (StaleElementReferenceException ex) {
-				result = true;
-			}
-			return result;
-		});
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for the element" +
+					" to no longer appear on the page.", ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

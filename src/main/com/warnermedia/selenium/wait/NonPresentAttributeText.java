@@ -1,7 +1,11 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,13 +31,13 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
+	public void on(TestElement... element) throws TestException {
 		switch (condition) {
 			case EQUAL:
-				waitForAttributeToNoLongerEqualACertainValue(element, attribute, value, time);
+				waitForAttributeToNoLongerEqualACertainValue(Arrays.stream(element).findFirst().get(), attribute, value, time);
 				break;
 			case CONTAIN:
-				waitForAttributeToNoLongerContainACertainValue(element, attribute, value, time);
+				waitForAttributeToNoLongerContainACertainValue(Arrays.stream(element).findFirst().get(), attribute, value, time);
 				break;
 			default:
 				throw new TestException(
@@ -75,26 +79,33 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 */
 	private void waitForAttributeToNoLongerContainACertainValue(TestElement element, String attribute, String expectedValue,
 			Duration i) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = null;
-			try {
-				elementToBeTested = getElement(element);
-			} catch (TestException e) {
-				return false;
-			}
-			String actualValue = elementToBeTested.getAttribute(attribute);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(element);
+				} catch (TestException e) {
+					return false;
+				}
+				String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			still means the attribute does not contain the
 			desired value.*/
-			if (actualValue == null 
-					|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+				if (actualValue == null
+						|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -114,22 +125,29 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToNoLongerContainACertainValue(WebElement element, String attribute,
-			String expectedValue, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+			String expectedValue, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualValue = elementToBeTested.getAttribute(attribute);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = element;
+				String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			still means the attribute does not contain the
 			desired value.*/
-			if (actualValue == null 
-					|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
-				result = true;
-			}
-			return result;
-		});
+				if (actualValue == null
+						|| !actualValue.trim().toLowerCase().contains(expectedValue.toLowerCase().trim())) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for and element" +
+					" to no longer " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -151,25 +169,32 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 */
 	private void waitForAttributeToNoLongerEqualACertainValue(TestElement element, String attribute, String expectedValue,
 			Duration i) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = null;
-			try {
-				elementToBeTested = getElement(element);
-			} catch (TestException e) {
-				return false;
-			}
-			String actualValue = elementToBeTested.getAttribute(attribute);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = null;
+				try {
+					elementToBeTested = getElement(element);
+				} catch (TestException e) {
+					return false;
+				}
+				String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			   still means the attribute does not contain the
 			   desired value.*/
-			if (actualValue == null || !actualValue.equalsIgnoreCase(expectedValue)) {
-				result = true;
-			}
-			return result;
-		});
+				if (actualValue == null || !actualValue.equalsIgnoreCase(expectedValue)) {
+					result = true;
+				}
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + element.locator().value() +
+					" to no longer " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
 	}
 
 	/**
@@ -188,25 +213,32 @@ public class NonPresentAttributeText extends Commands implements IWait {
 	 * @return void
 	 */
 	private void waitForAttributeToNoLongerEqualACertainValue(WebElement element, String attribute,
-			String expectedValue, Duration i) {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
+			String expectedValue, Duration i) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), i);
 
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			WebElement elementToBeTested = element;
-			String actualValue = elementToBeTested.getAttribute(attribute);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				WebElement elementToBeTested = element;
+				String actualValue = elementToBeTested.getAttribute(attribute);
 			/* returning true if attribute is null because it
 			still means the attribute does not contain the
 			desired value.*/
-			if (actualValue != null) {
-				if (!actualValue.equalsIgnoreCase(expectedValue)) {
+				if (actualValue != null) {
+					if (!actualValue.equalsIgnoreCase(expectedValue)) {
+						result = true;
+					}
+				} else {
 					result = true;
 				}
-			} else {
-				result = true;
-			}
-			return result;
-		});
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for an element" +
+					" to no longer " + condition.name() +
+					" an attribute named " + attribute
+					+ " with value " + expectedValue, ErrorCode.WAIT);
+		}
 	}
 
 	public static class LocalWaitBuilder extends Commands {

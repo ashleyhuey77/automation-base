@@ -1,5 +1,6 @@
 package tests.shelper;
 
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -38,14 +39,14 @@ public class Wait_PresentAttributeText_Tests {
 		LocalDriver.getDriver().get("http://www.google.com");
 	}
 
-	@Test(expectedExceptions = Exception.class)
+	@Test(expectedExceptions = SeleniumException.class)
 	public void verifyWaitForAttributeToHaveValueInvalidCondition_ExceptionThrown() throws Exception {
 		SHelper.get().waitMethod(Wait.PRESENCE_OF_ATTRIBUTE_TEXT,
 				new WaitBuilder().forAttribute("class").to(Condition.INVALID_CONDITION).value("help").forAMaxTimeOf(Duration.ofSeconds(2)))
 				.on(element);
 	}
 
-	@Test(expectedExceptions = Exception.class)
+	@Test(expectedExceptions = SeleniumException.class)
 	public void verifyWaitForAttributeToHaveValueInvalidCondition_PreDefinedWebElement_ExceptionThrown()
 			throws Exception {
 		((JavascriptExecutor) LocalDriver.getDriver())
@@ -86,7 +87,7 @@ public class Wait_PresentAttributeText_Tests {
 				.on(element);
 	}
 
-	@Test(expectedExceptions = WebDriverException.class)
+	@Test(expectedExceptions = SeleniumException.class)
 	public void verifyWaitForAttributeToContainACertainValue_ExceptionThrown() throws Exception {
 		((JavascriptExecutor) LocalDriver.getDriver())
 				.executeScript("document.write('<div id=Test class=someClassValue></div>');");
@@ -112,7 +113,7 @@ public class Wait_PresentAttributeText_Tests {
 				.on(test);
 	}
 
-	@Test(expectedExceptions = WebDriverException.class)
+	@Test(expectedExceptions = SeleniumException.class)
 	public void verifyWaitForAttributeToContainACertainValue__PredefinedElement_ExceptionThrown() throws Exception {
 		((JavascriptExecutor) LocalDriver.getDriver())
 				.executeScript("document.write('<div id=Test class=someClassValue></div>');");

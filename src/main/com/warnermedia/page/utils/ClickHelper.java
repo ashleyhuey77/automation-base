@@ -3,23 +3,23 @@ package com.warnermedia.page.utils;
 import java.time.Duration;
 import java.util.Objects;
 
-import com.warnermedia.page.core.web.Fetch;
 import com.warnermedia.page.core.web.Type;
+import com.warnermedia.selenium.TestElement;
+import com.warnermedia.selenium.wait.Wait;
+import com.warnermedia.selenium.wait.WaitBuilder;
+import com.warnermedia.utils.TestUtils;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.report.LocalReport;
-import com.warnermedia.config.report.LocalValidation;
-import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.utils.Validator;
 
 public class ClickHelper {
 
-	private Fetch fetch;
-
 	// optional params
 	private Type type;
+	private TestElement element;
 	private WebElement webElement;
 	private Via via;
 	private int index;
@@ -51,58 +51,48 @@ public class ClickHelper {
 	 * @throws TestException
 	 */
 	public ClickHelper() throws TestException {
-		fetch = new Fetch();
-		if (this.via == null) {
-			this.via = Via.SELENIUM;
-		}
+
 	}
 
 	private void clickSomeTestElement() throws TestException {
 		try {
-			if (SHelper.get().element().isDisplayed(fetch.element(type), Duration.ofSeconds(5))) {
-				tryAllClicks(fetch.element(type), via);
-				LocalReport.getReport().reportDoneEvent(fetch.name(type) + " clicked successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(
-						"Element is not on the page. Unable to click the " + fetch.name(type));
-			}
+			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
+			SHelper.get().click(via).on(element);
+			LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
 		} catch (Exception e) {
-			throw LocalReport.getReport().reportException(e);
+			try {
+				if (via.equals(Via.SELENIUM)) {
+					SHelper.get().click(Via.JAVASCRIPT).on(element);
+				} else if (via.equals(Via.JAVASCRIPT)) {
+					SHelper.get().click(Via.SELENIUM).on(element);
+				} else {
+					throw e;
+				}
+				LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+			} catch (Exception e2) {
+				throw LocalReport.getReport().reportException(e);
+			}
 		}
 	}
 
 	private void clickSomeWebElement() throws TestException {
 		try {
 			SHelper.get().click(via).on(webElement);
-			LocalReport.getReport().reportDoneEvent(fetch.name(type) + " clicked successfully.");
+			LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
 		} catch (Exception e) {
-			throw LocalReport.getReport().reportException(e);
-		}
-	}
-
-	private void tryAllClicks(TestElement element, Via via) throws TestException {
-		try {
-			indexCheckClick(via, element);
-		} catch (Exception ex) {
 			try {
-				indexCheckClick(Via.SELENIUM, element);
-			} catch (Exception e2) {
-				try {
-					indexCheckClick(Via.JAVASCRIPT, element);
-				} catch (Exception e3) {
-					try {
-						indexCheckClick(Via.JQUERY, element);
-					} catch (Exception e4) {
-						throw LocalValidation.getValidations().assertionFailed("Test has exhausted all different click "
-								+ "methods. Not able to click element with the specified locator.");
-					}
+				if (via.equals(Via.SELENIUM)) {
+					SHelper.get().click(Via.JAVASCRIPT).on(element);
+				} else if (via.equals(Via.JAVASCRIPT)) {
+					SHelper.get().click(Via.SELENIUM).on(element);
+				} else {
+					throw e;
 				}
+				LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+			} catch (Exception e2) {
+				throw LocalReport.getReport().reportException(e);
 			}
 		}
-	}
-
-	private void indexCheckClick(Via via, TestElement element) throws TestException {
-		SHelper.get().click(via).on(element);
 	}
 
 	/**
@@ -122,6 +112,7 @@ public class ClickHelper {
 	 */
 	public ClickHelper on(Type element) {
 		this.type = element;
+		this.element = element.element();
 		return this;
 	}
 
@@ -190,6 +181,9 @@ public class ClickHelper {
 	}
 
 	public ClickHelper start() throws TestException {
+		if (via == null) {
+			via = Via.SELENIUM;
+		}
 		if (webElement != null) {
 			clickSomeWebElement();
 		}else if (type != null) {

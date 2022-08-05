@@ -2,6 +2,13 @@ package com.warnermedia.selenium.shared;
 
 import java.util.List;
 
+import com.warnermedia.selenium.click.IClick;
+import com.warnermedia.selenium.click.RetryClick;
+import com.warnermedia.selenium.element.RetryGetElement;
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
+import com.warnermedia.utils.retry.Retry;
+import com.warnermedia.utils.retry.TestOperation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.TestException;
@@ -10,6 +17,8 @@ import com.warnermedia.selenium.TestElement;
 import com.warnermedia.utils.CookieHelper;
 
 public class Commands {
+
+	private static TestOperation op;
 
 	/**
 	 * <summary> method to get the by value based on
@@ -64,9 +73,17 @@ public class Commands {
 	 */
 	public WebElement getElement(TestElement element) throws TestException {
 		try {
-			WebDriver driver = LocalDriver.getDriver();
-			WebElement el = driver.findElement(getByValueBasedOnUserInput(element));
-			return el;
+			TestOperation test = new RetryGetElement(element,
+					new SeleniumException(ErrorCode.FIND_ELEMENT)
+			);
+			final Retry retry = new Retry(
+					test,
+					3,  //3 attempts
+					1000, //100 ms delay between attempts
+					e -> SeleniumException.class.isAssignableFrom(e.getClass())
+			);
+			op = retry;
+			return (WebElement) op.perform();
 		} catch (Exception e) {
 			throw e;
 		}
@@ -83,7 +100,8 @@ public class Commands {
 		try {
 			return LocalDriver.getDriver().findElements(getByValueBasedOnUserInput(element));
 		} catch (Exception e) {
-			throw e;
+			throw new SeleniumException("Check that the elements exist on the page. Unable to find elements by " + element.by().value()
+					+ " with locator " + element.locator().value(), ErrorCode.FIND_ELEMENT);
 		}
 	}
 	

@@ -1,8 +1,10 @@
 package tests.shelper;
 
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.How;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -23,7 +25,6 @@ public class ClickTests {
 	public void beforeScenario()
 	{
 		SHelper.set(new SeleniumHelper());
-        //System.setProperty("webdriver.chrome.driver", TestUtils.getRelativePath() + "/externalLibraries/browsers/chromedriver");
         LocalDriver.getDriver().get("http://www.google.com");
 	}
 	
@@ -154,7 +155,7 @@ public class ClickTests {
 		SHelper.get().click(Via.JQUERY).on(element, -2);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyClickViaJQuery_IndexIsNull() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<input id=Test class=Testing value=Testing></input>');");
@@ -209,7 +210,7 @@ public class ClickTests {
 		SHelper.get().click(Via.JQUERY).on(element, "-2");
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyClick_ThrowsWebDriverException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
@@ -220,12 +221,12 @@ public class ClickTests {
 		SHelper.get().click(Via.SELENIUM).on(element);
 	}
 	
-	@Test(expectedExceptions=Exception.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyClick_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
 		Locator locator = new Locator("#Ha");
-		TestElement element = new TestElement(locator, new By(""));
+		TestElement element = new TestElement(locator, new By(How.CSS));
 	
 		SHelper.get().click(Via.SELENIUM).on(element);
 	}
@@ -305,7 +306,7 @@ public class ClickTests {
 		SHelper.get().click(Via.SELENIUM).on(element, 7);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions= SeleniumException.class)
 	public void verifyClick_PredefinedWebElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
@@ -376,12 +377,12 @@ public class ClickTests {
 		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
 	
-	@Test(expectedExceptions=Exception.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyClickViaJavascript_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=testClass >Dont click this button</button>');");
-		Locator locator = new Locator("#Test");
-		TestElement element = new TestElement(locator, new By(""));
+		Locator locator = new Locator("#Test}{[");
+		TestElement element = new TestElement(locator, new By(How.CSS));
 		Thread.sleep(500);
 		SHelper.get().click(Via.JAVASCRIPT).on(element);
 	}
@@ -399,7 +400,7 @@ public class ClickTests {
 		SHelper.get().click(Via.JAVASCRIPT).on(test);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyClickViaJavascript_PredefinedElement_ThrowsException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test name=testName >Dont click this button</button>');");
@@ -563,7 +564,7 @@ public class ClickTests {
 		SHelper.get().click(Via.JAVASCRIPT).on(element, 2);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyRightClick_ThrowsWebDriverException() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");
@@ -616,7 +617,7 @@ public class ClickTests {
 		SHelper.get().click(Via.ALTERNATE).on(element);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions=SeleniumException.class)
 	public void verifyRightClick_PredefinedWebElement_ThrowsWebDriverException2() throws Exception
 	{
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test>Dont click this button</button>');");

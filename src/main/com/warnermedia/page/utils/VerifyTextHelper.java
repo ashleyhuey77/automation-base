@@ -2,8 +2,8 @@ package com.warnermedia.page.utils;
 
 import java.util.Objects;
 
-import com.warnermedia.page.core.web.Fetch;
 import com.warnermedia.page.core.web.Type;
+import com.warnermedia.selenium.TestElement;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
@@ -17,13 +17,10 @@ import com.warnermedia.utils.Validator;
 
 public class VerifyTextHelper {
 
-
-	// required params
-	private Fetch info;
-
 	// optional params
 	private Type type;
 	private WebElement webElement;
+	private TestElement element;
 	private String expectedText;
 	private String index;
 	private Boolean removeAllSpaces;
@@ -60,7 +57,6 @@ public class VerifyTextHelper {
 	 * @throws TestException
 	 */
 	public VerifyTextHelper() throws TestException {
-		info = new Fetch();
 		if (this.removeAllSpaces == null) {
 			this.removeAllSpaces = false;
 		}
@@ -81,10 +77,10 @@ public class VerifyTextHelper {
 
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations()
-						.assertionPass(info.name(type) + " contains the correct text: " + actualText);
+						.assertionPass(type.name() + " contains the correct text: " + actualText);
 			} else {
 				throw LocalValidation.getValidations().assertionFailed(
-						info.name(type) + " does not contain the correct text. Expected text: "
+						type.name() + " does not contain the correct text. Expected text: "
 								+ expectedText + ". Actual text: " + actualText);
 			}
 			CookieHelper.newHelper().getCookies().setCookies().build();
@@ -105,10 +101,10 @@ public class VerifyTextHelper {
 
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations()
-						.assertionPass(info.name(type) + " contains the correct text: " + actualText);
+						.assertionPass(type.name() + " contains the correct text: " + actualText);
 			} else {
 				throw LocalValidation.getValidations().assertionFailed(
-						info.name(type) + " does not contain the correct text. Expected text: "
+						type.name() + " does not contain the correct text. Expected text: "
 								+ expectedText + ". Actual text: " + actualText);
 			}
 			CookieHelper.newHelper().getCookies().setCookies().build();
@@ -136,10 +132,10 @@ public class VerifyTextHelper {
 
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations().assertionPass(
-						info.name(type) + " contains " + actualValueInTextBox + " as expected.");
+						type.name() + " contains " + actualValueInTextBox + " as expected.");
 			} else {
 				throw LocalValidation.getValidations()
-						.assertionFailed(info.name(type) + " should contain " + expectedText
+						.assertionFailed(type.name() + " should contain " + expectedText
 								+ " but is retaining an incorrect value instead. The value being retained is "
 								+ actualValueInTextBox);
 			}
@@ -168,10 +164,10 @@ public class VerifyTextHelper {
 
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations().assertionPass(
-						info.name(type) + " contains " + actualValueInTextBox + " as expected.");
+						type.name() + " contains " + actualValueInTextBox + " as expected.");
 			} else {
 				throw LocalValidation.getValidations()
-						.assertionFailed(info.name(type) + " should contain " + expectedText
+						.assertionFailed(type.name() + " should contain " + expectedText
 								+ " but is retaining an incorrect value instead. The value being retained is "
 								+ actualValueInTextBox);
 			}

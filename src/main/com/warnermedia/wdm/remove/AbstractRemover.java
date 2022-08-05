@@ -1,6 +1,6 @@
 package com.warnermedia.wdm.remove;
 
-import com.warnermedia.wdm.utils.WebDriverManagerException;
+import com.warnermedia.utils.ex.WebDriverManagerException;
 
 import java.io.File;
 

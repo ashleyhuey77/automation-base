@@ -17,7 +17,19 @@ public enum BaseGeneric implements Type {
 	USER_NAME_TEXT_FIELD2 {
 		@Override
 		public TestElement element() {
-			return new TestElement(new Locator("#MainContent_UserName"), new By(How.CSS));
+			return new TestElement(new Locator("#idp-discovery-username"), new By(How.CSS));
+		}
+	},
+	USER_NAME_TEXT_FIELD3 {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#okta-signin-username"), new By(How.CSS));
+		}
+	},
+	NEXT_BUTTON {
+		@Override
+		public TestElement element() {
+			return new TestElement(new Locator("#idp-discovery-submit"), new By(How.CSS));
 		}
 	},
 	LOG_IN_BOX {
@@ -35,7 +47,7 @@ public enum BaseGeneric implements Type {
 	PWD_TEXT_FIELD2 {
 		@Override
 		public TestElement element() {
-			return new TestElement(new Locator("#MainContent_Password"), new By(How.CSS));
+			return new TestElement(new Locator("#okta-signin-password"), new By(How.CSS));
 		}
 	},
 	ANYWHERE_PWD_TEXT_FIELD {
@@ -65,7 +77,7 @@ public enum BaseGeneric implements Type {
 	LOG_IN_BTN {
 		@Override
 		public TestElement element() {
-			return new TestElement(new Locator("#MainContent_LoginButton"), new By(How.CSS));
+			return new TestElement(new Locator("#okta-signin-submit"), new By(How.CSS));
 		}
 	},
 	ERROR_MSG {

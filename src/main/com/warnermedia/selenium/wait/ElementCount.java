@@ -1,7 +1,11 @@
 package com.warnermedia.selenium.wait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Objects;
+
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,31 +28,35 @@ public class ElementCount extends Commands implements IWait {
 	}
 
 	@Override
-	public void on(TestElement element) throws TestException {
-		WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
-		wait.until((WebDriver driver) -> {
-			Boolean result = false;
-			try {
-				/** refresh can't live in this method. If refresh
-			 	is necessary, then a new loop will need to be
-			 	created that contains the refresh
-			 	The list of web elements needs to be refreshed
-			 	every time the page is refreshed or this method
-			 	will not work correctly.
-			 	SHelper.get().page().refresh(); **/
-				SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
-						new WaitBuilder()
-						.forAMaxTimeOf(Duration.ofSeconds(3)))
-				.on(element);
-				int actualElementCount = getElements(element).size();
-				if (actualElementCount == expectedTotalCount) {
-					result = true;
+	public void on(TestElement... element) throws TestException {
+		try {
+			WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), time);
+			wait.until((WebDriver driver) -> {
+				Boolean result = false;
+				try {
+					/** refresh can't live in this method. If refresh
+					 is necessary, then a new loop will need to be
+					 created that contains the refresh
+					 The list of web elements needs to be refreshed
+					 every time the page is refreshed or this method
+					 will not work correctly.
+					 SHelper.get().page().refresh(); **/
+					SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT,
+									new WaitBuilder()
+											.forAMaxTimeOf(Duration.ofSeconds(3)))
+							.on(element);
+					int actualElementCount = getElements(Arrays.stream(element).findFirst().get()).size();
+					if (actualElementCount == expectedTotalCount) {
+						result = true;
+					}
+				} catch (Exception e) {
+					//Log.get().log(Level.WARNING, e.getMessage(), e);
 				}
-			} catch (Exception e) {
-				//Log.get().log(Level.WARNING, e.getMessage(), e);
-			}
-			return result;
-		});
+				return result;
+			});
+		} catch (Exception e) {
+			throw new SeleniumException("The test waited " + time.getSeconds() + " seconds for element with locator " + Arrays.stream(element).findFirst().get().locator().value() + " to have a total count of " + expectedTotalCount, ErrorCode.WAIT);
+		}
 	}
 
 	@Override

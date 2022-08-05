@@ -1,11 +1,12 @@
 package com.warnermedia.wdm.download;
 
+import com.warnermedia.config.TestException;
 import com.warnermedia.wdm.utils.Constants;
 
 public class LinuxDownloader extends AbstractDownloader implements Downloader {
 
     @Override
-    public void findUrl(String expectedVersion) throws Exception {
+    public void findUrl(String expectedVersion) throws TestException {
         try {
             findURL(expectedVersion, "/chromedriver_linux64.zip");
         } catch (Exception e) {
@@ -14,7 +15,7 @@ public class LinuxDownloader extends AbstractDownloader implements Downloader {
     }
 
     @Override
-    public void downloadFile() throws Exception {
+    public void downloadFile() throws TestException {
         try {
             String[] c = {"bash", "-c", "unzip "};
             downloadFile(Constants.DRIVER_FILE_PATH, Constants.ZIP_FILE_NAME);

@@ -5,11 +5,7 @@ import com.warnermedia.selenium.actions.ElementActions;
 import com.warnermedia.selenium.actions.IActions;
 import com.warnermedia.selenium.browser.Browser;
 import com.warnermedia.selenium.browser.IBrowser;
-import com.warnermedia.selenium.click.Click;
-import com.warnermedia.selenium.click.IClick;
-import com.warnermedia.selenium.click.JQClick;
-import com.warnermedia.selenium.click.JSClick;
-import com.warnermedia.selenium.click.RightClick;
+import com.warnermedia.selenium.click.*;
 import com.warnermedia.selenium.element.Element;
 import com.warnermedia.selenium.element.IElement;
 import com.warnermedia.selenium.enter.Enter;
@@ -36,8 +32,17 @@ import com.warnermedia.selenium.wait.PresentElement;
 import com.warnermedia.selenium.wait.PresentElementText;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.FileDownloadException;
+import com.warnermedia.utils.ex.MismatchedVersionException;
+import com.warnermedia.utils.ex.SeleniumException;
+import com.warnermedia.utils.retry.Retry;
+import com.warnermedia.utils.retry.TestOperation;
+import com.warnermedia.wdm.download.Download;
 
 public class SeleniumHelper {
+
+	private static TestOperation op;
 
 	/**
 	 * <p>
@@ -108,25 +113,18 @@ public class SeleniumHelper {
 	 * @throws TestException
 	 */
 	public IClick click(Via type) throws TestException {
-		IClick click = null;
-		switch (type) {
-			case SELENIUM:
-				click = new Click();
-				break;
-			case JAVASCRIPT:
-				click = new JSClick();
-				break;
-			case JQUERY:
-				click = new JQClick();
-				break;
-			case ALTERNATE:
-				click = new RightClick();
-				break;
-			default:
-				throw new TestException("Please select an appropriate action type from the action type enum.");
-		}
-
-		return click;
+		TestOperation test = new RetryClick(type,
+				new SeleniumException(ErrorCode.CLICK),
+				new SeleniumException(ErrorCode.FIND_ELEMENT)
+		);
+		final Retry retry = new Retry(
+				test,
+				3,  //3 attempts
+				1000, //100 ms delay between attempts
+				e -> SeleniumException.class.isAssignableFrom(e.getClass())
+		);
+		op = retry;
+		return (IClick) op.perform();
 	}
 
 	/**

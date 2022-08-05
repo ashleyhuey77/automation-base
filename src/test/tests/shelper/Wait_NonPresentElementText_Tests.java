@@ -173,6 +173,16 @@ public class Wait_NonPresentElementText_Tests {
 				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(test);
 	}
 
+	@Test
+	public void verifyWaitForElementToNotContainACertainValue() throws Exception {
+		((JavascriptExecutor) LocalDriver.getDriver())
+				.executeScript("document.write('<button id=Test class=SomeClass>Help</button>');");
+		Thread.sleep(300);
+
+		SHelper.get().waitMethod(Wait.ELEMENT_TEXT_NOT_TO_BE_PRESENT,
+				new WaitBuilder().to(Condition.CONTAIN).value("Test").forAMaxTimeOf(Duration.ofSeconds(2))).on(element);
+	}
+
 	@Test(expectedExceptions = WebDriverException.class)
 	public void verifyWaitForElementToNotContainACertainValue_PredefinedElement_ThrowsException() throws Exception {
 		((JavascriptExecutor) LocalDriver.getDriver())

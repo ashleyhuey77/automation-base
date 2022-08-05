@@ -3,7 +3,6 @@ package tests.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.warnermedia.page.core.web.Fetch;
 import com.warnermedia.selenium.TestElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;

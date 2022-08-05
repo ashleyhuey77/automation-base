@@ -1,6 +1,6 @@
 package com.warnermedia.wdm.remove;
 
-import com.warnermedia.wdm.utils.WebDriverManagerException;
+import com.warnermedia.utils.ex.WebDriverManagerException;
 
 public class WindowsRemover extends AbstractRemover implements Remover {
     @Override

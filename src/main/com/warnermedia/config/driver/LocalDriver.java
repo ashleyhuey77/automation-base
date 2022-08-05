@@ -2,6 +2,13 @@ package com.warnermedia.config.driver;
 
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.settings.LocalTest;
+import com.warnermedia.utils.ex.ChromeDriverException;
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.FileDownloadException;
+import com.warnermedia.utils.ex.MismatchedVersionException;
+import com.warnermedia.utils.retry.Retry;
+import com.warnermedia.utils.retry.TestOperation;
+import com.warnermedia.wdm.download.Download;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -14,6 +21,7 @@ import org.openqa.selenium.WebDriver;
 public class LocalDriver {
 
     private static ThreadLocal<WebDriver> THREAD_LOCAL = new ThreadLocal();
+    private static ThreadLocal<TestOperation> op = new ThreadLocal<>();
     private static Object mutex = new Object();
 
     public static WebDriver getDriver() {
@@ -23,8 +31,17 @@ public class LocalDriver {
                 synchronized (mutex) {
                     localRef = THREAD_LOCAL.get();
                     if (localRef == null) {
-                        localRef = DriverFacade
-                                .getDriver(Drivers.valueOf(LocalTest.getEnvironment().getBrowser().toUpperCase().trim()));
+                        TestOperation test = new LaunchBrowser(
+                                new ChromeDriverException(ErrorCode.CHROMEDRIVER)
+                        );
+                        final Retry retry = new Retry(
+                                test,
+                                4,  //3 attempts
+                                1000, //100 ms delay between attempts
+                                e -> ChromeDriverException.class.isAssignableFrom(e.getClass())
+                        );
+                        op.set(retry);
+                        localRef = (WebDriver) op.get().perform();
                         THREAD_LOCAL.set(localRef);
                     }
                 }

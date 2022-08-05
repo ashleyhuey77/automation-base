@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 import com.warnermedia.page.core.PageUtils;
-import com.warnermedia.page.core.web.Fetch;
 import com.warnermedia.page.core.web.Type;
+import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
@@ -19,9 +19,8 @@ import com.warnermedia.utils.Validator;
 
 public class OptionSelector extends PageUtils {
 
-	private Fetch info;
-
 	private Type type;
+	private TestElement telement;
 	private List<WebElement> element;
 	private String option;
 	private Condition condition;
@@ -51,7 +50,6 @@ public class OptionSelector extends PageUtils {
 	 * @throws TestException
 	 */
 	public OptionSelector() throws TestException {
-		info = new Fetch();
 		if (condition == null) {
 			this.condition = Condition.INVALID_CONDITION;
 		}

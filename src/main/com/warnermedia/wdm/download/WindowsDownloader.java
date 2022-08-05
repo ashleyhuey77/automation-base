@@ -1,11 +1,12 @@
 package com.warnermedia.wdm.download;
 
+import com.warnermedia.config.TestException;
 import com.warnermedia.wdm.utils.Constants;
 
 public class WindowsDownloader extends AbstractDownloader implements Downloader {
 
     @Override
-    public void findUrl(String expectedVersion) throws Exception {
+    public void findUrl(String expectedVersion) throws TestException {
         try {
             findURL(expectedVersion, "/chromedriver_win32.zip");
         } catch (Exception e) {
@@ -14,7 +15,7 @@ public class WindowsDownloader extends AbstractDownloader implements Downloader 
     }
 
     @Override
-    public void downloadFile() throws Exception {
+    public void downloadFile() throws TestException {
         try {
             String fullPath = Constants.DRIVER_FILE_PATH + Constants.ZIP_FILE_NAME;
             downloadFile(Constants.DRIVER_FILE_PATH, Constants.ZIP_FILE_NAME);
@@ -29,8 +30,10 @@ public class WindowsDownloader extends AbstractDownloader implements Downloader 
                 //abnormal...
             }
             process.destroy();
-        } catch (Exception e) {
+        } catch (TestException e) {
             throw e;
+        } catch (Exception e) {
+            throw new TestException("An error occurred when trying to execute the windows command process.");
         }
     }
 }

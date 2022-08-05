@@ -1,6 +1,8 @@
 package tests.shelper;
 
+import com.warnermedia.utils.ex.SeleniumException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.How;
@@ -60,7 +62,7 @@ public class Wait_PresentAttribute_Tests {
 			.on(element2);
 	}
 	
-	@Test(expectedExceptions=WebDriverException.class)
+	@Test(expectedExceptions= SeleniumException.class)
 	public void verifyAttributeIsPresent_ThrowsException() throws Exception {
 		((JavascriptExecutor)LocalDriver.getDriver()).executeScript("document.write('<button id=Test class=someClass>Button</button>');");
 		Thread.sleep(300);

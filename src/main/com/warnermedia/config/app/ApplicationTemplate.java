@@ -144,27 +144,12 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 	public ApplicationTemplate() throws Exception {
 		super();
 		SHelper.set(new SeleniumHelper());
-		initializeTestUsers();
 		initializeBrowserName();
 		initializeEnvironment();
 		initializeTestData();
 		initializeBrowser();
 		initializeReporting();
 		openApplication();
-	}
-
-	public void initializeTestUsers() throws Exception {
-		if ((UserHelper.getName(CredentialsType.BASE) == null)) {
-			Decrypter.decryptFromDB(CredentialsType.BASE);
-			UserHelper.setName(CredentialsType.BASE, DataMapper.getCredentials().name);
-			UserHelper.setPassword(CredentialsType.BASE, DataMapper.getCredentials().password);
-		}
-
-		if ((UserHelper.getName(CredentialsType.MIRA) == null)) {
-			Decrypter.decryptFromDB(CredentialsType.MIRA);
-			UserHelper.setName(CredentialsType.MIRA, DataMapper.getCredentials().name);
-			UserHelper.setPassword(CredentialsType.MIRA, DataMapper.getCredentials().password);
-		}
 	}
 
 	public void initializeBrowser() throws TestException {

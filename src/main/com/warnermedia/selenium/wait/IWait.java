@@ -72,7 +72,7 @@ public interface IWait {
 	 * </pre>
 	 * @throws TestException
 	 */
-	public void on(TestElement element) throws TestException;
+	public void on(TestElement... element) throws TestException;
 	
 	/**
 	 * <p>This method is meant to wait for some condition 
