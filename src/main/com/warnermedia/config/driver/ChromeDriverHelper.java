@@ -1,7 +1,9 @@
 package com.warnermedia.config.driver;
 
+import java.io.File;
 import java.util.logging.Level;
 
+import com.warnermedia.utils.TestUtils;
 import com.warnermedia.utils.ex.ChromeDriverException;
 import com.warnermedia.utils.ex.ErrorCode;
 import org.openqa.selenium.PageLoadStrategy;
@@ -46,6 +48,9 @@ public class ChromeDriverHelper {
 			LocalChromeOptions.get().addArguments("--enable-automation");
 			LocalChromeOptions.get().addArguments("--no-sandbox");
 			LocalChromeOptions.get().addArguments("--disable-infobars");
+			if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
+				LocalChromeOptions.get().addExtensions(new File(TestUtils.getRelativePath() + "/externalLibraries/asperaConnect.crx"));
+			}
 
 			/**LoggingPreferences logPrefs = new LoggingPreferences();
 			 logPrefs.enable( LogType.BROWSER, Level.ALL );

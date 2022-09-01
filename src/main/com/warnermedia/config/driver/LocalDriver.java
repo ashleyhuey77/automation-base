@@ -37,7 +37,7 @@ public class LocalDriver {
                         final Retry retry = new Retry(
                                 test,
                                 4,  //3 attempts
-                                1000, //100 ms delay between attempts
+                                100, //100 ms delay between attempts
                                 e -> ChromeDriverException.class.isAssignableFrom(e.getClass())
                         );
                         op.set(retry);
