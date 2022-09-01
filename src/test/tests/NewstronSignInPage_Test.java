@@ -27,7 +27,7 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	
 	@BeforeMethod
 	public void goToNewsapps() {
-		LocalDriver.getDriver().get("http://newstron-dev.turner.com/");
+		LocalDriver.getDriver().get("http://newstron-ref.turner.com/");
 	}
 	
 	@Test

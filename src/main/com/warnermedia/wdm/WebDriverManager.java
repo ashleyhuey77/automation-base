@@ -62,7 +62,7 @@ public class WebDriverManager {
             final Retry retry = new Retry(
                     test,
                     3,  //3 attempts
-                    2000, //100 ms delay between attempts
+                    1000, //100 ms delay between attempts
                     e -> MismatchedVersionException.class.isAssignableFrom(e.getClass()),
                     f -> FileDownloadException.class.isAssignableFrom(f.getClass())
             );

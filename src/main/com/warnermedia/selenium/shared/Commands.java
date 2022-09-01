@@ -79,7 +79,7 @@ public class Commands {
 			final Retry retry = new Retry(
 					test,
 					3,  //3 attempts
-					1000, //100 ms delay between attempts
+					100, //100 ms delay between attempts
 					e -> SeleniumException.class.isAssignableFrom(e.getClass())
 			);
 			op = retry;

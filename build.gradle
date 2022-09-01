@@ -141,7 +141,7 @@ task runUnitTests(type: Test) {
     ignoreFailures = true
 }
 
-version = '7.28.34'
+version = '7.28.37'
 
 task updateVersion {
     doLast {
