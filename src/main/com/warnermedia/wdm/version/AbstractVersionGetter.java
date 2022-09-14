@@ -1,5 +1,8 @@
 package com.warnermedia.wdm.version;
 
+import com.warnermedia.utils.TestUtils;
+import com.warnermedia.utils.ex.ErrorCode;
+import com.warnermedia.utils.ex.VersionFormatException;
 import com.warnermedia.utils.ex.WebDriverManagerException;
 
 import java.io.BufferedReader;
@@ -34,6 +37,9 @@ public abstract class AbstractVersionGetter {
                 System.out.println(output);
             } else {
                 //abnormal...
+            }
+            if (TestUtils.isNullOrBlank(result)) {
+                throw new VersionFormatException("Please download the latest version of Google Chrome to this machine.", ErrorCode.GOOGLE_CHROME);
             }
             String[] split = result.split("\\.");
             result = split[0] + "." + split[1] + "." + split[2];

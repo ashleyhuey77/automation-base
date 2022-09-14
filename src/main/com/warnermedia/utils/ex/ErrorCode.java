@@ -8,7 +8,8 @@ public enum ErrorCode {
     UNZIP(3, "Something went wrong when unzipping the downloaded file."),
     CLICK(4, "Unable to click on the element."),
     FIND_ELEMENT(5, "Unable to locate element."),
-    WAIT(6, "The wait method timed out.");
+    WAIT(6, "The wait method timed out."),
+    GOOGLE_CHROME(7, "Google Chrome is not installed on this machine.");
 
     private final int code;
     private final String description;
