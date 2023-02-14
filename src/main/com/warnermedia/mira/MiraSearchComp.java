@@ -13,6 +13,7 @@ import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.How;
@@ -21,6 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+@Slf4j
 public class MiraSearchComp extends AbstractMiraPage {
 
     public MiraSearchComp() {
@@ -65,7 +67,7 @@ public class MiraSearchComp extends AbstractMiraPage {
                 try {
                     switchToResultMainFrame();
                     SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(MiraResults.RECORD_CHECKBOX.element());
-                    LocalValidation.getValidations().assertionPass("Asset has successfully processed.");
+                    LocalValidation.getValidations().assertionPass(log, "Asset has successfully processed.");
                     result = true;
                 } catch (Exception ex) {
                     try {

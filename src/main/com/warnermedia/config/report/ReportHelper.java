@@ -3,7 +3,8 @@ package com.warnermedia.config.report;
 
 import java.io.IOException;
 import com.warnermedia.config.TestException;
-import com.warnermedia.utils.ConsoleHelper;
+import com.warnermedia.utils.ConsoleDecoration;
+import org.slf4j.Logger;
 
 public class ReportHelper {
 	
@@ -26,12 +27,22 @@ public class ReportHelper {
      * one wishes to display on the html report for the executed step.
      * @throws IOException
      */
-    public void reportDoneEvent(String description) throws TestException {
+    public void reportDoneEvent(Logger log, String description) throws TestException {
         String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
         testReport.reportDoneEvent(stepName, description);
-        synchronized (System.out) {
-        	System.out.println("Step: " + stepName + " has passed. " + description);
+        log.info("{}{}Step: {} has passed. {}{}", ConsoleDecoration.WHITE_TEXT.value, ConsoleDecoration.CYAN_BACKGROUND.value, stepName, description, ConsoleDecoration.RESET.value);
+    }
+
+    public void reportDoneEvent(Logger log, String description, String value) throws TestException {
+        String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
+        String newDes = null;
+        if (description.contains("{0}")) {
+            newDes = description.replace("{0}", value);
+        } else {
+            newDes = description;
         }
+        testReport.reportDoneEvent(stepName, newDes);
+        log.info("Step: {0} has passed. {1}", stepName, newDes);
     }
 
     /**
@@ -57,9 +68,7 @@ public class ReportHelper {
         	errorMessage = webDriverException.getMessage();
         }
         testReport.reportFailEvent(stepName, errorMessage);
-        ConsoleHelper.analyzeLog();
         String message = "StepName: " + stepName + "\n ErrorMessage : " + errorMessage;
-        //ConsoleHelper.analyzeLog();
         return new TestException(message);
     }
 

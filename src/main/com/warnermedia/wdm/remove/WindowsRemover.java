@@ -1,7 +1,9 @@
 package com.warnermedia.wdm.remove;
 
 import com.warnermedia.utils.ex.WebDriverManagerException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class WindowsRemover extends AbstractRemover implements Remover {
     @Override
     public void remove(String filePath, String[] fileName) throws Exception {
@@ -13,7 +15,7 @@ public class WindowsRemover extends AbstractRemover implements Remover {
                 Process process = processBuilder.start();
                 int exitVal = process.waitFor();
                 if (exitVal == 0) {
-                    System.out.println("File removed successfully.");
+                    log.info("File removed successfully.");
                 } else {
                     throw new WebDriverManagerException("Exit code is not as expected.");
                 }

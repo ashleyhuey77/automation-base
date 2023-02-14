@@ -7,13 +7,15 @@ import java.util.logging.Level;
 import javax.mail.*;
 import javax.mail.Authenticator;
 import javax.mail.internet.*;
+
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.*;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.utils.Log;
 import com.warnermedia.utils.TestUtils;
 
+@Slf4j
 public class IMAPHelper {
 
 	private IMAPHelper() {
@@ -39,7 +41,7 @@ public class IMAPHelper {
 				return new PasswordAuthentication(un, pwd);
 			}
 		});
-		Log.get().log(Level.INFO, "IMAP session started... ");
+		log.info("IMAP session started... ");
 		session.set(sess);
 	}
 
@@ -50,17 +52,17 @@ public class IMAPHelper {
 			String un = "";
 			String pwd = "";
 			store.get().connect("imap.mail.yahoo.com", un, pwd);
-			Log.get().log(Level.INFO, "Store opened... ");
+			log.info("Store opened... ");
 			Folder f = store.get().getFolder(folderPath);
 			folder.set(f);
 			if (!folder.get().exists()) {
-				Log.get().log(Level.SEVERE, "{0} was not found.", folderPath);
+				log.info("{0} was not found.", folderPath);
 				System.exit(0);
 			}
 			folder.get().open(Folder.READ_ONLY);
-			Log.get().log(Level.INFO, "Folder {0} opened... ", folderPath);
+			log.info("Folder {0} opened... ", folderPath);
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 	}
 
@@ -106,7 +108,7 @@ public class IMAPHelper {
 				if (TestUtils.isNullOrBlank(expectedBody)) {
 					if (actualDate.equals(expectedDate)
 							&& actualSubject.toLowerCase().trim().contains(expectedSubject.toLowerCase().trim())) {
-						Log.get().log(Level.INFO, "Existing email message found... ");
+						log.info("Existing email message found... ");
 						setRequiredValues(m, actualBody);
 						result = true;
 						break;
@@ -115,7 +117,7 @@ public class IMAPHelper {
 					if (actualDate.equals(expectedDate)
 							&& actualSubject.toLowerCase().trim().contains(expectedSubject.toLowerCase().trim())
 							&& actualBody.toLowerCase().trim().contains(expectedBody.toLowerCase().trim())) {
-						Log.get().log(Level.INFO, "Existing email message found... ");
+						log.info("Existing email message found... ");
 						setRequiredValues(m, actualBody);
 						result = true;
 						break;
@@ -124,7 +126,7 @@ public class IMAPHelper {
 
 			}
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 		return result;
 	}
@@ -138,7 +140,7 @@ public class IMAPHelper {
 				folder.get().close(false);
 			}
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 	}
 
@@ -196,7 +198,7 @@ public class IMAPHelper {
 			}
 			return "";
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 		return result;
 	}
@@ -208,7 +210,7 @@ public class IMAPHelper {
 			from.set(InternetAddress.toString(mess.getFrom()));
 			body.set(actualBody);
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 	}
 

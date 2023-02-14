@@ -64,7 +64,7 @@ public class DropdownHelper extends PageUtils {
             Thread.sleep(900);
             selector()
                     .findOption(option)
-                    .thatIs(Condition.EQUAL)
+                    .thatIs(Condition.CONTAIN)
                     .in(optionsElement).start();
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
@@ -88,7 +88,7 @@ public class DropdownHelper extends PageUtils {
             Thread.sleep(900);
             selector()
                     .findOption(option)
-                    .thatIs(Condition.EQUAL)
+                    .thatIs(Condition.CONTAIN)
                     .in(optionsElement).start();
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);

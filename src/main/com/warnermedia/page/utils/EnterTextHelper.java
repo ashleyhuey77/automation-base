@@ -7,6 +7,7 @@ import com.warnermedia.page.core.PageUtils;
 import com.warnermedia.page.core.web.Type;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
@@ -18,6 +19,7 @@ import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.utils.TestUtils;
 import com.warnermedia.utils.Validator;
 
+@Slf4j
 public class EnterTextHelper extends PageUtils {
 
     // optional params
@@ -61,7 +63,7 @@ public class EnterTextHelper extends PageUtils {
                 SHelper.get().enter(Via.SELENIUM).clear(webElement);
                 SHelper.get().enter(Via.SELENIUM).textInto(webElement, value);
             }
-            LocalReport.getReport().reportDoneEvent(type.name() + " has been entered successfully");
+            LocalReport.getReport().reportDoneEvent(log, type.name() + " has been entered successfully");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -74,7 +76,7 @@ public class EnterTextHelper extends PageUtils {
                 SHelper.get().enter(Via.SELENIUM).clear(type.element());
                 SHelper.get().enter(Via.SELENIUM).textInto(type.element(), value);
             }
-            LocalReport.getReport().reportDoneEvent(type.name() + " has been entered successfully");
+            LocalReport.getReport().reportDoneEvent(log, type.name() + " has been entered successfully");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }

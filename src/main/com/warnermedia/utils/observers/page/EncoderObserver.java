@@ -7,9 +7,11 @@ import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.report.LocalValidation;
 import com.warnermedia.page.core.web.BaseGeneric;
-import com.warnermedia.utils.Log;
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.observers.ErrorType;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class EncoderObserver implements Page {
 
 	@Override
@@ -17,11 +19,11 @@ public class EncoderObserver implements Page {
 		try {
 			switch (stateType) {
 				case AFTER_SCHEDULED_EXPORT_EVENT:
-					LocalValidation.getValidations().assertionPass("Screencap of the error that displays as taken by the observer.");
+					LocalValidation.getValidations().assertionPass(log, "Screencap of the error that displays as taken by the observer.");
 					SHelper.get().element().get(BaseGeneric.DISMISS_BUTTON.element()).click(); 
 					break;
 				case MISSING_ASSET:
-					LocalValidation.getValidations().assertionPass("Screencap of the error that displays as taken by the observer.");
+					LocalValidation.getValidations().assertionPass(log, "Screencap of the error that displays as taken by the observer.");
 					SHelper.get().element().get(BaseGeneric.DISMISS_BUTTON.element()).click();
 					break;
 				default:
@@ -29,7 +31,7 @@ public class EncoderObserver implements Page {
 					
 			}
 		} catch (Exception e) {
-			Log.get().log(Level.WARNING, "An attempt to clear the error was made but the click was not successful. The error may no longer be displayed.");
+			log.info("{}{}An attempt to clear the error was made but the click was not successful. The error may no longer be displayed.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
 		}
 	}
 

@@ -1,8 +1,11 @@
 package com.warnermedia.wdm.download;
 
 import com.warnermedia.config.TestException;
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.wdm.utils.Constants;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class WindowsDownloader extends AbstractDownloader implements Downloader {
 
     @Override
@@ -25,7 +28,7 @@ public class WindowsDownloader extends AbstractDownloader implements Downloader 
             Process process = processBuilder.start();
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                System.out.println("Unzip command executed successfully.");
+                log.info("{}{}Unzip command executed successfully.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
             } else {
                 //abnormal...
             }

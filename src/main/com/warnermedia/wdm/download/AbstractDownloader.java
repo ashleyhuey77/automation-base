@@ -2,11 +2,13 @@ package com.warnermedia.wdm.download;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.warnermedia.config.TestException;
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.ex.ErrorCode;
 import com.warnermedia.utils.ex.FileDownloadException;
 import com.warnermedia.utils.ex.MismatchedVersionException;
 import com.warnermedia.wdm.models.ListBucketResult;
 import com.warnermedia.utils.ex.WebDriverManagerException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+@Slf4j
 public abstract class AbstractDownloader {
 
     private String endpoint;
@@ -97,7 +100,7 @@ public abstract class AbstractDownloader {
             Process process = processBuilder.start();
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                System.out.println("Unzip command executed successfully.");
+                log.info("{}{}Unzip command executed successfully.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
             } else {
                 process.destroy();
                 throw new FileDownloadException("Make sure file path " + filePath + " is correct and accessible.", ErrorCode.UNZIP);

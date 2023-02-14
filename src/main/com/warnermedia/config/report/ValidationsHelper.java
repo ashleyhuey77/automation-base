@@ -1,10 +1,9 @@
 package com.warnermedia.config.report;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import com.warnermedia.config.TestException;
-import com.warnermedia.utils.ConsoleHelper;
-import com.warnermedia.utils.Log;
+import com.warnermedia.utils.ConsoleDecoration;
+import org.slf4j.Logger;
 
 public class ValidationsHelper {
 
@@ -46,12 +45,10 @@ public class ValidationsHelper {
 	 *            executed step.
 	 * @throws IOException
 	 */
-	public void assertionPass(String message) throws TestException {
+	public void assertionPass(Logger log, String message) throws TestException {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		testReport.reportPassEvent(stepName, message);
-		synchronized (System.out) {
-			System.out.println("Step: " + stepName + " has passed. " + message);
-		}
+		log.info("{}{}Step: {} has passed. {}{}", ConsoleDecoration.WHITE_TEXT.value, ConsoleDecoration.GREEN_BACKGROUND.value, stepName, message, ConsoleDecoration.RESET.value);
 	}
 
 	/**
@@ -86,12 +83,11 @@ public class ValidationsHelper {
 	 *            executed step.
 	 * @throws IOException
 	 */
-	public TestException assertionFailed(String message) throws TestException {
+	public TestException assertionFailed(Logger log, String message) throws TestException {
 		String stepName = Thread.currentThread().getStackTrace()[2].getMethodName();
 		AssertionError assertionFailedError = getAssertionFailedErrorObject(stepName, message);
 		testReport.reportFailEvent(stepName, message);
-		ConsoleHelper.analyzeLog();
-		Log.get().log(Level.SEVERE, assertionFailedError.toString());
+		log.error("{}{}{}{}", ConsoleDecoration.WHITE_TEXT.value, ConsoleDecoration.RED_BACKGROUND.value, assertionFailedError.toString(), ConsoleDecoration.RESET.value);
 		return reportAssertionFailed(assertionFailedError);
 	}
 
@@ -102,7 +98,6 @@ public class ValidationsHelper {
 
 	private TestException reportAssertionFailed(AssertionError assertionFailedError) {
 		TestException exception = new TestException(assertionFailedError.toString());
-		Log.get().log(Level.SEVERE, exception.getMessage(), exception);
 		return exception;
 	}
 

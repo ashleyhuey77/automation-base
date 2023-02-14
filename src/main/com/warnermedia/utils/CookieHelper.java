@@ -2,10 +2,13 @@ package com.warnermedia.utils;
 
 import java.util.Set;
 import java.util.logging.Level;
+
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Cookie;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 
+@Slf4j
 public final class CookieHelper {
 
 	private CookieHelper() {
@@ -34,7 +37,7 @@ public final class CookieHelper {
 
 		@Override
 		public void build() {
-			Log.get().log(Level.INFO, "Cookies have been managed successfully.");
+			log.info("{}{}Cookies have been managed successfully.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
 		}
 
 		@Override
@@ -46,7 +49,7 @@ public final class CookieHelper {
     				}
 				//}
 			} catch (Exception e) {
-				Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
+				log.info("{}{}An error occurred. Cookies were not created.{}", ConsoleDecoration.RED_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
 			}
 			return this;
 		}
@@ -60,21 +63,26 @@ public final class CookieHelper {
     						for (Cookie cookie : CookieManager.getCookies()) {
     							if (!currentCookies.contains(cookie)) {
     								LocalDriver.getDriver().manage().addCookie(cookie);
-    								Log.get().log(Level.INFO, "Added Cookie: {0}", cookie.getName() + " "
-    										+ cookie.getValue() + " " + cookie.getDomain() + " " + cookie.getPath());
+    								log.info("{}{}Added Cookie: {} {} {} {}{}",
+											ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value,
+											cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(),
+											ConsoleDecoration.RESET.value);
     							}
     						}
     					} else {
     						for (Cookie cookie : CookieManager.getCookies()) {
     							LocalDriver.getDriver().manage().addCookie(cookie);
-    							Log.get().log(Level.INFO, "Added Cookie: {0}", cookie.getName() + " " + cookie.getValue()
-    									+ " " + cookie.getDomain() + " " + cookie.getPath());
+								log.info("{}{}Added Cookie: {} {} {} {}{}",
+										ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value,
+										cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(),
+										ConsoleDecoration.RESET.value);
     						}
     					}
     				}
 				//}
 			} catch (Exception e) {
-				Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
+				log.info("{}{}An error occurred. Cookies were not created.{}",
+						ConsoleDecoration.RED_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
 			}
 			return this;
 		}

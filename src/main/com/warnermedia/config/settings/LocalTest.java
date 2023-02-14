@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import com.warnermedia.config.TestException;
 import com.warnermedia.utils.TestUtils;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class LocalTest {
 	
 	private LocalTest() {
@@ -67,7 +69,7 @@ public class LocalTest {
             setIsLoggingEnabled(isLoggingEnabled);
             System.getProperties().setProperty("jdk.tls.client.protocols", "TLSv1.2");
     	} catch (Exception e) {
-    		System.out.println(e);
+    		log.error(e.getMessage(), e);
     	}
     }
 

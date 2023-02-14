@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 import com.warnermedia.utils.TestUtils;
+import com.warnermedia.utils.devtools.LocalDevTools;
 import com.warnermedia.utils.ex.ChromeDriverException;
 import com.warnermedia.utils.ex.ErrorCode;
 import org.openqa.selenium.PageLoadStrategy;
@@ -48,14 +49,13 @@ public class ChromeDriverHelper {
 			LocalChromeOptions.get().addArguments("--enable-automation");
 			LocalChromeOptions.get().addArguments("--no-sandbox");
 			LocalChromeOptions.get().addArguments("--disable-infobars");
+			LoggingPreferences logPrefs = new LoggingPreferences();
+			logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+			logPrefs.enable(LogType.BROWSER, Level.ALL);
+			LocalChromeOptions.get().setCapability( "goog:loggingPrefs", logPrefs );
 			if (!LocalTest.getEnvironment().isHeadlessEnabled()) {
 				LocalChromeOptions.get().addExtensions(new File(TestUtils.getRelativePath() + "/externalLibraries/asperaConnect.crx"));
 			}
-
-			/**LoggingPreferences logPrefs = new LoggingPreferences();
-			 logPrefs.enable( LogType.BROWSER, Level.ALL );
-			 LocalChromeOptions.get().setCapability( "goog:loggingPrefs", logPrefs );
-			 LocalChromeOptions.get().merge(caps);**/
 
 			driver = new InheritableThreadLocal<WebDriver>() {
 				@Override

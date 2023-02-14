@@ -1,9 +1,12 @@
 package com.warnermedia.wdm.remove;
 
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.ex.WebDriverManagerException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
+@Slf4j
 public abstract class AbstractRemover {
 
     public AbstractRemover() {
@@ -19,7 +22,7 @@ public abstract class AbstractRemover {
             Process process = processBuilder.start();
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                System.out.println("Unzip command executed successfully.");
+                log.info("{}{}Unzip command executed successfully.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
             } else {
                 throw new WebDriverManagerException("Exit code is not as expected.");
             }

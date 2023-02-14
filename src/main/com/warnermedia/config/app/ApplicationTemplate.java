@@ -12,7 +12,7 @@ import com.warnermedia.config.report.ReportType;
 import com.warnermedia.config.settings.LocalTest;
 //import com.warnermedia.data.mongo.config.MongoConfig;
 import com.warnermedia.selenium.SeleniumHelper;
-import com.warnermedia.utils.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -78,6 +78,7 @@ import java.util.logging.Level;
  * 
  * @author ashleyhuey
  */
+@Slf4j
 public abstract class ApplicationTemplate extends ApplicationHelper implements Application {
 
 	/**
@@ -186,7 +187,7 @@ public abstract class ApplicationTemplate extends ApplicationHelper implements A
 		try {
 
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 

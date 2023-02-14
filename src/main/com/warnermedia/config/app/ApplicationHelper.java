@@ -1,9 +1,4 @@
 package com.warnermedia.config.app;
-
-import java.awt.Toolkit;
-import java.util.logging.Level;
-
-import com.warnermedia.utils.Log;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import com.warnermedia.config.TestException;

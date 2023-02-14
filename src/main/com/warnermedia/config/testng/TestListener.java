@@ -3,12 +3,15 @@ package com.warnermedia.config.testng;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.warnermedia.utils.ConsoleDecoration;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
+@Slf4j
 public class TestListener extends TestListenerAdapter implements ITestListener {
 	
 	@Override
@@ -61,7 +64,7 @@ public class TestListener extends TestListenerAdapter implements ITestListener {
 			ITestResult skippedTestCase = skippedTestCases.next();
 			ITestNGMethod method = skippedTestCase.getMethod();
 			if (context.getSkippedTests().getResults(method).size() > 0) {
-				System.out.println("Removing:" + skippedTestCase.getTestClass().toString());
+				log.info("{}{}Removing: {}{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, skippedTestCase.getTestClass().toString(), ConsoleDecoration.RESET.value);
 				skippedTestCases.remove();
 			}
 		}

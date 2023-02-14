@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.warnermedia.page.core.web.Type;
 import com.warnermedia.selenium.TestElement;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
@@ -15,6 +16,7 @@ import com.warnermedia.utils.CookieHelper;
 import com.warnermedia.utils.TestUtils;
 import com.warnermedia.utils.Validator;
 
+@Slf4j
 public class VerifyTextHelper {
 
 	// optional params
@@ -77,9 +79,9 @@ public class VerifyTextHelper {
 
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations()
-						.assertionPass(type.name() + " contains the correct text: " + actualText);
+						.assertionPass(log, type.name() + " contains the correct text: " + actualText);
 			} else {
-				throw LocalValidation.getValidations().assertionFailed(
+				throw LocalValidation.getValidations().assertionFailed(log,
 						type.name() + " does not contain the correct text. Expected text: "
 								+ expectedText + ". Actual text: " + actualText);
 			}
@@ -101,9 +103,9 @@ public class VerifyTextHelper {
 
 			if (actualText.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
 				LocalValidation.getValidations()
-						.assertionPass(type.name() + " contains the correct text: " + actualText);
+						.assertionPass(log, type.name() + " contains the correct text: " + actualText);
 			} else {
-				throw LocalValidation.getValidations().assertionFailed(
+				throw LocalValidation.getValidations().assertionFailed(log,
 						type.name() + " does not contain the correct text. Expected text: "
 								+ expectedText + ". Actual text: " + actualText);
 			}
@@ -131,11 +133,11 @@ public class VerifyTextHelper {
 			}
 
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				LocalValidation.getValidations().assertionPass(
+				LocalValidation.getValidations().assertionPass(log,
 						type.name() + " contains " + actualValueInTextBox + " as expected.");
 			} else {
 				throw LocalValidation.getValidations()
-						.assertionFailed(type.name() + " should contain " + expectedText
+						.assertionFailed(log, type.name() + " should contain " + expectedText
 								+ " but is retaining an incorrect value instead. The value being retained is "
 								+ actualValueInTextBox);
 			}
@@ -163,11 +165,11 @@ public class VerifyTextHelper {
 			}
 
 			if (actualValueInTextBox.toLowerCase().trim().contains(expectedText.toLowerCase().trim())) {
-				LocalValidation.getValidations().assertionPass(
+				LocalValidation.getValidations().assertionPass(log,
 						type.name() + " contains " + actualValueInTextBox + " as expected.");
 			} else {
 				throw LocalValidation.getValidations()
-						.assertionFailed(type.name() + " should contain " + expectedText
+						.assertionFailed(log, type.name() + " should contain " + expectedText
 								+ " but is retaining an incorrect value instead. The value being retained is "
 								+ actualValueInTextBox);
 			}
@@ -344,7 +346,7 @@ public class VerifyTextHelper {
 				}
 			} else {
 				throw LocalValidation.getValidations()
-						.assertionFailed("An Element was not provided. Unable to enter text into an undefined element. "
+						.assertionFailed(log, "An Element was not provided. Unable to enter text into an undefined element. "
 								+ "Add the verify() method to the VerifyTextHelper chain and provide either TestElement or WebElement.");
 			}
 		} catch (Exception ex) {

@@ -3,9 +3,11 @@ package com.warnermedia.report.controllers;
 import java.io.*;
 import java.util.logging.Level;
 
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.observers.app.Application;
 import com.warnermedia.utils.observers.app.ApplicationState;
 import com.warnermedia.utils.observers.app.IssueType;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,10 +18,10 @@ import com.warnermedia.report.Util;
 import com.warnermedia.report.models.ReportSettings;
 import com.warnermedia.report.models.TestContent;
 import com.warnermedia.report.models.TestStepContent;
-import com.warnermedia.utils.Log;
 import com.warnermedia.utils.TestUtils;
 import org.jsoup.select.Elements;
 
+@Slf4j
 public class TestResultsReport implements ReportContent, Application  {
 
 	private String resultSummaryPath;
@@ -119,7 +121,7 @@ public class TestResultsReport implements ReportContent, Application  {
 			streamWriter.write(document.get().toString());
 			streamWriter.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -133,7 +135,7 @@ public class TestResultsReport implements ReportContent, Application  {
 				file.createNewFile();
 			}
 		} catch (IOException oException) {
-			Log.get().log(Level.SEVERE, oException.getMessage(), oException);
+			log.error("{}{}{}{}", ConsoleDecoration.RED_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, oException.getMessage(), ConsoleDecoration.RESET.value);
 			throw new TestException("Error while creating HTML result summary file");
 		}
 	}

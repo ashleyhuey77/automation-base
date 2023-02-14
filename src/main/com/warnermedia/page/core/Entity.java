@@ -4,6 +4,7 @@ public enum Entity {
 	DRAFTS,
     SCHEDULER,
     MS2,
+    CREATE_MS2,
     CRASH_RECORDS,
     REQUESTS,
     ENCODER,

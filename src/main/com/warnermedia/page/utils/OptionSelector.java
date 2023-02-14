@@ -7,6 +7,7 @@ import com.warnermedia.page.core.PageUtils;
 import com.warnermedia.page.core.web.Type;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
@@ -17,6 +18,7 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.utils.Validator;
 
+@Slf4j
 public class OptionSelector extends PageUtils {
 
 	private Type type;
@@ -59,12 +61,13 @@ public class OptionSelector extends PageUtils {
 		try {
 			//SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(type.element());
 			List<WebElement> webElements = SHelper.get().element().getListOf(type.element());
-			WebElement element = find(webElements).that(Condition.EQUAL).text(option).get();
-			if (element != null) {
+			WebElement element = null;
+			try {
+				element = find(webElements).that(Condition.EQUAL).text(option).get();
 				click().on(type).using(element).start();
-				LocalReport.getReport().reportDoneEvent(option + " has been selected successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(option + " is not found in the "
+				LocalReport.getReport().reportDoneEvent(log, option + " has been selected successfully.");
+			} catch (Exception e2) {
+				throw LocalValidation.getValidations().assertionFailed(log, option + " is not found in the "
 						+ "list of available options. Unable to select the expected option.");
 			}
 		} catch (Exception ex) {
@@ -74,12 +77,13 @@ public class OptionSelector extends PageUtils {
 
 	private void findOptionThatIsEqualToOptionInAWebElementList() throws TestException {
 		try {
-			WebElement el = find(element).that(Condition.EQUAL).text(option).get();
-			if (el != null) {
+			WebElement el = null;
+			try {
+				el = find(element).that(Condition.EQUAL).text(option).get();
 				click().on(type).using(el).start();
-				LocalReport.getReport().reportDoneEvent(option + " has been selected successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(option + " is not found in the "
+				LocalReport.getReport().reportDoneEvent(log, option + " has been selected successfully.");
+			} catch (Exception e2) {
+				throw LocalValidation.getValidations().assertionFailed(log, option + " is not found in the "
 						+ "list of available options. Unable to select the expected option.");
 			}
 		} catch (Exception ex) {
@@ -91,12 +95,13 @@ public class OptionSelector extends PageUtils {
 		try {
 			//SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(20)).on(type.element());
 			List<WebElement> webElements = SHelper.get().element().getListOf(type.element());
-			WebElement element = find(webElements).that(Condition.CONTAIN).text(option).get();
-			if (element != null) {
+			WebElement element = null;
+			try {
+				element = find(webElements).that(Condition.CONTAIN).text(option).get();
 				click().on(type).using(element).start();
-				LocalReport.getReport().reportDoneEvent(option + " has been selected successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(option + " is not found in the "
+				LocalReport.getReport().reportDoneEvent(log, option + " has been selected successfully.");
+			} catch (Exception e2) {
+				throw LocalValidation.getValidations().assertionFailed(log, option + " is not found in the "
 						+ "list of available options. Unable to select the expected option.");
 			}
 		} catch (Exception ex) {
@@ -106,12 +111,13 @@ public class OptionSelector extends PageUtils {
 
 	private void findTheOptionContainedInAWebElementList() throws TestException {
 		try {
-			WebElement el = find(element).that(Condition.CONTAIN).text(option).get();
-			if (el != null) {
+			WebElement el = null;
+			try {
+				el = find(element).that(Condition.CONTAIN).text(option).get();
 				click().on(type).using(el).start();
-				LocalReport.getReport().reportDoneEvent(option + " has been selected successfully.");
-			} else {
-				throw LocalValidation.getValidations().assertionFailed(option + " is not found in the "
+				LocalReport.getReport().reportDoneEvent(log, option + " has been selected successfully.");
+			} catch (Exception e2) {
+				throw LocalValidation.getValidations().assertionFailed(log, option + " is not found in the "
 						+ "list of available options. Unable to select the expected option.");
 			}
 		} catch (Exception ex) {

@@ -8,8 +8,10 @@ import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.data.mongo.config.Serializer;
 import com.warnermedia.data.mongo.models.Local;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+@Slf4j
 public class LocalRepository {
 
     MongoDatabase database;
@@ -51,7 +53,7 @@ public class LocalRepository {
             data = mapper.readValue(obj, Local.class);
             DataMapper.setLocal(data);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -59,7 +61,7 @@ public class LocalRepository {
         try {
             cursor.get().close();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 }

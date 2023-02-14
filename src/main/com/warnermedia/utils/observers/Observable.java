@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.warnermedia.config.TestException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class Observable<S extends Observable<S, O, A>, O extends Observer<S, O, A>, A> {
 
 	protected List<O> observers;
@@ -32,7 +34,7 @@ public abstract class Observable<S extends Observable<S, O, A>, O extends Observ
 				observer.update((S) this, argument);
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.error(e.getMessage(), e);
 		}
 	}
 

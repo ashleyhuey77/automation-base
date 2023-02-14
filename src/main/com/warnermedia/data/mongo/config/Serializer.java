@@ -1,12 +1,14 @@
 package com.warnermedia.data.mongo.config;
 
 import com.mongodb.client.MongoCursor;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Serializer {
 
     public static String serialize(MongoCursor<Document> collection) {
@@ -20,7 +22,7 @@ public class Serializer {
             JSONObject obj = new JSONObject(list.get(0).toJson());
             result = obj.toString();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
         return result;
     }
@@ -31,7 +33,7 @@ public class Serializer {
             JSONObject obj = new JSONObject(collection.toJson());
             result = obj.toString();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
         return result;
     }

@@ -1,16 +1,14 @@
 package com.warnermedia.config.driver;
 
 import java.util.Set;
-import java.util.logging.Level;
 
-//import io.appium.java_client.AppiumDriver;
-import com.warnermedia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
+import com.warnermedia.utils.ConsoleDecoration;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.*;
 import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.utils.CookieManager;
-import com.warnermedia.utils.Log;
 
+@Slf4j
 public class WebDriverListener extends TestListenerAdapter implements ITestListener, IInvokedMethodListener {
 
     public static int testNumber = 0;
@@ -19,7 +17,6 @@ public class WebDriverListener extends TestListenerAdapter implements ITestListe
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         try {
-                Log.set();
                 LocalTest.initializeSettings();
                 LocalTest.setTestThreadCount(method.getTestMethod().getTestClass().getXmlTest().getThreadCount());
             if (method.toString().toLowerCase().contains("beforescenario")) {
@@ -29,12 +26,12 @@ public class WebDriverListener extends TestListenerAdapter implements ITestListe
                 if (!hasBeforeScenarioAlreadyBeenExecuted.get()) {
                     LocalDriver.getDriver();
                     testNumber++;
-                    Log.get().log(Level.INFO, "Now executing test number: {0}", testNumber);
+                    log.info("{}{}Now executing test number: {}{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, testNumber, ConsoleDecoration.RESET.value);
                     hasBeforeScenarioAlreadyBeenExecuted.set(true);
                 }
             }
         } catch (Exception e) {
-            System.out.println("Could not open the browser for the following reason: " + e);
+            log.error("{}{}Could not open the browser for the following reason: {}{}", ConsoleDecoration.RED_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, e.getMessage(), ConsoleDecoration.RESET.value);
         }
     }
 
@@ -56,19 +53,14 @@ public class WebDriverListener extends TestListenerAdapter implements ITestListe
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         if (method.toString().toLowerCase().contains("afterscenario")) {
-            WebDriver driver = null;
             try {
                 hasBeforeScenarioAlreadyBeenExecuted.set(false);
                 CookieManager.setCookies(null);
                 LocalDriver.quitDriver();
             } catch (Exception e) {
-                if (driver != null) {
-                    LocalDriver.quitDriver();
-                }
+                LocalDriver.quitDriver();
             } finally {
-                if (driver != null) {
-                    LocalDriver.quitDriver();
-                }
+                LocalDriver.quitDriver();
             }
         }
     }

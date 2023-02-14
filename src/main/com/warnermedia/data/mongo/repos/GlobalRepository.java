@@ -11,8 +11,10 @@ import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.data.mongo.config.Serializer;
 import com.warnermedia.data.mongo.models.Global;
 import com.warnermedia.data.mongo.models.Person;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+@Slf4j
 public class GlobalRepository {
 
     MongoDatabase database;
@@ -32,7 +34,7 @@ public class GlobalRepository {
             data = mapper.readValue(obj, Global.class);
             DataMapper.setGlobal(data);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -40,7 +42,7 @@ public class GlobalRepository {
         try {
             cursor.get().close();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 }

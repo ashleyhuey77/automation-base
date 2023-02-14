@@ -1,0 +1,7 @@
+{
+  "exceptions": [
+    "kfservice",
+    "stills.json",
+    "stuffstore"
+  ]
+}

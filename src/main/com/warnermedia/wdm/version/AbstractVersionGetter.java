@@ -1,13 +1,16 @@
 package com.warnermedia.wdm.version;
 
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.TestUtils;
 import com.warnermedia.utils.ex.ErrorCode;
 import com.warnermedia.utils.ex.VersionFormatException;
 import com.warnermedia.utils.ex.WebDriverManagerException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+@Slf4j
 public abstract class AbstractVersionGetter {
 
     public AbstractVersionGetter() {
@@ -34,7 +37,7 @@ public abstract class AbstractVersionGetter {
             result = output.toString().replace("Google Chrome ", "");
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                System.out.println(output);
+                log.info("{}{}{}{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, result, ConsoleDecoration.RESET.value);
             } else {
                 //abnormal...
             }

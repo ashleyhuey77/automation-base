@@ -8,10 +8,12 @@ import com.warnermedia.config.TestException;
 import com.warnermedia.page.core.web.BaseGeneric;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.selenium.text.Variable;
-import com.warnermedia.utils.Log;
+import com.warnermedia.utils.ConsoleDecoration;
 import com.warnermedia.utils.observers.ErrorType;
 import com.warnermedia.utils.observers.Observable;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class PageState extends Observable<PageState, Page, ErrorType> {
 	
 	private ErrorType currentState;
@@ -35,7 +37,7 @@ public class PageState extends Observable<PageState, Page, ErrorType> {
 				currentState = ErrorType.MISSING_ASSET;
 			}
 		}
-		Log.get().log(Level.INFO, currentState.name(), "Page state is {0}");
+		log.info("{}{}Page state is {}{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, currentState.name(), ConsoleDecoration.RESET.value);
 		notifyObservers(currentState);
 		currentState = ErrorType.NONE;
 	}

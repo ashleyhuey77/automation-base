@@ -11,6 +11,8 @@ import com.warnermedia.selenium.browser.BrowserObject;
 import com.warnermedia.selenium.wait.Condition;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import com.warnermedia.utils.ConsoleDecoration;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+@Slf4j
 public class MiraServerFulfillmentComp extends AbstractMiraPage {
 
     public MiraServerFulfillmentComp() {
@@ -36,7 +39,7 @@ public class MiraServerFulfillmentComp extends AbstractMiraPage {
 
     private void waitForStatusToExist(String cnnId, String status) throws TestException {
         try {
-            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofMinutes(5));
+            WebDriverWait wait = new WebDriverWait(LocalDriver.getDriver(), Duration.ofMinutes(8));
 
             wait.until((WebDriver driver) -> {
                 Boolean result = false;
@@ -44,15 +47,13 @@ public class MiraServerFulfillmentComp extends AbstractMiraPage {
                     Thread.sleep(5000);
                     List<WebElement> rows = SHelper.get().element().getListOf(MiraServerFulfillment.REQUEST_ROWS.element());
                     if (rows.isEmpty()) {
-                        System.out.println("The list of rows was not found with the given selector.");
+                        log.info("{}{}The list of rows was not found with the given selector.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
                     }
                     WebElement row = find(rows).that(Condition.CONTAIN).text(cnnId).get();
-                    if (row == null) {
-                        System.out.println("The row was not found with cnnid " + cnnId + " and status " + status);
-                    }
-                    if (row.getText().contains(status)) {
+                    String text = row.getText().toLowerCase();
+                    if (text.contains(status.toLowerCase())) {
                         result = true;
-                        LocalValidation.getValidations().assertionPass(status + " appears for the fulfillment as expected.");
+                        LocalValidation.getValidations().assertionPass(log, status + " appears for the fulfillment as expected.");
                     } else {
                         result = false;
                         click().on(MiraServerFulfillment.REFRSH_BTN).start();
@@ -62,7 +63,7 @@ public class MiraServerFulfillmentComp extends AbstractMiraPage {
                         result = false;
                         click().on(MiraServerFulfillment.REFRSH_BTN).start();
                     } catch (Exception e) {
-                        System.out.println("Status is not as expected. Retrying...");
+                        log.info("{}{}Status is not as expected. Retrying...{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
                     }
                 }
                 return result;

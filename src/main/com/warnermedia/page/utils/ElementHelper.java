@@ -1,6 +1,10 @@
 package com.warnermedia.page.utils;
 
 import java.util.List;
+import java.util.Objects;
+
+import com.warnermedia.utils.Validator;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
@@ -8,6 +12,7 @@ import com.warnermedia.config.report.LocalValidation;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.Condition;
 
+@Slf4j
 public class ElementHelper {
 
 	//required
@@ -107,15 +112,18 @@ public class ElementHelper {
 			if (condition == Condition.CONTAIN) {
 				webElement = elementList.stream().filter(d -> d.getText().toLowerCase().contains(elementText.toLowerCase())).findFirst()
 						.orElse(null);
+				Validator.of(webElement).validate(Objects::nonNull, result -> webElement != null, "The element returned null. Unable to find the element with text " + elementText + " on this page.").get();
+
 			} else if (condition == Condition.EQUAL) {
 				webElement = elementList.stream().filter(d -> d.getText().equalsIgnoreCase(elementText)).findFirst()
 						.orElse(null);
+				Validator.of(webElement).validate(Objects::nonNull, result -> webElement != null, "The element returned null. Unable to find the element with text " + elementText + " on this page.").get();
 			}
 
 		} else if (element != null) {
 			webElement = SHelper.get().element().get(element);
 		} else {
-			throw LocalValidation.getValidations().assertionFailed("Please provide either an element or a list of elements.");
+			throw LocalValidation.getValidations().assertionFailed(log, "Please provide either an element or a list of elements.");
 		}
 		return webElement;
 	}

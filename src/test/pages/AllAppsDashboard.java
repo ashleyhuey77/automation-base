@@ -10,10 +10,12 @@ import com.warnermedia.selenium.Locator;
 import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.How;
 
 import java.time.Duration;
 
+@Slf4j
 public class AllAppsDashboard extends PageTemplate {
 
     public AllAppsDashboard() throws TestException {
@@ -30,7 +32,7 @@ public class AllAppsDashboard extends PageTemplate {
     }
 
     public AllAppsDashboard reportThatPageLoadedSuccessfully() throws TestException {
-        LocalValidation.getValidations().assertionPass("Dashboard page loaded as expected.");
+        LocalValidation.getValidations().assertionPass(log, "Dashboard page loaded as expected.");
         return this;
     }
 }

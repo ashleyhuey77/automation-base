@@ -14,13 +14,11 @@ import com.warnermedia.config.os.OS;
 import com.warnermedia.config.os.OSContext;
 import com.warnermedia.config.os.OSFacade;
 import com.warnermedia.config.os.Windows;
-import com.warnermedia.utils.Log;
 
 public class StateTests {
 	
 	@Test
 	public void verifyHeadlessStopState() throws Exception {
-		Log.set();
 		HeadlessContext context = new HeadlessContext();
 		State headlessStopState = new HeadlessStop();
         context.setState(headlessStopState);
@@ -71,7 +69,6 @@ public class StateTests {
 	
 	@Test
 	public void verifyEnvironmentCOntext() throws Exception {
-		Log.set();
 		EnvironmentContext context = new EnvironmentContext();
 		State headlessStopState = new HeadlessStop();
         context.setState(headlessStopState);

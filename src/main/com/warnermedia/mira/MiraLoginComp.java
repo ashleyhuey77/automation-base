@@ -11,9 +11,11 @@ import com.warnermedia.config.settings.LocalTest;
 import com.warnermedia.mira.web.inputs.MiraLogin;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
+@Slf4j
 public class MiraLoginComp extends AbstractMiraPage {
 
     public MiraLoginComp() {
@@ -44,7 +46,7 @@ public class MiraLoginComp extends AbstractMiraPage {
             click().on(MiraLogin.LOGIN_BUTTON).start();
             Thread.sleep(2000);
             switchToMiraAppWindow();
-            LocalValidation.getValidations().assertionPass("User is able to sign in to Mira successfully.");
+            LocalValidation.getValidations().assertionPass(log, "User is able to sign in to Mira successfully.");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }

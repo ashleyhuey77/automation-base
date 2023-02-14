@@ -7,8 +7,10 @@ import com.mongodb.client.MongoDatabase;
 import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.data.mongo.config.Serializer;
 import com.warnermedia.data.mongo.models.Video;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+@Slf4j
 public class VideoRepository {
     MongoDatabase database;
     private static ThreadLocal<MongoCursor<Document>> cursor = new ThreadLocal<>();
@@ -27,7 +29,7 @@ public class VideoRepository {
             data = mapper.readValue(obj, Video.class);
             DataMapper.setVideo(data);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -35,7 +37,7 @@ public class VideoRepository {
         try {
             cursor.get().close();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 }

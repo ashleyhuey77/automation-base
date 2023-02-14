@@ -10,8 +10,10 @@ import com.mongodb.client.MongoDatabase;
 import com.warnermedia.data.mongo.config.DataMapper;
 import com.warnermedia.data.mongo.config.Serializer;
 import com.warnermedia.data.mongo.models.Asset;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+@Slf4j
 public class AssetRepository {
 
     MongoDatabase database;
@@ -31,7 +33,7 @@ public class AssetRepository {
             data = mapper.readValue(obj, Asset.class);
             DataMapper.setAsset(data);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -39,7 +41,7 @@ public class AssetRepository {
         try {
             cursor.get().close();
         } catch (Exception e) {
-            System.out.println(e);
+            log.error(e.getMessage(), e);
         }
     }
 }

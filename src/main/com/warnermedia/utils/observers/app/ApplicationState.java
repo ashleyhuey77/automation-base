@@ -2,7 +2,9 @@ package com.warnermedia.utils.observers.app;
 
 import com.warnermedia.config.TestException;
 import com.warnermedia.utils.observers.Observable;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ApplicationState extends Observable<ApplicationState, Application, IssueType> {
     private static ThreadLocal<IssueType> currentState = new ThreadLocal<>();
 
@@ -23,7 +25,7 @@ public class ApplicationState extends Observable<ApplicationState, Application, 
             currentState.set(result);
             notifyObservers(currentState.get());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 }

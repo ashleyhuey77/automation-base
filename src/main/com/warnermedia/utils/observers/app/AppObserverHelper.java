@@ -55,10 +55,13 @@ public class AppObserverHelper extends PageUtils {
         }
         if (SHelper.get().element().isDisplayed(BaseGeneric.TOP_CONTAINER_VALUES.element(), Duration.ofSeconds(1))) {
             List<WebElement> values = SHelper.get().element().getListOf(BaseGeneric.TOP_CONTAINER_VALUES.element());
-            WebElement preraw = find(values).that(Condition.EQUAL).text("pre-raw").get();
-            WebElement precut = find(values).that(Condition.EQUAL).text("pre-cut").get();
-            if (preraw != null
-                    || precut != null) {
+            WebElement preraw = null;
+            WebElement precut = null;
+            try {
+                find(values).that(Condition.EQUAL).text("pre-raw").get();
+                find(values).that(Condition.EQUAL).text("pre-cut").get();
+                result = IssueType.ASSET_STATUS_IS_NOT_CHANGING;
+            } catch (Exception e) {
                 result = IssueType.ASSET_STATUS_IS_NOT_CHANGING;
             }
         }

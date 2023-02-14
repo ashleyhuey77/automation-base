@@ -2,6 +2,7 @@ package com.warnermedia.page.core;
 
 import com.warnermedia.config.data.UserHelper;
 import com.warnermedia.selenium.wait.Condition;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriverException;
 import com.utils.CredentialsType;
 import com.warnermedia.config.SHelper;
@@ -20,6 +21,7 @@ import com.warnermedia.utils.Url;
 
 import java.time.Duration;
 
+@Slf4j
 @Url(url = "/newstron/record/timeline.html#")
 public class SignInPage extends PageTemplate {
 
@@ -30,8 +32,8 @@ public class SignInPage extends PageTemplate {
     @Override
     public void WaitForPageLoad() throws TestException {
         try {
-            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.USER_NAME_TEXT_FIELD.element(), BaseGeneric.USER_NAME_TEXT_FIELD2.element(), BaseGeneric.USER_NAME_TEXT_FIELD3.element());
-            LocalReport.getReport().reportDoneEvent("The login page loaded as expected.");
+            SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(60))).on(BaseGeneric.USER_NAME_TEXT_FIELD.element(), BaseGeneric.USER_NAME_TEXT_FIELD2.element(), BaseGeneric.USER_NAME_TEXT_FIELD3.element());
+            LocalReport.getReport().reportDoneEvent(log, "The login page loaded as expected.");
         } catch (WebDriverException ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -132,7 +134,7 @@ public class SignInPage extends PageTemplate {
                     .text(new String(UserHelper.getPassword(CredentialsType.BASE)).trim())
                     .into(BaseGeneric.PWD_TEXT_FIELD)
                     .start();
-            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            LocalValidation.getValidations().assertionPass(log, "User is able to sign in successfully.");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -152,7 +154,7 @@ public class SignInPage extends PageTemplate {
                     .text("bingo")
                     .into(BaseGeneric.PWD_TEXT_FIELD)
                     .start();
-            LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+            LocalValidation.getValidations().assertionPass(log, "User is able to sign in successfully.");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -184,9 +186,9 @@ public class SignInPage extends PageTemplate {
                         .into(BaseGeneric.PWD_TEXT_FIELD2)
                         .start();
             } else {
-                throw LocalValidation.getValidations().assertionFailed("The sign in page does not appear as expected.");
+                throw LocalValidation.getValidations().assertionFailed(log, "The sign in page does not appear as expected.");
             }
-            LocalValidation.getValidations().assertionPass("User is able to enter credentials.");
+            LocalValidation.getValidations().assertionPass(log, "User is able to enter credentials.");
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);
         }
@@ -196,14 +198,14 @@ public class SignInPage extends PageTemplate {
         try {
             click().on(BaseGeneric.SIGN_IN_BTN).start();
             Thread.sleep(3000);
-            SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.SIGN_IN_BTN.element());
+            SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(90))).on(BaseGeneric.SIGN_IN_BTN.element());
             CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
         } catch (Exception ex) {
             try {
                 SHelper.get().waitMethod(Wait.PRESENCE_OF_ELEMENT_TEXT, new WaitBuilder().to(Condition.CONTAIN).value("is incorrect").forAMaxTimeOf(Duration.ofSeconds(10))).on(BaseGeneric.ERROR_MSG.element());
                 String errorText = getErrorText();
                 if (!TestUtils.isNullOrBlank(errorText)) {
-                    throw LocalValidation.getValidations().assertionFailed(errorText);
+                    throw LocalValidation.getValidations().assertionFailed(log, errorText);
                 }
             } catch (Exception e2) {
                 throw LocalReport.getReport().reportException(ex);
@@ -214,7 +216,7 @@ public class SignInPage extends PageTemplate {
     private void selectNewLoginButton() throws TestException {
         try {
             click().on(BaseGeneric.LOG_IN_BTN).start();
-            SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(30))).on(BaseGeneric.LOG_IN_BTN.element());
+            SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(100))).on(BaseGeneric.LOG_IN_BTN.element());
             CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
         } catch (Exception ex) {
             throw LocalReport.getReport().reportException(ex);

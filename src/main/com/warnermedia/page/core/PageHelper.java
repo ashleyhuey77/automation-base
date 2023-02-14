@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.logging.Level;
 
 import com.warnermedia.config.data.UserHelper;
+import com.warnermedia.utils.ConsoleDecoration;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,7 +31,6 @@ import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.CookieHelper;
 import com.warnermedia.utils.CookieManager;
-import com.warnermedia.utils.Log;
 import com.warnermedia.utils.TestUtils;
 import org.openqa.selenium.support.How;
 
@@ -58,6 +59,7 @@ import org.openqa.selenium.support.How;
  * 
  * @author ashleyhuey
  */
+@Slf4j
 public abstract class PageHelper extends PageUtils {
 
 	protected Locator locator(String locator) {
@@ -292,9 +294,9 @@ public abstract class PageHelper extends PageUtils {
 		try {
 			if (SHelper.get().element().isDisplayed(element, Duration.ofSeconds(10))) {
 				LocalValidation.getValidations()
-						.assertionPass(elementBeingTested + " displays in the page as expected.");
+						.assertionPass(log, elementBeingTested + " displays in the page as expected.");
 			} else {
-				throw LocalValidation.getValidations().assertionFailed(
+				throw LocalValidation.getValidations().assertionFailed(log,
 						elementBeingTested + " should display in the page. It does not display as expected.");
 			}
 		} catch (Exception ex) {
@@ -324,9 +326,9 @@ public abstract class PageHelper extends PageUtils {
 	protected void verifySomeElementIsNotPresent(TestElement element, String elementBeingTested) throws TestException {
 		try {
 			if (!SHelper.get().element().isDisplayed(element, Duration.ofSeconds(5))) {
-				LocalValidation.getValidations().assertionPass(elementBeingTested + " does not display in the page.");
+				LocalValidation.getValidations().assertionPass(log, elementBeingTested + " does not display in the page.");
 			} else {
-				throw LocalValidation.getValidations().assertionFailed(
+				throw LocalValidation.getValidations().assertionFailed(log,
 						elementBeingTested + " should not display in the page. It does display. This is not expected.");
 			}
 		} catch (Exception ex) {
@@ -428,9 +430,9 @@ public abstract class PageHelper extends PageUtils {
 	 */
 	protected void failTestIfVariableIsNull(String variable, String passMessage, String failMessage) throws TestException {
 		if (variable != null) {
-			LocalValidation.getValidations().assertionPass(passMessage);
+			LocalValidation.getValidations().assertionPass(log, passMessage);
 		} else {
-			throw LocalValidation.getValidations().assertionFailed(failMessage);
+			throw LocalValidation.getValidations().assertionFailed(log, failMessage);
 		}
 	}
 
@@ -514,13 +516,13 @@ public abstract class PageHelper extends PageUtils {
 			if (!TestUtils.isNullOrBlank(expectedValue) && !TestUtils.isNullOrBlank(actualValue)) {
 				if (actualValue.toLowerCase().trim().equals(expectedValue.toLowerCase().trim())) {
 					LocalValidation.getValidations()
-							.assertionPass(actualValue + " is set correctly in " + variableBeingTested);
+							.assertionPass(log, actualValue + " is set correctly in " + variableBeingTested);
 				} else {
 					throw LocalValidation.getValidations().assertionFailed(
-							expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+							log, expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			} else {
-				throw LocalValidation.getValidations().assertionFailed(variableBeingTested
+				throw LocalValidation.getValidations().assertionFailed(log, variableBeingTested
 						+ " returned null in either the actual or the expected variable that was set. "
 						+ "Check the test to verify all variables are being assigned a value appropriately. Actual: "
 						+ actualValue + ". Expected: " + expectedValue);
@@ -609,17 +611,17 @@ public abstract class PageHelper extends PageUtils {
 
 				{
 					LocalValidation.getValidations()
-							.assertionPass(actualValue + " is set correctly in " + variableBeingTested);
+							.assertionPass(log, actualValue + " is set correctly in " + variableBeingTested);
 				} else {
 					throw LocalValidation.getValidations().assertionFailed(
-							expectedValue + " is not set as expected. " + actualValue + " is set instead.");
+							log, expectedValue + " is not set as expected. " + actualValue + " is set instead.");
 				}
 			} else {
 				if (TestUtils.isNullOrBlank(expectedValue)) {
 					throw LocalValidation.getValidations().assertionFailed(
-							variableBeingTested + " returned null. Variable was not expected to return null.");
+							log, variableBeingTested + " returned null. Variable was not expected to return null.");
 				} else if (TestUtils.isNullOrBlank(actualValue)) {
-					throw LocalValidation.getValidations().assertionFailed(variableBeingTested
+					throw LocalValidation.getValidations().assertionFailed(log, variableBeingTested
 							+ " returned null in the actual variable that was set. Check the test to verify all "
 							+ "variables are being assigned a value appropriately.");
 				}
@@ -758,11 +760,11 @@ public abstract class PageHelper extends PageUtils {
 	
 	protected void handleSignInModal() throws TestException {
 		try {
-			LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+			LocalValidation.getValidations().assertionPass(log, "User is able to sign in successfully.");
 			if (SHelper.get().element().isDisplayed(BaseGeneric.EA_SIGNIN_BOX.element(),Duration.ofSeconds(10))) {
 				enter().text(new String(UserHelper.getPassword(CredentialsType.BASE))).into(BaseGeneric.ANYWHERE_PWD_TEXT_FIELD).start();
 				click().on(BaseGeneric.ANYWHERE_SIGN_IN_BTN).start();
-				LocalValidation.getValidations().assertionPass("User is able to sign in successfully.");
+				LocalValidation.getValidations().assertionPass(log, "User is able to sign in successfully.");
 				SHelper.get().waitMethod(Wait.ELEMENT_NOT_TO_BE_PRESENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(10))).on(BaseGeneric.EA_SIGNIN_BOX.element());
 				CookieManager.setCookies(LocalDriver.getDriver().manage().getCookies());
 			}
@@ -782,7 +784,7 @@ public abstract class PageHelper extends PageUtils {
 				SHelper.get().page().refresh();
 			}
 		} catch (Exception e) {
-			Log.get().log(Level.INFO, "An error occurred. Cookies were not created.");
+			log.info("{}{}An error occurred. Cookies were not created.{}", ConsoleDecoration.RED_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value);
 		}
 	}
 	

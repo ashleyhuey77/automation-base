@@ -1,12 +1,14 @@
 package com.warnermedia.config.email;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Properties;
 import java.util.logging.Level;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage.RecipientType;
-import com.warnermedia.utils.Log;
 
+@Slf4j
 public class SMTPHelper {
 
 	private SMTPHelper() {
@@ -26,7 +28,7 @@ public class SMTPHelper {
 						"");
 			}
 		});
-		Log.get().log(Level.INFO, "SMTP session started... ");
+		log.info("SMTP session started... ");
 		session.set(sess);
 	}
 
@@ -38,9 +40,9 @@ public class SMTPHelper {
 			t.connect("smtp.mail.yahoo.com", uN, pwd);
 			t.sendMessage(replyMessage.get(), replyMessage.get().getRecipients(RecipientType.TO));
 			t.close();
-			Log.get().log(Level.INFO, "Replied to message successfully... ");
+			log.info("Replied to message successfully... ");
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 	}
 
@@ -68,9 +70,9 @@ public class SMTPHelper {
 			rMessage.saveChanges();
 
 			replyMessage.set(rMessage);
-			Log.get().log(Level.INFO, "Reply message composed... ");
+			log.info("Reply message composed... ");
 		} catch (Exception e) {
-			Log.get().log(Level.SEVERE, e.getMessage(), e);
+			log.info(e.getMessage(), e);
 		}
 	}
 

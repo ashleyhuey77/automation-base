@@ -6,6 +6,8 @@ import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.selenium.SeleniumHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <h2>PageTemplate</h2>
@@ -78,7 +80,6 @@ public abstract class PageTemplate extends PageHelper implements PageControl {
 	 */
 	public PageTemplate() throws TestException {
 		super();
-
 		WebDriver browser = LocalDriver.getDriver();
 		SHelper.set(new SeleniumHelper());
 		PageFactory.initElements(browser, this);

@@ -8,6 +8,7 @@ import com.warnermedia.selenium.TestElement;
 import com.warnermedia.selenium.wait.Wait;
 import com.warnermedia.selenium.wait.WaitBuilder;
 import com.warnermedia.utils.TestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import com.warnermedia.config.SHelper;
 import com.warnermedia.config.TestException;
@@ -15,6 +16,7 @@ import com.warnermedia.config.report.LocalReport;
 import com.warnermedia.selenium.shared.Via;
 import com.warnermedia.utils.Validator;
 
+@Slf4j
 public class ClickHelper {
 
 	// optional params
@@ -58,7 +60,7 @@ public class ClickHelper {
 		try {
 			SHelper.get().waitMethod(Wait.CLICKABILITY_OF_ELEMENT, new WaitBuilder().forAMaxTimeOf(Duration.ofSeconds(20))).on(element);
 			SHelper.get().click(via).on(element);
-			LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+			LocalReport.getReport().reportDoneEvent(log, type.name() + " clicked successfully.");
 		} catch (Exception e) {
 			try {
 				if (via.equals(Via.SELENIUM)) {
@@ -68,7 +70,7 @@ public class ClickHelper {
 				} else {
 					throw e;
 				}
-				LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+				LocalReport.getReport().reportDoneEvent(log, type.name() + " clicked successfully.");
 			} catch (Exception e2) {
 				throw LocalReport.getReport().reportException(e);
 			}
@@ -78,7 +80,7 @@ public class ClickHelper {
 	private void clickSomeWebElement() throws TestException {
 		try {
 			SHelper.get().click(via).on(webElement);
-			LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+			LocalReport.getReport().reportDoneEvent(log, type.name() + " clicked successfully.");
 		} catch (Exception e) {
 			try {
 				if (via.equals(Via.SELENIUM)) {
@@ -88,7 +90,7 @@ public class ClickHelper {
 				} else {
 					throw e;
 				}
-				LocalReport.getReport().reportDoneEvent(type.name() + " clicked successfully.");
+				LocalReport.getReport().reportDoneEvent(log, type.name() + " clicked successfully.");
 			} catch (Exception e2) {
 				throw LocalReport.getReport().reportException(e);
 			}

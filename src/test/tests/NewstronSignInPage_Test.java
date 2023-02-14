@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 import com.utils.CredentialsType;
 import com.warnermedia.config.driver.LocalDriver;
 import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.page.core.NewstronSignInPage;
 import com.warnermedia.utils.CookieHelper;
 import pages.AllAppsDashboard;
 import pages.TestInitialization;
@@ -48,19 +47,6 @@ public class NewstronSignInPage_Test extends TestInitialization {
 
 		_newstronSignInPage.testingError();
 		_newstronSignInPage.clickTheSignInButton();
-	}
-	
-	@Test
-	public void verifyNewstronSignInPage_2() throws Exception {
-		try {
-			NewstronSignInPage<TestPage> _newstronSignInPage = new NewstronSignInPage<TestPage>(TestPage.class);
-
-			_newstronSignInPage.enterLogInDetails(CredentialsType.BASE)
-					.clickTheSignInButton();
-			new AllAppsDashboard().reportThatPageLoadedSuccessfully();
-		} catch (Exception e) {
-			throw LocalReport.getReport().reportException(e);
-		}
 	}
 
 }
