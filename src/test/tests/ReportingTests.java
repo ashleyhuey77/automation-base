@@ -2,14 +2,14 @@ package tests;
 
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-import com.warnermedia.config.report.LocalReport;
-import com.warnermedia.config.report.LocalValidation;
-import com.warnermedia.config.report.ReportFacade;
-import com.warnermedia.config.report.ReportType;
-import com.warnermedia.config.report.TestReport;
-import com.warnermedia.config.report.TestReportHelper;
-import com.warnermedia.config.settings.Environment;
-import com.warnermedia.config.settings.LocalTest;
+import com.config.setup.report.LocalReport;
+import com.config.setup.report.LocalValidation;
+import com.config.setup.report.ReportFacade;
+import com.config.setup.report.ReportType;
+import com.config.setup.report.TestReport;
+import com.config.setup.report.TestReportHelper;
+import com.config.setup.app.Environment;
+import com.config.setup.app.LocalTest;
 
 @Slf4j
 public class ReportingTests {

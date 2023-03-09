@@ -1,17 +1,14 @@
 package tests;
 
-import com.warnermedia.config.SHelper;
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.page.core.PageUtils;
-import com.warnermedia.page.core.web.Type;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.SeleniumHelper;
-import com.warnermedia.selenium.TestElement;
-import com.warnermedia.selenium.wait.Wait;
-import com.warnermedia.selenium.wait.WaitBuilder;
+import com.config.SHelper;
+import com.config.TestException;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.browser.WebDriverListener;
+import com.page.core.web.Type;
+import com.selenium.By;
+import com.selenium.Locator;
+import com.selenium.SeleniumHelper;
+import com.selenium.TestElement;
 import org.openqa.selenium.support.How;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;

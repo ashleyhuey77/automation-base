@@ -1,6 +1,6 @@
 package utils;
 
-import com.warnermedia.config.TestException;
+import com.config.TestException;
 
 public class MyAssert {
 	

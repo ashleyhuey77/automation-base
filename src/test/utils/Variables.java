@@ -1,9 +1,9 @@
 package utils;
 
-import com.warnermedia.page.core.web.Type;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.TestElement;
+import com.page.core.web.Type;
+import com.selenium.By;
+import com.selenium.Locator;
+import com.selenium.TestElement;
 import org.openqa.selenium.support.How;
 
 public enum Variables implements Type {

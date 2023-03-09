@@ -1,11 +1,10 @@
 package pages;
 
-import com.warnermedia.config.settings.LocalTest;
 import org.openqa.selenium.WebDriverException;
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.app.ApplicationTemplate;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.report.LocalReport;
+import com.config.TestException;
+import com.config.setup.app.ApplicationTemplate;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.report.LocalReport;
 
 public class NewsAppsApplication extends ApplicationTemplate {
   

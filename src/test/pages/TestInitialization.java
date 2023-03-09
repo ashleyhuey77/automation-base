@@ -4,14 +4,13 @@ import java.io.BufferedReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
 
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.data.InitializeTestUsers;
-import com.warnermedia.page.core.PageUtils;
+import com.config.setup.app.InitializeTestUsers;
+import com.page.core.PageUtils;
 import org.jsoup.Jsoup;
 import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import com.warnermedia.config.settings.LocalTest;
+import com.config.setup.app.LocalTest;
 import org.testng.annotations.BeforeTest;
 
 public class TestInitialization extends PageUtils {

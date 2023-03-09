@@ -1,10 +1,9 @@
 package tests;
 
-import com.utils.CredentialsType;
-import com.warnermedia.config.settings.LocalTest;
+import com.config.setup.app.LocalTest;
 
-import com.warnermedia.data.mongo.config.DataMapper;
-import com.warnermedia.data.mongo.config.MongoConfig;
+import com.data.config.DataMapper;
+import com.data.config.MongoConfig;
 import org.testng.annotations.Test;
 
 public class Mongo_Tests {

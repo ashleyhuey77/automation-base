@@ -11,14 +11,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import com.warnermedia.config.SHelper;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.SeleniumHelper;
-import com.warnermedia.selenium.TestElement;
-import com.warnermedia.utils.TestUtils;
+import com.config.SHelper;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.browser.WebDriverListener;
+import com.selenium.By;
+import com.selenium.Locator;
+import com.selenium.SeleniumHelper;
+import com.selenium.TestElement;
+import com.utils.TestUtils;
 
 @Listeners(WebDriverListener.class)
 public class ElementTests {

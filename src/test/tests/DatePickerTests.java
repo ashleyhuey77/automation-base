@@ -4,17 +4,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.warnermedia.config.SHelper;
-import com.warnermedia.selenium.shared.Via;
-import com.warnermedia.selenium.text.Variable;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.warnermedia.config.TestException;
-import com.warnermedia.page.utils.date.DatePicker;
-import com.warnermedia.page.utils.date.FutureDate;
-import com.warnermedia.page.utils.date.PastDate;
-import com.warnermedia.page.utils.date.PresentDate;
+import com.config.TestException;
+import com.page.utils.date.DatePicker;
+import com.page.utils.date.FutureDate;
+import com.page.utils.date.PastDate;
+import com.page.utils.date.PresentDate;
 
 public class DatePickerTests {
 	

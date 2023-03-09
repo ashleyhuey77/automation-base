@@ -3,17 +3,17 @@ package tests.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.warnermedia.selenium.TestElement;
+import com.selenium.TestElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import com.warnermedia.config.SHelper;
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.selenium.wait.Condition;
+import com.config.SHelper;
+import com.config.TestException;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.browser.WebDriverListener;
+import com.selenium.wait.Condition;
 import pages.TestInitialization;
 import utils.Variables;
 

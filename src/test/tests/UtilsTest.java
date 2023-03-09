@@ -1,32 +1,24 @@
 package tests;
 
-import com.app.SecurityHelper;
-import com.app.file.FileCredentials;
-import com.app.file.FileCredentialsType;
-import com.app.file.FileEncrypterDecrypter;
-import com.warnermedia.config.SHelper;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.page.core.web.BaseGeneric;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.SeleniumHelper;
-import com.warnermedia.selenium.TestElement;
-import com.warnermedia.utils.devtools.JSTool;
-import org.openqa.selenium.HasAuthentication;
+import com.config.SHelper;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.browser.WebDriverListener;
+import com.selenium.By;
+import com.selenium.Locator;
+import com.selenium.SeleniumHelper;
+import com.selenium.TestElement;
+import com.utils.ConsoleDecoration;
+import com.utils.devtools.ConsoleErrorLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.UsernameAndPassword;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.How;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.TestInitialization;
-import utils.Variables;
 
-import java.net.URI;
-import java.util.function.Predicate;
-
+@Slf4j
 @Listeners(WebDriverListener.class)
 public class UtilsTest extends TestInitialization {
 
@@ -40,13 +32,13 @@ public class UtilsTest extends TestInitialization {
         try {
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("document.write('<a id=\"Test\" >Butter</a>');");
             Thread.sleep(500);
-            JSTool tool = JSTool.INSTANCE;
-            tool.start();
+            ConsoleErrorLogger task = new ConsoleErrorLogger<String>("Testing");
+            task.initialize();
             WebElement link2click = SHelper.get().element().get(new TestElement(new Locator("Test"), new By(How.ID)));
             ((JavascriptExecutor) LocalDriver.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
                     link2click, "onclick", "throw new Error('Hello, world!')");
             link2click.click();
-            tool.parse();
+            task.executeWith(() -> log.info("{}{}Console error task has completed successfully.{}", ConsoleDecoration.CYAN_TEXT.value, ConsoleDecoration.BLACK_BACKGROUND.value, ConsoleDecoration.RESET.value));
         } catch (Exception e) {
             throw e;
         }

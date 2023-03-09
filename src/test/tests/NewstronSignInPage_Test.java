@@ -1,25 +1,22 @@
 package tests;
 
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.data.UserHelper;
-import com.warnermedia.config.report.LocalReport;
-import com.warnermedia.config.testng.TestListener;
-import com.warnermedia.data.mongo.config.DataMapper;
-import com.warnermedia.page.core.SignInPage;
-import com.warnermedia.utils.ex.SeleniumException;
-import org.openqa.selenium.TimeoutException;
-import org.testng.Assert;
+import com.config.TestException;
+import com.config.setup.report.LocalReport;
+import com.config.setup.report.LocalValidation;
+import com.config.setup.browser.TestListener;
+import com.page.core.SignInPage;
+import com.utils.devtools.Switch;
+import com.utils.devtools.ConsoleErrorLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import com.utils.CredentialsType;
-import com.warnermedia.config.driver.LocalDriver;
-import com.warnermedia.config.driver.WebDriverListener;
-import com.warnermedia.utils.CookieHelper;
-import pages.AllAppsDashboard;
+import com.config.setup.browser.LocalDriver;
+import com.config.setup.browser.WebDriverListener;
+import com.utils.devtools.CookieHelper;
 import pages.TestInitialization;
-import pages.TestPage;
 
+@Slf4j
 @Listeners({TestListener.class, WebDriverListener.class})
 public class NewstronSignInPage_Test extends TestInitialization {
 
@@ -31,13 +28,21 @@ public class NewstronSignInPage_Test extends TestInitialization {
 	
 	@Test
 	public void verifyNewstronSignInPage() throws Exception {
+		try {
+			new ConsoleErrorLogger<String>(SignInPage.class.getName())
+					.setState(Switch.ON);
+			SignInPage _newstronSignInPage = new SignInPage();
 
-		SignInPage _newstronSignInPage = new SignInPage();
-		
-		_newstronSignInPage.enterLoginDetails();
-		CookieHelper.newHelper().getCookies().setCookies().build();
-		   				_newstronSignInPage.clickTheSignInButton();
-		CookieHelper.newHelper().getCookies().setCookies().build();
+			_newstronSignInPage.enterLoginDetails();
+			CookieHelper.newHelper().getCookies().setCookies().build();
+			new ConsoleErrorLogger()
+					.setState(Switch.OFF);
+			_newstronSignInPage.clickTheSignInButton();
+			CookieHelper.newHelper().getCookies().setCookies().build();
+			throw LocalValidation.getValidations().assertionFailed(log, "Test Failure");
+		} catch (Exception e) {
+			throw LocalReport.getReport().reportException(e);
+		}
 	}
 
 	@Test(expectedExceptions= TestException.class)

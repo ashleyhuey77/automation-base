@@ -3,17 +3,17 @@ package tests;
 import org.apache.commons.lang3.NotImplementedException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.warnermedia.config.State;
-import com.warnermedia.config.app.EnvironmentContext;
-import com.warnermedia.config.driver.DriverFacade;
-import com.warnermedia.config.driver.Drivers;
-import com.warnermedia.config.driver.HeadlessContext;
-import com.warnermedia.config.driver.HeadlessStop;
-import com.warnermedia.config.os.Linux;
-import com.warnermedia.config.os.OS;
-import com.warnermedia.config.os.OSContext;
-import com.warnermedia.config.os.OSFacade;
-import com.warnermedia.config.os.Windows;
+import com.config.setup.app.State;
+import com.config.setup.app.EnvironmentContext;
+import com.config.setup.browser.DriverFacade;
+import com.config.setup.browser.Drivers;
+import com.config.setup.browser.HeadlessContext;
+import com.config.setup.browser.HeadlessStop;
+import com.config.setup.browser.Linux;
+import com.config.setup.browser.OS;
+import com.config.setup.browser.OSContext;
+import com.config.setup.browser.OSFacade;
+import com.config.setup.browser.Windows;
 
 public class StateTests {
 	

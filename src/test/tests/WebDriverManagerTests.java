@@ -1,7 +1,6 @@
 package tests;
 
-import com.warnermedia.wdm.utils.OS;
-import com.warnermedia.wdm.WebDriverManager;
+import com.wdm.WebDriverManager;
 import org.testng.annotations.Test;
 
 public class WebDriverManagerTests {

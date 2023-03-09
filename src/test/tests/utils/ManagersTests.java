@@ -2,8 +2,8 @@ package tests.utils;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.warnermedia.config.settings.Environment;
-import com.warnermedia.config.settings.TestSettings;
+import com.config.setup.app.Environment;
+import com.config.setup.app.TestSettings;
 
 public class ManagersTests {
 	

@@ -1,15 +1,15 @@
 package pages;
 
-import com.warnermedia.config.SHelper;
-import com.warnermedia.config.TestException;
-import com.warnermedia.config.report.LocalReport;
-import com.warnermedia.config.report.LocalValidation;
-import com.warnermedia.page.core.PageTemplate;
-import com.warnermedia.selenium.By;
-import com.warnermedia.selenium.Locator;
-import com.warnermedia.selenium.TestElement;
-import com.warnermedia.selenium.wait.Wait;
-import com.warnermedia.selenium.wait.WaitBuilder;
+import com.config.SHelper;
+import com.config.TestException;
+import com.config.setup.report.LocalReport;
+import com.config.setup.report.LocalValidation;
+import com.page.core.PageTemplate;
+import com.selenium.By;
+import com.selenium.Locator;
+import com.selenium.TestElement;
+import com.selenium.wait.Wait;
+import com.selenium.wait.WaitBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.How;
 

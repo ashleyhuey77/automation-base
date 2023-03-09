@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.warnermedia.config.TestException;
-import com.warnermedia.utils.RandomStringHelper;
-import com.warnermedia.utils.RandomStringHelper.RandomStringBuilder;
+import com.config.TestException;
+import com.utils.RandomStringHelper;
+import com.utils.RandomStringHelper.RandomStringBuilder;
 
 public class RandomStringTests {
 	
